@@ -1,0 +1,7 @@
+[
+  { "id": 1, "title": "AWS Certified Solutions Architect", "provider": "Amazon Web Services", "url": "https://aws.amazon.com/certification/", "tags": ["technology", "software", "engineering", "it"] },
+  { "id": 2, "title": "Google Data Analytics Certificate", "provider": "Coursera", "url": "https://www.coursera.org/professional-certificates/google-data-analytics", "tags": ["technology", "data", "business", "it"] },
+  { "id": 3, "title": "CFA Level 1", "provider": "CFA Institute", "url": "https://www.cfainstitute.org", "tags": ["finance", "business", "economics"] },
+  { "id": 4, "title": "PMP Certification", "provider": "PMI", "url": "https://www.pmi.org", "tags": ["business", "management", "engineering"] },
+  { "id": 5, "title": "Certified Medical Assistant (CMA)", "provider": "AAMA", "url": "https://www.aama-ntl.org", "tags": ["medicine", "healthcare"] }
+]

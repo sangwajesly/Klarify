@@ -1,0 +1,7 @@
+[
+  { "id": 1, "title": "Clean Code", "author": "Robert C. Martin", "url": "#", "tags": ["technology", "software", "engineering"] },
+  { "id": 2, "title": "The Pragmatic Programmer", "author": "Andrew Hunt", "url": "#", "tags": ["technology", "software"] },
+  { "id": 3, "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "url": "#", "tags": ["business", "economics", "humanities"] },
+  { "id": 4, "title": "Principles of Economics", "author": "N. Gregory Mankiw", "url": "#", "tags": ["economics", "finance", "business"] },
+  { "id": 5, "title": "Gray's Anatomy for Students", "author": "Richard L. Drake", "url": "#", "tags": ["medicine", "healthcare", "biology"] }
+]

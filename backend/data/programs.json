@@ -1,0 +1,59 @@
+[
+  {
+    "id": "prog_001",
+    "name": "BSc. Computer Science",
+    "university": "University of Buea",
+    "duration": "3 Years",
+    "requiresConcours": false,
+    "portalUrl": "https://ubuea.cm",
+    "required_al_subjects": ["Computer Science", "Pure Math with Mechanics", "Pure Math with Statistics", "Further Mathematics", "Physics", "ICT"],
+    "tags": ["technology", "software", "programming", "data", "computing", "development", "it"],
+    "description": "A comprehensive program in computer science covering algorithms, software engineering, databases, and AI."
+  },
+  {
+    "id": "prog_002",
+    "name": "BEng. Computer Engineering",
+    "university": "National Polytechnic School of Douala (ENSPD)",
+    "duration": "5 Years",
+    "requiresConcours": true,
+    "concours_id": "conc_001",
+    "portalUrl": "https://enspd-udo.cm",
+    "required_al_subjects": ["Pure Math with Mechanics", "Further Mathematics", "Physics", "Chemistry", "Computer Science"],
+    "tags": ["engineering", "technology", "hardware", "software", "embedded", "systems", "electronics"],
+    "description": "An intense engineering program focused on bridging hardware and software, including embedded systems and digital electronics."
+  },
+  {
+    "id": "prog_003",
+    "name": "BSc. Economics",
+    "university": "University of Bamenda",
+    "duration": "3 Years",
+    "requiresConcours": false,
+    "portalUrl": "https://uniba.cm",
+    "required_al_subjects": ["Economics", "Accounting", "Pure Math with Statistics", "Commerce", "Business Management"],
+    "tags": ["business", "finance", "economics", "markets", "accounting", "management"],
+    "description": "Study of economic theories, macro and microeconomics, financial markets, and business statistics."
+  },
+  {
+    "id": "prog_004",
+    "name": "MD Medicine",
+    "university": "Faculty of Health Sciences, University of Buea",
+    "duration": "7 Years",
+    "requiresConcours": true,
+    "concours_id": "conc_002",
+    "portalUrl": "https://fhs.ubuea.cm",
+    "required_al_subjects": ["Biology", "Chemistry", "Physics"],
+    "tags": ["medicine", "healthcare", "doctor", "health", "clinical", "hospital"],
+    "description": "Professional medical degree leading to qualification as a medical doctor. Includes rigorous clinical rotations."
+  },
+  {
+    "id": "prog_005",
+    "name": "LLB Law",
+    "university": "University of Yaounde II",
+    "duration": "3 Years",
+    "requiresConcours": false,
+    "portalUrl": "https://univ-yaounde2.org",
+    "required_al_subjects": ["History", "Literature in English", "Philosophy", "Religious Studies", "Economics"],
+    "tags": ["law", "legal", "policy", "justice", "humanities", "arts"],
+    "description": "Foundation in public, private, and international law."
+  }
+]

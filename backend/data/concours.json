@@ -1,0 +1,16 @@
+[
+  {
+    "id": "conc_001",
+    "name": "ENSPD Entrance Exam",
+    "month": "July",
+    "deadline": "2026-06-30",
+    "fee": "20,000 FCFA"
+  },
+  {
+    "id": "conc_002",
+    "name": "National Medical Entrance Exam",
+    "month": "September",
+    "deadline": "2026-08-15",
+    "fee": "20,000 FCFA"
+  }
+]
