@@ -56,6 +56,37 @@ const StepComponent = ({ number, title, description }) => (
 
 const Home = () => {
   const navigate = useNavigate();
+  const [text, setText] = React.useState('');
+  const [isDeleting, setIsDeleting] = React.useState(false);
+  const [loopNum, setLoopNum] = React.useState(0);
+  const [typingSpeed, setTypingSpeed] = React.useState(150);
+
+  const words = ["Academic", "Career"];
+
+  React.useEffect(() => {
+    const handleTyping = () => {
+      const i = loopNum % words.length;
+      const fullText = words[i];
+
+      setText(isDeleting 
+        ? fullText.substring(0, text.length - 1) 
+        : fullText.substring(0, text.length + 1)
+      );
+
+      setTypingSpeed(isDeleting ? 80 : 150);
+
+      if (!isDeleting && text === fullText) {
+        setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && text === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+        setTypingSpeed(500);
+      }
+    };
+
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, loopNum, typingSpeed]);
 
   return (
     <Layout noPadding={true}>
@@ -63,12 +94,17 @@ const Home = () => {
       <section className="px-6 md:px-12 py-16 md:py-24 max-w-5xl mx-auto">
         <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 text-sm font-medium mb-8">
-            <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+            <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
             Klarify Your Future
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-            Find the Right <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">Academic Path</span> for You
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight min-h-[3.5em] md:min-h-0">
+            Find the Right <br className="md:hidden" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">
+              {text}
+            </span>
+            <span className="text-orange-500 animate-pulse font-light">|</span>
+            <br className="md:hidden" /> Path for You
           </h1>
           
           <p className="text-lg text-slate-600 mb-12 max-w-2xl">

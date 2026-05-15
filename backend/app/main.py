@@ -14,8 +14,11 @@ app = FastAPI(
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
-    allow_credentials=False, # Must be False when origins=["*"]
+    allow_origins=[
+        "http://localhost:5173",
+        "https://klarify-path.vercel.app"
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

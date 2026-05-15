@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = import.meta.env.PROD 
+  ? 'https://klarify-path-be.vercel.app' 
+  : 'http://localhost:8000';
 
 export const getRecommendations = async (data) => {
   try {
