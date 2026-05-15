@@ -5,10 +5,11 @@ def normalize_text(text: str) -> str:
     return text.lower().strip()
 
 def prepare_program_text(program: dict) -> str:
-    """Combine tags and description for vectorization."""
+    """Combine tags, careers, and description for vectorization."""
     tags = " ".join(program.get("tags", []))
+    careers = " ".join(program.get("careers", []))
     description = program.get("description", "")
-    combined = f"{tags} {description}"
+    combined = f"{tags} {careers} {description}"
     return normalize_text(combined)
 
 def prepare_user_text(subjects: list, interests: list) -> str:

@@ -5,44 +5,90 @@ from app.utils.text_processing import prepare_program_text, prepare_user_text
 
 def get_recommendations(request: RecommendationRequest) -> RecommendationResponse:
     user_subjects = set(s.lower() for s in request.subjects)
+    user_interest_text = " ".join(request.interest).lower()
     
-    # 1. Rule-Based Filtering
-    # Filter programs where required_al_subjects is a subset of user_subjects
-    filtered_programs = []
-    for program in data_store.programs:
-        prog_reqs = set(req.lower() for req in program.get("required_al_subjects", []))
-        if prog_reqs.issubset(user_subjects) or not prog_reqs:
-            filtered_programs.append(program)
-            
-    # If no programs match strict subset logic, fallback to partial matching or all programs 
-    # (for a better UX in demo if user selects too few subjects)
-    if not filtered_programs:
-        filtered_programs = data_store.programs
-
-    # 2. Prepare text for ML
-    programs_text = [prepare_program_text(p) for p in filtered_programs]
+    # 1. Base Filtering (Eligibility)
+    # We still want to prioritize programs where the student meets minimum requirements
+    # but the instructions suggest a more nuanced "Eligibility Depth".
+    # For now, let's include all programs but score them based on depth.
+    all_programs = data_store.programs
+    
+    # 2. Prepare text for ML (Signal 1)
+    programs_text = [prepare_program_text(p) for p in all_programs]
     user_text = prepare_user_text(request.subjects, request.interest)
     
-    # Ensure recommender is fitted on current corpus
-    # In a real app with static data, this would be done once at startup.
     if not ml_recommender.is_fitted:
-        all_programs_text = [prepare_program_text(p) for p in data_store.programs]
-        ml_recommender.fit(all_programs_text)
+        ml_recommender.fit(programs_text)
         
-    # 3. Calculate Similarity
-    similarities = ml_recommender.calculate_similarities(user_text, programs_text)
+    semantic_scores = ml_recommender.calculate_similarities(user_text, programs_text)
     
-    # 4. Rank and Format Results
-    scored_programs = list(zip(filtered_programs, similarities))
-    # Sort by similarity descending
-    scored_programs.sort(key=lambda x: x[1], reverse=True)
+    scored_programs = []
+    for i, program in enumerate(all_programs):
+        # --- Signal 1: Semantic Match (55%) ---
+        semantic_score = semantic_scores[i]
+        
+        # --- Signal 2: Subject Overlap Score (30%) ---
+        prog_reqs = set(req.lower() for req in program.get("required_al_subjects", []))
+        if not prog_reqs:
+            overlap_score = 1.0  # Open programs match perfectly by subject
+        else:
+            matching_subjects = user_subjects.intersection(prog_reqs)
+            overlap_score = len(matching_subjects) / len(prog_reqs)
+            
+        # --- Signal 3: Career Alignment Score (15%) ---
+        career_list = [c.lower() for c in program.get("careers", [])]
+        career_score = 0.0
+        if career_list:
+            interest_words = set(user_interest_text.split())
+            matched_careers = 0
+            for career in career_list:
+                career_words = set(career.split())
+                # If any significant word in the career title matches user interest
+                # (Ignoring very short words like 'and', 'of', etc. if necessary)
+                if any(word in interest_words for word in career_words if len(word) > 2):
+                    matched_careers += 1
+            
+            if len(career_list) > 0:
+                career_score = matched_careers / len(career_list)
+
+        # --- FINAL SCORE CALCULATION ---
+        final_score = (
+            0.55 * semantic_score +
+            0.30 * overlap_score +
+            0.15 * career_score
+        )
+        
+        scored_programs.append({
+            "program": program,
+            "final_score": final_score,
+            "faculty": program.get("faculty", "Unknown")
+        })
+
+    # 4. Rank by final score
+    scored_programs.sort(key=lambda x: x["final_score"], reverse=True)
     
-    # Take top 10
-    top_results = scored_programs[:10]
+    # --- Signal 4: Diversity Boost (Post-ranking) ---
+    # Limits results to a maximum of 2 programs per faculty in top results
+    final_top_results = []
+    faculty_counts = {}
     
+    for item in scored_programs:
+        faculty = item["faculty"]
+        count = faculty_counts.get(faculty, 0)
+        
+        if count < 2:
+            final_top_results.append(item)
+            faculty_counts[faculty] = count + 1
+            
+        if len(final_top_results) >= 10:
+            break
+
+    # Format Results
     response_programs = []
-    for prog, score in top_results:
-        # Attach concours data if required
+    for item in final_top_results:
+        prog = item["program"]
+        score = item["final_score"]
+        
         exam_details = None
         if prog.get("requiresConcours") and "concours_id" in prog:
             conc_data = data_store.concours_map.get(prog["concours_id"])
@@ -67,7 +113,6 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
             )
         )
         
-    # 5. Return full response
     return RecommendationResponse(
         programs=response_programs,
         certifications=data_store.certifications,

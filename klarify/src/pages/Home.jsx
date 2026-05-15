@@ -64,7 +64,7 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 text-sm font-medium mb-8">
             <span className="w-2 h-2 rounded-full bg-orange-500"></span>
-            AI-Powered Recommendations
+            Klarify Your Future
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
