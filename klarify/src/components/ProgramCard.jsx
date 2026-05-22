@@ -62,31 +62,9 @@ const ProgramCard = ({ program }) => {
           <div className="mt-4 p-5 bg-slate-50 rounded-xl border border-slate-100 transition-all duration-300">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               
-              {/* Left Column: Careers List */}
-              <div className={program.requiresConcours && program.examDetails ? "md:col-span-2" : "md:col-span-3"}>
-                <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
-                  <Briefcase size={16} className="text-orange-500" />
-                  Potential Career Paths
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {program.careers && program.careers.length > 0 ? (
-                    program.careers.map((career, idx) => (
-                      <span 
-                        key={idx} 
-                        className="px-3 py-1.5 bg-white hover:bg-orange-50/50 border border-slate-200/60 hover:border-orange-200 text-xs font-medium text-slate-600 hover:text-orange-700 rounded-lg transition-all shadow-sm"
-                      >
-                        {career}
-                      </span>
-                    ))
-                  ) : (
-                    <span className="text-xs text-slate-500 italic">No specific careers listed</span>
-                  )}
-                </div>
-              </div>
-
-              {/* Right Column: Exam Details (Only if applicable) */}
+              {/* Left Column: Exam Details (Priority — shown first when applicable) */}
               {program.requiresConcours && program.examDetails && (
-                <div className="border-t md:border-t-0 md:border-l border-slate-200/60 pt-4 md:pt-0 md:pl-6">
+                <div className="md:col-span-1">
                   <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
                     <AlertCircle size={16} className="text-orange-500" />
                     Entrance Exam Details
@@ -122,6 +100,28 @@ const ProgramCard = ({ program }) => {
                   </div>
                 </div>
               )}
+
+              {/* Right Column: Careers List */}
+              <div className={program.requiresConcours && program.examDetails ? "md:col-span-2 border-t md:border-t-0 md:border-l border-slate-200/60 pt-4 md:pt-0 md:pl-6" : "md:col-span-3"}>
+                <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
+                  <Briefcase size={16} className="text-orange-500" />
+                  Potential Career Paths
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {program.careers && program.careers.length > 0 ? (
+                    program.careers.map((career, idx) => (
+                      <span 
+                        key={idx} 
+                        className="px-3 py-1.5 bg-white hover:bg-orange-50/50 border border-slate-200/60 hover:border-orange-200 text-xs font-medium text-slate-600 hover:text-orange-700 rounded-lg transition-all shadow-sm"
+                      >
+                        {career}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs text-slate-500 italic">No specific careers listed</span>
+                  )}
+                </div>
+              </div>
               
             </div>
           </div>
