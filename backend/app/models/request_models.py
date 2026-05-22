@@ -15,6 +15,7 @@ class ProgramResponse(BaseModel):
     id: str
     name: str
     university: str
+    faculty: str
     duration: str
     requiresConcours: bool
     portalUrl: str

@@ -125,6 +125,7 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
                 id=prog["id"],
                 name=prog["name"],
                 university=prog["university"],
+                faculty=prog.get("faculty") or "Unknown",
                 duration=duration_val,
                 requiresConcours=requires_conc,
                 portalUrl=prog.get("portalUrl", "#"),

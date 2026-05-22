@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Building2, Clock, AlertCircle, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
+import { Building2, Clock, AlertCircle, ChevronDown, ChevronUp, ExternalLink, GraduationCap } from 'lucide-react';
 
 const ProgramCard = ({ program }) => {
   const [expanded, setExpanded] = useState(false);
@@ -16,6 +16,12 @@ const ProgramCard = ({ program }) => {
               <Building2 size={16} className="text-slate-400" />
               {program.university}
             </div>
+            {program.faculty && (
+              <div className="flex items-center gap-1.5">
+                <GraduationCap size={16} className="text-slate-400" />
+                {program.faculty}
+              </div>
+            )}
             <div className="flex items-center gap-1.5">
               <Clock size={16} className="text-slate-400" />
               {program.duration}
