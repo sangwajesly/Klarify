@@ -79,10 +79,15 @@ const ProgramCard = ({ program }) => {
                   <div className="font-medium text-slate-900">{program.examDetails.fee}</div>
                 </div>
               </div>
-              <button className="flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors">
+              <a 
+                href={`https://wa.me/237672507711?text=${encodeURIComponent(`Greetings Sir, i need past questions for ${program.name}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
+              >
                 <ExternalLink size={16} />
                 View Past Questions
-              </button>
+              </a>
             </div>
           )}
         </div>
