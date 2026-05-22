@@ -59,40 +59,45 @@ const ProgramCard = ({ program }) => {
         </button>
         
         {expanded && (
-          <div className="mt-4 p-5 bg-slate-50 rounded-xl border border-slate-100 transition-all duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              {/* Left Column: Exam Details (Priority — shown first when applicable) */}
+          <div className="mt-4 space-y-4">
+
+              {/* Entrance Exam Details — Bold Standout Callout */}
               {program.requiresConcours && program.examDetails && (
-                <div className="md:col-span-1">
-                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
-                    <AlertCircle size={16} className="text-orange-500" />
-                    Entrance Exam Details
-                  </div>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between py-1 border-b border-slate-100">
-                      <span className="text-slate-500">Exam:</span>
-                      <span className="font-semibold text-slate-800 text-right pl-2">{program.examDetails.name}</span>
+                <div className="relative overflow-hidden rounded-xl border border-orange-200 bg-gradient-to-r from-orange-50 via-amber-50/60 to-white shadow-md">
+                  {/* Thick orange accent bar */}
+                  <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-orange-500 to-amber-500 rounded-l-xl"></div>
+                  
+                  <div className="pl-6 pr-5 py-5">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-100">
+                        <AlertCircle size={18} className="text-orange-600" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-bold text-slate-900">Entrance Exam Required</h4>
+                        <p className="text-xs text-orange-600/80 font-medium">{program.examDetails.name}</p>
+                      </div>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-slate-100">
-                      <span className="text-slate-500">Date:</span>
-                      <span className="font-semibold text-slate-800">{program.examDetails.month}</span>
+
+                    <div className="grid grid-cols-3 gap-4 mb-5">
+                      <div className="bg-white/70 rounded-lg px-3 py-2.5 border border-orange-100/60">
+                        <div className="text-[10px] uppercase tracking-wider text-orange-500/80 font-semibold mb-0.5">Exam Month</div>
+                        <div className="text-sm font-bold text-slate-900">{program.examDetails.month}</div>
+                      </div>
+                      <div className="bg-white/70 rounded-lg px-3 py-2.5 border border-orange-100/60">
+                        <div className="text-[10px] uppercase tracking-wider text-orange-500/80 font-semibold mb-0.5">Deadline</div>
+                        <div className="text-sm font-bold text-slate-900">{program.examDetails.deadline}</div>
+                      </div>
+                      <div className="bg-white/70 rounded-lg px-3 py-2.5 border border-orange-100/60">
+                        <div className="text-[10px] uppercase tracking-wider text-orange-500/80 font-semibold mb-0.5">Exam Fee</div>
+                        <div className="text-sm font-bold text-slate-900">{program.examDetails.fee}</div>
+                      </div>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-slate-100">
-                      <span className="text-slate-500">Deadline:</span>
-                      <span className="font-semibold text-slate-800">{program.examDetails.deadline}</span>
-                    </div>
-                    <div className="flex justify-between py-1">
-                      <span className="text-slate-500">Fee:</span>
-                      <span className="font-semibold text-slate-800">{program.examDetails.fee}</span>
-                    </div>
-                  </div>
-                  <div className="mt-4">
+
                     <a 
                       href={`https://wa.me/237672507711?text=${encodeURIComponent(`Greetings Sir, i need past questions for ${program.name} (${program.examDetails.name})`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs font-semibold text-orange-600 hover:text-orange-700 transition-colors"
+                      className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md"
                     >
                       <ExternalLink size={14} />
                       View Past Questions
@@ -101,8 +106,8 @@ const ProgramCard = ({ program }) => {
                 </div>
               )}
 
-              {/* Right Column: Careers List */}
-              <div className={program.requiresConcours && program.examDetails ? "md:col-span-2 border-t md:border-t-0 md:border-l border-slate-200/60 pt-4 md:pt-0 md:pl-6" : "md:col-span-3"}>
+              {/* Career Paths Section */}
+              <div className="p-5 bg-slate-50 rounded-xl border border-slate-100">
                 <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
                   <Briefcase size={16} className="text-orange-500" />
                   Potential Career Paths
@@ -122,9 +127,8 @@ const ProgramCard = ({ program }) => {
                   )}
                 </div>
               </div>
-              
+
             </div>
-          </div>
         )}
       </div>
     </div>
