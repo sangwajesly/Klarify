@@ -28,7 +28,16 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
         semantic_score = semantic_scores[i]
         
         # --- Signal 2: Subject Overlap Score (30%) ---
-        prog_reqs = set(req.lower() for req in program.get("required_al_subjects", []))
+        req_val = program.get("required_al_subjects")
+        if not req_val:
+            prog_reqs = set()
+        elif isinstance(req_val, str):
+            prog_reqs = set(s.strip().lower() for s in req_val.split(",") if s.strip())
+        elif isinstance(req_val, list):
+            prog_reqs = set(str(s).strip().lower() for s in req_val if s)
+        else:
+            prog_reqs = set()
+
         if not prog_reqs:
             overlap_score = 1.0  # Open programs match perfectly by subject
         else:
@@ -36,7 +45,8 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
             overlap_score = len(matching_subjects) / len(prog_reqs)
             
         # --- Signal 3: Career Alignment Score (15%) ---
-        career_list = [c.lower() for c in program.get("careers", [])]
+        careers_raw = program.get("Careers") or program.get("careers") or []
+        career_list = [c.lower() for c in careers_raw]
         career_score = 0.0
         if career_list:
             interest_words = set(user_interest_text.split())
@@ -44,7 +54,6 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
             for career in career_list:
                 career_words = set(career.split())
                 # If any significant word in the career title matches user interest
-                # (Ignoring very short words like 'and', 'of', etc. if necessary)
                 if any(word in interest_words for word in career_words if len(word) > 2):
                     matched_careers += 1
             
@@ -89,24 +98,35 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
         prog = item["program"]
         score = item["final_score"]
         
+        # Check concours
+        requires_conc = prog.get("requiresConcour") == "true" or prog.get("requiresConcours") is True
         exam_details = None
-        if prog.get("requiresConcours") and "concours_id" in prog:
+        if requires_conc and prog.get("concours_id"):
             conc_data = data_store.concours_map.get(prog["concours_id"])
             if conc_data:
                 exam_details = ExamDetails(
                     name=conc_data["name"],
                     month=conc_data["month"],
                     deadline=conc_data["deadline"],
-                    fee=conc_data["fee"]
+                    fee=str(conc_data["fee"])
                 )
                 
+        # Resolve duration
+        duration_val = prog.get("duration")
+        if not duration_val and "durations" in prog:
+            durations = prog.get("durations")
+            if durations is not None:
+                duration_val = f"{durations} Years"
+        if not duration_val:
+            duration_val = "3 Years"
+
         response_programs.append(
             ProgramResponse(
                 id=prog["id"],
                 name=prog["name"],
                 university=prog["university"],
-                duration=prog["duration"],
-                requiresConcours=prog.get("requiresConcours", False),
+                duration=duration_val,
+                requiresConcours=requires_conc,
                 portalUrl=prog.get("portalUrl", "#"),
                 examDetails=exam_details,
                 score=round(score, 2)
