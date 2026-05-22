@@ -1,16 +1,37 @@
 [
   {
-    "id": "conc_001",
-    "name": "ENSPD Entrance Exam",
-    "month": "July",
-    "deadline": "2026-06-30",
-    "fee": "20,000 FCFA"
+    "id": "COLTECH1",
+    "name": "COLTECH",
+    "month": "September",
+    "deadline": "Sept-04",
+    "fee": 20000
   },
   {
-    "id": "conc_002",
-    "name": "National Medical Entrance Exam",
+    "id": "NAHPI1",
+    "name": "NAHPI",
+    "month": "August",
+    "deadline": "Aug-14",
+    "fee": 20000
+  },
+  {
+    "id": "HITL1",
+    "name": "HILT",
     "month": "September",
-    "deadline": "2026-08-15",
-    "fee": "20,000 FCFA"
+    "deadline": "Sept-18",
+    "fee": 20000
+  },
+  {
+    "id": "ENS1",
+    "name": "ENS",
+    "month": "March",
+    "deadline": "Mar-06",
+    "fee": 20000
+  },
+  {
+    "id": "ENSET1",
+    "name": "ENSET",
+    "month": "March",
+    "deadline": "Mar-06",
+    "fee": 20000
   }
 ]
