@@ -21,6 +21,7 @@ class ProgramResponse(BaseModel):
     portalUrl: str
     examDetails: Optional[ExamDetails] = None
     score: float
+    careers: List[str]
 
 class CertificationResponse(BaseModel):
     id: int

@@ -130,7 +130,8 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
                 requiresConcours=requires_conc,
                 portalUrl=prog.get("portalUrl", "#"),
                 examDetails=exam_details,
-                score=round(score, 2)
+                score=round(score, 2),
+                careers=prog.get("Careers") or prog.get("careers") or []
             )
         )
         

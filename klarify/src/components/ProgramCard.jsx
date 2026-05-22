@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Building2, Clock, AlertCircle, ChevronDown, ChevronUp, ExternalLink, GraduationCap } from 'lucide-react';
+import { Building2, Clock, AlertCircle, ChevronDown, ChevronUp, ExternalLink, GraduationCap, Briefcase } from 'lucide-react';
 
 const ProgramCard = ({ program }) => {
   const [expanded, setExpanded] = useState(false);
@@ -49,49 +49,84 @@ const ProgramCard = ({ program }) => {
         </div>
       </div>
 
-      {program.requiresConcours && program.examDetails && (
-        <div className="mt-6">
-          <button 
-            onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors w-full"
-          >
-            {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            {expanded ? 'Hide Exam Details' : 'View Exam Details'}
-          </button>
-          
-          {expanded && (
-            <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                <div>
-                  <div className="text-xs text-slate-500 mb-1">Exam Name</div>
-                  <div className="font-medium text-slate-900">{program.examDetails.name}</div>
+      <div className="mt-6">
+        <button 
+          onClick={() => setExpanded(!expanded)}
+          className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors w-full cursor-pointer"
+        >
+          {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          {expanded ? 'Hide Details & Careers' : 'Explore Details & Careers'}
+        </button>
+        
+        {expanded && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-xl border border-slate-100 transition-all duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              {/* Left Column: Careers List */}
+              <div className={program.requiresConcours && program.examDetails ? "md:col-span-2" : "md:col-span-3"}>
+                <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
+                  <Briefcase size={16} className="text-orange-500" />
+                  Potential Career Paths
                 </div>
-                <div>
-                  <div className="text-xs text-slate-500 mb-1">Testing Month</div>
-                  <div className="font-medium text-slate-900">{program.examDetails.month}</div>
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500 mb-1">Deadline</div>
-                  <div className="font-medium text-slate-900">{program.examDetails.deadline}</div>
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500 mb-1">Exam Fee</div>
-                  <div className="font-medium text-slate-900">{program.examDetails.fee}</div>
+                <div className="flex flex-wrap gap-2">
+                  {program.careers && program.careers.length > 0 ? (
+                    program.careers.map((career, idx) => (
+                      <span 
+                        key={idx} 
+                        className="px-3 py-1.5 bg-white hover:bg-orange-50/50 border border-slate-200/60 hover:border-orange-200 text-xs font-medium text-slate-600 hover:text-orange-700 rounded-lg transition-all shadow-sm"
+                      >
+                        {career}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs text-slate-500 italic">No specific careers listed</span>
+                  )}
                 </div>
               </div>
-              <a 
-                href={`https://wa.me/237672507711?text=${encodeURIComponent(`Greetings Sir, i need past questions for ${program.name} (${program.examDetails.name})`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
-              >
-                <ExternalLink size={16} />
-                View Past Questions
-              </a>
+
+              {/* Right Column: Exam Details (Only if applicable) */}
+              {program.requiresConcours && program.examDetails && (
+                <div className="border-t md:border-t-0 md:border-l border-slate-200/60 pt-4 md:pt-0 md:pl-6">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
+                    <AlertCircle size={16} className="text-orange-500" />
+                    Entrance Exam Details
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between py-1 border-b border-slate-100">
+                      <span className="text-slate-500">Exam:</span>
+                      <span className="font-semibold text-slate-800 text-right pl-2">{program.examDetails.name}</span>
+                    </div>
+                    <div className="flex justify-between py-1 border-b border-slate-100">
+                      <span className="text-slate-500">Date:</span>
+                      <span className="font-semibold text-slate-800">{program.examDetails.month}</span>
+                    </div>
+                    <div className="flex justify-between py-1 border-b border-slate-100">
+                      <span className="text-slate-500">Deadline:</span>
+                      <span className="font-semibold text-slate-800">{program.examDetails.deadline}</span>
+                    </div>
+                    <div className="flex justify-between py-1">
+                      <span className="text-slate-500">Fee:</span>
+                      <span className="font-semibold text-slate-800">{program.examDetails.fee}</span>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <a 
+                      href={`https://wa.me/237672507711?text=${encodeURIComponent(`Greetings Sir, i need past questions for ${program.name} (${program.examDetails.name})`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-orange-600 hover:text-orange-700 transition-colors"
+                    >
+                      <ExternalLink size={14} />
+                      View Past Questions
+                    </a>
+                  </div>
+                </div>
+              )}
+              
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
