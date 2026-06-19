@@ -16,7 +16,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://klarify-path.vercel.app"
+        "https://www.klarifypath.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
