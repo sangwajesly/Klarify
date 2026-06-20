@@ -3,14 +3,73 @@ import React from "react";
 const Layout = ({ children, noPadding = false }) => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white border-b border-slate-200 py-4 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white font-bold">
+      <header className="bg-white border-b border-slate-200/60 py-4 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg shadow-md hover:shadow-lg transition-shadow">
             K
           </div>
-          <span className="font-bold text-xl text-slate-900 tracking-tight">
-            <a href="#">Klarify</a>
-          </span>
+          <div className="flex flex-col">
+            <span className="font-bold text-xl text-slate-900 tracking-tight leading-none">
+              <a href="/" className="hover:text-orange-600 transition-colors">
+                Klarify
+              </a>
+            </span>
+            <span className="text-xs text-slate-500 font-medium">
+              Academic Guidance
+            </span>
+          </div>
+        </div>
+
+        <div className="hidden md:flex items-center gap-8">
+          <nav className="flex items-center gap-6">
+            <a
+              href="/gce-results"
+              className="px-6 py-2.5 mx-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
+            >
+              Check GCE Results
+            </a>
+            <a
+              href="/"
+              className="text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
+            >
+              Home
+            </a>
+            <a
+              href="#features"
+              className="text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
+            >
+              How It Works
+            </a>
+            <a
+              href="#about"
+              className="text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
+            >
+              About
+            </a>
+          </nav>
+          <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
+            <a
+              href="/login"
+              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
+            >
+              Sign In
+            </a>
+            <a
+              href="/signup"
+              className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
+            >
+              Get Started
+            </a>
+          </div>
+        </div>
+
+        <div className="md:hidden">
+          <a
+            href="/login"
+            className="px-4 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
+          >
+            Sign In
+          </a>
         </div>
       </header>
 
