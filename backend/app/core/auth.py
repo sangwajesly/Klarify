@@ -46,6 +46,11 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         )
 
     try:
+        unverified_header = jwt.get_unverified_header(token)
+    except Exception:
+        unverified_header = {}
+
+    try:
         payload = jwt.decode(token, supabase_jwt_secret, algorithms=["HS256"], audience="authenticated")
         return payload
     except JWTError as e:
@@ -54,6 +59,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
             return {"id": "dev-user-id", "email": "dev@klarify.com", "role": "authenticated"}
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid or expired authentication token: {str(e)}",
+            detail=f"Invalid or expired authentication token: {str(e)}. Token header: {unverified_header}",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
