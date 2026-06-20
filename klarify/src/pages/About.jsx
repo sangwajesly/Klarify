@@ -5,13 +5,13 @@ import { Heart, Lightbulb, Target, Users, ArrowRight, GraduationCap } from "luci
 import heroBg from "../assets/hero.jpg";
 
 const ValueCard = ({ icon: Icon, title, description }) => (
-  <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 flex flex-col items-start gap-4 hover:bg-white/10 transition-all">
-    <div className="w-12 h-12 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0">
+  <div className="bg-slate-800 p-6 rounded-2xl border border-slate-600/60 flex flex-col items-start gap-4 hover:border-orange-500/40 hover:bg-slate-800/90 transition-all shadow-sm">
+    <div className="w-12 h-12 rounded-xl bg-orange-500/25 text-orange-300 flex items-center justify-center shrink-0">
       <Icon size={24} />
     </div>
     <div>
       <h3 className="text-lg font-bold text-white mb-1">{title}</h3>
-      <p className="text-sm text-slate-300 leading-relaxed">{description}</p>
+      <p className="text-sm text-slate-200 leading-relaxed">{description}</p>
     </div>
   </div>
 );
@@ -80,11 +80,11 @@ const About = () => {
 
             {/* Statistic / Highlight Block */}
             <div className="flex flex-col gap-5">
-              <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 rounded-3xl p-8 relative overflow-hidden">
+              <div className="bg-linear-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 rounded-3xl p-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl transform translate-x-1/4 -translate-y-1/4" />
                 <div className="relative z-10">
                   <GraduationCap className="text-orange-400 mb-4" size={40} />
-                  <p className="text-4xl font-black text-white mb-2">1 in 3</p>
+                  <p className="text-4xl font-black text-white mb-2">2 in 3</p>
                   <p className="text-slate-300 text-sm leading-relaxed">
                     Cameroonian students end up in a university program they didn't originally want — not from lack of ambition, but lack of guidance at the critical moment.
                   </p>
@@ -102,12 +102,12 @@ const About = () => {
       </section>
 
       {/* Mission & Values */}
-      <section className="bg-slate-800/50 py-20 px-6 md:px-12 border-t border-slate-700">
+      <section className="bg-slate-950 py-20 px-6 md:px-12 border-t border-slate-700">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <span className="text-xs uppercase tracking-widest font-black text-orange-400">What Drives Us</span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-2 mb-4">Our Mission & Values</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-slate-200 max-w-2xl mx-auto leading-relaxed">
               Everything we build is guided by a single belief — that every Cameroonian student deserves access to the right information at the right time.
             </p>
           </div>

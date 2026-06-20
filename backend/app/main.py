@@ -18,6 +18,7 @@ app.add_middleware(
         "http://localhost:5173",
         "https://www.klarifypath.com",
         "https://klarifypath.com",
+        "https://klarify-path-be.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -37,3 +38,11 @@ async def startup_event():
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
+
+@app.get("/")
+async def root():
+    return {
+        "message": "Welcome to the Klarify Backend API",
+        "docs": "/docs",
+        "health": "/health"
+    }

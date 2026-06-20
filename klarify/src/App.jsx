@@ -9,10 +9,12 @@ import GceResults from "./pages/GceResults";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import InstallPrompt from "./components/InstallPrompt";
 
 function App() {
   return (
     <Router>
+      <InstallPrompt />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
