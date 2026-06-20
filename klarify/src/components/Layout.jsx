@@ -1,6 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Layout = ({ children, noPadding = false }) => {
+  const { user, loading, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <header className="bg-white border-b border-slate-200/60 py-4 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50 shadow-sm">
@@ -14,62 +22,80 @@ const Layout = ({ children, noPadding = false }) => {
                 Klarify
               </a>
             </span>
-            <span className="text-xs text-slate-500 font-medium">
-              Academic Guidance
-            </span>
           </div>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
           <nav className="flex items-center gap-6">
-            <a
-              href="/gce-results"
+            <Link
+              to="/gce-results"
               className="px-6 py-2.5 mx-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
             >
               Check GCE Results
-            </a>
-            <a
-              href="/"
+            </Link>
+            <Link
+              to="/"
               className="text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
             >
               Home
-            </a>
-            <a
-              href="#features"
-              className="text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
-            >
-              How It Works
-            </a>
-            <a
-              href="#about"
+            </Link>
+            <Link
+              to="/about"
               className="text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
             >
               About
-            </a>
+            </Link>
           </nav>
           <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
-            <a
-              href="/login"
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
-            >
-              Sign In
-            </a>
-            <a
-              href="/signup"
-              className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
-            >
-              Get Started
-            </a>
+            {!loading && user ? (
+              <>
+                <span className="text-sm text-slate-600 hidden lg:inline">
+                  {user.email}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-orange-600 transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
         <div className="md:hidden">
-          <a
-            href="/login"
-            className="px-4 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
-          >
-            Sign In
-          </a>
+          {!loading && user ? (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="px-4 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="px-4 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
+            >
+              Sign In
+            </Link>
+          )}
         </div>
       </header>
 
@@ -100,19 +126,19 @@ const Layout = ({ children, noPadding = false }) => {
             <h4 className="text-white font-semibold mb-4">Platform</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link to="/flow" className="hover:text-white transition-colors">
                   A/L Student Path
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  University Path
-                </a>
+                <Link to="/gce-results" className="hover:text-white transition-colors">
+                  Check GCE Results
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Self Learner
-                </a>
+                <Link to="/about" className="hover:text-white transition-colors">
+                  About Klarify
+                </Link>
               </li>
             </ul>
           </div>
@@ -120,14 +146,14 @@ const Layout = ({ children, noPadding = false }) => {
             <h4 className="text-white font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link to="/privacy" className="hover:text-white transition-colors">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link to="/terms" className="hover:text-white transition-colors">
                   Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

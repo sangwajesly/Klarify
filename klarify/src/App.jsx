@@ -6,6 +6,9 @@ import Results from "./pages/Results";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import GceResults from "./pages/GceResults";
+import About from "./pages/About";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/flow" element={<InputFlow />} />
         <Route path="/results" element={<Results />} />
         <Route path="/gce-results" element={<GceResults />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
     </Router>
   );

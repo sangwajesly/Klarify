@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Check } from "lucide-react";
 import Layout from "../components/Layout";
+import { useAuth } from "../context/AuthContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -59,13 +61,21 @@ const SignUp = () => {
 
     setLoading(true);
     try {
-      // TODO: Replace with actual API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const { session } = await signUp(
+        formData.email,
+        formData.password,
+        formData.fullName,
+      );
 
-      // Redirect to login on success
-      navigate("/login");
+      if (session) {
+        navigate("/flow");
+      } else {
+        setError(
+          "Account created. Please check your email to confirm, then sign in.",
+        );
+      }
     } catch (err) {
-      setError("Sign up failed. Please try again.");
+      setError(err.message || "Sign up failed. Please try again.");
     } finally {
       setLoading(false);
     }

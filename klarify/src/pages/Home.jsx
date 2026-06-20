@@ -76,43 +76,19 @@ const StepComponent = ({ number, title, description }) => (
 
 const Home = () => {
   const navigate = useNavigate();
-  const [text, setText] = React.useState("");
-  const [isDeleting, setIsDeleting] = React.useState(false);
-  const [loopNum, setLoopNum] = React.useState(0);
-  const [typingSpeed, setTypingSpeed] = React.useState(150);
-
-  const words = ["Academic", "Career"];
+  const [activeSlide, setActiveSlide] = React.useState(0);
 
   React.useEffect(() => {
-    const handleTyping = () => {
-      const i = loopNum % words.length;
-      const fullText = words[i];
-
-      setText(
-        isDeleting
-          ? fullText.substring(0, text.length - 1)
-          : fullText.substring(0, text.length + 1),
-      );
-
-      setTypingSpeed(isDeleting ? 80 : 150);
-
-      if (!isDeleting && text === fullText) {
-        setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && text === "") {
-        setIsDeleting(false);
-        setLoopNum(loopNum + 1);
-        setTypingSpeed(500);
-      }
-    };
-
-    const timer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, typingSpeed]);
+    const slideInterval = setInterval(() => {
+      setActiveSlide((prev) => (prev === 0 ? 1 : 0));
+    }, 6000);
+    return () => clearInterval(slideInterval);
+  }, []);
 
   return (
     <Layout noPadding={true}>
       {/* Hero Section */}
-      <section className="relative min-h-[600px] md:min-h-[700px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[720px] sm:min-h-[650px] md:min-h-[700px] flex items-center justify-center overflow-hidden">
         {/* Background with gradient and shapes */}
         <div className="absolute inset-0 z-0">
           {/* Background image */}
@@ -158,23 +134,27 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 px-6 md:px-12 py-16 md:py-24 max-w-5xl mx-auto w-full">
-          <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
+        {/* Content Container */}
+        <div className="relative z-10 px-6 md:px-12 py-16 md:py-24 max-w-5xl mx-auto w-full flex flex-col items-center justify-center">
+          {/* Slide 0: Core Value Prop & Persona Cards */}
+          <div
+            className={`w-full flex flex-col items-center justify-center text-center max-w-3xl mx-auto transition-all duration-700 ease-in-out ${
+              activeSlide === 0
+                ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
+                : "opacity-0 -translate-x-12 scale-95 pointer-events-none absolute"
+            }`}
+          >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-8 hover:bg-white/15 transition-all">
               <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
               Klarify Your Future
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight min-h-[3.5em] md:min-h-0">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
               Find the Right <br className="md:hidden" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-red-500">
-                {text}
-              </span>
-              <span className="text-orange-400 animate-pulse font-light">
-                |
-              </span>
-              <br className="md:hidden" /> Path for You
+                Academic & Career
+              </span>{" "}
+              Path for You
             </h1>
 
             <p className="text-lg md:text-xl text-slate-200 mb-12 max-w-2xl leading-relaxed">
@@ -205,25 +185,67 @@ const Home = () => {
               />
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* GCE Results CTA Section */}
-      <section className="py-20 px-6 md:px-12 bg-accent-50">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-            Check Your GCE Results In Seconds
-          </h2>
-          <p className="text-slate-500 text-lg mb-8 max-w-2xl mx-auto">
-            Whether O/L or A/L or TVE, get your results instantly and see how they align with your academic and career goals.
-          </p>
-          <button
-            onClick={() => navigate("/gce-results")}
-            className="inline-flex items-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-transform hover:scale-105 shadow-xl shadow-orange-500/20"
+          {/* Slide 1: GCE Results Search CTA */}
+          <div
+            className={`w-full flex flex-col items-center justify-center text-center max-w-3xl mx-auto transition-all duration-700 ease-in-out ${
+              activeSlide === 1
+                ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
+                : "opacity-0 translate-x-12 scale-95 pointer-events-none absolute"
+            }`}
           >
-            Check Results Now
-            <ArrowRight size={20} />
-          </button>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 backdrop-blur-md border border-orange-500/30 text-orange-300 text-sm font-semibold mb-8 hover:bg-orange-500/20 transition-all">
+              <span className="w-2.5 h-2.5 rounded-full bg-orange-400 animate-ping"></span>
+              2025 GCE Results Engine Live
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+              Check Your <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 animate-pulse">
+                GCE Results
+              </span>{" "}
+              Instantly
+            </h1>
+
+            <p className="text-lg md:text-xl text-slate-200 mb-12 max-w-2xl leading-relaxed mx-auto">
+              Skip the massive PDF lists. Search your result by name in seconds, 
+              then map your profile directly to university courses and career options.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md mx-auto">
+              <button
+                onClick={() => navigate("/gce-results")}
+                className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transform hover:scale-105"
+              >
+                Search Results Now
+                <ArrowRight size={20} />
+              </button>
+              <button
+                onClick={() => navigate("/flow")}
+                className="px-8 py-4 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 transform hover:scale-105"
+              >
+                Find Career Recommendations
+              </button>
+            </div>
+          </div>
+
+          {/* Dot Indicators */}
+          <div className="absolute bottom-6 flex items-center gap-2.5 z-20">
+            <button
+              onClick={() => setActiveSlide(0)}
+              aria-label="Go to slide 1"
+              className={`w-3 h-3 rounded-full transition-all ${
+                activeSlide === 0 ? "bg-orange-500 w-8" : "bg-white/30 hover:bg-white/50"
+              }`}
+            ></button>
+            <button
+              onClick={() => setActiveSlide(1)}
+              aria-label="Go to slide 2"
+              className={`w-3 h-3 rounded-full transition-all ${
+                activeSlide === 1 ? "bg-orange-500 w-8" : "bg-white/30 hover:bg-white/50"
+              }`}
+            ></button>
+          </div>
         </div>
       </section>
 

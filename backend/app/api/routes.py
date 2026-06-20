@@ -1,9 +1,10 @@
 import os
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Query, HTTPException, Depends
 from supabase import create_client, Client
 from dotenv import load_dotenv
 from app.models.request_models import RecommendationRequest, RecommendationResponse
 from app.services.recommendation_service import get_recommendations
+from app.core.auth import get_current_user
 
 load_dotenv()
 
@@ -16,7 +17,10 @@ if url and key:
     supabase = create_client(url, key)
 
 @router.post("/recommend/al-student", response_model=RecommendationResponse)
-async def recommend_programs(request: RecommendationRequest):
+async def recommend_programs(
+    request: RecommendationRequest,
+    current_user: dict = Depends(get_current_user)
+):
     """
     Get academic program recommendations based on A/L subjects and interests.
     """

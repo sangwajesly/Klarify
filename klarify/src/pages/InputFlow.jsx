@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import Layout from '../components/Layout';
@@ -11,12 +12,20 @@ import { getRecommendations } from '../services/api';
 
 const InputFlow = () => {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   
   // Form State
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [interest, setInterest] = useState([]);
+  const [submitError, setSubmitError] = useState('');
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/login', { state: { from: '/flow' } });
+    }
+  }, [authLoading, user, navigate]);
 
   const handleNext = () => {
     if (step === 1 && selectedSubjects.length >= 2) {
@@ -36,15 +45,20 @@ const InputFlow = () => {
     if (interest.length === 0) return;
     
     setLoading(true);
+    setSubmitError('');
     try {
       const data = await getRecommendations({
         subjects: selectedSubjects,
         interest: interest
       });
-      // Store data globally or pass via state
       navigate('/results', { state: { results: data, subjects: selectedSubjects, interest } });
     } catch (error) {
       console.error(error);
+      if (error.response?.status === 401) {
+        navigate('/login', { state: { from: '/flow' } });
+      } else {
+        setSubmitError('Failed to get recommendations. Please try again.');
+      }
       setLoading(false);
     }
   };
@@ -65,6 +79,10 @@ const InputFlow = () => {
       opacity: 0
     })
   };
+
+  if (authLoading || !user) {
+    return null;
+  }
 
   return (
     <Layout>
@@ -135,6 +153,10 @@ const InputFlow = () => {
               )}
             </AnimatePresence>
           </div>
+
+          {submitError && (
+            <p className="text-sm text-red-500 mt-4">{submitError}</p>
+          )}
 
           <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
             {step === 1 ? (

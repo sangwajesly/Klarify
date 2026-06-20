@@ -16,7 +16,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://www.klarifypath.com"
+        "https://www.klarifypath.com",
+        "https://klarifypath.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],

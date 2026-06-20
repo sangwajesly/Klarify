@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Layout from "../components/Layout";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +19,6 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // TODO: Replace with actual API call
       if (!email || !password) {
         setError("Please fill in all fields");
         return;
@@ -27,13 +28,10 @@ const Login = () => {
         return;
       }
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Redirect to home on success
-      navigate("/");
+      await signIn(email, password);
+      navigate("/flow");
     } catch (err) {
-      setError("Login failed. Please try again.");
+      setError(err.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
