@@ -1,11 +1,21 @@
 import axios from "axios";
 import { supabase } from "./supabase";
 
+let rawUrl = import.meta.env.VITE_API_URL;
+if (rawUrl && !rawUrl.startsWith("http://") && !rawUrl.startsWith("https://") && !rawUrl.startsWith("/")) {
+  if (rawUrl.includes("localhost") || rawUrl.includes("127.0.0.1")) {
+    rawUrl = `http://${rawUrl}`;
+  } else {
+    rawUrl = `https://${rawUrl}`;
+  }
+}
+
 export const API_URL =
-  import.meta.env.VITE_API_URL ||
+  rawUrl ||
   (import.meta.env.PROD
     ? "https://klarify-path-be.vercel.app"
     : "http://localhost:8000");
+
 
 export async function getAuthHeaders() {
   const {
