@@ -3,3 +3,8 @@ uvicorn
 pydantic
 scikit-learn
 numpy
+python-jose[cryptography]
+PyMuPDF
+supabase
+pytest
+python-dotenv

@@ -5,29 +5,27 @@ import numpy as np
 class Recommender:
     def __init__(self):
         self.vectorizer = TfidfVectorizer(stop_words='english')
+        self.program_vectors = None
         self.is_fitted = False
         
     def fit(self, corpus: list[str]):
-        """Fit the TF-IDF vectorizer on the corpus of program descriptions."""
+        """Fit the TF-IDF vectorizer on the corpus of program descriptions and precompute vectors."""
         if not corpus:
             return
         self.vectorizer.fit(corpus)
+        self.program_vectors = self.vectorizer.transform(corpus)
         self.is_fitted = True
         
-    def calculate_similarities(self, user_text: str, programs_text: list[str]) -> list[float]:
-        """Calculate cosine similarity between user profile and programs."""
-        if not self.is_fitted or not programs_text:
-            return [0.0] * len(programs_text)
+    def calculate_similarities(self, user_text: str) -> list[float]:
+        """Calculate cosine similarity between user profile and precomputed programs."""
+        if not self.is_fitted or self.program_vectors is None:
+            return []
             
-        # Transform user text and program texts
-        all_texts = [user_text] + programs_text
-        tfidf_matrix = self.vectorizer.transform(all_texts)
+        # Transform user text
+        user_vector = self.vectorizer.transform([user_text])
         
-        # Calculate cosine similarity between user (index 0) and programs (index 1 to end)
-        user_vector = tfidf_matrix[0:1]
-        program_vectors = tfidf_matrix[1:]
-        
-        similarities = cosine_similarity(user_vector, program_vectors).flatten()
+        # Calculate cosine similarity between user_vector and precomputed program_vectors
+        similarities = cosine_similarity(user_vector, self.program_vectors).flatten()
         return similarities.tolist()
 
 # Singleton recommender instance

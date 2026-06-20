@@ -14,13 +14,13 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
     all_programs = data_store.programs
     
     # 2. Prepare text for ML (Signal 1)
-    programs_text = [prepare_program_text(p) for p in all_programs]
     user_text = prepare_user_text(request.subjects, request.interest)
     
     if not ml_recommender.is_fitted:
+        programs_text = [prepare_program_text(p) for p in all_programs]
         ml_recommender.fit(programs_text)
         
-    semantic_scores = ml_recommender.calculate_similarities(user_text, programs_text)
+    semantic_scores = ml_recommender.calculate_similarities(user_text)
     
     scored_programs = []
     for i, program in enumerate(all_programs):
