@@ -88,7 +88,7 @@ const Home = () => {
   return (
     <Layout noPadding={true}>
       {/* Hero Section */}
-      <section className="relative min-h-[720px] sm:min-h-[650px] md:min-h-[700px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-180 sm:min-h-162.5 md:min-h-180 flex items-center justify-center overflow-hidden">
         {/* Background with gradient and shapes */}
         <div className="absolute inset-0 z-0">
           {/* Background image */}
@@ -101,10 +101,10 @@ const Home = () => {
           ></div>
 
           {/* Main gradient background overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/92 via-slate-900/88 to-slate-900/92"></div>
+          <div className="absolute inset-0 bg-linear-to-br from-slate-900/92 via-slate-900/88 to-slate-900/92"></div>
 
           {/* Animated gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/25 via-transparent to-blue-500/15 opacity-80"></div>
+          <div className="absolute inset-0 bg-linear-to-tr from-orange-500/25 via-transparent to-blue-500/15 opacity-80"></div>
 
           {/* Decorative blobs */}
           <div className="absolute top-20 -left-40 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl animate-pulse"></div>

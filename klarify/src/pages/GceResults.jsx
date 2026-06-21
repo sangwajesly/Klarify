@@ -76,7 +76,7 @@ const GceResults = () => {
           ></div>
 
           {/* Heavy Dark Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-slate-900/85 to-slate-900/95"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-slate-900/95 via-slate-900/85 to-slate-900/95"></div>
 
           {/* Animated Decorative Blobs */}
           <div className="absolute top-20 -left-40 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -116,7 +116,7 @@ const GceResults = () => {
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
               Check Your{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-400 to-orange-600">
                 GCE Results
               </span>
             </h1>
@@ -131,7 +131,7 @@ const GceResults = () => {
               className="w-full max-w-4xl mx-auto mt-8 flex flex-col md:flex-row gap-4"
             >
               {/* Year Selector */}
-              <div className="relative min-w-full md:min-w-[10rem]">
+              <div className="relative min-w-full md:min-w-40">
                 <select
                   value={examYear}
                   onChange={(e) => setExamYear(e.target.value)}
@@ -140,12 +140,12 @@ const GceResults = () => {
                   <option value="2025" className="text-slate-900">
                     2025
                   </option>
-                  <option value="2024" className="text-slate-900">
+                  {/* <option value="2024" className="text-slate-900">
                     2024
                   </option>
                   <option value="2023" className="text-slate-900 ">
                     2023
-                  </option>
+                  </option> */}
                 </select>
                 <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/50 text-xs font-bold uppercase tracking-widest">
                   Year
@@ -170,7 +170,7 @@ const GceResults = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full md:w-auto md:absolute md:right-2 md:top-1/2 md:-translate-y-1/2 px-8 py-4 md:py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transform hover:scale-105"
+                  className="w-full md:w-auto md:absolute md:right-2 md:top-1/2 md:-translate-y-1/2 px-8 py-4 md:py-3.5 bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transform hover:scale-105"
                 >
                   {loading ? (
                     <Loader2 className="animate-spin" size={20} />
@@ -215,17 +215,17 @@ const GceResults = () => {
                       <div className="p-2 bg-orange-500/20 rounded-lg shrink-0">
                         <User size={24} className="text-orange-400 md:w-7 md:h-7" />
                       </div>
-                      <span className="break-words leading-tight">{result.candidate_name}</span>
+                      <span className="wrap-break-words leading-tight">{result.candidate_name}</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm md:text-lg text-slate-300">
                       <div className="p-1.5 bg-white/5 rounded-lg shrink-0">
                         <Building2 size={16} className="text-slate-400 md:w-5 md:h-5" />
                       </div>
-                      <span className="break-words">{result.center_number} - {result.center_name}</span>
+                      <span className="wrap-break-words">{result.center_number} - {result.center_name}</span>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 px-6 py-3 md:px-8 md:py-4 rounded-2xl text-center w-full md:w-auto md:min-w-[200px] shrink-0">
+                  <div className="bg-linear-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 px-6 py-3 md:px-8 md:py-4 rounded-2xl text-center w-full md:w-auto md:min-w-50 shrink-0">
                     <span className="block text-[10px] md:text-xs uppercase tracking-widest font-bold text-orange-300 mb-1">
                       Status
                     </span>
@@ -306,7 +306,7 @@ const GceResults = () => {
             </div>
 
             {/* Next Steps CTA Card */}
-            <div className="bg-gradient-to-br from-orange-500/20 via-orange-600/10 to-transparent backdrop-blur-md p-8 md:p-10 rounded-3xl border border-orange-500/30 flex flex-col justify-between lg:col-span-5 relative overflow-hidden group">
+            <div className="bg-linear-to-br from-orange-500/20 via-orange-600/10 to-transparent backdrop-blur-md p-8 md:p-10 rounded-3xl border border-orange-500/30 flex flex-col justify-between lg:col-span-5 relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/10 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/2"></div>
               
               <div className="relative z-10 space-y-4">
@@ -322,7 +322,7 @@ const GceResults = () => {
               <div className="mt-8 relative z-10">
                 <button
                   onClick={() => navigate("/flow")}
-                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transform hover:scale-105"
+                  className="w-full bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transform hover:scale-105"
                 >
                   Start Orientation Assessment
                   <ArrowRight size={18} />
@@ -332,8 +332,8 @@ const GceResults = () => {
           </div>
 
           {/* Social Share Callout */}
-          <div className="w-full bg-gradient-to-r from-slate-900/80 to-slate-800/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 md:p-10 text-center relative overflow-hidden mb-16">
-            <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
+          <div className="w-full bg-linear-to-r from-slate-900/80 to-slate-800/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 md:p-10 text-center relative overflow-hidden mb-16">
+            <div className="absolute inset-0 bg-linear-to-tr from-orange-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
             
             <div className="relative z-10 max-w-2xl mx-auto space-y-6">
               <h2 className="text-2xl md:text-3xl font-extrabold text-white">
