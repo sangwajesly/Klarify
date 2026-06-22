@@ -98,7 +98,7 @@ const SignUp = () => {
 
   return (
     <Layout noPadding={true}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-8">
+      <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-8">
         {/* Background blobs */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 -left-40 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -109,7 +109,7 @@ const SignUp = () => {
         <div className="relative z-10 w-full max-w-md">
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xl shadow-lg mb-3">
+            <div className="w-12 h-12 rounded-lg bg-linear-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xl shadow-lg mb-3">
               K
             </div>
             <h1 className="text-3xl font-bold text-white">Klarify</h1>
@@ -121,7 +121,7 @@ const SignUp = () => {
           {/* Card */}
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl">
             {/* Google Sign In */}
-            <button
+            {/* <button
               onClick={async () => {
                 setLoading(true);
                 try {
@@ -147,7 +147,7 @@ const SignUp = () => {
               <div className="flex-1 h-px bg-white/10"></div>
               <span className="text-slate-400 text-sm font-medium uppercase tracking-wider">Or</span>
               <div className="flex-1 h-px bg-white/10"></div>
-            </div>
+            </div> */}
             {/* Error message */}
             {error && (
               <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">

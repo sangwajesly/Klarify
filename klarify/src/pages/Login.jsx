@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <Layout noPadding={true}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
         {/* Background blobs */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 -left-40 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -56,7 +56,7 @@ const Login = () => {
         <div className="relative z-10 w-full max-w-md">
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xl shadow-lg mb-3">
+            <div className="w-12 h-12 rounded-lg bg-linear-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xl shadow-lg mb-3">
               K
             </div>
             <h1 className="text-3xl font-bold text-white">Klarify</h1>
@@ -66,7 +66,7 @@ const Login = () => {
           {/* Card */}
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl">
             {/* Google Sign In */}
-            <button
+            {/* <button
               onClick={async () => {
                 setLoading(true);
                 try {
@@ -86,13 +86,13 @@ const Login = () => {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
               Continue with Google
-            </button>
+            </button> */}
 
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex-1 h-px bg-white/10"></div>
-              <span className="text-slate-400 text-sm font-medium uppercase tracking-wider">Or</span>
-              <div className="flex-1 h-px bg-white/10"></div>
-            </div>
+            {/* <div className="flex items-center gap-3 mb-6">
+            <div className="flex-1 h-px bg-white/10"></div>
+            <span className="text-slate-400 text-sm font-medium uppercase tracking-wider">Or</span>
+            <div className="flex-1 h-px bg-white/10"></div>
+          </div> */}
             {/* Error message */}
             {error && (
               <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">

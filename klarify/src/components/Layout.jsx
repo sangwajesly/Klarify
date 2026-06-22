@@ -29,7 +29,7 @@ const Layout = ({ children, noPadding = false }) => {
           <nav className="flex items-center gap-6">
             <Link
               to="/gce-results"
-              className="px-6 py-2.5 mx-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
+              className="px-6 py-2.5 mx-6 bg-linear-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
             >
               Check GCE Results
             </Link>
@@ -70,7 +70,7 @@ const Layout = ({ children, noPadding = false }) => {
                 </Link>
                 <Link
                   to="/signup"
-                  className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
+                  className="px-6 py-2.5 bg-linear-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5"
                 >
                   Get Started
                 </Link>
@@ -106,7 +106,7 @@ const Layout = ({ children, noPadding = false }) => {
       </main>
 
       <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="max-w-5xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-6 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-6 h-6 rounded bg-orange-500 flex items-center justify-center text-white font-bold text-xs">
@@ -116,7 +116,7 @@ const Layout = ({ children, noPadding = false }) => {
                 Klarify
               </span>
             </div>
-            <p className="text-sm max-w-sm mb-6">
+            <p className="text-sm max-w-xs mb-6">
               AI-powered academic recommendations to help students find the
               right university programs and career paths based on their unique
               strengths.
@@ -131,14 +131,38 @@ const Layout = ({ children, noPadding = false }) => {
                 </Link>
               </li>
               <li>
-                <Link to="/gce-results" className="hover:text-white transition-colors">
+                <Link
+                  to="/gce-results"
+                  className="hover:text-white transition-colors"
+                >
                   Check GCE Results
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-white transition-colors">
+                <Link
+                  to="/about"
+                  className="hover:text-white transition-colors"
+                >
                   About Klarify
                 </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-span-1 md:col-span-2">
+            <h4 className="text-white font-semibold mb-4">Contacts</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/flow" className="hover:text-white transition-colors">
+                  Call/WhatsApp: 672-507-711 / 678-557-731
+                </Link>
+              </li>
+              <li>
+                <a
+                  className="px-6 py-2 hover:text-accent-200 transition-colors bg-linear-to-r from-green-500 to-green-800 rounded-lg text-white"
+                  href="https://chat.whatsapp.com/IJt9zyMnPj0Gm4q2V7fdLj"
+                >
+                  Join WhatsApp Community
+                </a>
               </li>
             </ul>
           </div>
@@ -146,12 +170,18 @@ const Layout = ({ children, noPadding = false }) => {
             <h4 className="text-white font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/privacy" className="hover:text-white transition-colors">
+                <Link
+                  to="/privacy"
+                  className="hover:text-white transition-colors"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="hover:text-white transition-colors">
+                <Link
+                  to="/terms"
+                  className="hover:text-white transition-colors"
+                >
                   Terms of Service
                 </Link>
               </li>

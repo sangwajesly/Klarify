@@ -13,6 +13,7 @@ import {
   Zap,
   BookOpen,
   ArrowRight,
+  ChevronDown,
 } from "lucide-react";
 import Layout from "../components/Layout";
 import { API_URL } from "../services/api";
@@ -132,12 +133,16 @@ const GceResults = () => {
             >
               {/* Year Selector */}
               <div className="relative min-w-full md:min-w-40">
+              
                 <select
                   value={examYear}
                   onChange={(e) => setExamYear(e.target.value)}
                   className="w-full px-6 py-4 md:py-5 rounded-full border pr-16 border-white/20 bg-white/10 backdrop-blur-md text-white text-lg md:text-xl font-black text-center focus:outline-none focus:border-orange-500/50 transition-all shadow-2xl appearance-none cursor-pointer"
                 >
+                
+                  
                   <option value="2025" className="text-slate-900">
+                  
                     2025
                   </option>
                   {/* <option value="2024" className="text-slate-900">

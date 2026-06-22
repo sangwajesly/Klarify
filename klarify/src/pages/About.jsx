@@ -22,14 +22,14 @@ const About = () => {
   return (
     <Layout noPadding={true}>
       {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center min-h-[55vh] pt-28 pb-20 px-6 overflow-hidden">
+      <section id="about" className="relative flex flex-col items-center justify-center min-h-[55vh] pt-28 pb-20 px-6 overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 z-0">
           <div
             className="absolute inset-0 bg-cover bg-center opacity-50"
             style={{ backgroundImage: `url(${heroBg})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-900/90 to-slate-900/95" />
+          <div className="absolute inset-0 bg-linear-to-br from-slate-900/95 via-slate-900/90 to-slate-900/95" />
           <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 via-transparent to-blue-500/10 opacity-80" />
           <div className="absolute top-20 -left-40 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
