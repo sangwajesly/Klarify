@@ -6,10 +6,22 @@ class RecommendationRequest(BaseModel):
     interest: List[str]
 
 class ExamDetails(BaseModel):
+    # Existing fields (keep for backward compatibility)
     name: str
-    month: str
-    deadline: str
-    fee: str
+    month: Optional[str] = None
+    deadline: Optional[str] = None
+    fee: Optional[str] = None
+
+    # Extended fields (may be missing in older data)
+    required_subjects: Optional[List[str]] = None
+    required_documents: Optional[List[str]] = None
+    summary: Optional[str] = None
+    reg_date: Optional[str] = None
+    writing_date: Optional[str] = None
+    registration_procedure: Optional[List[str]] = None
+    portalUrl: Optional[str] = None
+    notes: Optional[str] = None
+
 
 class ProgramResponse(BaseModel):
     id: str

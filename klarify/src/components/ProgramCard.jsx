@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Building2, Clock, AlertCircle, ChevronDown, ChevronUp, ExternalLink, GraduationCap, Briefcase } from 'lucide-react';
 
 const ProgramCard = ({ program }) => {
+  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+
 
   return (
     <div className="card overflow-hidden group">
@@ -93,15 +96,27 @@ const ProgramCard = ({ program }) => {
                       </div>
                     </div>
 
-                    <a 
-                      href={`https://wa.me/237672507711?text=${encodeURIComponent(`Greetings Sir, i need past questions for ${program.name} (${program.examDetails.name})`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md"
-                    >
-                      <ExternalLink size={14} />
-                      View Past Questions
-                    </a>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <button
+                        type="button"
+                        onClick={() => navigate('/exam-details', { state: { examDetails: program.examDetails } })}
+                        className="inline-flex items-center justify-center gap-2 bg-white hover:bg-orange-50 text-orange-700 border border-orange-200 text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md"
+                      >
+                        <ExternalLink size={14} />
+                        More Exam Details
+                      </button>
+
+                      <a 
+                        href={`https://wa.me/237672507711?text=${encodeURIComponent(`Greetings Sir, i need past questions for ${program.name} (${program.examDetails.name})`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md"
+                      >
+                        <ExternalLink size={14} />
+                        View Past Questions
+                      </a>
+                    </div>
+
                   </div>
                 </div>
               )}

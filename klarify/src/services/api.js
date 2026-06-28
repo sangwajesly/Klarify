@@ -34,10 +34,15 @@ export async function getAuthHeaders() {
 export const getRecommendations = async (data) => {
   try {
     const headers = await getAuthHeaders();
+
     const response = await axios.post(
       `${API_URL}/recommend/al-student`,
       data,
-      { headers },
+      {
+        headers,
+        // If auth is missing/expired, backend may return 401.
+        // We keep it so the UI can decide what to do.
+      },
     );
     return response.data;
   } catch (error) {

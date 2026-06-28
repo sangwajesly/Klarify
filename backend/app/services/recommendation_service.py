@@ -104,12 +104,24 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
         if requires_conc and prog.get("concours_id"):
             conc_data = data_store.concours_map.get(prog["concours_id"])
             if conc_data:
+                # Extended exam details are optional: older concours.json may not include them.
                 exam_details = ExamDetails(
-                    name=conc_data["name"],
-                    month=conc_data["month"],
-                    deadline=conc_data["deadline"],
-                    fee=str(conc_data["fee"])
+                    name=conc_data.get("name"),
+                    month=conc_data.get("month"),
+                    # Keep old "deadline" for the existing UI.
+                    deadline=conc_data.get("deadline") or conc_data.get("reg_date"),
+                    fee=str(conc_data.get("fee")) if conc_data.get("fee") is not None else None,
+
+                    required_subjects=conc_data.get("required_al_subjects"),
+                    required_documents=conc_data.get("required_documents"),
+                    summary=conc_data.get("brief_summary"),
+                    reg_date=conc_data.get("reg_date"),
+                    writing_date=conc_data.get("writing_date"),
+                    registration_procedure=conc_data.get("registration_procedure"),
+                    portalUrl=conc_data.get("portalUrl"),
+                    notes=conc_data.get("notes"),
                 )
+
                 
         # Resolve duration
         duration_val = prog.get("duration")

@@ -77,7 +77,7 @@ const SubjectSelector = ({ selected, onChange }) => {
         })}
       </div>
 
-      <div className="flex flex-wrap gap-2 md:gap-3 min-h-[160px] content-start">
+      <div className="flex flex-wrap gap-2 md:gap-3 min-h-40 content-start">
         {SUBJECT_CATEGORIES[activeTab].map(subject => {
           const isSelected = selected.includes(subject);
           return (

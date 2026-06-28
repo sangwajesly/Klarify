@@ -8,6 +8,7 @@ import {
   Zap,
   ShieldCheck,
   ArrowRight,
+  X,
 } from "lucide-react";
 import Layout from "../components/Layout";
 import heroBg from "../assets/hero.jpg";
@@ -18,10 +19,10 @@ const PersonaCard = ({ icon: Icon, title, description, active, onClick }) => {
       onClick={onClick}
       disabled={!active}
       className={`
-        relative overflow-hidden p-6 rounded-2xl border text-left transition-all duration-300 h-full flex flex-col backdrop-blur-sm
+        relative overflow-hidden p-6 rounded-2xl border text-left transition-all duration-300 h-full flex flex-col backdrop-blur-sm w-full
         ${
           active
-            ? "bg-white/10 border-white/30 hover:border-orange-400/50 hover:shadow-xl hover:shadow-orange-500/20 group hover:bg-white/15"
+            ? "bg-white/10 border-white/30 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20 group hover:bg-white/15 active:scale-[0.98]"
             : "bg-white/5 border-white/10 opacity-60 cursor-not-allowed"
         }
       `}
@@ -40,13 +41,19 @@ const PersonaCard = ({ icon: Icon, title, description, active, onClick }) => {
         {title}
       </h3>
       <p
-        className={`text-sm flex-1 ${active ? "text-slate-200" : "text-slate-400"}`}
+        className={`text-sm mb-6 flex-1 ${active ? "text-slate-200" : "text-slate-400"}`}
       >
         {description}
       </p>
 
-      {!active && (
-        <div className="absolute top-4 right-4 bg-white/20 text-white text-[10px] uppercase font-bold px-2 py-1 rounded-md backdrop-blur-sm">
+      {/* Explicit visual indicator that it is clickable or locked */}
+      {active ? (
+        <div className="mt-auto inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-md group-hover:from-orange-400 group-hover:to-orange-500 transition-all w-full justify-center sm:w-auto">
+          Start Recommendations
+          <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+        </div>
+      ) : (
+        <div className="mt-auto inline-flex items-center gap-1.5 text-slate-400 font-semibold text-xs py-1.5 px-2.5 border border-white/10 bg-white/5 rounded-lg w-fit">
           Coming Soon
         </div>
       )}
@@ -76,19 +83,52 @@ const StepComponent = ({ number, title, description }) => (
 
 const Home = () => {
   const navigate = useNavigate();
-  const [activeSlide, setActiveSlide] = React.useState(0);
+  const [showGceBanner, setShowGceBanner] = React.useState(() => {
+    return localStorage.getItem("dismissedGceBanner") !== "true";
+  });
 
-  React.useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setActiveSlide((prev) => (prev === 0 ? 1 : 0));
-    }, 6000);
-    return () => clearInterval(slideInterval);
-  }, []);
+  const handleDismissGceBanner = () => {
+    localStorage.setItem("dismissedGceBanner", "true");
+    setShowGceBanner(false);
+  };
 
   return (
     <Layout noPadding={true}>
+      {/* GCE Results Live Announcement Banner */}
+      {showGceBanner && (
+        <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-red-600 text-white relative z-20 shadow-md">
+          <div className="max-w-5xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center flex-1 min-w-0">
+              <span className="flex p-1.5 rounded-lg bg-white/10 text-white">
+                <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-ping"></span>
+              </span>
+              <p className="ml-3 font-medium text-xs sm:text-sm text-white truncate">
+                <span className="md:hidden">2025 Cameroonian GCE Results are Live!</span>
+                <span className="hidden md:inline">🎉 2025 Cameroonian GCE Results are Live! Skip PDF scrolling and search instantly.</span>
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate("/gce-results")}
+                className="flex items-center justify-center px-4 py-1.5 border border-white/30 rounded-lg text-xs font-bold bg-white text-orange-600 hover:bg-orange-50 transition-all shadow-sm active:scale-95 shrink-0"
+              >
+                Search Now
+              </button>
+              <button
+                onClick={handleDismissGceBanner}
+                type="button"
+                className="flex p-1 rounded-md hover:bg-white/10 focus:outline-none transition-colors shrink-0 text-white"
+                aria-label="Dismiss banner"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section className="relative min-h-180 sm:min-h-162.5 md:min-h-180 flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[85vh] py-16 md:py-24 flex items-center justify-center overflow-hidden">
         {/* Background with gradient and shapes */}
         <div className="absolute inset-0 z-0">
           {/* Background image */}
@@ -135,15 +175,9 @@ const Home = () => {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 px-6 md:px-12 py-16 md:py-24 max-w-5xl mx-auto w-full flex flex-col items-center justify-center">
-          {/* Slide 0: Core Value Prop & Persona Cards */}
-          <div
-            className={`w-full flex flex-col items-center justify-center text-center max-w-3xl mx-auto transition-all duration-700 ease-in-out ${
-              activeSlide === 0
-                ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
-                : "opacity-0 -translate-x-12 scale-95 pointer-events-none absolute"
-            }`}
-          >
+        <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto w-full flex flex-col items-center justify-center">
+          {/* Core Value Prop & Persona Cards */}
+          <div className="w-full flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-8 hover:bg-white/15 transition-all">
               <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
               Klarify Your Future
@@ -157,94 +191,59 @@ const Home = () => {
               Path for You
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-200 mb-12 max-w-2xl leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl leading-relaxed">
               Get personalized university and career recommendations based on
-              your subjects and interests. Select your profile to begin.
+              your subjects and interests.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-              <PersonaCard
-                icon={GraduationCap}
-                title="A/L Student"
-                description="High school students preparing for university entrance and selecting degree programs."
-                active={true}
-                onClick={() => navigate("/flow")}
-              />
-              
-              <PersonaCard
-                icon={User}
-                title="University Student"
-                description="Current undergrads looking for masters programs or career paths."
-                active={false}
-              />
-              <PersonaCard
-                icon={BookOpen}
-                title="Self Learner"
-                description="Professionals looking to switch careers or learn new skills independently."
-                active={false}
-              />
-            </div>
-          </div>
-
-          {/* Slide 1: GCE Results Search CTA */}
-          <div
-            className={`w-full flex flex-col items-center justify-center text-center max-w-3xl mx-auto transition-all duration-700 ease-in-out ${
-              activeSlide === 1
-                ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
-                : "opacity-0 translate-x-12 scale-95 pointer-events-none absolute"
-            }`}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 backdrop-blur-md border border-orange-500/30 text-orange-300 text-sm font-semibold mb-8 hover:bg-orange-500/20 transition-all">
-              <span className="w-2.5 h-2.5 rounded-full bg-orange-400 animate-ping"></span>
-              2025 GCE Results Engine Live
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-              Check Your <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 animate-pulse">
-                GCE Results
-              </span>{" "}
-              Instantly
-            </h1>
-
-            <p className="text-lg md:text-xl text-slate-200 mb-12 max-w-2xl leading-relaxed mx-auto">
-              Skip the massive PDF lists. Search your result by name in seconds, 
-              then map your profile directly to university courses and career options.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md mx-auto">
-              <button
-                onClick={() => navigate("/gce-results")}
-                className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transform hover:scale-105"
-              >
-                Search Results Now
-                <ArrowRight size={20} />
-              </button>
+            {/* Featured CTA Card — the one action users can take */}
+            <div className="w-full max-w-md mx-auto mb-8">
               <button
                 onClick={() => navigate("/flow")}
-                className="px-8 py-4 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 transform hover:scale-105"
+                className="group relative w-full rounded-2xl transition-all active:scale-[0.98]"
               >
-                Find Career Recommendations
+                {/* Animated glow ring */}
+                <div className="absolute -inset-[2px] bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 rounded-2xl opacity-50 blur-sm group-hover:opacity-80 transition-opacity duration-500"></div>
+
+                {/* Card body */}
+                <div className="relative p-8 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-orange-500/30 text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 text-white flex items-center justify-center mb-5 mx-auto shadow-lg shadow-orange-500/30">
+                    <GraduationCap size={30} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">A/L Student</h3>
+                  <p className="text-slate-300 text-sm mb-6 max-w-xs mx-auto">
+                    Get matched to university programs and career paths based on your A-Level subjects.
+                  </p>
+                  <div className="inline-flex items-center gap-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-sm py-3.5 px-8 rounded-xl shadow-lg shadow-orange-500/25 group-hover:from-orange-400 group-hover:to-orange-500 transition-all">
+                    Get My Recommendations
+                    <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+                  </div>
+                </div>
               </button>
             </div>
-          </div>
 
-          {/* Dot Indicators */}
-          <div className="absolute bottom-6 flex items-center gap-2.5 z-20">
-            <button
-              onClick={() => setActiveSlide(0)}
-              aria-label="Go to slide 1"
-              className={`w-3 h-3 rounded-full transition-all ${
-                activeSlide === 0 ? "bg-orange-500 w-8" : "bg-white/30 hover:bg-white/50"
-              }`}
-            ></button>
-            <button
-              onClick={() => setActiveSlide(1)}
-              aria-label="Go to slide 2"
-              className={`w-3 h-3 rounded-full transition-all ${
-                activeSlide === 1 ? "bg-orange-500 w-8" : "bg-white/30 hover:bg-white/50"
-              }`}
-            ></button>
+            {/* Secondary — Coming Soon personas */}
+            <div className="flex items-center gap-3 justify-center w-full max-w-md mx-auto">
+              <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-left">
+                <div className="w-9 h-9 rounded-lg bg-white/10 text-white/40 flex items-center justify-center shrink-0">
+                  <User size={18} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-slate-400 truncate">University Student</p>
+                  <p className="text-[10px] text-slate-500">Coming Soon</p>
+                </div>
+              </div>
+              <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-left">
+                <div className="w-9 h-9 rounded-lg bg-white/10 text-white/40 flex items-center justify-center shrink-0">
+                  <BookOpen size={18} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-slate-400 truncate">Self Learner</p>
+                  <p className="text-[10px] text-slate-500">Coming Soon</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
