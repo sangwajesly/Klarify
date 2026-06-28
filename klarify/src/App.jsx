@@ -12,6 +12,17 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
+import Layout from "./components/Layout";
+
+// Future Architecture Placeholder
+const ComingSoon = ({ title }) => (
+  <Layout>
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+      <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">{title}</h1>
+      <p className="text-slate-600 text-lg">This section is currently under development. Check back soon!</p>
+    </div>
+  </Layout>
+);
 
 
 function App() {
@@ -28,6 +39,15 @@ function App() {
         <Route path="/gce-results" element={<GceResults />} />
         <Route path="/exam-details" element={<ExamDetails />} />
         <Route path="/about" element={<About />} />
+
+        {/* Future Architecture Routes */}
+        <Route path="/universities" element={<ComingSoon title="Universities in Cameroon" />} />
+        <Route path="/universities/:id" element={<ComingSoon title="University Profile" />} />
+        <Route path="/programs" element={<ComingSoon title="Academic Programs" />} />
+        <Route path="/programs/:id" element={<ComingSoon title="Program Details" />} />
+        <Route path="/guides" element={<ComingSoon title="Educational Guides" />} />
+        <Route path="/careers" element={<ComingSoon title="Career Pathways" />} />
+        <Route path="/skills" element={<ComingSoon title="Skills & Certifications" />} />
 
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />

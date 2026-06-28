@@ -6,14 +6,18 @@ import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { initPwaInstallListener } from "./utils/pwaInstall.js";
 
+import { HelmetProvider } from "react-helmet-async";
+
 initPwaInstallListener();
 
 registerSW({ immediate: true });
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </HelmetProvider>
   </StrictMode>,
 );
