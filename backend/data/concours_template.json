@@ -1,0 +1,28 @@
+[
+    {
+        "id": "CONCOURS_ID",
+        "name": "EXAM_NAME",
+        "month": "September",
+        "reg_date": "YYYY-MM-DD or 'Sept-04'",
+        "writing_date": "YYYY-MM-DD or 'Sept-18'",
+        "deadline": "YYYY-MM-DD or 'Sept-04' (backward compatible)",
+        "fee": 20000,
+        "required_al_subjects": [
+            "Mathematics",
+            "Biology"
+        ],
+        "required_documents": [
+            "Certified copy of birth certificate",
+            "A/L transcripts",
+            "GCE result slip"
+        ],
+        "brief_summary": "Short exam summary (1-3 sentences).",
+        "registration_procedure": [
+            "Step 1: ...",
+            "Step 2: ...",
+            "Step 3: ..."
+        ],
+        "portalUrl": "https://example.com/registration",
+        "notes": "Any additional information (optional)."
+    }
+]
