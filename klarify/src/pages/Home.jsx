@@ -186,41 +186,27 @@ const Home = () => {
                 <button
                   onClick={() => navigate("/flow")}
                   aria-label="Get Started"
-                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-linear-to-r from-orange-500 to-orange-600 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-1 transition-all duration-300"
+                  className="group relative w-full sm:w-auto min-w-[220px] inline-flex items-center justify-center gap-3 bg-linear-to-r from-orange-500 to-orange-600 text-white font-bold text-lg py-4 px-10 rounded-2xl shadow-[0_14px_35px_rgba(249,115,22,0.35)] hover:shadow-[0_18px_42px_rgba(249,115,22,0.45)] hover:-translate-y-0.5 transition-all duration-300"
                 >
-                  Get Started — It's Free
+                  Get Started Free
                   <ArrowRight
                     size={20}
                     className="transition-transform duration-300 group-hover:translate-x-1.5"
                     aria-hidden="true"
                   />
                 </button>
-                <p className="text-slate-400 text-sm mt-4">
+                <p className="text-slate-400 text-sm mt-3">
                   Takes only 2 minutes.
                 </p>
               </div>
 
               {/* Trust Indicators */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2 sm:mt-4 pt-4 sm:pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
-                <div className="flex -space-x-3">
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-xs text-white">
-                    JD
-                  </div>
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-orange-600 flex items-center justify-center text-xs text-white">
-                    MK
-                  </div>
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-blue-600 flex items-center justify-center text-xs text-white">
-                    SA
-                  </div>
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-emerald-600 flex items-center justify-center text-xs text-white">
-                    FR
-                  </div>
-                </div>
-                <div className="text-left">
+              <div className="mt-2 sm:mt-4 pt-4 sm:pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
+                <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 backdrop-blur-sm">
                   <div className="flex text-orange-400 text-sm">★★★★★</div>
-                  <p className="text-slate-300 text-sm font-medium">
+                  <span className="text-slate-200 text-sm font-medium">
                     Trusted by 5,000+ students
-                  </p>
+                  </span>
                 </div>
               </div>
             </div>
