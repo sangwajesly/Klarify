@@ -69,6 +69,7 @@ export function AuthProvider({ children }) {
         data: {
           full_name: fullName,
           phone_number: phone,
+          phone: phone,
           auth_method: "phone",
         },
       },
