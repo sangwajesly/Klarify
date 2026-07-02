@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { Mail, Phone, Lock, User, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
-import { sendOTP } from "../services/api";
 
 // Detect if a value looks like a phone number
 const isPhone = (value) => /^[+\d]/.test(value.trim()) && !value.includes("@");
@@ -17,7 +16,7 @@ const normalizePhone = (value) => {
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { signUp, user } = useAuth();
+  const { signUp, signUpWithPhone, user } = useAuth();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -79,17 +78,13 @@ const SignUp = () => {
     setLoading(true);
     try {
       if (usingPhone) {
-        // Phone signup: send OTP first, then redirect to verify page
         const phone = normalizePhone(formData.identifier);
-        await sendOTP(phone, formData.fullName);
-        navigate("/verify-phone", {
-          state: {
-            phone,
-            fullName: formData.fullName,
-            password: formData.password,
-            mode: "signup",
-          },
-        });
+        const { session } = await signUpWithPhone(phone, formData.password, formData.fullName);
+        if (session) {
+          navigate("/flow");
+        } else {
+          setError("Account created! Please sign in to continue.");
+        }
       } else {
         // Email signup: existing Supabase flow
         const { session } = await signUp(
@@ -184,7 +179,7 @@ const SignUp = () => {
                 </div>
                 {usingPhone && (
                   <p className="text-xs text-orange-300 mt-1 flex items-center gap-1">
-                    <Phone size={12} /> A 6-digit verification code will be sent to this number.
+                    <Phone size={12} /> Phone sign-up is currently enabled without an SMS verification step.
                   </p>
                 )}
               </div>

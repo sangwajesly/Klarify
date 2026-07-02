@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { Mail, Phone, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
-import { sendOTP } from "../services/api";
 
 const isPhone = (value) => /^[+\d]/.test(value.trim()) && !value.includes("@");
 
