@@ -10,6 +10,7 @@ import ExamDetails from "./pages/ExamDetails";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import VerifyPhone from "./pages/VerifyPhone";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -39,6 +40,7 @@ function App() {
         <Route path="/gce-results" element={<GceResults />} />
         <Route path="/exam-details" element={<ExamDetails />} />
         <Route path="/about" element={<About />} />
+        <Route path="/verify-phone" element={<VerifyPhone />} />
 
         {/* Future Architecture Routes */}
         <Route path="/universities" element={<ComingSoon title="Universities in Cameroon" />} />

@@ -50,3 +50,30 @@ export const getRecommendations = async (data) => {
     throw error;
   }
 };
+
+/**
+ * Send an OTP to a phone number (sign-up or login via phone).
+ * @param {string} phone  - E.164 or local Cameroonian number
+ * @param {string} fullName - User's full name (used for sign-up)
+ */
+export const sendOTP = async (phone, fullName = "") => {
+  const response = await axios.post(`${API_URL}/auth/send-otp`, {
+    phone,
+    full_name: fullName,
+  });
+  return response.data;
+};
+
+/**
+ * Verify the OTP the user received via SMS.
+ * @param {string} phone - Same phone used in sendOTP
+ * @param {string} code  - 6-digit code entered by user
+ */
+export const verifyOTP = async (phone, code) => {
+  const response = await axios.post(`${API_URL}/auth/verify-otp`, {
+    phone,
+    code,
+  });
+  return response.data;
+};
+
