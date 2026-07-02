@@ -24,6 +24,7 @@ import heroBg from "../assets/hero.jpg";
 const GceResults = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const [examType, setExamType] = useState("");
   const [examYear, setExamYear] = useState("2025");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,16 +32,23 @@ const GceResults = () => {
   const [searched, setSearched] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  const EXAM_TYPES = [
+    { id: "", label: "All Levels" },
+    { id: "GEN_A", label: "A-Level" },
+    { id: "GEN_O", label: "O-Level" },
+    { id: "TVE_A", label: "Technical AL" },
+    { id: "TVE_O", label: "Technical OL" }
+  ];
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText("https://klarifypath.com/gce-results");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (query.trim().length < 3) {
-      setError("Please enter at least 3 characters of your name.");
+  const fetchResults = async (searchQuery, year, type) => {
+    if (searchQuery.trim().length < 3) {
+      setError("Please enter at least 3 characters.");
       return;
     }
 
@@ -49,9 +57,12 @@ const GceResults = () => {
     setSearched(true);
 
     try {
-      const response = await fetch(
-        `${API_URL}/gce/search?name=${encodeURIComponent(query)}&exam_year=${examYear}`,
-      );
+      let url = `${API_URL}/gce/search?name=${encodeURIComponent(searchQuery)}&exam_year=${year}`;
+      if (type) {
+        url += `&exam_type=${type}`;
+      }
+      
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch results");
       }
@@ -64,7 +75,22 @@ const GceResults = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    fetchResults(query, examYear, examType);
+  };
+
+  const handleTabChange = (typeId) => {
+    setExamType(typeId);
+    if (searched && query.trim().length >= 3) {
+      fetchResults(query, examYear, typeId);
+    }
+  };
+
   const isOLevelResult = (result) => {
+    if (result.exam_type) {
+      return result.exam_type === "GEN_O" || result.exam_type === "TVE_O";
+    }
     const resultStr = JSON.stringify(result).toLowerCase();
     return resultStr.includes("o-level") || resultStr.includes("ordinary level") || resultStr.includes("o/l");
   };
@@ -150,6 +176,24 @@ const GceResults = () => {
               instantly in just a few seconds.
             </p>
 
+            {/* Filters (Tabs) */}
+            <div className="w-full max-w-3xl mx-auto mt-8 flex flex-wrap justify-center gap-2">
+              {EXAM_TYPES.map((type) => (
+                <button
+                  key={type.id}
+                  type="button"
+                  onClick={() => handleTabChange(type.id)}
+                  className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
+                    examType === type.id
+                      ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30 ring-2 ring-orange-500/50 ring-offset-2 ring-offset-slate-900"
+                      : "bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white"
+                  }`}
+                >
+                  {type.label}
+                </button>
+              ))}
+            </div>
+
             {/* Search Form */}
             <form
               onSubmit={handleSearch}
@@ -184,8 +228,8 @@ const GceResults = () => {
                     type="search"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Enter your full name (e.g. SANGWA JESLY)..."
-                    aria-label="Search by candidate name"
+                    placeholder="Enter candidate name or center number..."
+                    aria-label="Search by candidate name or center number"
                     className="w-full pl-14 md:pl-16 pr-6 md:pr-36 py-4 md:py-5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white text-base md:text-lg focus:outline-none focus:border-orange-500/50 focus:bg-white/15 transition-all shadow-2xl placeholder:text-slate-400"
                   />
                 </div>

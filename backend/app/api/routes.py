@@ -45,10 +45,11 @@ async def recommend_programs(
 
 @router.get("/gce/search")
 async def search_gce_results(
-    name: str = Query(..., min_length=3, description="The name of the candidate to search for"),
-    exam_year: int | None = Query(None, description="Optional filter for exam year")
+    name: str = Query(..., min_length=3, description="The name of the candidate or center number to search for"),
+    exam_year: int | None = Query(None, description="Optional filter for exam year"),
+    exam_type: str | None = Query(None, description="Optional filter for exam type (GEN_A, GEN_O, TVE_A, TVE_O)")
 ):
-    """Search for GCE Results by Candidate Name."""
+    """Search for GCE Results by Candidate Name or Center Number."""
     if not supabase:
         raise HTTPException(status_code=500, detail="Database connection not configured.")
         
@@ -56,10 +57,16 @@ async def search_gce_results(
         clean_name  = " ".join(name.strip().split())
         search_term = f"%{clean_name.upper()}%"
         
-        query = supabase.table("gce_results").select("*").ilike("candidate_name", search_term)
+        # Smart search: match against name or center number
+        query = supabase.table("gce_results").select("*").or_(
+            f"candidate_name.ilike.{search_term},center_number.ilike.{search_term}"
+        )
         
         if exam_year:
             query = query.eq("exam_year", exam_year)
+            
+        if exam_type:
+            query = query.eq("exam_type", exam_type)
             
         response = query.limit(50).execute()
         return response.data

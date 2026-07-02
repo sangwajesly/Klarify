@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ArrowLeft, GraduationCap, BookOpen, User } from 'lucide-react';
 import Layout from '../components/Layout';
 import ProgressBar from '../components/ProgressBar';
 import SubjectSelector from '../components/SubjectSelector';
@@ -19,6 +19,7 @@ const InputFlow = () => {
   const [loading, setLoading] = useState(false);
   
   // Form State
+  const [persona, setPersona] = useState(''); // 'alevel', 'graduate', 'professional'
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [interest, setInterest] = useState([]);
   const [submitError, setSubmitError] = useState('');
@@ -30,8 +31,12 @@ const InputFlow = () => {
   }, [authLoading, user, navigate]);
 
   const handleNext = () => {
-    if (step === 1 && selectedSubjects.length >= 2) {
+    if (step === 1 && persona) {
+      // If not A-Level, we don't really have a next step implemented yet,
+      // but we will let them advance to step 2 which will show "Coming Soon".
       setStep(2);
+    } else if (step === 2 && persona === 'alevel' && selectedSubjects.length >= 2) {
+      setStep(3);
     }
   };
 
@@ -133,8 +138,8 @@ const InputFlow = () => {
         <section className="max-w-3xl mx-auto px-4 text-center mb-10">
           <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6">Discover Your Perfect Academic Path</h1>
           <p className="text-lg text-slate-600 mb-4">
-            Welcome to the KlarifyPath AI Recommender. This tool is designed exclusively for Cameroonian A-Level students. 
-            By analyzing your exact subject combinations and personal interests, we match you with the most suitable degrees, 
+            Welcome to the KlarifyPath AI Recommender. 
+            By analyzing your exact profile and personal interests, we match you with the most suitable degrees, 
             HNDs, and professional concours available across the national territory.
           </p>
         </section>
@@ -151,10 +156,13 @@ const InputFlow = () => {
           </button>
 
           <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xl shadow-slate-200/50 border border-slate-100 min-h-[400px] flex flex-col relative z-10">
-            <ProgressBar currentStep={step} totalSteps={2} />
+            {persona === 'alevel' && <ProgressBar currentStep={step} totalSteps={3} />}
+            {(!persona || persona !== 'alevel') && <ProgressBar currentStep={step} totalSteps={2} />}
 
             <div className="flex-1 relative mt-4">
               <AnimatePresence mode="wait" custom={step}>
+                
+                {/* STEP 1: Persona Selection */}
                 {step === 1 && (
                   <motion.div
                     key="step1"
@@ -165,23 +173,118 @@ const InputFlow = () => {
                     exit="exit"
                     transition={{ duration: 0.3 }}
                   >
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Select Your A-Level Subjects</h2>
-                    <p className="text-slate-500 mb-8">Choose at least 2 subjects you studied for your Advanced Levels.</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Which best describes you?</h2>
+                    <p className="text-slate-500 mb-8">Select your current academic or professional status to tailor your recommendations.</p>
                     
-                    <SubjectSelector 
-                      selected={selectedSubjects} 
-                      onChange={setSelectedSubjects} 
-                    />
-                    
-                    {selectedSubjects.length > 0 && selectedSubjects.length < 2 && (
-                      <p className="text-sm text-orange-500 mt-4" role="alert">Please select at least 2 subjects.</p>
+                    <div className="space-y-4">
+                      {/* A-Level Option */}
+                      <button
+                        onClick={() => setPersona('alevel')}
+                        className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all ${
+                          persona === 'alevel' 
+                            ? 'border-orange-500 bg-orange-50/50' 
+                            : 'border-slate-100 bg-white hover:border-orange-200 hover:bg-orange-50/30'
+                        }`}
+                      >
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
+                          persona === 'alevel' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'
+                        }`}>
+                          <GraduationCap size={24} />
+                        </div>
+                        <div className="text-left">
+                          <h3 className="font-bold text-slate-900 text-lg">Secondary School Student</h3>
+                          <p className="text-sm text-slate-500">I have written or am preparing for the GCE A-Levels.</p>
+                        </div>
+                      </button>
+
+                      {/* Graduate Option */}
+                      <button
+                        onClick={() => setPersona('graduate')}
+                        className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all ${
+                          persona === 'graduate' 
+                            ? 'border-orange-500 bg-orange-50/50' 
+                            : 'border-slate-100 bg-white hover:border-orange-200 hover:bg-orange-50/30'
+                        }`}
+                      >
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
+                          persona === 'graduate' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'
+                        }`}>
+                          <BookOpen size={24} />
+                        </div>
+                        <div className="text-left">
+                          <h3 className="font-bold text-slate-900 text-lg">University Graduate</h3>
+                          <p className="text-sm text-slate-500">I have a degree and am looking for postgraduate options.</p>
+                        </div>
+                      </button>
+
+                      {/* Professional Option */}
+                      <button
+                        onClick={() => setPersona('professional')}
+                        className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all ${
+                          persona === 'professional' 
+                            ? 'border-orange-500 bg-orange-50/50' 
+                            : 'border-slate-100 bg-white hover:border-orange-200 hover:bg-orange-50/30'
+                        }`}
+                      >
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
+                          persona === 'professional' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'
+                        }`}>
+                          <User size={24} />
+                        </div>
+                        <div className="text-left">
+                          <h3 className="font-bold text-slate-900 text-lg">Self-Learner / Professional</h3>
+                          <p className="text-sm text-slate-500">I want to upskill or find professional certification paths.</p>
+                        </div>
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 2: Subject Selection OR Coming Soon */}
+                {step === 2 && (
+                  <motion.div
+                    key="step2"
+                    custom={1}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.3 }}
+                  >
+                    {persona === 'alevel' ? (
+                      <>
+                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Select Your A-Level Subjects</h2>
+                        <p className="text-slate-500 mb-8">Choose at least 2 subjects you studied for your Advanced Levels.</p>
+                        
+                        <SubjectSelector 
+                          selected={selectedSubjects} 
+                          onChange={setSelectedSubjects} 
+                        />
+                        
+                        {selectedSubjects.length > 0 && selectedSubjects.length < 2 && (
+                          <p className="text-sm text-orange-500 mt-4" role="alert">Please select at least 2 subjects.</p>
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center py-12 text-center h-full">
+                        <div className="w-20 h-20 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center mb-6">
+                          {persona === 'graduate' ? <BookOpen size={40} /> : <User size={40} />}
+                        </div>
+                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Coming Soon!</h2>
+                        <p className="text-slate-600 max-w-md">
+                          We are currently fine-tuning our AI recommendation engine for {persona === 'graduate' ? 'University Graduates' : 'Professionals and Self-Learners'}. 
+                          <br /><br />
+                          This feature will be available very soon. Stay tuned!
+                        </p>
+                      </div>
                     )}
                   </motion.div>
                 )}
 
-                {step === 2 && (
+                {/* STEP 3: Interest Selection (Only for A-Level) */}
+                {step === 3 && persona === 'alevel' && (
                   <motion.div
-                    key="step2"
+                    key="step3"
                     custom={1}
                     variants={variants}
                     initial="enter"
@@ -213,24 +316,34 @@ const InputFlow = () => {
               {step === 1 ? (
                 <button 
                   onClick={handleNext}
-                  disabled={selectedSubjects.length < 2}
-                  className="btn-primary flex items-center gap-2"
+                  disabled={!persona}
+                  className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Proceed to next step"
                 >
                   Next Step
                   <ArrowRight size={18} aria-hidden="true" />
                 </button>
-              ) : (
+              ) : step === 2 && persona === 'alevel' ? (
+                <button 
+                  onClick={handleNext}
+                  disabled={selectedSubjects.length < 2}
+                  className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Proceed to next step"
+                >
+                  Next Step
+                  <ArrowRight size={18} aria-hidden="true" />
+                </button>
+              ) : step === 3 && persona === 'alevel' ? (
                 <button 
                   onClick={handleSubmit}
                   disabled={interest.length === 0}
-                  className="btn-primary bg-orange-600 hover:bg-orange-700 flex items-center gap-2"
+                  className="btn-primary bg-orange-600 hover:bg-orange-700 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Submit for recommendations"
                 >
                   Get My Recommendations
                   <ArrowRight size={18} aria-hidden="true" />
                 </button>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
