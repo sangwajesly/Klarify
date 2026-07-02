@@ -23,7 +23,7 @@ def _get_at_sms():
     try:
         import africastalking
         username = os.getenv("AT_USERNAME", "sandbox")
-        api_key  = os.getenv("AT_API_KEY", "")
+        api_key = os.getenv("AT_API_KEY", "")
         if not api_key:
             raise RuntimeError("AT_API_KEY not set")
         africastalking.initialize(username, api_key)
@@ -32,6 +32,10 @@ def _get_at_sms():
         print(f"[OTP] Africa's Talking init failed: {e}")
         _at_sms = None
     return _at_sms
+
+
+def _dev_mode_enabled() -> bool:
+    return os.getenv("DEV_MODE", "false").strip().lower() in {"1", "true", "yes", "y"}
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -91,15 +95,34 @@ def send_otp(phone: str, full_name: str) -> dict:
     if sms:
         try:
             msg = f"Your KlarifyPath verification code is: {code}\nExpires in 5 minutes. Do not share it."
-            sms.send(msg, [phone])
-            print(f"[OTP] SMS sent to {phone}")
+            response = sms.send(msg, [phone])
+            print(f"[OTP] SMS send response for {phone}: {response}")
+            if isinstance(response, dict) and response.get("SMSMessageData", {}).get("Recipients"):
+                recipient = response["SMSMessageData"]["Recipients"][0]
+                if recipient.get("statusCode") != "Success":
+                    raise RuntimeError(
+                        f"SMS send failed for {phone}: {recipient.get('status') or recipient.get('statusCode') or 'unknown'}"
+                    )
+                print(f"[OTP] SMS successfully queued for {phone}")
+            else:
+                print(f"[OTP] Unexpected SMS response: {response}")
         except Exception as e:
             print(f"[OTP] SMS send failed: {e}")
-            # Don't raise — still return success so UI can show OTP page
-            # In sandbox the code is visible in logs
+            if _dev_mode_enabled():
+                print(f"[OTP] DEV — fallback code for {phone}: {code}")
+            else:
+                raise HTTPException(
+                    status_code=500,
+                    detail="Unable to send OTP via SMS. Please try again later."
+                )
     else:
-        # Dev fallback: print code to console
-        print(f"[OTP] DEV — code for {phone}: {code}")
+        if _dev_mode_enabled():
+            print(f"[OTP] DEV — code for {phone}: {code}")
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail="SMS service is not configured. Please contact support."
+            )
 
     return {"phone": phone, "message": "OTP sent successfully."}
 
