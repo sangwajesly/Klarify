@@ -130,7 +130,7 @@ const Home = () => {
         )}
 
         {/* Hero Section */}
-        <section className="relative min-h-[85vh] py-16 md:py-24 flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[85vh] pt-32 pb-16 md:pt-40 md:pb-24 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <div
               className="absolute inset-0 bg-cover bg-center"
@@ -145,67 +145,56 @@ const Home = () => {
           </div>
 
           <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto w-full flex flex-col items-center justify-center">
-            <div className="w-full flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
+            <div className="w-full flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+              {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-8 hover:bg-white/15 transition-all">
                 <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
                 Cameroon's #1 Academic Guidance Platform
               </div>
 
+              {/* Headline */}
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-                Find the Right <br className="md:hidden" />
+                Find Your Next Step <br className="hidden md:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-red-500">
-                  Academic & Career
-                </span>{" "}
-                Path
+                  After Secondary School or University
+                </span>
               </h1>
 
-              <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl leading-relaxed">
-                Discover university programs and professional careers in Cameroon tailored specifically to your A-Level subjects and personal interests.
+              {/* Supporting Paragraph */}
+              <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl leading-relaxed mx-auto">
+                Stop guessing what comes next. Discover the perfect university programs, professional concours, and career paths in Cameroon tailored precisely to your unique profile and goals.
               </p>
 
-              {/* Featured CTA Card */}
-              <div className="w-full max-w-md mx-auto mb-8">
+              {/* Primary CTA */}
+              <div className="w-full max-w-md mx-auto mb-8 flex flex-col items-center">
                 <button
                   onClick={() => navigate("/flow")}
-                  aria-label="Start Recommendations for A-Level Students"
-                  className="group relative w-full rounded-2xl transition-all active:scale-[0.98]"
+                  aria-label="Find Your Path"
+                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-1 transition-all duration-300"
                 >
-                  <div className="absolute -inset-[2px] bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 rounded-2xl opacity-50 blur-sm group-hover:opacity-80 transition-opacity duration-500"></div>
-                  <div className="relative p-8 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-orange-500/30 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 text-white flex items-center justify-center mb-5 mx-auto shadow-lg shadow-orange-500/30">
-                      <GraduationCap size={30} aria-hidden="true" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-white mb-2">A-Level Students</h2>
-                    <p className="text-slate-300 text-sm mb-6 max-w-xs mx-auto">
-                      Get matched to university programs and career paths based on your GCE A-Level subjects.
-                    </p>
-                    <div className="inline-flex items-center gap-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-sm py-3.5 px-8 rounded-xl shadow-lg shadow-orange-500/25 group-hover:from-orange-400 group-hover:to-orange-500 transition-all">
-                      Get My Recommendations
-                      <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />
-                    </div>
-                  </div>
+                  Find Your Path — It's Free
+                  <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />
                 </button>
+                <p className="text-slate-400 text-sm mt-4">
+                  Takes only 2 minutes. No credit card required.
+                </p>
               </div>
 
-              {/* Secondary — Coming Soon personas */}
-              <div className="flex items-center gap-3 justify-center w-full max-w-md mx-auto">
-                <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-left">
-                  <div className="w-9 h-9 rounded-lg bg-white/10 text-white/40 flex items-center justify-center shrink-0">
-                    <User size={18} aria-hidden="true" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-semibold text-slate-400 truncate">O-Level Students</h3>
-                    <p className="text-[10px] text-slate-500">Coming Soon</p>
-                  </div>
+              {/* Trust Indicators */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4 pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
+                <div className="flex -space-x-3">
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-xs text-white">JD</div>
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-orange-600 flex items-center justify-center text-xs text-white">MK</div>
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-blue-600 flex items-center justify-center text-xs text-white">SA</div>
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-emerald-600 flex items-center justify-center text-xs text-white">FR</div>
                 </div>
-                <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-left">
-                  <div className="w-9 h-9 rounded-lg bg-white/10 text-white/40 flex items-center justify-center shrink-0">
-                    <BookOpen size={18} aria-hidden="true" />
+                <div className="text-left">
+                  <div className="flex text-orange-400 text-sm">
+                    ★★★★★
                   </div>
-                  <div className="min-w-0">
-                    <h3 className="text-xs font-semibold text-slate-400 truncate">University Graduates</h3>
-                    <p className="text-[10px] text-slate-500">Coming Soon</p>
-                  </div>
+                  <p className="text-slate-300 text-sm font-medium">
+                    Trusted by 5,000+ students
+                  </p>
                 </div>
               </div>
             </div>
