@@ -11,7 +11,7 @@ import {
   X,
   Building2,
   Award,
-  BookMarked
+  BookMarked,
 } from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
@@ -30,7 +30,10 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 
 const StepComponent = ({ number, title, description }) => (
   <article className="flex flex-col items-center text-center relative">
-    <div className="w-16 h-16 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-2xl font-bold mb-6 z-10 relative border-4 border-white shadow-sm" aria-hidden="true">
+    <div
+      className="w-16 h-16 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-2xl font-bold mb-6 z-10 relative border-4 border-white shadow-sm"
+      aria-hidden="true"
+    >
       {number}
     </div>
     <h3 className="text-xl font-bold text-slate-900 mb-2">{title}</h3>
@@ -52,42 +55,48 @@ const Home = () => {
   const homeSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "KlarifyPath",
-    "url": "https://www.klarifypath.com/",
-    "potentialAction": {
+    name: "KlarifyPath",
+    url: "https://www.klarifypath.com/",
+    potentialAction: {
       "@type": "SearchAction",
-      "target": "https://www.klarifypath.com/gce-results?q={search_term_string}",
-      "query-input": "required name=search_term_string"
+      target: "https://www.klarifypath.com/gce-results?q={search_term_string}",
+      "query-input": "required name=search_term_string",
     },
-    "description": "KlarifyPath is an AI-powered academic and career guidance platform focused on Cameroon. Get A-Level university program recommendations and GCE result searches."
+    description:
+      "KlarifyPath is an AI-powered academic and career guidance platform focused on Cameroon. Get A-Level university program recommendations and GCE result searches.",
   };
 
   const homeFaqs = [
     {
       question: "What is KlarifyPath?",
-      answer: "KlarifyPath is an AI-powered educational platform designed specifically for Cameroonian students. It helps A-Level students find the best university programs and career paths based on their subjects and interests."
+      answer:
+        "KlarifyPath is an AI-powered educational platform designed specifically for Cameroonian students. It helps A-Level students find the best university programs and career paths based on their subjects and interests.",
     },
     {
       question: "How do I choose a university program in Cameroon?",
-      answer: "Choosing a program depends on your A-Level subjects, grades, and career interests. Our AI Recommender analyzes your specific subject combination (e.g., Biology, Chemistry, Math) and matches you with eligible degrees in Cameroonian universities."
+      answer:
+        "Choosing a program depends on your A-Level subjects, grades, and career interests. Our AI Recommender analyzes your specific subject combination (e.g., Biology, Chemistry, Math) and matches you with eligible degrees in Cameroonian universities.",
     },
     {
       question: "Which programs require concours?",
-      answer: "Many professional programs in Cameroon (like Medicine at FMSB, Engineering at ENSP, or Teaching at ENS) require a competitive entrance examination known as a 'concours'. KlarifyPath clearly labels which recommended programs require a concours."
+      answer:
+        "Many professional programs in Cameroon (like Medicine at FMSB, Engineering at ENSP, or Teaching at ENS) require a competitive entrance examination known as a 'concours'. KlarifyPath clearly labels which recommended programs require a concours.",
     },
     {
       question: "Which universities are public in Cameroon?",
-      answer: "Cameroon has several state universities including the University of Buea, University of Bamenda, University of Yaounde I & II, University of Douala, University of Dschang, University of Maroua, and University of Ngaoundere. Our platform recommends programs across these institutions."
+      answer:
+        "Cameroon has several state universities including the University of Buea, University of Bamenda, University of Yaounde I & II, University of Douala, University of Dschang, University of Maroua, and University of Ngaoundere. Our platform recommends programs across these institutions.",
     },
     {
       question: "Is KlarifyPath free to use?",
-      answer: "Yes! Searching for GCE results and getting your initial AI-powered career and university recommendations is completely free for all Cameroonian students."
-    }
+      answer:
+        "Yes! Searching for GCE results and getting your initial AI-powered career and university recommendations is completely free for all Cameroonian students.",
+    },
   ];
 
   return (
     <Layout noPadding={true}>
-      <SEOHead 
+      <SEOHead
         title="KlarifyPath - University & Career Guidance in Cameroon"
         description="Discover the best university programs and career paths in Cameroon. Use our AI recommender based on your A-Level subjects and interests. Check GCE results instantly."
         canonicalUrl="https://www.klarifypath.com"
@@ -100,12 +109,17 @@ const Home = () => {
           <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-red-600 text-white relative z-20 shadow-md">
             <div className="max-w-5xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center flex-1 min-w-0">
-                <span className="flex p-1.5 rounded-lg bg-white/10 text-white" aria-hidden="true">
+                <span
+                  className="flex p-1.5 rounded-lg bg-white/10 text-white"
+                  aria-hidden="true"
+                >
                   <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-ping"></span>
                 </span>
                 <p className="ml-3 font-medium text-xs sm:text-sm text-white truncate">
-                  <span className="md:hidden">2025 Cameroonian GCE Results are Live!</span>
-                  <span className="hidden md:inline">🎉 2025 Cameroonian GCE Results are Live! Skip PDF scrolling and search instantly.</span>
+                  <span className="md:hidden">Check GCE Results</span>
+                  <span className="hidden md:inline">
+                    Check GCE Results Now.
+                  </span>
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -130,7 +144,7 @@ const Home = () => {
         )}
 
         {/* Hero Section */}
-        <section className="relative min-h-[85vh] pt-32 pb-16 md:pt-40 md:pb-24 flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[72vh] pt-8 pb-10 sm:min-h-[85vh] sm:pt-20 sm:pb-16 md:pt-24 md:pb-16 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <div
               className="absolute inset-0 bg-cover bg-center"
@@ -140,58 +154,70 @@ const Home = () => {
               }}
               aria-hidden="true"
             ></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-900/90 to-slate-900/95"></div>
-            <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/25 via-transparent to-blue-500/15 opacity-80"></div>
+            <div className="absolute inset-0 bg-linear-to-br from-slate-900/95 via-slate-900/90 to-slate-900/95"></div>
+            <div className="absolute inset-0 bg-linear-to-tr from-orange-500/25 via-transparent to-blue-500/15 opacity-80"></div>
           </div>
 
           <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto w-full flex flex-col items-center justify-center">
             <div className="w-full flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-8 hover:bg-white/15 transition-all">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-4 sm:mb-8 hover:bg-white/15 transition-all">
                 <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
                 Cameroon's #1 Academic Guidance Platform
               </div>
 
               {/* Headline */}
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 sm:mb-6 leading-tight">
                 Find Your Next Step <br className="hidden md:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-red-500">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-400 via-orange-500 to-red-500">
                   After Secondary School or University
                 </span>
               </h1>
 
               {/* Supporting Paragraph */}
-              <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl leading-relaxed mx-auto">
-                Stop guessing what comes next. Discover the perfect university programs, professional concours, and career paths in Cameroon tailored precisely to your unique profile and goals.
+              <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-6 sm:mb-10 max-w-2xl leading-relaxed mx-auto">
+                Stop guessing what comes next. Discover the perfect university
+                programs, professional concours, and career paths in Cameroon
+                tailored precisely to your unique profile and goals.
               </p>
 
               {/* Primary CTA */}
-              <div className="w-full max-w-md mx-auto mb-8 flex flex-col items-center">
+              <div className="w-full max-w-md mx-auto mb-6 sm:mb-8 flex flex-col items-center">
                 <button
                   onClick={() => navigate("/flow")}
-                  aria-label="Find Your Path"
-                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-1 transition-all duration-300"
+                  aria-label="Get Started"
+                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-linear-to-r from-orange-500 to-orange-600 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-1 transition-all duration-300"
                 >
-                  Find Your Path — It's Free
-                  <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />
+                  Get Started — It's Free
+                  <ArrowRight
+                    size={20}
+                    className="transition-transform duration-300 group-hover:translate-x-1.5"
+                    aria-hidden="true"
+                  />
                 </button>
                 <p className="text-slate-400 text-sm mt-4">
-                  Takes only 2 minutes. No credit card required.
+                  Takes only 2 minutes.
                 </p>
               </div>
 
               {/* Trust Indicators */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4 pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2 sm:mt-4 pt-4 sm:pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
                 <div className="flex -space-x-3">
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-xs text-white">JD</div>
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-orange-600 flex items-center justify-center text-xs text-white">MK</div>
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-blue-600 flex items-center justify-center text-xs text-white">SA</div>
-                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-emerald-600 flex items-center justify-center text-xs text-white">FR</div>
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-xs text-white">
+                    JD
+                  </div>
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-orange-600 flex items-center justify-center text-xs text-white">
+                    MK
+                  </div>
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-blue-600 flex items-center justify-center text-xs text-white">
+                    SA
+                  </div>
+                  <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-emerald-600 flex items-center justify-center text-xs text-white">
+                    FR
+                  </div>
                 </div>
                 <div className="text-left">
-                  <div className="flex text-orange-400 text-sm">
-                    ★★★★★
-                  </div>
+                  <div className="flex text-orange-400 text-sm">★★★★★</div>
                   <p className="text-slate-300 text-sm font-medium">
                     Trusted by 5,000+ students
                   </p>
@@ -204,12 +230,21 @@ const Home = () => {
         {/* About KlarifyPath Section */}
         <section className="py-20 px-6 md:px-12 bg-white">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">About KlarifyPath</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+              About KlarifyPath
+            </h2>
             <p className="text-lg text-slate-600 leading-relaxed mb-6">
-              KlarifyPath is Cameroon's premier educational platform designed to bridge the gap between high school education and career success. Every year, thousands of Cameroonian students struggle to navigate the complex higher education system.
+              KlarifyPath is Cameroon's premier educational platform designed to
+              bridge the gap between high school education and career success.
+              Every year, thousands of Cameroonian students struggle to navigate
+              the complex higher education system.
             </p>
             <p className="text-lg text-slate-600 leading-relaxed">
-              We solve this problem by providing an intelligent, AI-driven recommendation engine that analyzes your academic strengths (like GCE A-Level subjects) and personal interests to suggest the most appropriate public and private university programs, concours, and career pathways in Cameroon.
+              We solve this problem by providing an intelligent, AI-driven
+              recommendation engine that analyzes your academic strengths (like
+              GCE A-Level subjects) and personal interests to suggest the most
+              appropriate public and private university programs, concours, and
+              career pathways in Cameroon.
             </p>
           </div>
         </section>
@@ -223,7 +258,8 @@ const Home = () => {
                 Why Choose KlarifyPath?
               </h2>
               <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-                We take the guesswork out of your future by mapping your current skills to the perfect educational opportunities.
+                We take the guesswork out of your future by mapping your current
+                skills to the perfect educational opportunities.
               </p>
             </div>
 
@@ -255,12 +291,16 @@ const Home = () => {
                 How It Works
               </h2>
               <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-                A simple, 3-step process to discover your ideal academic journey in Cameroon.
+                A simple, 3-step process to discover your ideal academic journey
+                in Cameroon.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-              <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-orange-200 z-0" aria-hidden="true"></div>
+              <div
+                className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-orange-200 z-0"
+                aria-hidden="true"
+              ></div>
 
               <StepComponent
                 number="1"
@@ -284,9 +324,12 @@ const Home = () => {
         {/* Universities Covered Section */}
         <section className="py-20 px-6 md:px-12 bg-white">
           <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Universities & Institutions Covered</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+              Universities & Institutions Covered
+            </h2>
             <p className="text-lg text-slate-600 mb-12 max-w-2xl mx-auto">
-              Our recommendation engine includes programs from top institutions across the national territory.
+              Our recommendation engine includes programs from top institutions
+              across the national territory.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
@@ -297,9 +340,12 @@ const Home = () => {
                 "University of Dschang",
                 "University of Maroua",
                 "University of Ngaoundere",
-                "Professional Concours (ENS, ENSP, FMSB)"
+                "Professional Concours (ENS, ENSP, FMSB)",
               ].map((uni, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow">
+                <div
+                  key={idx}
+                  className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow"
+                >
                   <span className="font-semibold text-slate-700">{uni}</span>
                 </div>
               ))}
@@ -309,7 +355,10 @@ const Home = () => {
 
         {/* FAQs */}
         <div className="bg-slate-50 py-10 px-6">
-          <FAQBlock faqs={homeFaqs} title="Frequently Asked Questions About KlarifyPath" />
+          <FAQBlock
+            faqs={homeFaqs}
+            title="Frequently Asked Questions About KlarifyPath"
+          />
         </div>
 
         {/* CTA Section */}
@@ -319,7 +368,8 @@ const Home = () => {
               Ready to find your path?
             </h2>
             <p className="text-orange-100 text-lg mb-8 max-w-2xl mx-auto">
-              Join thousands of Cameroonian students who have already discovered their ideal university programs and careers with KlarifyPath.
+              Join thousands of Cameroonian students who have already discovered
+              their ideal university programs and careers with KlarifyPath.
             </p>
             <button
               onClick={() => navigate("/flow")}
