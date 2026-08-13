@@ -44,6 +44,20 @@ const Layout = ({ children, noPadding = false }) => {
           </Link>
         </div>
 
+        {/* Mobile GCE Results Quick Badge (Center) */}
+        <div className="md:hidden">
+          <Link
+            to="/gce-results"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-full shadow-xs transition-all"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-200 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            </span>
+            <span>GCE Results</span>
+          </Link>
+        </div>
+
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           <nav className="flex items-center gap-7">
