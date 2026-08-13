@@ -167,16 +167,16 @@ const GceResults = () => {
               instantly in just a few seconds.
             </p>
 
-            {/* Level filters */}
-            <div className="flex flex-wrap justify-center gap-2 pt-2">
+            {/* Level filters - scrollable on mobile */}
+            <div className="flex items-center gap-2 overflow-x-auto w-full max-w-2xl mx-auto py-2 px-1 hide-scrollbar sm:justify-center">
               {EXAM_TYPES.map((type) => (
                 <button
                   key={type.id}
                   type="button"
                   onClick={() => handleTabChange(type.id)}
-                  className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors duration-200 ${
+                  className={`shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
                     examType === type.id
-                      ? "bg-orange-500 text-white"
+                      ? "bg-orange-500 text-white shadow-md shadow-orange-500/20"
                       : "bg-white/8 border border-white/15 text-slate-300 hover:bg-white/12 hover:text-white"
                   }`}
                 >
@@ -188,55 +188,59 @@ const GceResults = () => {
             {/* Search form */}
             <form
               onSubmit={handleSearch}
-              className="w-full max-w-3xl mx-auto mt-6"
+              className="w-full max-w-3xl mx-auto mt-4"
               role="search"
             >
-              <div className="flex flex-col md:flex-row gap-3">
-                {/* Year selector */}
-                <div className="relative md:w-32 shrink-0">
-                  <select
-                    aria-label="Select Examination Year"
-                    value={examYear}
-                    onChange={(e) => setExamYear(e.target.value)}
-                    className="w-full appearance-none px-4 py-4 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md text-white text-sm font-semibold text-center focus:outline-none focus:border-orange-400/60 focus:ring-2 focus:ring-orange-400/20 transition-all cursor-pointer pr-9"
-                  >
-                    <option value="2025" className="text-slate-900 bg-white">2025</option>
-                    <option value="2024" className="text-slate-900 bg-white">2024</option>
-                  </select>
-                  <ChevronDown
-                    size={16}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none"
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                {/* Candidate Name Input - Full width on mobile */}
+                <div className="relative flex-1 w-full">
+                  <Search
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                    size={18}
                     aria-hidden="true"
+                  />
+                  <input
+                    type="search"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Enter candidate name or center number..."
+                    aria-label="Search by candidate name or center number"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white text-sm focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 transition-all placeholder:text-slate-400"
                   />
                 </div>
 
-                {/* Name input + submit */}
-                <div className="flex-1 flex gap-3">
-                  <div className="relative flex-1">
-                    <Search
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                      size={18}
+                {/* Controls row on mobile: Year dropdown + Search button */}
+                <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                  <div className="relative w-28 sm:w-32 shrink-0">
+                    <select
+                      aria-label="Select Examination Year"
+                      value={examYear}
+                      onChange={(e) => setExamYear(e.target.value)}
+                      className="w-full appearance-none pl-3.5 pr-8 py-3.5 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white text-sm font-semibold text-center focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 transition-all cursor-pointer"
+                    >
+                      <option value="2025" className="text-slate-900 bg-white">2025</option>
+                      <option value="2024" className="text-slate-900 bg-white">2024</option>
+                    </select>
+                    <ChevronDown
+                      size={14}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none"
                       aria-hidden="true"
                     />
-                    <input
-                      type="search"
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      placeholder="Enter candidate name or center number..."
-                      aria-label="Search by candidate name or center number"
-                      className="w-full pl-11 pr-5 py-4 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md text-white text-sm focus:outline-none focus:border-orange-400/60 focus:ring-2 focus:ring-orange-400/20 focus:bg-white/12 transition-all placeholder:text-slate-500"
-                    />
                   </div>
+
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-6 py-4 bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/50 text-white font-bold text-sm rounded-2xl transition-colors duration-200 flex items-center gap-2 shrink-0"
+                    className="flex-1 sm:flex-initial px-6 py-3.5 bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/50 text-white font-bold text-sm rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 shrink-0 cursor-pointer"
                     aria-label="Search Results"
                   >
                     {loading ? (
                       <Loader2 className="animate-spin" size={18} />
                     ) : (
-                      "Search"
+                      <>
+                        <Search size={16} className="sm:hidden" />
+                        <span>Search</span>
+                      </>
                     )}
                   </button>
                 </div>
@@ -266,53 +270,57 @@ const GceResults = () => {
             {results.map((result) => (
               <article
                 key={result.id}
-                className="bg-white/8 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/12 transition-colors duration-200 relative overflow-hidden"
+                className="bg-white/8 backdrop-blur-sm rounded-2xl p-5 sm:p-6 border border-white/10 hover:bg-white/12 transition-all duration-200 relative overflow-hidden"
               >
-                <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-5">
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center gap-3 text-xl md:text-2xl font-bold text-white">
-                      <div className="p-2 bg-orange-500/15 rounded-lg shrink-0">
-                        <User size={20} className="text-orange-400" aria-hidden="true" />
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div className="space-y-1.5 flex-1 min-w-0 w-full">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-orange-500/15 rounded-lg shrink-0 mt-0.5">
+                        <User size={18} className="text-orange-400" aria-hidden="true" />
                       </div>
-                      <span className="break-words leading-tight">{result.candidate_name}</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-sm text-slate-400 pl-12">
-                      <Building2 size={14} aria-hidden="true" />
-                      <span>{result.center_number} — {result.center_name}</span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-lg sm:text-xl font-bold text-white leading-snug break-words">
+                          {result.candidate_name}
+                        </h3>
+                        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mt-1">
+                          <Building2 size={14} className="shrink-0 text-slate-400" aria-hidden="true" />
+                          <span className="truncate">{result.center_number} — {result.center_name}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="border border-orange-500/25 bg-orange-500/10 px-6 py-3 rounded-xl text-center shrink-0 md:min-w-[180px]">
-                    <span className="block text-[10px] uppercase tracking-widest font-bold text-orange-400 mb-1">
+                  <div className="w-full sm:w-auto border border-orange-500/25 bg-orange-500/10 px-5 py-2.5 rounded-xl text-center shrink-0 sm:min-w-[160px]">
+                    <span className="block text-[10px] uppercase tracking-widest font-bold text-orange-400 mb-0.5">
                       Status
                     </span>
-                    <span className="block text-lg font-black text-white">
+                    <span className="block text-base sm:text-lg font-black text-white">
                       {result.passed_category}
                     </span>
                   </div>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-white/8 flex justify-end">
+                <div className="mt-4 pt-3 border-t border-white/8 flex justify-start sm:justify-end">
                   {!isOLevelResult(result) ? (
                     <button
                       onClick={() => navigate("/flow")}
-                      className="flex items-center gap-2 text-orange-400 hover:text-orange-300 font-semibold text-sm transition-colors group/btn"
+                      className="w-full sm:w-auto justify-center flex items-center gap-2 text-orange-400 hover:text-orange-300 font-semibold text-xs sm:text-sm transition-colors py-2.5 px-4.5 sm:p-0 bg-white/5 sm:bg-transparent rounded-xl sm:rounded-none group/btn cursor-pointer"
                     >
                       Find Recommended University Programs
                       <GraduationCap
                         size={16}
-                        className="transition-transform duration-200 group-hover/btn:translate-x-1"
+                        className="transition-transform duration-200 group-hover/btn:translate-x-1 shrink-0"
                       />
                     </button>
                   ) : (
                     <button
                       onClick={() => navigate("/careers")}
-                      className="flex items-center gap-2 text-slate-300 hover:text-white font-semibold text-sm transition-colors group/btn"
+                      className="w-full sm:w-auto justify-center flex items-center gap-2 text-slate-300 hover:text-white font-semibold text-xs sm:text-sm transition-colors py-2.5 px-4.5 sm:p-0 bg-white/5 sm:bg-transparent rounded-xl sm:rounded-none group/btn cursor-pointer"
                     >
                       Explore O-Level Career Pathways
                       <ArrowRight
                         size={16}
-                        className="transition-transform duration-200 group-hover/btn:translate-x-1"
+                        className="transition-transform duration-200 group-hover/btn:translate-x-1 shrink-0"
                       />
                     </button>
                   )}
