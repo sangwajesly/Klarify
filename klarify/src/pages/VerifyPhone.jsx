@@ -21,12 +21,10 @@ const VerifyPhone = () => {
 
   const inputs = useRef([]);
 
-  // Redirect if no state (direct navigation)
   useEffect(() => {
     if (!phone) navigate("/signup");
   }, [phone, navigate]);
 
-  // Countdown timer for resend
   useEffect(() => {
     if (resendTimer <= 0) return;
     const t = setInterval(() => setResendTimer((s) => s - 1), 1000);
@@ -34,13 +32,11 @@ const VerifyPhone = () => {
   }, [resendTimer]);
 
   const handleChange = (index, value) => {
-    // Only allow digits
     if (!/^\d?$/.test(value)) return;
     const next = [...code];
     next[index] = value;
     setCode(next);
     setError("");
-    // Auto-advance
     if (value && index < 5) inputs.current[index + 1]?.focus();
   };
 
@@ -68,10 +64,8 @@ const VerifyPhone = () => {
     setLoading(true);
     setError("");
     try {
-      // 1. Verify OTP with backend
       await verifyOTP(phone, fullCode);
 
-      // 2. Create Supabase account (signup mode only — login uses existing account)
       if (mode === "signup") {
         await signUpWithPhone(phone, password, fullName);
       }
@@ -104,51 +98,44 @@ const VerifyPhone = () => {
 
   return (
     <Layout noPadding={true}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
-        {/* Background blobs */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 -left-40 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-        </div>
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,0.07) 0%, transparent 70%)",
+          }}
+          aria-hidden="true"
+        />
 
-        <div className="relative z-10 w-full max-w-md">
-          {/* Logo */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xl shadow-lg mb-3">
-              K
+        <div className="relative z-10 w-full max-w-sm">
+          <div className="flex flex-col items-center mb-6">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center mb-3">
+              <MessageSquare size={24} />
             </div>
-            <h1 className="text-3xl font-bold text-white">Verify Your Number</h1>
-            <p className="text-slate-400 text-sm mt-1 text-center max-w-xs">
+            <h1 className="text-2xl font-bold text-white">Verify Your Number</h1>
+            <p className="text-slate-400 text-xs mt-1 text-center max-w-xs leading-relaxed">
               We sent a 6-digit code to{" "}
               <span className="text-orange-400 font-semibold">{phone}</span>
             </p>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 rounded-2xl bg-orange-500/20 flex items-center justify-center">
-                <MessageSquare size={32} className="text-orange-400" />
-              </div>
-            </div>
-
-            {/* Error */}
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-7 shadow-xl">
             {error && (
-              <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-                <p className="text-red-200 text-sm font-medium">{error}</p>
+              <div className="mb-5 p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl">
+                <p className="text-red-400 text-sm">{error}</p>
               </div>
             )}
 
-            {/* Success */}
             {success && (
-              <div className="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg">
-                <p className="text-green-200 text-sm font-medium">{success}</p>
+              <div className="mb-5 p-3.5 bg-green-500/10 border border-green-500/30 rounded-xl">
+                <p className="text-green-400 text-sm">{success}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit}>
-              {/* 6-digit OTP boxes */}
               <div
-                className="flex justify-center gap-3 mb-8"
+                className="flex justify-between gap-2 mb-7"
                 onPaste={handlePaste}
               >
                 {code.map((digit, i) => (
@@ -161,12 +148,12 @@ const VerifyPhone = () => {
                     value={digit}
                     onChange={(e) => handleChange(i, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(i, e)}
-                    className={`w-12 h-14 text-center text-2xl font-bold rounded-xl border transition-all
+                    className={`w-11 h-13 text-center text-xl font-bold rounded-xl border transition-all
                       ${digit
-                        ? "bg-orange-500/20 border-orange-500/60 text-white"
-                        : "bg-white/5 border-white/20 text-white"
+                        ? "bg-slate-800/80 border-orange-500/60 text-white"
+                        : "bg-slate-800/40 border-slate-700 text-white"
                       }
-                      focus:outline-none focus:border-orange-500 focus:bg-orange-500/10`}
+                      focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20`}
                   />
                 ))}
               </div>
@@ -174,23 +161,31 @@ const VerifyPhone = () => {
               <button
                 type="submit"
                 disabled={loading || code.join("").length < 6}
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 rounded-lg hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/40 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2"
               >
-                {loading ? "Verifying..." : "Verify & Continue"}
-                {!loading && <ArrowRight size={18} />}
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                    </svg>
+                    Verifying...
+                  </span>
+                ) : (
+                  <>Verify & Continue <ArrowRight size={16} /></>
+                )}
               </button>
             </form>
 
-            {/* Resend */}
-            <div className="mt-6 text-center">
-              <p className="text-slate-400 text-sm mb-2">Didn't receive the code?</p>
+            <div className="mt-5 text-center">
+              <p className="text-slate-500 text-xs mb-1.5">Didn't receive the code?</p>
               <button
                 type="button"
                 onClick={handleResend}
                 disabled={resendTimer > 0 || resending}
-                className="text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1 mx-auto"
+                className="text-orange-400 hover:text-orange-300 text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1 mx-auto"
               >
-                <RefreshCw size={14} className={resending ? "animate-spin" : ""} />
+                <RefreshCw size={12} className={resending ? "animate-spin" : ""} />
                 {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend Code"}
               </button>
             </div>

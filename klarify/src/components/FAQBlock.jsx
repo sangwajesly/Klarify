@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import React from 'react';
+import { ChevronDown } from 'lucide-react';
 import SEOHead from './SEOHead';
 
 const FAQBlock = ({ faqs, title = "Frequently Asked Questions" }) => {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = React.useState(null);
 
   const toggleFaq = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  // Generate FAQPage Schema
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -24,40 +23,47 @@ const FAQBlock = ({ faqs, title = "Frequently Asked Questions" }) => {
   };
 
   return (
-    <section className="py-12 bg-white rounded-2xl shadow-sm border border-slate-100 my-8">
+    <section className="py-12 my-6">
       <SEOHead structuredData={faqSchema} title={title} description={`Answers to common questions about ${title}`} />
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-8 text-center">{title}</h2>
-        
-        <div className="space-y-4">
+
+        <div className="divide-y divide-slate-200 border-t border-b border-slate-200">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
-              <div 
-                key={index} 
-                className={`border rounded-xl transition-all duration-200 ${isOpen ? 'border-orange-500 bg-orange-50/30' : 'border-slate-200 hover:border-slate-300'}`}
-              >
+              <div key={index}>
                 <button
                   type="button"
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-5 text-left focus:outline-none"
+                  className="w-full flex items-center justify-between py-5 text-left gap-4 focus:outline-none group"
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <h3 className="text-lg font-semibold text-slate-800 pr-4">{faq.question}</h3>
-                  <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-500'}`}>
-                    {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                  </div>
+                  <h3 className="text-sm md:text-base font-semibold text-slate-800 group-hover:text-slate-900 transition-colors">
+                    {faq.question}
+                  </h3>
+                  <ChevronDown
+                    size={18}
+                    className={`text-slate-400 group-hover:text-slate-600 shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? "rotate-180 text-orange-500" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
                 </button>
-                
-                {isOpen && (
-                  <div 
-                    id={`faq-answer-${index}`}
-                    className="p-5 pt-0 text-slate-600 leading-relaxed animate-in fade-in slide-in-from-top-2 duration-200"
-                  >
-                    <p>{faq.answer}</p>
-                  </div>
-                )}
+
+                <div
+                  id={`faq-answer-${index}`}
+                  style={{
+                    maxHeight: isOpen ? "500px" : "0",
+                    overflow: "hidden",
+                    transition: "max-height 320ms cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
+                >
+                  <p className="pb-5 text-sm text-slate-500 leading-relaxed pr-8">
+                    {faq.answer}
+                  </p>
+                </div>
               </div>
             );
           })}

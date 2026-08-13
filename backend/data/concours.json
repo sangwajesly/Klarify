@@ -33,5 +33,355 @@
     "month": "March",
     "deadline": "Mar-06",
     "fee": 20000
+  },
+  {
+    "id": "COLTECH001",
+    "name": "College of Technology (Agribusiness Technology)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH002",
+    "name": "College of Technology (Agricultural Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH004",
+    "name": "College of Technology (Crop Production Technology)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH003",
+    "name": "College of Technology (Animal Production Technology)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH006",
+    "name": "College of Technology (Nutrition Food And Bio-Resource Technology)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH005",
+    "name": "College of Technology (Forestry And Wildlife Technology)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH012",
+    "name": "College of Technology (Computer Networks And Systems Maintenance)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH013",
+    "name": "College of Technology (Computer Software Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH014",
+    "name": "College of Technology (Data Science)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH007",
+    "name": "College of Technology (Electric And Power Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH008",
+    "name": "College of Technology (Electrical And Electronics Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH009",
+    "name": "College of Technology (Renewable Energy Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH010",
+    "name": "College of Technology (Renewable Thermal Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COLTECH011",
+    "name": "College of Technology (Bioenergy Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI001",
+    "name": "National Higher Polytehnic Institute (Biotechnology And Food Procerssing Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI002",
+    "name": "National Higher Polytehnic Institute (Chemical And Process Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI003",
+    "name": "National Higher Polytehnic Institute (Civil Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI004",
+    "name": "National Higher Polytehnic Institute (Architecture)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI005",
+    "name": "National Higher Polytehnic Institute (Computer Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI006",
+    "name": "National Higher Polytehnic Institute (Meteorology Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI007",
+    "name": "National Higher Polytehnic Institute (Electrical And Electronic Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI008",
+    "name": "National Higher Polytehnic Institute (Biomedical Engineering And Medical Equipment Maintenance)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI009",
+    "name": "National Higher Polytehnic Institute (Mechanical And Industrial Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI010",
+    "name": "National Higher Polytehnic Institute (Mining And Mineral Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "NAHPI011",
+    "name": "National Higher Polytehnic Institute (Petroleum Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "HICM1",
+    "name": "Higher Institute of Commerce and Management (Organizational Sciences)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FHS004",
+    "name": "Faculty of Health Science (Medical Laboratory Science)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FHS001",
+    "name": "Faculty of Health Science (Nursing/Midwifery)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FHS002",
+    "name": "Faculty of Health Science (Medicine)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FHS003",
+    "name": "Faculty of Health Science (Pharmarcy)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FET002",
+    "name": "Faculty of engineering and technology (Civil Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FET001",
+    "name": "Faculty of engineering and technology (Fundamental Computer Science)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FET003",
+    "name": "Faculty of engineering and technology (Power Systems Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FET004",
+    "name": "Faculty of engineering and technology (Mechanical and industrial engineeriing)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FET005",
+    "name": "Faculty of engineering and technology (Chemical Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM003",
+    "name": "Faculty of Agriculture and Veternary Medicine (Animal Science)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM007",
+    "name": "Faculty of Agriculture and Veternary Medicine (Forestry and Wildlife)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM010",
+    "name": "Faculty of Agriculture and Veternary Medicine (Veterinary Medicine)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM006",
+    "name": "Faculty of Agriculture and Veternary Medicine (Food Science and Technology)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM009",
+    "name": "Faculty of Agriculture and Veternary Medicine (Soil Science)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM004",
+    "name": "Faculty of Agriculture and Veternary Medicine (Crop Production)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM008",
+    "name": "Faculty of Agriculture and Veternary Medicine (Plant Health Management)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM001",
+    "name": "Faculty of Agriculture and Veternary Medicine (Agricultural Economics)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM002",
+    "name": "Faculty of Agriculture and Veternary Medicine (Agricultural Extension and Rural Development)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "FAVM005",
+    "name": "Faculty of Agriculture and Veternary Medicine (Fisheries and Agriculture)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COT001",
+    "name": "College of Technology (Hardware Maintenance)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COT002",
+    "name": "College of Technology (Electrical and Electronic Engineering)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COT003",
+    "name": "College of Technology (Construction of Metal Structures)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "COT004",
+    "name": "College of Technology (Renewable Energy)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
+  },
+  {
+    "id": "ASTI001",
+    "name": "Advance School of Interpreters and Translatotrs (Translation and Intercultural Studies)",
+    "month": "August/September",
+    "deadline": "To be announced",
+    "fee": 20000
   }
 ]

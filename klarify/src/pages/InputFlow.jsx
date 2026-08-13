@@ -12,14 +12,47 @@ import SEOHead from '../components/SEOHead';
 import FAQBlock from '../components/FAQBlock';
 import { getRecommendations } from '../services/api';
 
+const PersonaButton = ({ icon: Icon, title, subtitle, selected, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`group w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all duration-200 cursor-pointer ${
+      selected
+        ? 'border-orange-500 bg-orange-50/40 shadow-sm'
+        : 'border-slate-200 bg-white hover:border-orange-200 hover:bg-orange-50/10'
+    }`}
+  >
+    <div
+      className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+        selected ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-orange-100 group-hover:text-orange-500'
+      }`}
+    >
+      <Icon size={20} />
+    </div>
+    <div className="flex-1">
+      <h3 className={`font-bold text-sm transition-colors ${selected ? 'text-slate-900' : 'text-slate-700 group-hover:text-slate-900'}`}>{title}</h3>
+      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{subtitle}</p>
+    </div>
+    <div className={`ml-auto w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all ${
+      selected 
+        ? 'bg-orange-500 ring-2 ring-orange-500 ring-offset-2' 
+        : 'border-2 border-slate-300 group-hover:border-orange-300'
+    }`}>
+      {selected && (
+        <svg className="w-3 h-3 text-white" viewBox="0 0 10 10" fill="none">
+          <path d="M1.5 5L4 7.5L8.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )}
+    </div>
+  </button>
+);
+
 const InputFlow = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  
-  // Form State
-  const [persona, setPersona] = useState(''); // 'alevel', 'graduate', 'professional'
+
+  const [persona, setPersona] = useState('');
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [interest, setInterest] = useState([]);
   const [submitError, setSubmitError] = useState('');
@@ -32,8 +65,6 @@ const InputFlow = () => {
 
   const handleNext = () => {
     if (step === 1 && persona) {
-      // If not A-Level, we don't really have a next step implemented yet,
-      // but we will let them advance to step 2 which will show "Coming Soon".
       setStep(2);
     } else if (step === 2 && persona === 'alevel' && selectedSubjects.length >= 2) {
       setStep(3);
@@ -50,7 +81,7 @@ const InputFlow = () => {
 
   const handleSubmit = async () => {
     if (interest.length === 0) return;
-    
+
     setLoading(true);
     setSubmitError('');
     try {
@@ -72,7 +103,7 @@ const InputFlow = () => {
 
   const variants = {
     enter: (direction) => ({
-      x: direction > 0 ? 50 : -50,
+      x: direction > 0 ? 40 : -40,
       opacity: 0
     }),
     center: {
@@ -82,7 +113,7 @@ const InputFlow = () => {
     },
     exit: (direction) => ({
       zIndex: 0,
-      x: direction < 0 ? 50 : -50,
+      x: direction < 0 ? 40 : -40,
       opacity: 0
     })
   };
@@ -117,12 +148,12 @@ const InputFlow = () => {
   ];
 
   if (authLoading || !user) {
-    return null; // Will redirect in useEffect
+    return null;
   }
 
   return (
     <Layout>
-      <SEOHead 
+      <SEOHead
         title="AI Career & University Recommender Cameroon"
         description="Get personalized university program and career recommendations in Cameroon based on your GCE A-Level subjects using our advanced AI matching engine."
         canonicalUrl="https://www.klarifypath.com/flow"
@@ -133,36 +164,38 @@ const InputFlow = () => {
         {loading && <LoadingScreen key="loading" />}
       </AnimatePresence>
 
-      <main className="pt-8 pb-16">
-        {/* SEO Intro Block */}
-        <section className="max-w-3xl mx-auto px-4 text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6">Discover Your Perfect Academic Path</h1>
-          <p className="text-lg text-slate-600 mb-4">
-            Welcome to the KlarifyPath AI Recommender. 
-            By analyzing your exact profile and personal interests, we match you with the most suitable degrees, 
-            HNDs, and professional concours available across the national territory.
+      <main className="pt-4 pb-16">
+        {/* Intro */}
+        <section className="max-w-2xl mx-auto px-4 mb-10">
+          <span className="section-eyebrow block mb-3">AI Recommender</span>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+            Discover Your Perfect Academic Path
+          </h1>
+          <p className="text-slate-500 text-sm md:text-base leading-relaxed">
+            By analyzing your exact profile and personal interests, we match you with the most suitable
+            degrees, HNDs, and professional concours available across the national territory.
           </p>
         </section>
 
-        {/* The Recommender Application */}
+        {/* Recommender card */}
         <div className="max-w-2xl mx-auto px-4">
-          <button 
+          <button
             onClick={handleBack}
-            className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors mb-8 focus:outline-none"
+            className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors mb-6 focus:outline-none"
             aria-label="Go back to previous step"
           >
             <ArrowLeft size={16} aria-hidden="true" />
             {step === 1 ? 'Back to Home' : 'Previous Step'}
           </button>
 
-          <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xl shadow-slate-200/50 border border-slate-100 min-h-[400px] flex flex-col relative z-10">
+          <div className="bg-white rounded-2xl p-7 md:p-9 shadow-sm border border-slate-100 min-h-[380px] flex flex-col">
             {persona === 'alevel' && <ProgressBar currentStep={step} totalSteps={3} />}
             {(!persona || persona !== 'alevel') && <ProgressBar currentStep={step} totalSteps={2} />}
 
-            <div className="flex-1 relative mt-4">
+            <div className="flex-1 relative mt-2">
               <AnimatePresence mode="wait" custom={step}>
-                
-                {/* STEP 1: Persona Selection */}
+
+                {/* STEP 1: Persona */}
                 {step === 1 && (
                   <motion.div
                     key="step1"
@@ -171,76 +204,38 @@ const InputFlow = () => {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Which best describes you?</h2>
-                    <p className="text-slate-500 mb-8">Select your current academic or professional status to tailor your recommendations.</p>
-                    
-                    <div className="space-y-4">
-                      {/* A-Level Option */}
-                      <button
+                    <h2 className="text-xl font-bold text-slate-900 mb-1">Which best describes you?</h2>
+                    <p className="text-slate-500 text-sm mb-7">Select your current academic or professional status to tailor your recommendations.</p>
+
+                    <div className="space-y-3">
+                      <PersonaButton
+                        icon={GraduationCap}
+                        title="Secondary School Student"
+                        subtitle="I have written or am preparing for the GCE A-Levels."
+                        selected={persona === 'alevel'}
                         onClick={() => setPersona('alevel')}
-                        className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all ${
-                          persona === 'alevel' 
-                            ? 'border-orange-500 bg-orange-50/50' 
-                            : 'border-slate-100 bg-white hover:border-orange-200 hover:bg-orange-50/30'
-                        }`}
-                      >
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
-                          persona === 'alevel' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'
-                        }`}>
-                          <GraduationCap size={24} />
-                        </div>
-                        <div className="text-left">
-                          <h3 className="font-bold text-slate-900 text-lg">Secondary School Student</h3>
-                          <p className="text-sm text-slate-500">I have written or am preparing for the GCE A-Levels.</p>
-                        </div>
-                      </button>
-
-                      {/* Graduate Option */}
-                      <button
+                      />
+                      <PersonaButton
+                        icon={BookOpen}
+                        title="University Graduate"
+                        subtitle="I have a degree and am looking for postgraduate options."
+                        selected={persona === 'graduate'}
                         onClick={() => setPersona('graduate')}
-                        className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all ${
-                          persona === 'graduate' 
-                            ? 'border-orange-500 bg-orange-50/50' 
-                            : 'border-slate-100 bg-white hover:border-orange-200 hover:bg-orange-50/30'
-                        }`}
-                      >
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
-                          persona === 'graduate' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'
-                        }`}>
-                          <BookOpen size={24} />
-                        </div>
-                        <div className="text-left">
-                          <h3 className="font-bold text-slate-900 text-lg">University Graduate</h3>
-                          <p className="text-sm text-slate-500">I have a degree and am looking for postgraduate options.</p>
-                        </div>
-                      </button>
-
-                      {/* Professional Option */}
-                      <button
+                      />
+                      <PersonaButton
+                        icon={User}
+                        title="Self-Learner / Professional"
+                        subtitle="I want to upskill or find professional certification paths."
+                        selected={persona === 'professional'}
                         onClick={() => setPersona('professional')}
-                        className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all ${
-                          persona === 'professional' 
-                            ? 'border-orange-500 bg-orange-50/50' 
-                            : 'border-slate-100 bg-white hover:border-orange-200 hover:bg-orange-50/30'
-                        }`}
-                      >
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
-                          persona === 'professional' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'
-                        }`}>
-                          <User size={24} />
-                        </div>
-                        <div className="text-left">
-                          <h3 className="font-bold text-slate-900 text-lg">Self-Learner / Professional</h3>
-                          <p className="text-sm text-slate-500">I want to upskill or find professional certification paths.</p>
-                        </div>
-                      </button>
+                      />
                     </div>
                   </motion.div>
                 )}
 
-                {/* STEP 2: Subject Selection OR Coming Soon */}
+                {/* STEP 2: Subjects or Coming Soon */}
                 {step === 2 && (
                   <motion.div
                     key="step2"
@@ -249,31 +244,31 @@ const InputFlow = () => {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
                     {persona === 'alevel' ? (
                       <>
-                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Select Your A-Level Subjects</h2>
-                        <p className="text-slate-500 mb-8">Choose at least 2 subjects you studied for your Advanced Levels.</p>
-                        
-                        <SubjectSelector 
-                          selected={selectedSubjects} 
-                          onChange={setSelectedSubjects} 
+                        <h2 className="text-xl font-bold text-slate-900 mb-1">Select Your A-Level Subjects</h2>
+                        <p className="text-slate-500 text-sm mb-7">Choose at least 2 subjects you studied for your Advanced Levels.</p>
+
+                        <SubjectSelector
+                          selected={selectedSubjects}
+                          onChange={setSelectedSubjects}
                         />
-                        
+
                         {selectedSubjects.length > 0 && selectedSubjects.length < 2 && (
-                          <p className="text-sm text-orange-500 mt-4" role="alert">Please select at least 2 subjects.</p>
+                          <p className="text-xs text-orange-500 mt-4" role="alert">Please select at least 2 subjects.</p>
                         )}
                       </>
                     ) : (
-                      <div className="flex flex-col items-center justify-center py-12 text-center h-full">
-                        <div className="w-20 h-20 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center mb-6">
-                          {persona === 'graduate' ? <BookOpen size={40} /> : <User size={40} />}
+                      <div className="flex flex-col items-center justify-center py-10 text-center h-full">
+                        <div className="w-14 h-14 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center mb-5">
+                          {persona === 'graduate' ? <BookOpen size={28} /> : <User size={28} />}
                         </div>
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Coming Soon!</h2>
-                        <p className="text-slate-600 max-w-md">
-                          We are currently fine-tuning our AI recommendation engine for {persona === 'graduate' ? 'University Graduates' : 'Professionals and Self-Learners'}. 
-                          <br /><br />
+                        <h2 className="text-xl font-bold text-slate-900 mb-3">Coming Soon</h2>
+                        <p className="text-slate-500 text-sm max-w-sm leading-relaxed">
+                          We are currently fine-tuning our AI recommendation engine for{" "}
+                          {persona === 'graduate' ? 'University Graduates' : 'Professionals and Self-Learners'}.
                           This feature will be available very soon. Stay tuned!
                         </p>
                       </div>
@@ -281,7 +276,7 @@ const InputFlow = () => {
                   </motion.div>
                 )}
 
-                {/* STEP 3: Interest Selection (Only for A-Level) */}
+                {/* STEP 3: Interests */}
                 {step === 3 && persona === 'alevel' && (
                   <motion.div
                     key="step3"
@@ -290,18 +285,18 @@ const InputFlow = () => {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">What fields are you interested in?</h2>
-                    <p className="text-slate-500 mb-8">Select one or more career paths or topics you are passionate about.</p>
-                    
-                    <InterestSelector 
-                      selected={interest} 
-                      onChange={setInterest} 
+                    <h2 className="text-xl font-bold text-slate-900 mb-1">What fields are you interested in?</h2>
+                    <p className="text-slate-500 text-sm mb-7">Select one or more career paths or topics you are passionate about.</p>
+
+                    <InterestSelector
+                      selected={interest}
+                      onChange={setInterest}
                     />
-                    
+
                     {interest.length === 0 && (
-                      <p className="text-sm text-orange-500 mt-4" role="alert">Please select at least 1 field of interest.</p>
+                      <p className="text-xs text-orange-500 mt-4" role="alert">Please select at least 1 field of interest.</p>
                     )}
                   </motion.div>
                 )}
@@ -309,62 +304,60 @@ const InputFlow = () => {
             </div>
 
             {submitError && (
-              <p className="text-sm text-red-500 mt-4" role="alert">{submitError}</p>
+              <p className="text-xs text-red-500 mt-3" role="alert">{submitError}</p>
             )}
 
-            <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+            <div className="mt-8 pt-5 border-t border-slate-100 flex justify-end">
               {step === 1 ? (
-                <button 
+                <button
                   onClick={handleNext}
                   disabled={!persona}
-                  className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary flex items-center gap-2"
                   aria-label="Proceed to next step"
                 >
                   Next Step
-                  <ArrowRight size={18} aria-hidden="true" />
+                  <ArrowRight size={16} aria-hidden="true" />
                 </button>
               ) : step === 2 && persona === 'alevel' ? (
-                <button 
+                <button
                   onClick={handleNext}
                   disabled={selectedSubjects.length < 2}
-                  className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary flex items-center gap-2"
                   aria-label="Proceed to next step"
                 >
                   Next Step
-                  <ArrowRight size={18} aria-hidden="true" />
+                  <ArrowRight size={16} aria-hidden="true" />
                 </button>
               ) : step === 3 && persona === 'alevel' ? (
-                <button 
+                <button
                   onClick={handleSubmit}
                   disabled={interest.length === 0}
-                  className="btn-primary bg-orange-600 hover:bg-orange-700 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary bg-orange-500 hover:bg-orange-400 flex items-center gap-2"
                   aria-label="Submit for recommendations"
                 >
                   Get My Recommendations
-                  <ArrowRight size={18} aria-hidden="true" />
+                  <ArrowRight size={16} aria-hidden="true" />
                 </button>
               ) : null}
             </div>
           </div>
         </div>
 
-        {/* SEO Resources and FAQs Below the fold */}
-        <section className="max-w-4xl mx-auto mt-20 px-4">
-          <div className="bg-orange-50 rounded-2xl p-8 mb-12 border border-orange-100">
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">Why use our Recommender?</h2>
-            <ul className="space-y-3 text-slate-700">
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center shrink-0 mt-0.5">✓</div>
-                <p><strong>Save Time:</strong> Stop manually reading through hundreds of university brochures.</p>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center shrink-0 mt-0.5">✓</div>
-                <p><strong>Discover Hidden Paths:</strong> Find programs you didn't know existed but perfectly match your skills.</p>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center shrink-0 mt-0.5">✓</div>
-                <p><strong>Concours Awareness:</strong> Instantly know which professional schools (like ENS or FMSB) require competitive exams.</p>
-              </li>
+        {/* SEO / resources below fold */}
+        <section className="max-w-2xl mx-auto mt-16 px-4">
+          <div className="bg-slate-50 rounded-xl p-7 mb-10 border border-slate-100">
+            <h2 className="text-base font-bold text-slate-900 mb-4">Why use our Recommender?</h2>
+            <ul className="space-y-3">
+              {[
+                { label: "Save Time", detail: "Stop manually reading through hundreds of university brochures." },
+                { label: "Discover Hidden Paths", detail: "Find programs you didn't know existed but perfectly match your skills." },
+                { label: "Concours Awareness", detail: "Instantly know which professional schools (like ENS or FMSB) require competitive exams." },
+              ].map(({ label, detail }) => (
+                <li key={label} className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">✓</div>
+                  <p className="text-sm text-slate-600"><strong className="text-slate-800">{label}:</strong> {detail}</p>
+                </li>
+              ))}
             </ul>
           </div>
 

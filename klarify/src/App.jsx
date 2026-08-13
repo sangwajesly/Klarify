@@ -11,9 +11,11 @@ import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import VerifyPhone from "./pages/VerifyPhone";
+import Profile from "./pages/Profile";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
+import Analytics from "./components/Analytics";
 
 // Future Architecture Placeholder
 const ComingSoon = ({ title }) => (
@@ -29,6 +31,7 @@ const ComingSoon = ({ title }) => (
 function App() {
   return (
     <Router>
+      <Analytics />
       <ScrollToTop />
       <InstallPrompt />
       <Routes>
@@ -41,6 +44,7 @@ function App() {
         <Route path="/exam-details" element={<ExamDetails />} />
         <Route path="/about" element={<About />} />
         <Route path="/verify-phone" element={<VerifyPhone />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Future Architecture Routes */}
         <Route path="/universities" element={<ComingSoon title="Universities in Cameroon" />} />

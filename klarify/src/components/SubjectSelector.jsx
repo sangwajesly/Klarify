@@ -14,6 +14,7 @@ const SUBJECT_CATEGORIES = {
     'Geology'
   ],
   Arts: [
+    'Economics',
     'Literature in English',
     'French',
     'History',

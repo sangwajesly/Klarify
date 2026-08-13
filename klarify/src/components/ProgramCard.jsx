@@ -9,19 +9,54 @@ import {
   ExternalLink,
   GraduationCap,
   Briefcase,
+  Bookmark,
 } from "lucide-react";
 
-const ProgramCard = ({ program }) => {
+const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleToggleSave = async () => {
+    if (isSaving) return;
+    setIsSaving(true);
+    try {
+      if (isSaved && onRemove) {
+        await onRemove(program.id);
+      } else if (!isSaved && onSave) {
+        await onSave(program.id);
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className="card overflow-hidden group">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-        <div className="flex-1">
-          <h3 className="text-xl font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
-            {program.name}
-          </h3>
+        <div className="flex-1 pr-4">
+          <div className="flex items-start justify-between">
+            <h3 className="text-xl font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+              {program.name}
+            </h3>
+            {(onSave || onRemove) && (
+              <button
+                onClick={handleToggleSave}
+                disabled={isSaving}
+                className={`p-2 rounded-lg transition-colors flex-shrink-0 ml-4 ${
+                  isSaved
+                    ? "bg-orange-100 text-orange-600 hover:bg-orange-200"
+                    : "bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600"
+                } ${isSaving ? "opacity-50 cursor-not-allowed" : ""}`}
+                aria-label={isSaved ? "Remove from saved" : "Save program"}
+              >
+                <Bookmark
+                  size={20}
+                  className={isSaved ? "fill-current" : ""}
+                />
+              </button>
+            )}
+          </div>
           <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-600">
             <div className="flex items-center gap-1.5">
               <Building2 size={16} className="text-slate-400" />

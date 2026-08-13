@@ -77,3 +77,57 @@ export const verifyOTP = async (phone, code) => {
   return response.data;
 };
 
+// --- Saved Programs (Direct Supabase Access) ---
+
+export const saveProgram = async (userId, programId) => {
+  const { data, error } = await supabase
+    .from("saved_programs")
+    .insert([{ user_id: userId, program_id: programId }])
+    .select();
+
+  if (error) {
+    console.error("Error saving program:", error);
+    throw error;
+  }
+  return data;
+};
+
+export const removeSavedProgram = async (userId, programId) => {
+  const { data, error } = await supabase
+    .from("saved_programs")
+    .delete()
+    .eq("user_id", userId)
+    .eq("program_id", programId);
+
+  if (error) {
+    console.error("Error removing saved program:", error);
+    throw error;
+  }
+  return data;
+};
+
+export const getSavedPrograms = async (userId) => {
+  const { data, error } = await supabase
+    .from("saved_programs")
+    .select(`
+      id,
+      created_at,
+      programs (*)
+    `)
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching saved programs:", error);
+    throw error;
+  }
+  
+  // Flatten the response so it's easier to use in the UI
+  // data is an array of { id, created_at, programs: { ...program details } }
+  return data.map((item) => ({
+    save_id: item.id,
+    saved_at: item.created_at,
+    ...item.programs,
+  }));
+};
+
