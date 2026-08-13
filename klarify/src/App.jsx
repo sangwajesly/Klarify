@@ -12,6 +12,10 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import VerifyPhone from "./pages/VerifyPhone";
 import Profile from "./pages/Profile";
+import Programs from "./pages/Programs";
+import ProgramDetails from "./pages/ProgramDetails";
+import Universities from "./pages/Universities";
+import UniversityDetails from "./pages/UniversityDetails";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -46,11 +50,11 @@ function App() {
         <Route path="/verify-phone" element={<VerifyPhone />} />
         <Route path="/profile" element={<Profile />} />
 
-        {/* Future Architecture Routes */}
-        <Route path="/universities" element={<ComingSoon title="Universities in Cameroon" />} />
-        <Route path="/universities/:id" element={<ComingSoon title="University Profile" />} />
-        <Route path="/programs" element={<ComingSoon title="Academic Programs" />} />
-        <Route path="/programs/:id" element={<ComingSoon title="Program Details" />} />
+        {/* Architecture Routes */}
+        <Route path="/universities" element={<Universities />} />
+        <Route path="/universities/:id" element={<UniversityDetails />} />
+        <Route path="/programs" element={<Programs />} />
+        <Route path="/programs/:id" element={<ProgramDetails />} />
         <Route path="/guides" element={<ComingSoon title="Educational Guides" />} />
         <Route path="/careers" element={<ComingSoon title="Career Pathways" />} />
         <Route path="/skills" element={<ComingSoon title="Skills & Certifications" />} />

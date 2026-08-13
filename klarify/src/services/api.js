@@ -131,3 +131,184 @@ export const getSavedPrograms = async (userId) => {
   }));
 };
 
+// --- Programs Catalog & Details Queries ---
+
+export const fetchAllPrograms = async () => {
+  const { data, error } = await supabase
+    .from("programs")
+    .select(`
+      *,
+      concours (*)
+    `)
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching programs:", error);
+    throw error;
+  }
+
+  // Transform db records to match UI model expected by ProgramCard
+  return (data || []).map((p) => ({
+    id: p.id,
+    name: p.name,
+    university: p.university,
+    faculty: p.faculty,
+    duration: p.durations ? `${p.durations} Years` : "3 Years",
+    durationsNum: p.durations || 3,
+    requiresConcours: p.requires_concour,
+    portalUrl: p.portal_url,
+    requiredALSubjects: p.required_al_subjects,
+    tags: p.tags || [],
+    careers: p.careers || [],
+    descriptions: p.descriptions,
+    examDetails: p.concours ? {
+      id: p.concours.id,
+      name: p.concours.name,
+      month: p.concours.month,
+      deadline: p.concours.deadline,
+      fee: p.concours.fee,
+      requiredDocuments: p.concours.required_documents,
+      procedure: p.concours.registration_procedure,
+      portalUrl: p.concours.portal_url,
+      whatsappUrl: p.concours.whatsapp_url,
+      prerequisites: p.concours.required_subjects,
+    } : null
+  }));
+};
+
+export const fetchProgramById = async (programId) => {
+  const { data, error } = await supabase
+    .from("programs")
+    .select(`
+      *,
+      concours (*)
+    `)
+    .eq("id", programId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching program details:", error);
+    throw error;
+  }
+
+  return {
+    id: data.id,
+    name: data.name,
+    university: data.university,
+    faculty: data.faculty,
+    duration: data.durations ? `${data.durations} Years` : "3 Years",
+    durationsNum: data.durations || 3,
+    requiresConcours: data.requires_concour,
+    portalUrl: data.portal_url,
+    requiredALSubjects: data.required_al_subjects,
+    tags: data.tags || [],
+    careers: data.careers || [],
+    descriptions: data.descriptions,
+    examDetails: data.concours ? {
+      id: data.concours.id,
+      name: data.concours.name,
+      month: data.concours.month,
+      deadline: data.concours.deadline,
+      fee: data.concours.fee,
+      requiredDocuments: data.concours.required_documents,
+      procedure: data.concours.registration_procedure,
+      portalUrl: data.concours.portal_url,
+      whatsappUrl: data.concours.whatsapp_url,
+      prerequisites: data.concours.required_subjects,
+    } : null
+  };
+};
+
+export const fetchAllUniversities = async () => {
+  const { data, error } = await supabase
+    .from("programs")
+    .select("university, faculty, requires_concour");
+
+  if (error) {
+    console.error("Error fetching universities list:", error);
+    throw error;
+  }
+
+  // Aggregate stats per university
+  const uniMap = {};
+  (data || []).forEach((p) => {
+    const u = p.university || "Other State Institution";
+    if (!uniMap[u]) {
+      uniMap[u] = {
+        name: u,
+        programCount: 0,
+        concoursCount: 0,
+        faculties: new Set(),
+      };
+    }
+    uniMap[u].programCount += 1;
+    if (p.requires_concour) uniMap[u].concoursCount += 1;
+    if (p.faculty) uniMap[u].faculties.add(p.faculty);
+  });
+
+  return Object.values(uniMap).map((uni) => ({
+    name: uni.name,
+    programCount: uni.programCount,
+    concoursCount: uni.concoursCount,
+    facultiesCount: uni.faculties.size,
+    faculties: Array.from(uni.faculties).sort(),
+  })).sort((a, b) => b.programCount - a.programCount);
+};
+
+export const fetchUniversityDetails = async (uniName) => {
+  const { data, error } = await supabase
+    .from("programs")
+    .select(`
+      *,
+      concours (*)
+    `)
+    .eq("university", uniName)
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching university details:", error);
+    throw error;
+  }
+
+  const programs = (data || []).map((p) => ({
+    id: p.id,
+    name: p.name,
+    university: p.university,
+    faculty: p.faculty,
+    duration: p.durations ? `${p.durations} Years` : "3 Years",
+    durationsNum: p.durations || 3,
+    requiresConcours: p.requires_concour,
+    portalUrl: p.portal_url,
+    requiredALSubjects: p.required_al_subjects,
+    tags: p.tags || [],
+    careers: p.careers || [],
+    descriptions: p.descriptions,
+    examDetails: p.concours ? {
+      id: p.concours.id,
+      name: p.concours.name,
+      month: p.concours.month,
+      deadline: p.concours.deadline,
+      fee: p.concours.fee,
+      requiredDocuments: p.concours.required_documents,
+      procedure: p.concours.registration_procedure,
+      portalUrl: p.concours.portal_url,
+      whatsappUrl: p.concours.whatsapp_url,
+      prerequisites: p.concours.required_subjects,
+    } : null
+  }));
+
+  const facultiesSet = new Set();
+  programs.forEach((p) => {
+    if (p.faculty) facultiesSet.add(p.faculty);
+  });
+
+  return {
+    name: uniName,
+    programCount: programs.length,
+    concoursCount: programs.filter((p) => p.requiresConcours).length,
+    faculties: Array.from(facultiesSet).sort(),
+    programs,
+  };
+};
+
+
