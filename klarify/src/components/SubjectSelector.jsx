@@ -3,9 +3,7 @@ import { Check } from 'lucide-react';
 
 const SUBJECT_CATEGORIES = {
   Science: [
-    'Pure Math with Mechanics',
-    'Pure Math with Statistics',
-    'Further Mathematics',
+    'Mathematics',
     'Physics',
     'Chemistry',
     'Biology',
