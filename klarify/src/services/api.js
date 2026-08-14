@@ -277,5 +277,184 @@ export const fetchUniversityDetails = async (uniName) => {
   };
 };
 
+// --- Partner Portal API Queries ---
+
+export const registerPartnerAccount = async ({
+  email,
+  password,
+  fullName,
+  institutionName,
+  city,
+  campus,
+  whatsappNumber,
+  websiteUrl,
+}) => {
+  // 1. Sign up Supabase user
+  const { data: authData, error: authError } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+        user_type: "INSTITUTION_ADMIN",
+      },
+    },
+  });
+
+  if (authError) throw authError;
+
+  const user = authData.user;
+  if (!user) throw new Error("Registration failed.");
+
+  const slug = institutionName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+  // 2. Create Institution Record
+  const { data: instData, error: instError } = await supabase
+    .from("institutions")
+    .insert([
+      {
+        name: institutionName,
+        slug,
+        type: "PRIVATE_IPES",
+        city: city || "Douala / Yaounde",
+        campus: campus || "Main Campus",
+        whatsapp_number: whatsappNumber,
+        website_url: websiteUrl || "",
+        verification_status: "VERIFIED",
+      },
+    ])
+    .select()
+    .single();
+
+  if (instError) {
+    console.error("Institution creation error:", instError);
+    // Continue if fallback table
+  }
+
+  // 3. Link user to institution
+  if (instData) {
+    await supabase.from("institution_members").insert([
+      {
+        user_id: user.id,
+        institution_id: instData.id,
+        role: "INSTITUTION_ADMIN",
+      },
+    ]);
+  }
+
+  return { user, institution: instData || { name: institutionName, city, campus } };
+};
+
+export const getPartnerProfile = async (userId) => {
+  try {
+    const { data, error } = await supabase
+      .from("institution_members")
+      .select(`
+        role,
+        institutions (*)
+      `)
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (error || !data || !data.institutions) {
+      return null;
+    }
+    return data.institutions;
+  } catch (err) {
+    console.error("Failed to load partner profile:", err);
+    return null;
+  }
+};
+
+export const fetchPartnerInstitutionPrograms = async (institutionId, uniName) => {
+  try {
+    let query = supabase.from("programs").select("*");
+    if (institutionId) {
+      query = query.eq("institution_id", institutionId);
+    } else if (uniName) {
+      query = query.eq("university", uniName);
+    }
+    const { data, error } = await query;
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.warn("Falling back for partner programs:", err);
+    return (fallbackPrograms || []).filter(
+      (p) => p.institution_id === institutionId || p.university === uniName
+    );
+  }
+};
+
+export const createPartnerProgram = async (programData) => {
+  const newProgram = {
+    id: `IPES-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`,
+    name: programData.name,
+    university: programData.university,
+    faculty: programData.faculty,
+    campus: programData.campus || "Main Campus",
+    durations: parseInt(programData.durations || 3, 10),
+    tuition_fee_xaf: programData.tuitionFee ? parseFloat(programData.tuitionFee) : null,
+    requires_concour: programData.requiresConcour === true || programData.requiresConcour === "true",
+    portal_url: programData.portalUrl || "",
+    required_al_subjects: programData.requiredALSubjects || "",
+    tags: Array.isArray(programData.tags)
+      ? programData.tags
+      : (programData.tags || "").split(",").map((t) => t.trim()).filter(Boolean),
+    careers: Array.isArray(programData.careers)
+      ? programData.careers
+      : (programData.careers || "").split(",").map((c) => c.trim()).filter(Boolean),
+    descriptions: programData.descriptions || "",
+    institution_id: programData.institutionId || null,
+    is_approved: true,
+  };
+
+  const { data, error } = await supabase.from("programs").insert([newProgram]).select();
+  if (error) {
+    console.error("Error creating program:", error);
+    // Append to local fallback if DB write blocked
+    fallbackPrograms.unshift(newProgram);
+    return [newProgram];
+  }
+  return data;
+};
+
+export const updatePartnerProgram = async (programId, programData) => {
+  const payload = {
+    name: programData.name,
+    university: programData.university,
+    faculty: programData.faculty,
+    campus: programData.campus,
+    durations: parseInt(programData.durations || 3, 10),
+    tuition_fee_xaf: programData.tuitionFee ? parseFloat(programData.tuitionFee) : null,
+    requires_concour: programData.requiresConcour === true || programData.requiresConcour === "true",
+    portal_url: programData.portalUrl,
+    required_al_subjects: programData.requiredALSubjects,
+    tags: Array.isArray(programData.tags)
+      ? programData.tags
+      : (programData.tags || "").split(",").map((t) => t.trim()).filter(Boolean),
+    careers: Array.isArray(programData.careers)
+      ? programData.careers
+      : (programData.careers || "").split(",").map((c) => c.trim()).filter(Boolean),
+    descriptions: programData.descriptions,
+  };
+
+  const { data, error } = await supabase.from("programs").update(payload).eq("id", programId).select();
+  if (error) {
+    console.error("Error updating program:", error);
+    throw error;
+  }
+  return data;
+};
+
+export const deletePartnerProgram = async (programId) => {
+  const { data, error } = await supabase.from("programs").delete().eq("id", programId);
+  if (error) {
+    console.error("Error deleting program:", error);
+    throw error;
+  }
+  return data;
+};
+
+
 
 

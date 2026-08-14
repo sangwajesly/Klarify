@@ -16,6 +16,10 @@ import Programs from "./pages/Programs";
 import ProgramDetails from "./pages/ProgramDetails";
 import Universities from "./pages/Universities";
 import UniversityDetails from "./pages/UniversityDetails";
+import PartnersLanding from "./pages/PartnersLanding";
+import PartnerRegister from "./pages/PartnerRegister";
+import PartnerDashboard from "./pages/PartnerDashboard";
+import PartnerPrograms from "./pages/PartnerPrograms";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -49,6 +53,12 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/verify-phone" element={<VerifyPhone />} />
         <Route path="/profile" element={<Profile />} />
+
+        {/* Partner Portal Routes */}
+        <Route path="/partners" element={<PartnersLanding />} />
+        <Route path="/partner/register" element={<PartnerRegister />} />
+        <Route path="/partner/dashboard" element={<PartnerDashboard />} />
+        <Route path="/partner/programs" element={<PartnerPrograms />} />
 
         {/* Architecture Routes */}
         <Route path="/universities" element={<Universities />} />
