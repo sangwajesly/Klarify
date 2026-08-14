@@ -1,23 +1,64 @@
 from app.models.request_models import RecommendationRequest, RecommendationResponse, ProgramResponse, ExamDetails
+import os
+from supabase import create_client
 from app.data_loader.loader import data_store
 from app.core.recommender import ml_recommender
 from app.utils.text_processing import prepare_program_text, prepare_user_text
+
+
+def fetch_programs_from_db():
+    url = os.getenv('SUPABASE_URL')
+    key = os.getenv('SUPABASE_KEY')
+    if not url or not key:
+        return None
+    try:
+        supabase = create_client(url, key)
+        resp = supabase.table('programs').select('*').execute()
+        data = getattr(resp, 'data', None)
+        if data and isinstance(data, list) and len(data) > 0:
+            # Normalize keys to match existing program dict shape used elsewhere
+            normalized = []
+            for p in data:
+                normalized.append({
+                    'id': p.get('id'),
+                    'name': p.get('name'),
+                    'university': p.get('university'),
+                    'faculty': p.get('faculty'),
+                    'durations': p.get('durations') or p.get('duration'),
+                    'requiresConcour': p.get('requires_concour') or p.get('requiresConcour'),
+                    'concours_id': p.get('concours_id'),
+                    'portalUrl': p.get('portal_url') or p.get('portalUrl'),
+                    'required_al_subjects': p.get('required_al_subjects'),
+                    'tags': p.get('tags') or [],
+                    'careers': p.get('careers') or p.get('Careers') or [],
+                    'Careers': p.get('Careers') or p.get('careers') or [],
+                    'descriptions': p.get('descriptions') or p.get('description')
+                })
+            return normalized
+    except Exception:
+        return None
+    return None
 
 def get_recommendations(request: RecommendationRequest) -> RecommendationResponse:
     user_subjects = set(s.lower() for s in request.subjects)
     user_interest_text = " ".join(request.interest).lower()
     
     # 1. Base Filtering (Eligibility)
-    # We still want to prioritize programs where the student meets minimum requirements
-    # but the instructions suggest a more nuanced "Eligibility Depth".
-    # For now, let's include all programs but score them based on depth.
-    all_programs = data_store.programs
+    # Prefer live DB programs (Supabase) if available; otherwise fall back to local JSON
+    db_programs = fetch_programs_from_db()
+    all_programs = db_programs if db_programs is not None else data_store.programs
     
     # 2. Prepare text for ML (Signal 1)
     user_text = prepare_user_text(request.subjects, request.interest)
     
-    if not ml_recommender.is_fitted:
-        programs_text = [prepare_program_text(p) for p in all_programs]
+    programs_text = [prepare_program_text(p) for p in all_programs]
+    # Re-fit if not yet fitted or corpus size changed
+    try:
+        existing_count = ml_recommender.program_vectors.shape[0] if ml_recommender.program_vectors is not None else 0
+    except Exception:
+        existing_count = 0
+
+    if (not ml_recommender.is_fitted) or (existing_count != len(programs_text)):
         ml_recommender.fit(programs_text)
         
     semantic_scores = ml_recommender.calculate_similarities(user_text)
