@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS programs (
     tags TEXT[] DEFAULT '{}',
     careers TEXT[] DEFAULT '{}',
     descriptions TEXT,
+    degree_obtained TEXT,
+    tuition_fee_xaf NUMERIC(10,2),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

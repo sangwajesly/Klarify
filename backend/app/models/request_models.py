@@ -31,6 +31,9 @@ class ProgramResponse(BaseModel):
     duration: str
     requiresConcours: bool
     portalUrl: str
+    descriptions: Optional[str] = None
+    degree_obtained: Optional[str] = None
+    tuition_fee_xaf: Optional[float] = None
     examDetails: Optional[ExamDetails] = None
     score: float
     careers: List[str]

@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Building2, GraduationCap, Award, Search, Loader2, ArrowRight, MapPin } from "lucide-react";
+import {
+  Building2,
+  GraduationCap,
+  Award,
+  Search,
+  Loader2,
+  ArrowRight,
+  MapPin,
+} from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import { fetchAllUniversities } from "../services/api";
@@ -11,49 +19,56 @@ const UNI_METADATA = {
     established: "1993",
     type: "Public State University",
     tagline: "The Place to Be — Anglo-Saxon Excellence in Cameroon.",
-    description: "The University of Buea is Cameroon's premier Anglo-Saxon university offering programs across Arts, Social Sciences, Engineering, Education, and Health Sciences.",
+    description:
+      "The University of Buea is Cameroon's premier Anglo-Saxon university offering programs across Arts, Social Sciences, Engineering, Education, and Health Sciences.",
   },
   "University of Bamenda": {
     city: "Bambili, North West",
     established: "2010",
     type: "Public State University",
     tagline: "Education for Development and Innovation.",
-    description: "Located in Bambili, the University of Bamenda is home to prestigious schools such as COLTECH, HTTTC, NAHPI, and the Faculty of Science.",
+    description:
+      "Located in Bambili, the University of Bamenda is home to prestigious schools such as COLTECH, HTTTC, NAHPI, and the Faculty of Science.",
   },
   "University of Yaounde I": {
     city: "Ngoa-Ekelle, Yaounde",
     established: "1962 / 1993",
     type: "Public State University",
     tagline: "Sapientia, Disciplina, Labor.",
-    description: "Cameroon's flagship bilingual university housing ENSP (National Advanced School of Engineering) and FMSB (Faculty of Medicine).",
+    description:
+      "Cameroon's flagship bilingual university housing ENSP (National Advanced School of Engineering) and FMSB (Faculty of Medicine).",
   },
   "University of Douala": {
     city: "Douala, Littoral",
     established: "1993",
     type: "Public State University",
     tagline: "Economic Capital Center for Tech & Business.",
-    description: "Situated in the commercial capital, known for ENSET, ESSEC Business School, and robust industrial technology degree paths.",
+    description:
+      "Situated in the commercial capital, known for ENSET, ESSEC Business School, and robust industrial technology degree paths.",
   },
   "University of Dschang": {
     city: "Dschang, West Region",
     established: "1993",
     type: "Public State University",
     tagline: "Research, Agronomy, & Humanities.",
-    description: "Famed for FASA (Faculty of Agronomy and Agricultural Sciences) and comprehensive programs in science, law, and medicine.",
+    description:
+      "Famed for FASA (Faculty of Agronomy and Agricultural Sciences) and comprehensive programs in science, law, and medicine.",
   },
   "University of Maroua": {
     city: "Maroua, Far North",
     established: "2008",
     type: "Public State University",
     tagline: "Teacher Training & Renewable Energy.",
-    description: "Home to the renowned École Normale Supérieure (ENS) Maroua and specialized institutes in solar energy and Sahelian agriculture.",
+    description:
+      "Home to the renowned École Normale Supérieure (ENS) Maroua and specialized institutes in solar energy and Sahelian agriculture.",
   },
   "University of Ngaoundere": {
     city: "Ngaoundere, Adamawa",
     established: "1993",
     type: "Public State University",
     tagline: "Food Science & Industrial Technology.",
-    description: "Leading institution for ENSAI (National Advanced School of Agro-Industrial Sciences) and veterinary medicine.",
+    description:
+      "Leading institution for ENSAI (National Advanced School of Agro-Industrial Sciences) and veterinary medicine.",
   },
 };
 
@@ -98,17 +113,24 @@ const Universities = () => {
       <main className="py-6 pb-20">
         {/* Header */}
         <div className="mb-10 text-center max-w-3xl mx-auto">
-          <span className="section-eyebrow block mb-2">Higher Education Directory</span>
+          <span className="section-eyebrow block mb-2">
+            Higher Education Directory
+          </span>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
             Universities & Institutions in Cameroon
           </h1>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            Explore state public universities, professional schools (ENSP, FMSB, ENS, COLTECH), and private higher institutes across the national territory.
+            Explore state public universities, professional schools (ENSP, FMSB,
+            ENS, COLTECH), and private higher institutes across the national
+            territory.
           </p>
 
           {/* Search bar */}
           <div className="relative max-w-xl mx-auto mt-6">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              size={18}
+            />
             <input
               type="text"
               value={searchQuery}
@@ -131,7 +153,8 @@ const Universities = () => {
                 city: "Cameroon National Territory",
                 type: "Public Higher Institution",
                 tagline: "Higher Academic & Professional Education",
-                description: "State recognized institution providing degree programs across various faculties.",
+                description:
+                  "State recognized institution providing degree programs across various faculties.",
               };
 
               return (
@@ -150,6 +173,11 @@ const Universities = () => {
                           <MapPin size={12} className="text-orange-500" />
                           {meta.city}
                         </span>
+                        {uni.isPrivate && (
+                          <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-white bg-orange-600 px-2 py-1 rounded-md">
+                            Private Institute
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -157,7 +185,9 @@ const Universities = () => {
                     <h2 className="text-xl font-bold text-slate-900 group-hover:text-orange-600 transition-colors mb-1">
                       {uni.name}
                     </h2>
-                    <p className="text-xs font-semibold text-orange-600 mb-3">{meta.tagline}</p>
+                    <p className="text-xs font-semibold text-orange-600 mb-3">
+                      {meta.tagline}
+                    </p>
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
                       {meta.description}
                     </p>
@@ -165,16 +195,28 @@ const Universities = () => {
                     {/* Stats pills */}
                     <div className="grid grid-cols-3 gap-2 py-3 px-4 bg-slate-50 rounded-xl border border-slate-100 mb-6 text-center">
                       <div>
-                        <span className="block text-[10px] uppercase font-bold text-slate-400">Programs</span>
-                        <span className="block text-sm font-bold text-slate-900">{uni.programCount}</span>
+                        <span className="block text-[10px] uppercase font-bold text-slate-400">
+                          Programs
+                        </span>
+                        <span className="block text-sm font-bold text-slate-900">
+                          {uni.programCount}
+                        </span>
                       </div>
                       <div>
-                        <span className="block text-[10px] uppercase font-bold text-slate-400">Concours</span>
-                        <span className="block text-sm font-bold text-slate-900">{uni.concoursCount}</span>
+                        <span className="block text-[10px] uppercase font-bold text-slate-400">
+                          Concours
+                        </span>
+                        <span className="block text-sm font-bold text-slate-900">
+                          {uni.concoursCount}
+                        </span>
                       </div>
                       <div>
-                        <span className="block text-[10px] uppercase font-bold text-slate-400">Faculties</span>
-                        <span className="block text-sm font-bold text-slate-900">{uni.facultiesCount}</span>
+                        <span className="block text-[10px] uppercase font-bold text-slate-400">
+                          Faculties
+                        </span>
+                        <span className="block text-sm font-bold text-slate-900">
+                          {uni.facultiesCount}
+                        </span>
                       </div>
                     </div>
 
@@ -227,7 +269,9 @@ const Universities = () => {
         ) : (
           <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8">
             <Building2 className="mx-auto text-slate-300 mb-3" size={40} />
-            <h3 className="text-lg font-bold text-slate-900 mb-1">No institutions found</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">
+              No institutions found
+            </h3>
             <p className="text-slate-500 text-sm max-w-md mx-auto mb-4">
               No university matches your search term "{searchQuery}".
             </p>

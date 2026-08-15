@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="100%" height="100%" fill="#f1f5f9" />
+  <text x="40" y="60" font-size="28" font-family="Inter, system-ui" fill="#0f172a" font-weight="700">Courtyard Photo (placeholder)</text>
+  <rect x="40" y="100" width="720" height="340" rx="8" fill="#e2e8f0" stroke="#cbd5e1" />
+  <text x="60" y="160" font-size="14" fill="#475569">A courtyard view for program-level imagery.</text>
+</svg>

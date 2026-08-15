@@ -20,6 +20,7 @@ import PartnersLanding from "./pages/PartnersLanding";
 import PartnerRegister from "./pages/PartnerRegister";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import PartnerPrograms from "./pages/PartnerPrograms";
+import PartnerLogin from "./pages/PartnerLogin";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -29,12 +30,15 @@ import Analytics from "./components/Analytics";
 const ComingSoon = ({ title }) => (
   <Layout>
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-      <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">{title}</h1>
-      <p className="text-slate-600 text-lg">This section is currently under development. Check back soon!</p>
+      <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
+        {title}
+      </h1>
+      <p className="text-slate-600 text-lg">
+        This section is currently under development. Check back soon!
+      </p>
     </div>
   </Layout>
 );
-
 
 function App() {
   return (
@@ -56,6 +60,7 @@ function App() {
 
         {/* Partner Portal Routes */}
         <Route path="/partners" element={<PartnersLanding />} />
+        <Route path="/partner/login" element={<PartnerLogin />} />
         <Route path="/partner/register" element={<PartnerRegister />} />
         <Route path="/partner/dashboard" element={<PartnerDashboard />} />
         <Route path="/partner/programs" element={<PartnerPrograms />} />
@@ -65,9 +70,18 @@ function App() {
         <Route path="/universities/:id" element={<UniversityDetails />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/programs/:id" element={<ProgramDetails />} />
-        <Route path="/guides" element={<ComingSoon title="Educational Guides" />} />
-        <Route path="/careers" element={<ComingSoon title="Career Pathways" />} />
-        <Route path="/skills" element={<ComingSoon title="Skills & Certifications" />} />
+        <Route
+          path="/guides"
+          element={<ComingSoon title="Educational Guides" />}
+        />
+        <Route
+          path="/careers"
+          element={<ComingSoon title="Career Pathways" />}
+        />
+        <Route
+          path="/skills"
+          element={<ComingSoon title="Skills & Certifications" />}
+        />
 
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />

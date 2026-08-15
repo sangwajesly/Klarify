@@ -63,13 +63,16 @@ def generate_sql():
                 tags = format_sql_array(p.get("tags", []))
                 careers = format_sql_array(p.get("Careers", []))
                 desc = escape_sql_string(p.get("descriptions"))
+                degree_obtained = escape_sql_string(p.get("degree_obtained") or p.get("degreeObtained") or p.get("degree"))
+                tuition_fee = p.get("tuition_fee_xaf") if p.get("tuition_fee_xaf") is not None else p.get("tuition_fee")
+                tuition_fee_sql = str(tuition_fee) if tuition_fee is not None else "NULL"
                 
                 sql_lines.append(
-                    f"INSERT INTO programs (id, name, university, faculty, durations, requires_concour, concours_id, portal_url, required_al_subjects, tags, careers, descriptions) "
-                    f"VALUES ({p_id}, {name}, {uni}, {faculty}, {duration}, {requires_concour}, {concours_id}, {portal_url}, {req_al}, {tags}, {careers}, {desc}) "
+                    f"INSERT INTO programs (id, name, university, faculty, durations, requires_concour, concours_id, portal_url, required_al_subjects, tags, careers, descriptions, degree_obtained, tuition_fee_xaf) "
+                    f"VALUES ({p_id}, {name}, {uni}, {faculty}, {duration}, {requires_concour}, {concours_id}, {portal_url}, {req_al}, {tags}, {careers}, {desc}, {degree_obtained}, {tuition_fee_sql}) "
                     f"ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, university=EXCLUDED.university, faculty=EXCLUDED.faculty, durations=EXCLUDED.durations, "
                     f"requires_concour=EXCLUDED.requires_concour, concours_id=EXCLUDED.concours_id, portal_url=EXCLUDED.portal_url, required_al_subjects=EXCLUDED.required_al_subjects, "
-                    f"tags=EXCLUDED.tags, careers=EXCLUDED.careers, descriptions=EXCLUDED.descriptions;"
+                    f"tags=EXCLUDED.tags, careers=EXCLUDED.careers, descriptions=EXCLUDED.descriptions, degree_obtained=EXCLUDED.degree_obtained, tuition_fee_xaf=EXCLUDED.tuition_fee_xaf;"
                 )
             sql_lines.append("")
 

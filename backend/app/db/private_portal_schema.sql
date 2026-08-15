@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS public.institutions (
     name TEXT NOT NULL,
     slug TEXT UNIQUE NOT NULL,
     type public.institution_type DEFAULT 'PRIVATE_IPES',
-    verification_status public.verification_status DEFAULT 'VERIFIED',
+    verification_status public.verification_status DEFAULT 'PENDING',
     city TEXT NOT NULL,
     campus TEXT,
     logo_url TEXT,
@@ -47,7 +47,7 @@ ADD COLUMN IF NOT EXISTS institution_id UUID REFERENCES public.institutions(id) 
 ADD COLUMN IF NOT EXISTS campus TEXT,
 ADD COLUMN IF NOT EXISTS degree_obtained TEXT,
 ADD COLUMN IF NOT EXISTS tuition_fee_xaf NUMERIC(10, 2),
-ADD COLUMN IF NOT EXISTS is_approved BOOLEAN DEFAULT TRUE,
+ADD COLUMN IF NOT EXISTS is_approved BOOLEAN DEFAULT FALSE,
 ADD COLUMN IF NOT EXISTS admission_deadline DATE;
 
 -- 5. Row Level Security (RLS) Policies
@@ -55,29 +55,43 @@ ALTER TABLE public.institutions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.institution_members ENABLE ROW LEVEL SECURITY;
 
 -- Public can read institutions
+DROP POLICY IF EXISTS "Public can view institutions" ON public.institutions;
 CREATE POLICY "Public can view institutions" ON public.institutions FOR SELECT USING (true);
 
 -- Authenticated users can insert their institution upon signup
+DROP POLICY IF EXISTS "Authenticated users can create institution" ON public.institutions;
 CREATE POLICY "Authenticated users can create institution" ON public.institutions FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
 -- Institution admins can update their institution profile
+DROP POLICY IF EXISTS "Uni admins can update own institution" ON public.institutions;
 CREATE POLICY "Uni admins can update own institution" ON public.institutions FOR UPDATE USING (
     id IN (SELECT institution_id FROM public.institution_members WHERE user_id = auth.uid())
 );
 
 -- Members policies
+DROP POLICY IF EXISTS "Members can view own membership" ON public.institution_members;
 CREATE POLICY "Members can view own membership" ON public.institution_members FOR SELECT USING (user_id = auth.uid());
+DROP POLICY IF EXISTS "Users can create membership" ON public.institution_members;
 CREATE POLICY "Users can create membership" ON public.institution_members FOR INSERT WITH CHECK (user_id = auth.uid());
 
 -- Program RLS Policies for University Admins
+DROP POLICY IF EXISTS "Uni admins can insert programs" ON public.programs;
 CREATE POLICY "Uni admins can insert programs" ON public.programs FOR INSERT WITH CHECK (
     institution_id IN (SELECT institution_id FROM public.institution_members WHERE user_id = auth.uid())
 );
 
+DROP POLICY IF EXISTS "Uni admins can update own programs" ON public.programs;
 CREATE POLICY "Uni admins can update own programs" ON public.programs FOR UPDATE USING (
     institution_id IN (SELECT institution_id FROM public.institution_members WHERE user_id = auth.uid())
 );
 
+DROP POLICY IF EXISTS "Uni admins can delete own programs" ON public.programs;
 CREATE POLICY "Uni admins can delete own programs" ON public.programs FOR DELETE USING (
+    institution_id IN (SELECT institution_id FROM public.institution_members WHERE user_id = auth.uid())
+);
+
+-- Allow university admins to SELECT their own programs (even if not approved yet)
+DROP POLICY IF EXISTS "Uni admins can select own programs" ON public.programs;
+CREATE POLICY "Uni admins can select own programs" ON public.programs FOR SELECT USING (
     institution_id IN (SELECT institution_id FROM public.institution_members WHERE user_id = auth.uid())
 );

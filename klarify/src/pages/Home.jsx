@@ -1,17 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Target,
-  Zap,
-  ShieldCheck,
-  ArrowRight,
-  X,
-} from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { Target, Zap, ShieldCheck, ArrowRight, X } from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import FAQBlock from "../components/FAQBlock";
 import heroBg from "../assets/hero.jpg";
 import studentsCampus from "../assets/cameroon_secondary_students.png";
+import uniAerial from "../assets/pexels-skylight-views-2151863365-36347347.jpg";
+import { trackEvent } from "../utils/analytics";
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
   <article className="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 hover:border-slate-600 transition-colors duration-200 hover:-translate-y-0.5 transform">
@@ -117,7 +113,9 @@ const Home = () => {
                 </span>
                 <p className="text-sm font-medium truncate">
                   <span className="md:hidden">Check GCE Results</span>
-                  <span className="hidden md:inline">Check GCE Results Now.</span>
+                  <span className="hidden md:inline">
+                    Check GCE Results Now.
+                  </span>
                 </p>
               </div>
               <div className="flex items-center gap-3 shrink-0">
@@ -151,14 +149,17 @@ const Home = () => {
               aria-hidden="true"
             />
             {/* Single warm overlay — no blue tint */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/85 to-slate-900/95" />
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-900/20 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-b from-slate-900/80 via-slate-900/85 to-slate-900/95" />
+            <div className="absolute inset-0 bg-linear-to-r from-orange-900/20 via-transparent to-transparent" />
           </div>
 
           <div className="relative z-10 w-full max-w-5xl mx-auto px-6 md:px-12 pb-16 pt-20 md:py-24">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/8 text-white text-xs font-medium mb-8 backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-400" aria-hidden="true" />
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-orange-400"
+                aria-hidden="true"
+              />
               Cameroon's #1 Academic Guidance Platform
             </div>
 
@@ -194,9 +195,12 @@ const Home = () => {
 
             {/* Trust bar */}
             <div className="mt-10 pt-8 border-t border-white/10 flex items-center gap-3">
-              <div className="flex text-orange-400 text-sm tracking-tight">★★★★★</div>
+              <div className="flex text-orange-400 text-sm tracking-tight">
+                ★★★★★
+              </div>
               <span className="text-slate-300 text-sm">
-                Trusted by <strong className="text-white">5,000+</strong> students
+                Trusted by <strong className="text-white">5,000+</strong>{" "}
+                students
               </span>
             </div>
           </div>
@@ -208,7 +212,9 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-center">
               {/* Left: eyebrow + heading */}
               <div className="md:col-span-5">
-                <span className="section-eyebrow block mb-3">About KlarifyPath</span>
+                <span className="section-eyebrow block mb-3">
+                  About KlarifyPath
+                </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
                   Cameroon's premier educational platform
                 </h2>
@@ -229,10 +235,10 @@ const Home = () => {
                   concours, and career pathways in Cameroon.
                 </p>
                 <div className="mt-8">
-                  <img 
-                    src={studentsCampus} 
-                    alt="Cameroonian secondary school students" 
-                    className="rounded-2xl shadow-xl w-full h-auto object-cover max-h-[350px]"
+                  <img
+                    src={studentsCampus}
+                    alt="Cameroonian secondary school students"
+                    className="rounded-2xl shadow-xl w-full h-auto object-cover max-h-87.5"
                   />
                 </div>
               </div>
@@ -244,7 +250,9 @@ const Home = () => {
         <section className="bg-slate-900 py-20 px-6 md:px-12">
           <div className="max-w-5xl mx-auto">
             <div className="mb-12">
-              <span className="section-eyebrow block mb-3">Why KlarifyPath</span>
+              <span className="section-eyebrow block mb-3">
+                Why KlarifyPath
+              </span>
               <h2 className="text-2xl md:text-3xl font-bold text-white max-w-lg">
                 We take the guesswork out of your future
               </h2>
@@ -265,6 +273,59 @@ const Home = () => {
                 icon={ShieldCheck}
                 title="Comprehensive Guidance"
                 description="We don't just suggest degrees. We provide prerequisite information, concours requirements, and the skills you need to succeed."
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ── Partner Advertisement ── */}
+        <section className="py-16 px-6 md:px-12 bg-white">
+          <div className="max-w-5xl mx-auto rounded-2xl p-8 md:p-12 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-6">
+            <div className="flex-1">
+              <h3 className="text-2xl font-extrabold text-slate-900 mb-3">
+                Partner With Klarify
+              </h3>
+              <p className="text-slate-600 mb-4">
+                List your institution, upload programs and tuition fees, and get
+                matched to high-intent A-Level students with direct WhatsApp
+                leads and priority placement.
+              </p>
+              <ul className="text-sm text-slate-600 space-y-2 mb-4">
+                <li>• Easy self-serve campus onboarding</li>
+                <li>• Display tuition fees and program details</li>
+                <li>• Direct WhatsApp leads and program analytics</li>
+              </ul>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    trackEvent("partner_cta_click", {
+                      location: "homepage_promo",
+                    });
+                    navigate("/partners");
+                  }}
+                  className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-bold"
+                >
+                  Partner With Us
+                </button>
+                <Link
+                  to="/partner/login"
+                  onClick={() =>
+                    trackEvent("partner_cta_click", {
+                      location: "homepage_promo_login",
+                    })
+                  }
+                  className="text-sm text-slate-700 hover:text-orange-500"
+                >
+                  Institution Login
+                </Link>
+              </div>
+            </div>
+
+            <div className="w-full md:w-80">
+              <img
+                src={uniAerial}
+                alt="University aerial view"
+                className="rounded-xl shadow-md w-full h-auto object-cover"
               />
             </div>
           </div>
@@ -315,8 +376,8 @@ const Home = () => {
                 Universities & Institutions Covered
               </h2>
               <p className="text-slate-500 text-base max-w-xl">
-                Our recommendation engine includes programs from top institutions
-                across the national territory.
+                Our recommendation engine includes programs from top
+                institutions across the national territory.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -324,6 +385,7 @@ const Home = () => {
                 "University of Buea",
                 "University of Bamenda",
                 "University of Yaounde I",
+                "University of Yaounde II",
                 "University of Douala",
                 "University of Dschang",
                 "University of Maroua",
@@ -332,7 +394,7 @@ const Home = () => {
               ].map((uni, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-slate-50 border-l-2 border-orange-400/50 border-t border-r border-b border-slate-100 flex items-center text-sm font-medium text-slate-700"
+                  className="p-4 rounded-xl bg-slate-50 border-l-2 border-orange-400/50 border-t border-r border-b flex items-center text-sm font-medium text-slate-700"
                 >
                   {uni}
                 </div>
@@ -357,6 +419,36 @@ const Home = () => {
               "repeating-linear-gradient(45deg, transparent, transparent 28px, rgba(255,255,255,0.04) 28px, rgba(255,255,255,0.04) 29px)",
           }}
         >
+          {/* ── Partner Promo ── */}
+          <section className="py-12 px-6 md:px-12 bg-slate-50">
+            <div className="max-w-5xl mx-auto rounded-2xl bg-white p-6 md:p-8 border border-slate-200 flex flex-col md:flex-row items-center gap-6">
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-slate-900">
+                  Reach students actively choosing programs
+                </h3>
+                <p className="text-sm text-slate-600 mt-2">
+                  List your institution and academic programs on Klarify to get
+                  matched with high-intent A-Level students. Display tuition,
+                  campus, and receive direct WhatsApp leads.
+                </p>
+              </div>
+              <div className="shrink-0 flex items-center gap-3">
+                <button
+                  onClick={() => navigate("/partners")}
+                  className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-bold"
+                >
+                  Partner With Us
+                </button>
+                <Link
+                  to="/partner/login"
+                  className="text-sm text-slate-700 hover:text-orange-500"
+                >
+                  Institution Login
+                </Link>
+              </div>
+            </div>
+          </section>
+
           <div className="relative max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Ready to find your path?

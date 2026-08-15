@@ -17,7 +17,13 @@ import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import ProgramCard from "../components/ProgramCard";
 import { useAuth } from "../context/AuthContext";
-import { fetchProgramById, fetchAllPrograms, getSavedPrograms, saveProgram, removeSavedProgram } from "../services/api";
+import {
+  fetchProgramById,
+  fetchAllPrograms,
+  getSavedPrograms,
+  saveProgram,
+  removeSavedProgram,
+} from "../services/api";
 
 const ProgramDetails = () => {
   const { id } = useParams();
@@ -42,7 +48,11 @@ const ProgramDetails = () => {
         // Fetch related programs (same university or faculty)
         const all = await fetchAllPrograms();
         const related = all
-          .filter((p) => p.id !== id && (p.university === data.university || p.faculty === data.faculty))
+          .filter(
+            (p) =>
+              p.id !== id &&
+              (p.university === data.university || p.faculty === data.faculty),
+          )
           .slice(0, 3);
         setRelatedPrograms(related);
 
@@ -97,8 +107,12 @@ const ProgramDetails = () => {
       <Layout>
         <div className="max-w-2xl mx-auto py-16 text-center">
           <BookOpen size={48} className="mx-auto text-slate-300 mb-4" />
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">Program Not Found</h1>
-          <p className="text-slate-500 mb-6">{error || "The program you are looking for does not exist."}</p>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">
+            Program Not Found
+          </h1>
+          <p className="text-slate-500 mb-6">
+            {error || "The program you are looking for does not exist."}
+          </p>
           <Link
             to="/programs"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-colors"
@@ -114,19 +128,24 @@ const ProgramDetails = () => {
   const programSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
-    "name": program.name,
-    "description": program.descriptions || `${program.name} offered by ${program.university}`,
-    "provider": {
+    name: program.name,
+    description:
+      program.descriptions ||
+      `${program.name} offered by ${program.university}`,
+    provider: {
       "@type": "CollegeOrUniversity",
-      "name": program.university
-    }
+      name: program.university,
+    },
   };
 
   return (
     <Layout>
       <SEOHead
         title={`${program.name} - ${program.university} | KlarifyPath`}
-        description={program.descriptions || `Explore prerequisites, degree duration, concours requirements, and career paths for ${program.name} at ${program.university}.`}
+        description={
+          program.descriptions ||
+          `Explore prerequisites, degree duration, concours requirements, and career paths for ${program.name} at ${program.university}.`
+        }
         canonicalUrl={`https://www.klarifypath.com/programs/${id}`}
         structuredData={programSchema}
       />
@@ -160,6 +179,12 @@ const ProgramDetails = () => {
                   <div className="flex items-center gap-1.5">
                     <GraduationCap size={16} className="text-orange-400" />
                     <span>{program.faculty}</span>
+                  </div>
+                )}
+                {program.degree_obtained && (
+                  <div className="flex items-center gap-1.5">
+                    <Award size={16} className="text-orange-400" />
+                    <span>{program.degree_obtained}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1.5">
@@ -210,14 +235,18 @@ const ProgramDetails = () => {
                 Program Overview
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                {program.descriptions || `The ${program.name} degree offered by ${program.university} (${program.faculty || "Faculty"}) is designed to equip students with theoretical knowledge and practical skills for professional excellence.`}
+                {program.descriptions ||
+                  `The ${program.name} degree offered by ${program.university} (${program.faculty || "Faculty"}) is designed to equip students with theoretical knowledge and practical skills for professional excellence.`}
               </p>
 
               {/* Tags */}
               {program.tags && program.tags.length > 0 && (
                 <div className="mt-6 pt-5 border-t border-slate-100 flex flex-wrap gap-2">
                   {program.tags.map((tag, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-lg">
+                    <span
+                      key={idx}
+                      className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-lg"
+                    >
                       #{tag}
                     </span>
                   ))}
@@ -227,35 +256,55 @@ const ProgramDetails = () => {
 
             {/* Entrance Exam / Concours Section if required */}
             {program.requiresConcours && program.examDetails && (
-              <section className="relative overflow-hidden rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 via-cyan-50/60 to-white p-6 sm:p-7 shadow-sm">
+              <section className="relative overflow-hidden rounded-2xl border border-blue-200 bg-linear-to-r from-blue-50 via-cyan-50/60 to-white p-6 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
                     <Award size={22} />
                   </div>
                   <div>
-                    <h2 className="text-base font-bold text-slate-900">National Entrance Exam Required</h2>
-                    <p className="text-xs font-semibold text-blue-600">{program.examDetails.name}</p>
+                    <h2 className="text-base font-bold text-slate-900">
+                      National Entrance Exam Required
+                    </h2>
+                    <p className="text-xs font-semibold text-blue-600">
+                      {program.examDetails.name}
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 mb-6">
                   <div className="bg-white/80 rounded-xl p-3 border border-blue-100 text-center">
-                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">Exam Month</span>
-                    <span className="block text-sm font-bold text-slate-900">{program.examDetails.month || "June / July"}</span>
+                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">
+                      Exam Month
+                    </span>
+                    <span className="block text-sm font-bold text-slate-900">
+                      {program.examDetails.month || "June / July"}
+                    </span>
                   </div>
                   <div className="bg-white/80 rounded-xl p-3 border border-blue-100 text-center">
-                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">Deadline</span>
-                    <span className="block text-sm font-bold text-slate-900">{program.examDetails.deadline || "Varies"}</span>
+                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">
+                      Deadline
+                    </span>
+                    <span className="block text-sm font-bold text-slate-900">
+                      {program.examDetails.deadline || "Varies"}
+                    </span>
                   </div>
                   <div className="bg-white/80 rounded-xl p-3 border border-blue-100 text-center">
-                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">Exam Fee</span>
-                    <span className="block text-sm font-bold text-slate-900">{program.examDetails.fee || "20,000 XAF"}</span>
+                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">
+                      Exam Fee
+                    </span>
+                    <span className="block text-sm font-bold text-slate-900">
+                      {program.examDetails.fee || "20,000 XAF"}
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
-                    onClick={() => navigate("/exam-details", { state: { examDetails: program.examDetails } })}
+                    onClick={() =>
+                      navigate("/exam-details", {
+                        state: { examDetails: program.examDetails },
+                      })
+                    }
                     className="inline-flex items-center justify-center gap-2 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold px-4 py-2.5 rounded-xl transition-colors shadow-xs"
                   >
                     <ExternalLink size={14} />
@@ -283,14 +332,22 @@ const ProgramDetails = () => {
               {program.careers && program.careers.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {program.careers.map((career, idx) => (
-                    <div key={idx} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 size={16} className="text-green-500 shrink-0" />
+                    <div
+                      key={idx}
+                      className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-700"
+                    >
+                      <CheckCircle2
+                        size={16}
+                        className="text-green-500 shrink-0"
+                      />
                       <span>{career}</span>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-slate-500 italic">No specific career roles mapped yet.</p>
+                <p className="text-xs text-slate-500 italic">
+                  No specific career roles mapped yet.
+                </p>
               )}
             </section>
           </div>
@@ -304,21 +361,43 @@ const ProgramDetails = () => {
               </h3>
               <div className="space-y-4 text-xs sm:text-sm text-slate-600">
                 <div>
-                  <span className="block font-semibold text-slate-800 mb-1">Required A-Level Subjects:</span>
+                  <span className="block font-semibold text-slate-800 mb-1">
+                    Required A-Level Subjects:
+                  </span>
                   <div className="p-3 bg-white rounded-xl border border-slate-200/60 font-medium text-slate-700">
-                    {program.requiredALSubjects || "GCE A-Level Passes in relevant Arts or Science subjects."}
+                    {program.requiredALSubjects ||
+                      "GCE A-Level Passes in relevant Arts or Science subjects."}
                   </div>
                 </div>
 
                 <div>
-                  <span className="block font-semibold text-slate-800 mb-1">Duration:</span>
+                  <span className="block font-semibold text-slate-800 mb-1">
+                    Duration:
+                  </span>
                   <p className="text-slate-700 font-bold">{program.duration}</p>
                 </div>
 
+                {program.tuition_fee_xaf && (
+                  <div>
+                    <span className="block font-semibold text-slate-800 mb-1">
+                      Estimated Tuition:
+                    </span>
+                    <p className="text-slate-700 font-bold">
+                      {typeof program.tuition_fee_xaf === "number"
+                        ? program.tuition_fee_xaf.toLocaleString() + " XAF"
+                        : program.tuition_fee_xaf + " XAF"}
+                    </p>
+                  </div>
+                )}
+
                 <div>
-                  <span className="block font-semibold text-slate-800 mb-1">Entry Mode:</span>
+                  <span className="block font-semibold text-slate-800 mb-1">
+                    Entry Mode:
+                  </span>
                   <p className="text-slate-700 font-bold">
-                    {program.requiresConcours ? "Competitive Entrance Exam (Concours)" : "Direct Academic Entry"}
+                    {program.requiresConcours
+                      ? "Competitive Entrance Exam (Concours)"
+                      : "Direct Academic Entry"}
                   </p>
                 </div>
               </div>
@@ -327,7 +406,9 @@ const ProgramDetails = () => {
             {/* University Link Card */}
             <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs text-center">
               <Building2 className="mx-auto text-orange-500 mb-2" size={32} />
-              <h4 className="font-bold text-slate-900 text-sm mb-1">{program.university}</h4>
+              <h4 className="font-bold text-slate-900 text-sm mb-1">
+                {program.university}
+              </h4>
               <p className="text-xs text-slate-500 mb-4">{program.faculty}</p>
               <Link
                 to={`/universities`}
@@ -342,7 +423,9 @@ const ProgramDetails = () => {
         {/* Related Programs Section */}
         {relatedPrograms.length > 0 && (
           <section className="pt-8 border-t border-slate-200">
-            <h2 className="text-xl font-bold text-slate-900 mb-6">Related Programs You Might Like</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-6">
+              Related Programs You Might Like
+            </h2>
             <div className="grid grid-cols-1 gap-4">
               {relatedPrograms.map((rel) => (
                 <ProgramCard key={rel.id} program={rel} />

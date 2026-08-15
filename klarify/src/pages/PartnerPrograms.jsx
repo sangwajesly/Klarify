@@ -24,7 +24,9 @@ import {
   createPartnerProgram,
   updatePartnerProgram,
   deletePartnerProgram,
+  createPartnerProgramsBulk,
 } from "../services/api";
+import { trackEvent } from "../utils/analytics";
 
 const PartnerPrograms = () => {
   const { user, loading: authLoading } = useAuth();
@@ -55,6 +57,100 @@ const PartnerPrograms = () => {
   };
 
   const [formData, setFormData] = useState(initialForm);
+  // Bulk upload state
+  const [csvFile, setCsvFile] = useState(null);
+  const [csvPreview, setCsvPreview] = useState([]);
+  const [parsing, setParsing] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const handleCsvFile = (file) => {
+    setCsvFile(file || null);
+    setCsvPreview([]);
+  };
+
+  const parseCSVText = (text) => {
+    // Simple CSV parser that handles quoted fields
+    const lines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
+    if (lines.length === 0) return [];
+    const parseLine = (line) => {
+      const result = [];
+      let cur = "";
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQuotes && line[i + 1] === '"') {
+            cur += '"';
+            i++; // skip escaped quote
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === "," && !inQuotes) {
+          result.push(cur);
+          cur = "";
+        } else {
+          cur += ch;
+        }
+      }
+      result.push(cur);
+      return result.map((s) => s.trim());
+    };
+
+    const headers = parseLine(lines[0]).map((h) => h.toLowerCase());
+    const rows = [];
+    for (let i = 1; i < lines.length; i++) {
+      const cols = parseLine(lines[i]);
+      if (cols.length === 0) continue;
+      const obj = {};
+      for (let j = 0; j < headers.length; j++) {
+        obj[headers[j]] = cols[j] || "";
+      }
+      rows.push(obj);
+    }
+    return rows;
+  };
+
+  const parseCsvPreview = async () => {
+    if (!csvFile) return;
+    setParsing(true);
+    try {
+      const text = await csvFile.text();
+      const rows = parseCSVText(text);
+      setCsvPreview(rows);
+      trackEvent("partner_programs_bulk_preview", { rows: rows.length });
+    } catch (err) {
+      console.error("CSV parse error", err);
+      setCsvPreview([]);
+    } finally {
+      setParsing(false);
+    }
+  };
+
+  const uploadCsv = async () => {
+    if (!csvPreview || csvPreview.length === 0) return;
+    setUploading(true);
+    try {
+      const payload = csvPreview.map((r) => ({
+        ...r,
+        university: r.university || institution?.name,
+        institutionId: institution?.id || null,
+      }));
+      const resp = await createPartnerProgramsBulk(payload);
+      trackEvent("partner_programs_bulk_uploaded", {
+        uploaded: Array.isArray(resp) ? resp.length : 0,
+      });
+      // Refresh list
+      await loadData();
+      setCsvFile(null);
+      setCsvPreview([]);
+      alert("Programs uploaded successfully");
+    } catch (err) {
+      console.error("Bulk upload failed", err);
+      alert("Upload failed. Check console for details.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -68,7 +164,9 @@ const PartnerPrograms = () => {
       try {
         const profile = await getPartnerProfile(user.id);
         const inst = profile || {
-          name: user.user_metadata?.full_name ? `${user.user_metadata.full_name}'s Institute` : "Private University Partner",
+          name: user.user_metadata?.full_name
+            ? `${user.user_metadata.full_name}'s Institute`
+            : "Private University Partner",
           city: "Douala",
           campus: "Main Campus",
         };
@@ -76,7 +174,11 @@ const PartnerPrograms = () => {
 
         const progs = await fetchPartnerInstitutionPrograms(inst.id, inst.name);
         setPrograms(progs);
-        setFormData((f) => ({ ...f, university: inst.name, campus: inst.campus || "Main Campus" }));
+        setFormData((f) => ({
+          ...f,
+          university: inst.name,
+          campus: inst.campus || "Main Campus",
+        }));
       } catch (err) {
         console.error("Failed to load programs:", err);
       } finally {
@@ -99,11 +201,16 @@ const PartnerPrograms = () => {
         faculty: program.faculty || "",
         campus: program.campus || institution?.campus || "Main Campus",
         durations: String(program.durations || program.durationsNum || 3),
-        tuitionFee: program.tuition_fee_xaf ? String(program.tuition_fee_xaf) : program.tuitionFee || "",
+        tuitionFee: program.tuition_fee_xaf
+          ? String(program.tuition_fee_xaf)
+          : program.tuitionFee || "",
         requiresConcour: program.requires_concour ? "true" : "false",
-        requiredALSubjects: program.required_al_subjects || program.requiredALSubjects || "",
+        requiredALSubjects:
+          program.required_al_subjects || program.requiredALSubjects || "",
         portalUrl: program.portal_url || program.portalUrl || "",
-        careers: Array.isArray(program.careers) ? program.careers.join(", ") : program.careers || "",
+        careers: Array.isArray(program.careers)
+          ? program.careers.join(", ")
+          : program.careers || "",
         descriptions: program.descriptions || "",
       });
     } else {
@@ -202,7 +309,8 @@ const PartnerPrograms = () => {
               Academic Programs Studio
             </h1>
             <p className="text-slate-500 text-xs sm:text-sm">
-              Managing courses for <strong className="text-slate-800">{institution?.name}</strong>
+              Managing courses for{" "}
+              <strong className="text-slate-800">{institution?.name}</strong>
             </p>
           </div>
 
@@ -213,6 +321,85 @@ const PartnerPrograms = () => {
             <Plus size={18} />
             Add New Program
           </button>
+        </div>
+
+        {/* Bulk CSV Upload */}
+        <div className="mb-6">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-4 text-sm">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
+                <BookOpen size={20} />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-slate-900">
+                      Bulk Upload Programs
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      Upload a CSV of your programs to add them in bulk.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex items-center gap-3">
+                  <input
+                    type="file"
+                    accept="text/csv"
+                    onChange={(e) =>
+                      handleCsvFile(e.target.files && e.target.files[0])
+                    }
+                  />
+                  <button
+                    onClick={parseCsvPreview}
+                    disabled={!csvFile || parsing}
+                    className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs"
+                  >
+                    {parsing ? "Parsing..." : "Preview"}
+                  </button>
+                  <button
+                    onClick={uploadCsv}
+                    disabled={csvPreview.length === 0 || uploading}
+                    className="px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs"
+                  >
+                    {uploading ? "Uploading..." : "Upload"}
+                  </button>
+                </div>
+
+                {csvPreview.length > 0 && (
+                  <div className="mt-3 text-xs text-slate-600">
+                    <div className="font-semibold mb-2">
+                      Preview ({csvPreview.length} rows)
+                    </div>
+                    <div className="overflow-x-auto max-h-40">
+                      <table className="text-left text-[11px] w-full">
+                        <thead>
+                          <tr className="text-slate-500">
+                            <th className="pr-3">Name</th>
+                            <th className="pr-3">Faculty</th>
+                            <th className="pr-3">Tuition</th>
+                            <th className="pr-3">Campus</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {csvPreview.slice(0, 8).map((r, i) => (
+                            <tr key={i} className="odd:bg-slate-50">
+                              <td className="pr-3 py-1">{r.name}</td>
+                              <td className="pr-3 py-1">{r.faculty}</td>
+                              <td className="pr-3 py-1">
+                                {r.tuition_fee_xaf || r.tuitionFee || ""}
+                              </td>
+                              <td className="pr-3 py-1">{r.campus || ""}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Programs Data Table */}
@@ -232,10 +419,15 @@ const PartnerPrograms = () => {
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
                   {programs.map((p) => (
-                    <tr key={p.id} className="hover:bg-slate-50/60 transition-colors">
+                    <tr
+                      key={p.id}
+                      className="hover:bg-slate-50/60 transition-colors"
+                    >
                       <td className="py-4 px-6 font-semibold text-slate-900">
                         <div className="font-bold text-slate-900">{p.name}</div>
-                        <div className="text-xs text-slate-500 font-normal">{p.faculty || "Faculty"}</div>
+                        <div className="text-xs text-slate-500 font-normal">
+                          {p.faculty || "Faculty"}
+                        </div>
                       </td>
                       <td className="py-4 px-4 text-slate-600">
                         <span className="inline-flex items-center gap-1">
@@ -247,7 +439,9 @@ const PartnerPrograms = () => {
                         {p.durations || p.durationsNum || 3} Years
                       </td>
                       <td className="py-4 px-4 font-bold text-slate-900">
-                        {p.tuition_fee_xaf ? `${Number(p.tuition_fee_xaf).toLocaleString()} XAF` : "Contact Campus"}
+                        {p.tuition_fee_xaf
+                          ? `${Number(p.tuition_fee_xaf).toLocaleString()} XAF`
+                          : "Contact Campus"}
                       </td>
                       <td className="py-4 px-4">
                         <span
@@ -257,7 +451,9 @@ const PartnerPrograms = () => {
                               : "bg-green-50 text-green-700 border border-green-100"
                           }`}
                         >
-                          {p.requires_concour || p.requiresConcours ? "Concours Exam" : "Direct Entry"}
+                          {p.requires_concour || p.requiresConcours
+                            ? "Concours Exam"
+                            : "Direct Entry"}
                         </span>
                       </td>
                       <td className="py-4 px-6 text-right space-x-2">
@@ -285,9 +481,12 @@ const PartnerPrograms = () => {
         ) : (
           <div className="text-center py-16 bg-white rounded-3xl border border-slate-200/80 p-8">
             <BookOpen className="mx-auto text-slate-300 mb-3" size={40} />
-            <h3 className="text-lg font-bold text-slate-900 mb-1">No programs listed yet</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">
+              No programs listed yet
+            </h3>
             <p className="text-slate-500 text-xs sm:text-sm max-w-md mx-auto mb-6">
-              Start adding your university's degree programs, tuition fees, and campus locations so A-Level students can find you.
+              Start adding your university's degree programs, tuition fees, and
+              campus locations so A-Level students can find you.
             </p>
             <button
               onClick={() => handleOpenModal()}
@@ -306,10 +505,13 @@ const PartnerPrograms = () => {
               <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
                 <div>
                   <h2 className="text-lg font-bold text-slate-900">
-                    {editingProgram ? "Edit Program Details" : "Add New Academic Program"}
+                    {editingProgram
+                      ? "Edit Program Details"
+                      : "Add New Academic Program"}
                   </h2>
                   <p className="text-xs text-slate-500">
-                    Enter the course specifications as displayed in your official university prospectus.
+                    Enter the course specifications as displayed in your
+                    official university prospectus.
                   </p>
                 </div>
                 <button
@@ -521,7 +723,9 @@ const PartnerPrograms = () => {
                     ) : (
                       <>
                         <CheckCircle2 size={16} />
-                        <span>{editingProgram ? "Save Changes" : "Publish Program"}</span>
+                        <span>
+                          {editingProgram ? "Save Changes" : "Publish Program"}
+                        </span>
                       </>
                     )}
                   </button>

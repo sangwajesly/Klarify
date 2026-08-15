@@ -7,10 +7,14 @@ from app.models.request_models import RecommendationRequest, RecommendationRespo
 from app.services.recommendation_service import get_recommendations
 from app.core.auth import get_current_user
 from app.core.otp_service import send_otp, verify_otp
+from app.api.payments import router as payments_router
 
 load_dotenv()
 
 router = APIRouter()
+
+# Include payments subrouter
+router.include_router(payments_router, prefix="/payments", tags=["payments"]) 
 
 url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")

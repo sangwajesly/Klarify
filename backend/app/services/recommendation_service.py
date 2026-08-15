@@ -13,7 +13,7 @@ def fetch_programs_from_db():
         return None
     try:
         supabase = create_client(url, key)
-        resp = supabase.table('programs').select('*').execute()
+        resp = supabase.table('programs').select('*').eq('is_approved', True).execute()
         data = getattr(resp, 'data', None)
         if data and isinstance(data, list) and len(data) > 0:
             # Normalize keys to match existing program dict shape used elsewhere
@@ -32,7 +32,9 @@ def fetch_programs_from_db():
                     'tags': p.get('tags') or [],
                     'careers': p.get('careers') or p.get('Careers') or [],
                     'Careers': p.get('Careers') or p.get('careers') or [],
-                    'descriptions': p.get('descriptions') or p.get('description')
+                        'descriptions': p.get('descriptions') or p.get('description'),
+                        'degree_obtained': p.get('degree_obtained') or p.get('degreeObtained') or p.get('degree'),
+                        'tuition_fee_xaf': p.get('tuition_fee_xaf') or p.get('tuition_fee') or p.get('tuition_fee_xaf')
                 })
             return normalized
     except Exception:
@@ -182,6 +184,9 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
                 duration=duration_val,
                 requiresConcours=requires_conc,
                 portalUrl=prog.get("portalUrl", "#"),
+                descriptions=prog.get("descriptions") or prog.get("description"),
+                degree_obtained=prog.get("degree_obtained"),
+                tuition_fee_xaf=(float(prog.get("tuition_fee_xaf")) if prog.get("tuition_fee_xaf") is not None else None),
                 examDetails=exam_details,
                 score=round(score, 2),
                 careers=prog.get("Careers") or prog.get("careers") or []

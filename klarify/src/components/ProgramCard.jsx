@@ -43,17 +43,14 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
               <button
                 onClick={handleToggleSave}
                 disabled={isSaving}
-                className={`p-2 rounded-lg transition-colors flex-shrink-0 ml-4 ${
+                className={`p-2 rounded-lg transition-colors shrink-0 ml-4 ${
                   isSaved
                     ? "bg-orange-100 text-orange-600 hover:bg-orange-200"
                     : "bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600"
                 } ${isSaving ? "opacity-50 cursor-not-allowed" : ""}`}
                 aria-label={isSaved ? "Remove from saved" : "Save program"}
               >
-                <Bookmark
-                  size={20}
-                  className={isSaved ? "fill-current" : ""}
-                />
+                <Bookmark size={20} className={isSaved ? "fill-current" : ""} />
               </button>
             )}
           </div>
@@ -66,6 +63,12 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
               <div className="flex items-center gap-1.5">
                 <GraduationCap size={16} className="text-slate-400" />
                 {program.faculty}
+              </div>
+            )}
+            {program.degree_obtained && (
+              <div className="flex items-center gap-1.5">
+                <Award size={16} className="text-slate-400" />
+                {program.degree_obtained}
               </div>
             )}
             <div className="flex items-center gap-1.5">
@@ -92,6 +95,13 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
               <ExternalLink size={16} />
             </a>
           )}
+          {program.tuition_fee_xaf && (
+            <div className="mt-2 text-sm font-semibold text-slate-800 bg-white/80 px-3 py-1.5 rounded-lg border border-slate-100 w-full md:w-auto text-center">
+              {typeof program.tuition_fee_xaf === "number"
+                ? program.tuition_fee_xaf.toLocaleString() + " XAF"
+                : program.tuition_fee_xaf + " XAF"}
+            </div>
+          )}
         </div>
       </div>
 
@@ -108,9 +118,9 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
           <div className="mt-4 space-y-4">
             {/* Entrance Exam Details — Bold Standout Callout */}
             {program.requiresConcours && program.examDetails && (
-              <div className="relative overflow-hidden rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 via-cyan-50/60 to-white shadow-md">
+              <div className="relative overflow-hidden rounded-xl border border-blue-200 bg-linear-to-r from-blue-50 via-cyan-50/60 to-white shadow-md">
                 {/* Thick blue accent bar */}
-                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 to-cyan-500 rounded-l-xl"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-linear-to-b from-blue-500 to-cyan-500 rounded-l-xl"></div>
 
                 <div className="pl-6 pr-5 py-5">
                   <div className="flex items-center gap-2 mb-4">

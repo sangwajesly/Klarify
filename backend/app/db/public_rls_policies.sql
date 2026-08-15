@@ -12,7 +12,7 @@ DROP POLICY IF EXISTS "Allow public read access on concours" ON public.concours;
 -- 3. Create public SELECT policies
 CREATE POLICY "Allow public read access on programs"
 ON public.programs FOR SELECT
-USING (true);
+USING (is_approved = true);
 
 CREATE POLICY "Allow public read access on concours"
 ON public.concours FOR SELECT

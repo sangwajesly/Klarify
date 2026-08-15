@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="100%" height="100%" fill="#eef2ff" />
+  <text x="50" y="80" font-size="42" font-family="Inter, system-ui" fill="#0f172a" font-weight="700">Aerial Campus Photo (placeholder)</text>
+  <rect x="60" y="120" width="1480" height="640" rx="12" fill="#c7d2fe" stroke="#a5b4fc" />
+  <text x="80" y="180" font-size="20" fill="#334155">Use real aerial campus image for full-bleed hero.</text>
+</svg>

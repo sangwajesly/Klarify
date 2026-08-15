@@ -2,7 +2,12 @@ import axios from "axios";
 import { supabase } from "./supabase";
 
 let rawUrl = import.meta.env.VITE_API_URL;
-if (rawUrl && !rawUrl.startsWith("http://") && !rawUrl.startsWith("https://") && !rawUrl.startsWith("/")) {
+if (
+  rawUrl &&
+  !rawUrl.startsWith("http://") &&
+  !rawUrl.startsWith("https://") &&
+  !rawUrl.startsWith("/")
+) {
   if (rawUrl.includes("localhost") || rawUrl.includes("127.0.0.1")) {
     rawUrl = `http://${rawUrl}`;
   } else {
@@ -15,7 +20,6 @@ export const API_URL =
   (import.meta.env.PROD
     ? "https://klarify-path-be.vercel.app"
     : "http://localhost:8000");
-
 
 export async function getAuthHeaders() {
   const {
@@ -35,15 +39,11 @@ export const getRecommendations = async (data) => {
   try {
     const headers = await getAuthHeaders();
 
-    const response = await axios.post(
-      `${API_URL}/recommend/al-student`,
-      data,
-      {
-        headers,
-        // If auth is missing/expired, backend may return 401.
-        // We keep it so the UI can decide what to do.
-      },
-    );
+    const response = await axios.post(`${API_URL}/recommend/al-student`, data, {
+      headers,
+      // If auth is missing/expired, backend may return 401.
+      // We keep it so the UI can decide what to do.
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching recommendations:", error);
@@ -109,11 +109,13 @@ export const removeSavedProgram = async (userId, programId) => {
 export const getSavedPrograms = async (userId) => {
   const { data, error } = await supabase
     .from("saved_programs")
-    .select(`
+    .select(
+      `
       id,
       created_at,
       programs (*)
-    `)
+    `,
+    )
     .eq("user_id", userId)
     .order("created_at", { ascending: false });
 
@@ -121,7 +123,7 @@ export const getSavedPrograms = async (userId) => {
     console.error("Error fetching saved programs:", error);
     throw error;
   }
-  
+
   // Flatten the response so it's easier to use in the UI
   // data is an array of { id, created_at, programs: { ...program details } }
   return data.map((item) => ({
@@ -143,8 +145,11 @@ const fallbackConcoursMap = (fallbackConcours || []).reduce((acc, c) => {
 }, {});
 
 const formatProgramRecord = (p, cMap = {}) => {
-  const concourObj = p.concours || cMap[p.concours_id] || (p.concours_id ? fallbackConcoursMap[p.concours_id] : null);
-  const requiresConc = p.requires_concour ?? (strToBool(p.requiresConcour));
+  const concourObj =
+    p.concours ||
+    cMap[p.concours_id] ||
+    (p.concours_id ? fallbackConcoursMap[p.concours_id] : null);
+  const requiresConc = p.requires_concour ?? strToBool(p.requiresConcour);
 
   return {
     id: p.id,
@@ -159,18 +164,20 @@ const formatProgramRecord = (p, cMap = {}) => {
     tags: p.tags || [],
     careers: p.careers || p.Careers || [],
     descriptions: p.descriptions,
-    examDetails: concourObj ? {
-      id: concourObj.id,
-      name: concourObj.name,
-      month: concourObj.month,
-      deadline: concourObj.deadline,
-      fee: concourObj.fee,
-      requiredDocuments: concourObj.required_documents,
-      procedure: concourObj.registration_procedure,
-      portalUrl: concourObj.portal_url || concourObj.portalUrl,
-      whatsappUrl: concourObj.whatsapp_url,
-      prerequisites: concourObj.required_subjects,
-    } : null
+    examDetails: concourObj
+      ? {
+          id: concourObj.id,
+          name: concourObj.name,
+          month: concourObj.month,
+          deadline: concourObj.deadline,
+          fee: concourObj.fee,
+          requiredDocuments: concourObj.required_documents,
+          procedure: concourObj.registration_procedure,
+          portalUrl: concourObj.portal_url || concourObj.portalUrl,
+          whatsappUrl: concourObj.whatsapp_url,
+          prerequisites: concourObj.required_subjects,
+        }
+      : null,
   };
 };
 
@@ -181,21 +188,28 @@ function strToBool(val) {
 
 // Fallback loader if Supabase query returns empty array
 const getFallbackPrograms = () => {
-  return (fallbackPrograms || []).map((p) => formatProgramRecord(p, fallbackConcoursMap));
+  return (fallbackPrograms || []).map((p) =>
+    formatProgramRecord(p, fallbackConcoursMap),
+  );
 };
 
 export const fetchAllPrograms = async () => {
   try {
     const { data, error } = await supabase
       .from("programs")
-      .select(`
+      .select(
+        `
         *,
         concours:concours_id (*)
-      `)
+      `,
+      )
       .order("name", { ascending: true });
 
     if (error || !data || data.length === 0) {
-      console.warn("Supabase returned empty or error, using local dataset fallback:", error);
+      console.warn(
+        "Supabase returned empty or error, using local dataset fallback:",
+        error,
+      );
       return getFallbackPrograms();
     }
 
@@ -210,10 +224,12 @@ export const fetchProgramById = async (programId) => {
   try {
     const { data, error } = await supabase
       .from("programs")
-      .select(`
+      .select(
+        `
         *,
         concours:concours_id (*)
-      `)
+      `,
+      )
       .eq("id", programId)
       .maybeSingle();
 
@@ -243,20 +259,25 @@ export const fetchAllUniversities = async () => {
         programCount: 0,
         concoursCount: 0,
         faculties: new Set(),
+        hasPrivatePrograms: false,
       };
     }
     uniMap[u].programCount += 1;
     if (p.requiresConcours) uniMap[u].concoursCount += 1;
     if (p.faculty) uniMap[u].faculties.add(p.faculty);
+    // If the program has an institution_id it likely comes from a private partner
+    if (p.institution_id) uniMap[u].hasPrivatePrograms = true;
   });
 
-  return Object.values(uniMap).map((uni) => ({
-    name: uni.name,
-    programCount: uni.programCount,
-    concoursCount: uni.concoursCount,
-    facultiesCount: uni.faculties.size,
-    faculties: Array.from(uni.faculties).sort(),
-  })).sort((a, b) => b.programCount - a.programCount);
+  return Object.values(uniMap)
+    .map((uni) => ({
+      name: uni.name,
+      programCount: uni.programCount,
+      concoursCount: uni.concoursCount,
+      facultiesCount: uni.faculties.size,
+      faculties: Array.from(uni.faculties).sort(),
+    }))
+    .sort((a, b) => b.programCount - a.programCount);
 };
 
 export const fetchUniversityDetails = async (uniName) => {
@@ -273,7 +294,8 @@ export const fetchUniversityDetails = async (uniName) => {
     programCount: programs.length,
     concoursCount: programs.filter((p) => p.requiresConcours).length,
     faculties: Array.from(facultiesSet).sort(),
-    programs,
+    faculties: Array.from(uni.faculties).sort(),
+    isPrivate: !!uni.hasPrivatePrograms,
   };
 };
 
@@ -306,7 +328,10 @@ export const registerPartnerAccount = async ({
   const user = authData.user;
   if (!user) throw new Error("Registration failed.");
 
-  const slug = institutionName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  const slug = institutionName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
   // 2. Create Institution Record
   const { data: instData, error: instError } = await supabase
@@ -320,7 +345,7 @@ export const registerPartnerAccount = async ({
         campus: campus || "Main Campus",
         whatsapp_number: whatsappNumber,
         website_url: websiteUrl || "",
-        verification_status: "VERIFIED",
+        verification_status: "PENDING",
       },
     ])
     .select()
@@ -342,17 +367,22 @@ export const registerPartnerAccount = async ({
     ]);
   }
 
-  return { user, institution: instData || { name: institutionName, city, campus } };
+  return {
+    user,
+    institution: instData || { name: institutionName, city, campus },
+  };
 };
 
 export const getPartnerProfile = async (userId) => {
   try {
     const { data, error } = await supabase
       .from("institution_members")
-      .select(`
+      .select(
+        `
         role,
         institutions (*)
-      `)
+      `,
+      )
       .eq("user_id", userId)
       .maybeSingle();
 
@@ -366,7 +396,10 @@ export const getPartnerProfile = async (userId) => {
   }
 };
 
-export const fetchPartnerInstitutionPrograms = async (institutionId, uniName) => {
+export const fetchPartnerInstitutionPrograms = async (
+  institutionId,
+  uniName,
+) => {
   try {
     let query = supabase.from("programs").select("*");
     if (institutionId) {
@@ -380,7 +413,7 @@ export const fetchPartnerInstitutionPrograms = async (institutionId, uniName) =>
   } catch (err) {
     console.warn("Falling back for partner programs:", err);
     return (fallbackPrograms || []).filter(
-      (p) => p.institution_id === institutionId || p.university === uniName
+      (p) => p.institution_id === institutionId || p.university === uniName,
     );
   }
 };
@@ -393,22 +426,35 @@ export const createPartnerProgram = async (programData) => {
     faculty: programData.faculty,
     campus: programData.campus || "Main Campus",
     durations: parseInt(programData.durations || 3, 10),
-    tuition_fee_xaf: programData.tuitionFee ? parseFloat(programData.tuitionFee) : null,
-    requires_concour: programData.requiresConcour === true || programData.requiresConcour === "true",
+    tuition_fee_xaf: programData.tuitionFee
+      ? parseFloat(programData.tuitionFee)
+      : null,
+    requires_concour:
+      programData.requiresConcour === true ||
+      programData.requiresConcour === "true",
     portal_url: programData.portalUrl || "",
     required_al_subjects: programData.requiredALSubjects || "",
     tags: Array.isArray(programData.tags)
       ? programData.tags
-      : (programData.tags || "").split(",").map((t) => t.trim()).filter(Boolean),
+      : (programData.tags || "")
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
     careers: Array.isArray(programData.careers)
       ? programData.careers
-      : (programData.careers || "").split(",").map((c) => c.trim()).filter(Boolean),
+      : (programData.careers || "")
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean),
     descriptions: programData.descriptions || "",
     institution_id: programData.institutionId || null,
-    is_approved: true,
+    is_approved: false,
   };
 
-  const { data, error } = await supabase.from("programs").insert([newProgram]).select();
+  const { data, error } = await supabase
+    .from("programs")
+    .insert([newProgram])
+    .select();
   if (error) {
     console.error("Error creating program:", error);
     // Append to local fallback if DB write blocked
@@ -418,6 +464,67 @@ export const createPartnerProgram = async (programData) => {
   return data;
 };
 
+export const createPartnerProgramsBulk = async (programsArray = []) => {
+  if (!Array.isArray(programsArray) || programsArray.length === 0) return [];
+  // Normalize records similar to single-create helper
+  const normalized = programsArray.map((programData) => ({
+    id:
+      programData.id ||
+      `IPES-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`,
+    name: programData.name,
+    university: programData.university,
+    faculty: programData.faculty,
+    campus: programData.campus || "Main Campus",
+    durations: parseInt(programData.durations || 3, 10),
+    tuition_fee_xaf: programData.tuition_fee_xaf
+      ? parseFloat(programData.tuition_fee_xaf)
+      : programData.tuitionFee
+        ? parseFloat(programData.tuitionFee)
+        : null,
+    requires_concour:
+      programData.requires_concour === true ||
+      String(programData.requires_concour).toLowerCase() === "true" ||
+      programData.requiresConcour === "true",
+    portal_url: programData.portal_url || programData.portalUrl || "",
+    required_al_subjects:
+      programData.required_al_subjects || programData.requiredALSubjects || "",
+    tags: Array.isArray(programData.tags)
+      ? programData.tags
+      : (programData.tags || "")
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
+    careers: Array.isArray(programData.careers)
+      ? programData.careers
+      : (programData.careers || "")
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean),
+    descriptions: programData.descriptions || "",
+    institution_id:
+      programData.institutionId || programData.institution_id || null,
+    is_approved: false,
+  }));
+
+  try {
+    const { data, error } = await supabase
+      .from("programs")
+      .insert(normalized)
+      .select();
+    if (error) {
+      console.error("Bulk insert error:", error);
+      // Fallback: prepend to local fallback data
+      normalized.reverse().forEach((p) => fallbackPrograms.unshift(p));
+      return normalized;
+    }
+    return data || normalized;
+  } catch (err) {
+    console.error("Bulk create failed:", err);
+    normalized.reverse().forEach((p) => fallbackPrograms.unshift(p));
+    return normalized;
+  }
+};
+
 export const updatePartnerProgram = async (programId, programData) => {
   const payload = {
     name: programData.name,
@@ -425,20 +532,34 @@ export const updatePartnerProgram = async (programId, programData) => {
     faculty: programData.faculty,
     campus: programData.campus,
     durations: parseInt(programData.durations || 3, 10),
-    tuition_fee_xaf: programData.tuitionFee ? parseFloat(programData.tuitionFee) : null,
-    requires_concour: programData.requiresConcour === true || programData.requiresConcour === "true",
+    tuition_fee_xaf: programData.tuitionFee
+      ? parseFloat(programData.tuitionFee)
+      : null,
+    requires_concour:
+      programData.requiresConcour === true ||
+      programData.requiresConcour === "true",
     portal_url: programData.portalUrl,
     required_al_subjects: programData.requiredALSubjects,
     tags: Array.isArray(programData.tags)
       ? programData.tags
-      : (programData.tags || "").split(",").map((t) => t.trim()).filter(Boolean),
+      : (programData.tags || "")
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
     careers: Array.isArray(programData.careers)
       ? programData.careers
-      : (programData.careers || "").split(",").map((c) => c.trim()).filter(Boolean),
+      : (programData.careers || "")
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean),
     descriptions: programData.descriptions,
   };
 
-  const { data, error } = await supabase.from("programs").update(payload).eq("id", programId).select();
+  const { data, error } = await supabase
+    .from("programs")
+    .update(payload)
+    .eq("id", programId)
+    .select();
   if (error) {
     console.error("Error updating program:", error);
     throw error;
@@ -447,14 +568,13 @@ export const updatePartnerProgram = async (programId, programData) => {
 };
 
 export const deletePartnerProgram = async (programId) => {
-  const { data, error } = await supabase.from("programs").delete().eq("id", programId);
+  const { data, error } = await supabase
+    .from("programs")
+    .delete()
+    .eq("id", programId);
   if (error) {
     console.error("Error deleting program:", error);
     throw error;
   }
   return data;
 };
-
-
-
-

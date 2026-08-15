@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Building2, User, Mail, Lock, Phone, Globe, MapPin, Loader2, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  User,
+  Mail,
+  Lock,
+  Phone,
+  Globe,
+  MapPin,
+  Loader2,
+  ArrowRight,
+  Check,
+} from "lucide-react";
+import { trackEvent } from "../utils/analytics";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import { registerPartnerAccount } from "../services/api";
@@ -29,14 +41,26 @@ const PartnerRegister = () => {
     e.preventDefault();
     setError("");
 
-    if (!formData.fullName || !formData.email || !formData.password || !formData.institutionName || !formData.whatsappNumber) {
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.password ||
+      !formData.institutionName ||
+      !formData.whatsappNumber
+    ) {
       setError("Please fill in all required fields.");
       return;
     }
 
+    trackEvent("partner_register_start", {
+      institution: formData.institutionName || null,
+    });
     setLoading(true);
     try {
       await registerPartnerAccount(formData);
+      trackEvent("partner_register_complete", {
+        institution: formData.institutionName || null,
+      });
       // Success: navigate to partner dashboard
       navigate("/partner/dashboard", { state: { justRegistered: true } });
     } catch (err) {
@@ -59,19 +83,53 @@ const PartnerRegister = () => {
           <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mx-auto mb-3 font-bold">
             <Building2 size={24} />
           </div>
+          {/* Onboarding checklist indicator */}
+          <div className="flex items-center justify-center gap-3 mb-4">
+            {(() => {
+              const step1 =
+                formData.fullName && formData.email && formData.password;
+              const step2 = formData.institutionName && formData.whatsappNumber;
+              const step3 = false; // Programs upload step (later)
+              return (
+                <div className="flex items-center gap-3 text-xs text-slate-500">
+                  <div
+                    className={`px-3 py-1 rounded-full ${step1 ? "bg-green-50 text-green-600" : "bg-slate-100 text-slate-500"}`}
+                  >
+                    Account{" "}
+                    {step1 && <Check size={12} className="inline-block ml-2" />}
+                  </div>
+                  <div
+                    className={`px-3 py-1 rounded-full ${step2 ? "bg-green-50 text-green-600" : "bg-slate-100 text-slate-500"}`}
+                  >
+                    Institution{" "}
+                    {step2 && <Check size={12} className="inline-block ml-2" />}
+                  </div>
+                  <div
+                    className={`px-3 py-1 rounded-full ${step3 ? "bg-green-50 text-green-600" : "bg-slate-100 text-slate-500"}`}
+                  >
+                    Programs
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
           <span className="section-eyebrow block mb-2">Partner Onboarding</span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
             Register Your Private University
           </h1>
           <p className="text-slate-500 text-xs sm:text-sm mt-2">
-            Create an institution portal account to list your degree & HND programs.
+            Create an institution portal account to list your degree & HND
+            programs.
           </p>
         </div>
 
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-md">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="p-3.5 bg-red-50 border border-red-200 text-red-600 text-xs font-semibold rounded-xl" role="alert">
+              <div
+                className="p-3.5 bg-red-50 border border-red-200 text-red-600 text-xs font-semibold rounded-xl"
+                role="alert"
+              >
                 {error}
               </div>
             )}
@@ -87,7 +145,10 @@ const PartnerRegister = () => {
                   Full Name *
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <User
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                    size={16}
+                  />
                   <input
                     type="text"
                     name="fullName"
@@ -105,7 +166,10 @@ const PartnerRegister = () => {
                   Official Email Address *
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Mail
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                    size={16}
+                  />
                   <input
                     type="email"
                     name="email"
@@ -123,7 +187,10 @@ const PartnerRegister = () => {
                   Password *
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Lock
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                    size={16}
+                  />
                   <input
                     type="password"
                     name="password"
@@ -149,7 +216,10 @@ const PartnerRegister = () => {
                   University / Institution Name *
                 </label>
                 <div className="relative">
-                  <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Building2
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                    size={16}
+                  />
                   <input
                     type="text"
                     name="institutionName"
@@ -189,7 +259,10 @@ const PartnerRegister = () => {
                     Campus Location
                   </label>
                   <div className="relative">
-                    <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <MapPin
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                      size={16}
+                    />
                     <input
                       type="text"
                       name="campus"
@@ -207,7 +280,10 @@ const PartnerRegister = () => {
                   WhatsApp Admissions Contact Number *
                 </label>
                 <div className="relative">
-                  <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Phone
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                    size={16}
+                  />
                   <input
                     type="tel"
                     name="whatsappNumber"
@@ -219,7 +295,8 @@ const PartnerRegister = () => {
                   />
                 </div>
                 <p className="text-[11px] text-slate-400 mt-1">
-                  Students will use this number to send direct WhatsApp inquiries for your courses.
+                  Students will use this number to send direct WhatsApp
+                  inquiries for your courses.
                 </p>
               </div>
 
@@ -228,7 +305,10 @@ const PartnerRegister = () => {
                   Official Website (Optional)
                 </label>
                 <div className="relative">
-                  <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Globe
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                    size={16}
+                  />
                   <input
                     type="url"
                     name="websiteUrl"
