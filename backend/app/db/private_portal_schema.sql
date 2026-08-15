@@ -56,7 +56,9 @@ ALTER TABLE public.institution_members ENABLE ROW LEVEL SECURITY;
 
 -- Public can read institutions
 DROP POLICY IF EXISTS "Public can view institutions" ON public.institutions;
-CREATE POLICY "Public can view institutions" ON public.institutions FOR SELECT USING (true);
+-- Public may only view institutions that have been VERIFIED.
+-- Institutions with `verification_status` = 'PENDING' or 'SUSPENDED' remain hidden.
+CREATE POLICY "Public can view institutions" ON public.institutions FOR SELECT USING (verification_status = 'VERIFIED');
 
 -- Authenticated users can insert their institution upon signup
 DROP POLICY IF EXISTS "Authenticated users can create institution" ON public.institutions;
