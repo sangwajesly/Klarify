@@ -13,12 +13,26 @@ def fetch_programs_from_db():
         return None
     try:
         supabase = create_client(url, key)
-        resp = supabase.table('programs').select('*').eq('is_approved', True).execute()
+        # Fetch programs and include linked institution verification status so
+        # we can expose programs that are either approved OR whose institution
+        # has been verified.
+        resp = supabase.table('programs').select('*, institutions(verification_status)').execute()
         data = getattr(resp, 'data', None)
         if data and isinstance(data, list) and len(data) > 0:
             # Normalize keys to match existing program dict shape used elsewhere
             normalized = []
             for p in data:
+                # Determine visibility at service level: program is eligible if
+                # `is_approved` is True OR it's associated with an institution
+                # whose `verification_status` == 'VERIFIED'. The public RLS
+                # mirrors this logic, but because the service key bypasses RLS
+                # we must apply the same rule here for consistency.
+                inst = p.get('institutions') or {}
+                inst_verified = (inst.get('verification_status') == 'VERIFIED') if isinstance(inst, dict) else False
+                if not p.get('is_approved') and not inst_verified:
+                    # Skip unapproved programs that belong to unverified institutions
+                    continue
+
                 normalized.append({
                     'id': p.get('id'),
                     'name': p.get('name'),
