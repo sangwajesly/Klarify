@@ -31,7 +31,7 @@ const PartnerDashboard = () => {
             name: user.user_metadata?.full_name ? `${user.user_metadata.full_name}'s Institute` : "Private University Partner",
             city: "Douala / Yaounde",
             campus: "Main Campus",
-            verification_status: "VERIFIED",
+            verification_status: "PENDING",
           };
           setInstitution(inst);
 
@@ -81,9 +81,23 @@ const PartnerDashboard = () => {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="px-2.5 py-0.5 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-bold uppercase tracking-wider">
-                    Verified Partner
-                  </span>
+                  {institution?.verification_status === "VERIFIED" && (
+                    <span className="px-2.5 py-0.5 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-bold uppercase tracking-wider">
+                      Verified Partner
+                    </span>
+                  )}
+
+                  {institution?.verification_status === "PENDING" && (
+                    <span className="px-2.5 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-amber-700 text-[10px] font-bold uppercase tracking-wider">
+                      Pending Verification
+                    </span>
+                  )}
+
+                  {institution?.verification_status === "SUSPENDED" && (
+                    <span className="px-2.5 py-0.5 rounded-full bg-red-100 border border-red-300 text-red-700 text-[10px] font-bold uppercase tracking-wider">
+                      Suspended
+                    </span>
+                  )}
                 </div>
                 <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white">
                   {institution?.name}
