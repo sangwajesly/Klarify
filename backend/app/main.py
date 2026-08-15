@@ -16,15 +16,20 @@ app = FastAPI(
 )
 
 # CORS configuration
+# Allow overriding allowed origins via environment variable (comma-separated)
+raw_origins = os.getenv(
+    "FRONTEND_ORIGINS",
+    "http://localhost:5173,https://www.klarifypath.com,https://klarifypath.com,https://klarify-path-be.vercel.app",
+)
+allow_origins = [o.strip() for o in raw_origins.split(",") if o.strip()]
+
+# If wildcard is provided, CORSMiddleware requires allow_credentials=False
+use_wildcard = len(allow_origins) == 1 and allow_origins[0] == "*"
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://www.klarifypath.com",
-        "https://klarifypath.com",
-        "https://klarify-path-be.vercel.app"
-    ],
-    allow_credentials=True,
+    allow_origins=allow_origins if not use_wildcard else ["*"],
+    allow_credentials=(not use_wildcard),
     allow_methods=["*"],
     allow_headers=["*"],
 )
