@@ -246,10 +246,10 @@ const Universities = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
                     <Link
                       to={`/universities/${encodeURIComponent(uni.name)}`}
-                      className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors"
+                      className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold sm:px-4 sm:py-2.5 px-3 py-2 rounded-xl transition-colors w-full sm:w-auto justify-center"
                     >
                       Explore Programs & Faculties
                       <ArrowRight size={14} />
