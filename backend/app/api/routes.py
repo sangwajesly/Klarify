@@ -14,7 +14,7 @@ load_dotenv()
 router = APIRouter()
 
 # Include payments subrouter
-router.include_router(payments_router, prefix="/payments", tags=["payments"]) 
+router.include_router(payments_router, tags=["payments"]) 
 
 url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
