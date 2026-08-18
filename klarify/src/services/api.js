@@ -295,8 +295,7 @@ export const fetchUniversityDetails = async (uniName) => {
     programCount: programs.length,
     concoursCount: programs.filter((p) => p.requiresConcours).length,
     faculties: Array.from(facultiesSet).sort(),
-    faculties: Array.from(uni.faculties).sort(),
-    isPrivate: !!uni.hasPrivatePrograms,
+    isPrivate: programs.some((p) => p.institution_id),
   };
 };
 
