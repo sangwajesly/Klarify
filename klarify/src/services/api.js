@@ -333,43 +333,55 @@ export const registerPartnerAccount = async ({
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
+  // Generate UUID on client to avoid RLS .select() 403 failures
+  const institutionId = typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+      });
+
+  const institutionRecord = {
+    id: institutionId,
+    name: institutionName,
+    slug,
+    type: "PRIVATE_IPES",
+    city: city || "Douala / Yaounde",
+    campus: campus || "Main Campus",
+    whatsapp_number: whatsappNumber,
+    website_url: websiteUrl || "",
+    verification_status: "PENDING",
+  };
+
   // 2. Create Institution Record
-  const { data: instData, error: instError } = await supabase
+  const { error: instError } = await supabase
     .from("institutions")
-    .insert([
-      {
-        name: institutionName,
-        slug,
-        type: "PRIVATE_IPES",
-        city: city || "Douala / Yaounde",
-        campus: campus || "Main Campus",
-        whatsapp_number: whatsappNumber,
-        website_url: websiteUrl || "",
-        verification_status: "PENDING",
-      },
-    ])
-    .select()
-    .single();
+    .insert([institutionRecord]);
 
   if (instError) {
     console.error("Institution creation error:", instError);
-    // Continue if fallback table
+    throw instError;
   }
 
   // 3. Link user to institution
-  if (instData) {
-    await supabase.from("institution_members").insert([
+  const { error: memberError } = await supabase
+    .from("institution_members")
+    .insert([
       {
         user_id: user.id,
-        institution_id: instData.id,
+        institution_id: institutionId,
         role: "INSTITUTION_ADMIN",
       },
     ]);
+
+  if (memberError) {
+    console.error("Membership linkage error:", memberError);
+    throw memberError;
   }
 
   return {
     user,
-    institution: instData || { name: institutionName, city, campus },
+    institution: institutionRecord,
   };
 };
 
