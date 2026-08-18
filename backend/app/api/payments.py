@@ -2,11 +2,12 @@ import os
 from uuid import uuid4
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Request, Header
+from fastapi import APIRouter, HTTPException, Request, Header, Depends
 from pydantic import BaseModel
 from supabase import create_client, Client
 
 from app.services.payment_provider import provider
+from app.core.auth import get_current_user
 
 router = APIRouter()
 
@@ -25,9 +26,20 @@ class CreatePaymentRequest(BaseModel):
 
 
 @router.post("/create-intent")
-async def create_payment_intent(payload: CreatePaymentRequest):
+async def create_payment_intent(payload: CreatePaymentRequest, current_user: dict = Depends(get_current_user)):
     if not supabase:
         raise HTTPException(status_code=500, detail="Database connection not configured.")
+
+    # Secure Auth Check: Verify that user is a member of this institution
+    user_id = current_user.get("sub") or current_user.get("id")
+    try:
+        member_check = supabase.table("institution_members").select("role").eq("user_id", user_id).eq("institution_id", payload.institution_id).execute()
+        if not member_check.data:
+            raise HTTPException(status_code=403, detail="Access denied. You are not a member of this institution.")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to verify membership: {str(e)}")
 
     # create a provider payment intent/session
     result = provider.create_payment_intent(
@@ -37,8 +49,10 @@ async def create_payment_intent(payload: CreatePaymentRequest):
         metadata={"description": payload.description} if payload.description else {},
     )
 
-    # persist a payment record
+    # persist a payment record with client-side UUID to prevent RLS SELECT issues
+    payment_id = str(uuid4())
     record = {
+        "id": payment_id,
         "institution_id": payload.institution_id,
         "amount": float(payload.amount),
         "currency": payload.currency or "XAF",
@@ -48,16 +62,15 @@ async def create_payment_intent(payload: CreatePaymentRequest):
         "metadata": {"description": payload.description, "raw": result.get("raw", {})},
     }
 
-    resp = supabase.table("partner_payments").insert(record).execute()
-    if resp.error:
-        raise HTTPException(status_code=500, detail=str(resp.error))
-
-    db_row = resp.data[0]
+    try:
+        supabase.table("partner_payments").insert(record).execute()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database write failed: {str(e)}")
 
     return {
         "checkout_url": result.get("checkout_url"),
         "provider_reference": result.get("provider_reference"),
-        "payment_id": db_row.get("id"),
+        "payment_id": payment_id,
     }
 
 
@@ -90,9 +103,10 @@ async def payments_webhook(request: Request, x_provider_signature: Optional[str]
         "metadata": event,
     }
 
-    resp = supabase.table("partner_payments").update(update_payload).eq("provider_reference", provider_ref).execute()
-    if resp.error:
-        raise HTTPException(status_code=500, detail=str(resp.error))
+    try:
+        resp = supabase.table("partner_payments").update(update_payload).eq("provider_reference", provider_ref).execute()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database update failed: {str(e)}")
 
     # If completed, update the institution subscription_tier
     if mapped_status == "COMPLETED" and len(resp.data) > 0:
@@ -104,6 +118,10 @@ async def payments_webhook(request: Request, x_provider_signature: Optional[str]
         if amount >= 350000:
             new_tier = "FEATURED"
         
-        supabase.table("institutions").update({"subscription_tier": new_tier}).eq("id", inst_id).execute()
+        try:
+            supabase.table("institutions").update({"subscription_tier": new_tier}).eq("id", inst_id).execute()
+        except Exception as e:
+            # Log error but don't fail webhook response completely
+            print(f"Failed to update institution subscription tier: {e}")
 
     return {"ok": True}
