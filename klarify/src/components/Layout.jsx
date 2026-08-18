@@ -35,99 +35,101 @@ const Layout = ({ children, noPadding = false }) => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* ── Header ── */}
-      <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200/60 py-3.5 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-            K
-          </div>
-          <Link
-            to="/"
-            className="font-bold text-lg text-slate-900 tracking-tight hover:text-slate-700 transition-colors"
-          >
-            Klarify
-          </Link>
-        </div>
-
-        {/* Mobile GCE Results Quick Badge (Center) */}
-        <div className="md:hidden">
-          <Link
-            to="/gce-results"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-full shadow-xs transition-all"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-200 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-            </span>
-            <span>GCE Results</span>
-          </Link>
-        </div>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          <nav className="flex items-center gap-7">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/gce-results">GCE Results</NavLink>
-            <NavLink
-              to="/partners"
-              onClick={() =>
-                trackEvent("partner_cta_click", { location: "header_nav" })
-              }
+      <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200/60 py-3.5 sticky top-0 z-50">
+        <div className="max-w-6xl w-full mx-auto px-6 md:px-12 flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+              K
+            </div>
+            <Link
+              to="/"
+              className="font-bold text-lg text-slate-900 tracking-tight hover:text-slate-700 transition-colors"
             >
-              Partner
-            </NavLink>
-            <NavLink to="/about">About</NavLink>
-          </nav>
-
-          <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
-            {!loading && user ? (
-              <>
-                <span className="text-sm text-slate-500 hidden lg:inline truncate max-w-40">
-                  {user.email}
-                </span>
-                <Link
-                  to="/profile"
-                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  Profile
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/flow"
-                  className="px-5 py-2 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-colors"
-                >
-                  Get Started
-                </Link>
-              </>
-            )}
+              Klarify
+            </Link>
           </div>
-        </div>
 
-        {/* Mobile Hamburger Toggle */}
-        <div className="md:hidden flex items-center">
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-slate-600 hover:text-slate-900 focus:outline-none"
-            aria-label="Toggle mobile menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile GCE Results Quick Badge (Center) */}
+          <div className="md:hidden">
+            <Link
+              to="/gce-results"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-full shadow-xs transition-all"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-200 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+              </span>
+              <span>GCE Results</span>
+            </Link>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            <nav className="flex items-center gap-7">
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/gce-results">GCE Results</NavLink>
+              <NavLink
+                to="/partners"
+                onClick={() =>
+                  trackEvent("partner_cta_click", { location: "header_nav" })
+                }
+              >
+                Partner
+              </NavLink>
+              <NavLink to="/about">About</NavLink>
+            </nav>
+
+            <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
+              {!loading && user ? (
+                <>
+                  <span className="text-sm text-slate-500 hidden lg:inline truncate max-w-40">
+                    {user.email}
+                  </span>
+                  <Link
+                    to="/profile"
+                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleSignOut}
+                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/flow"
+                    className="px-5 py-2 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-colors"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Hamburger Toggle */}
+          <div className="md:hidden flex items-center">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-slate-600 hover:text-slate-900 focus:outline-none"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -139,7 +141,7 @@ const Layout = ({ children, noPadding = false }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white border-b border-slate-200/60 shadow-lg fixed top-15 left-0 right-0 z-50 overflow-hidden max-h-[calc(100vh-60px)]"
+            className="md:hidden bg-white border-b border-slate-200/60 shadow-lg fixed top-[57px] left-0 right-0 z-50 overflow-hidden max-h-[calc(100vh-60px)]"
           >
             <nav className="flex flex-col px-6 py-4 space-y-4">
               <Link
@@ -309,14 +311,14 @@ const Layout = ({ children, noPadding = false }) => {
 
       {/* ── Page Content ── */}
       <main
-        className={`flex-1 ${noPadding ? "" : "max-w-5xl w-full mx-auto p-6 md:p-12"}`}
+        className={`flex-1 ${noPadding ? "" : "max-w-6xl w-full mx-auto p-6 md:p-12"}`}
       >
         {children}
       </main>
 
       {/* ── Footer ── */}
       <footer className="bg-slate-900 text-slate-400 pt-14 pb-8 border-t border-slate-800">
-        <div className="max-w-5xl mx-auto px-6 md:px-12">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
           {/* Footer grid */}
           <div className="grid grid-cols-2 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800">
             {/* Brand col */}

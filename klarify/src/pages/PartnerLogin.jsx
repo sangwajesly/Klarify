@@ -14,7 +14,7 @@ const normalizePhone = (value) => {
 
 const PartnerLogin = () => {
   const navigate = useNavigate();
-  const { signIn, signInWithPhone, user } = useAuth();
+  const { signIn, signInWithPhone, user, signOut } = useAuth();
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,9 @@ const PartnerLogin = () => {
   const usingPhone = isPhone(identifier);
 
   React.useEffect(() => {
-    if (user) navigate("/partner/dashboard");
+    if (user && user.user_metadata?.user_type === "INSTITUTION_ADMIN") {
+      navigate("/partner/dashboard");
+    }
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
@@ -53,12 +55,18 @@ const PartnerLogin = () => {
 
     setLoading(true);
     try {
+      let data;
       if (usingPhone) {
         const phone = normalizePhone(identifier);
-        await signInWithPhone(phone, password);
-        navigate("/partner/dashboard");
+        data = await signInWithPhone(phone, password);
       } else {
-        await signIn(identifier, password);
+        data = await signIn(identifier, password);
+      }
+
+      if (data?.user?.user_metadata?.user_type !== "INSTITUTION_ADMIN") {
+        setError("Access denied. Only institution accounts can access the partner portal.");
+        await signOut();
+      } else {
         navigate("/partner/dashboard");
       }
     } catch (err) {

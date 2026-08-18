@@ -333,7 +333,7 @@ const GceResults = () => {
 
       {/* ── Content below hero ── */}
       <section className="bg-slate-900 px-4 md:px-6 py-16">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Core highlights */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
             {[

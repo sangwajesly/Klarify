@@ -103,7 +103,7 @@ const Home = () => {
         {/* ── GCE Banner ── */}
         {showGceBanner && (
           <div className="bg-orange-600 text-white relative z-20">
-            <div className="max-w-5xl mx-auto px-6 md:px-12 py-2.5 flex items-center justify-between gap-3">
+            <div className="max-w-6xl mx-auto px-6 md:px-12 py-2.5 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0">
                 <span className="flex h-2 w-2 shrink-0">
                   <span className="relative flex h-2 w-2">
@@ -153,7 +153,7 @@ const Home = () => {
             <div className="absolute inset-0 bg-linear-to-r from-orange-900/20 via-transparent to-transparent" />
           </div>
 
-          <div className="relative z-10 w-full max-w-5xl mx-auto px-6 md:px-12 pb-16 pt-20 md:py-24">
+          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 pb-16 pt-20 md:py-24">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/8 text-white text-xs font-medium mb-8 backdrop-blur-sm">
               <span
@@ -208,7 +208,7 @@ const Home = () => {
 
         {/* ── About KlarifyPath ── */}
         <section className="py-20 px-6 md:px-12 bg-white">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-center">
               {/* Left: eyebrow + heading */}
               <div className="md:col-span-5">
@@ -248,7 +248,7 @@ const Home = () => {
 
         {/* ── Why Choose Us ── */}
         <section className="bg-slate-900 py-20 px-6 md:px-12">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="mb-12">
               <span className="section-eyebrow block mb-3">
                 Why KlarifyPath
@@ -280,7 +280,7 @@ const Home = () => {
 
         {/* ── Partner Advertisement ── */}
         <section className="py-16 px-6 md:px-12 bg-white">
-          <div className="max-w-5xl mx-auto rounded-2xl p-8 md:p-12 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-6">
+          <div className="max-w-6xl mx-auto rounded-2xl p-8 md:p-12 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-6">
             <div className="flex-1">
               <h3 className="text-2xl font-extrabold text-slate-900 mb-3">
                 Partner With Klarify
@@ -333,7 +333,7 @@ const Home = () => {
 
         {/* ── How It Works ── */}
         <section className="py-20 px-6 md:px-12 bg-slate-50">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="mb-14 text-center">
               <span className="section-eyebrow block mb-3">How It Works</span>
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
@@ -369,7 +369,7 @@ const Home = () => {
 
         {/* ── Universities Covered ── */}
         <section className="py-20 px-6 md:px-12 bg-white">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="mb-12">
               <span className="section-eyebrow block mb-3">Coverage</span>
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">
@@ -421,7 +421,7 @@ const Home = () => {
         >
           {/* ── Partner Promo ── */}
           <section className="py-12 px-6 md:px-12 bg-slate-50">
-            <div className="max-w-5xl mx-auto rounded-2xl bg-white p-6 md:p-8 border border-slate-200 flex flex-col md:flex-row items-center gap-6">
+            <div className="max-w-6xl mx-auto rounded-2xl bg-white p-6 md:p-8 border border-slate-200 flex flex-col md:flex-row items-center gap-6">
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-slate-900">
                   Reach students actively choosing programs

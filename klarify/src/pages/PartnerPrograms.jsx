@@ -154,8 +154,12 @@ const PartnerPrograms = () => {
   };
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/partner/register");
+    if (!authLoading) {
+      if (!user) {
+        navigate("/partner/login");
+      } else if (user.user_metadata?.user_type !== "INSTITUTION_ADMIN") {
+        navigate("/");
+      }
     }
   }, [user, authLoading, navigate]);
 
