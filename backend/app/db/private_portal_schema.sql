@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS public.institutions (
     slug TEXT UNIQUE NOT NULL,
     type public.institution_type DEFAULT 'PRIVATE_IPES',
     verification_status public.verification_status DEFAULT 'PENDING',
+    subscription_tier TEXT DEFAULT 'STARTER',
     city TEXT NOT NULL,
     campus TEXT,
     logo_url TEXT,
@@ -41,7 +42,20 @@ CREATE TABLE IF NOT EXISTS public.institution_members (
     UNIQUE(user_id, institution_id)
 );
 
--- 4. Extend Programs Table to support Private University Attributes
+-- 4. Create Partner Payments Table
+CREATE TABLE IF NOT EXISTS public.partner_payments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    institution_id UUID NOT NULL REFERENCES public.institutions(id) ON DELETE CASCADE,
+    amount NUMERIC(10, 2) NOT NULL,
+    currency TEXT DEFAULT 'XAF',
+    provider TEXT NOT NULL,
+    provider_reference TEXT UNIQUE NOT NULL,
+    status TEXT DEFAULT 'PENDING',
+    metadata JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 5. Extend Programs Table to support Private University Attributes
 ALTER TABLE public.programs 
 ADD COLUMN IF NOT EXISTS institution_id UUID REFERENCES public.institutions(id) ON DELETE CASCADE,
 ADD COLUMN IF NOT EXISTS campus TEXT,
@@ -67,6 +81,12 @@ CREATE POLICY "Authenticated users can create institution" ON public.institution
 -- Institution admins can update their institution profile
 DROP POLICY IF EXISTS "Uni admins can update own institution" ON public.institutions;
 CREATE POLICY "Uni admins can update own institution" ON public.institutions FOR UPDATE USING (
+    id IN (SELECT institution_id FROM public.institution_members WHERE user_id = auth.uid())
+);
+
+-- Institution admins can select their own institution (even if PENDING)
+DROP POLICY IF EXISTS "Uni admins can select own institution" ON public.institutions;
+CREATE POLICY "Uni admins can select own institution" ON public.institutions FOR SELECT USING (
     id IN (SELECT institution_id FROM public.institution_members WHERE user_id = auth.uid())
 );
 

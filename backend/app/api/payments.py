@@ -42,10 +42,10 @@ async def create_payment_intent(payload: CreatePaymentRequest):
         "institution_id": payload.institution_id,
         "amount": float(payload.amount),
         "currency": payload.currency or "XAF",
-        "provider": os.getenv("PAYMENT_PROVIDER_NAME", "unknown"),
+        "provider": "FAPSHI",
         "provider_reference": result.get("provider_reference"),
         "status": "PENDING",
-        "metadata": result.get("raw", {}),
+        "metadata": {"description": payload.description, "raw": result.get("raw", {})},
     }
 
     resp = supabase.table("partner_payments").insert(record).execute()
@@ -78,12 +78,15 @@ async def payments_webhook(request: Request, x_provider_signature: Optional[str]
     if not provider_ref:
         return {"ok": False, "reason": "missing provider_reference"}
 
-    # Normalize status mapping - provider-specific mapping should be added
-    mapped_status = "COMPLETED" if str(status).lower() in ("paid", "completed", "payment.succeeded") else "FAILED"
+    # Normalize Fapshi status mapping
+    mapped_status = "PENDING"
+    if str(status).upper() == "SUCCESSFUL":
+        mapped_status = "COMPLETED"
+    elif str(status).upper() in ("FAILED", "EXPIRED"):
+        mapped_status = "FAILED"
 
     update_payload = {
         "status": mapped_status,
-        "provider_reference": provider_ref,
         "metadata": event,
     }
 
@@ -91,8 +94,16 @@ async def payments_webhook(request: Request, x_provider_signature: Optional[str]
     if resp.error:
         raise HTTPException(status_code=500, detail=str(resp.error))
 
-    # Optionally, upon successful payment you may want to flip institution verification
-    # or trigger other business workflows. Keep that out of the webhook by default
-    # and surface a small event via `metadata` so admins can act.
+    # If completed, update the institution subscription_tier
+    if mapped_status == "COMPLETED" and len(resp.data) > 0:
+        payment_record = resp.data[0]
+        inst_id = payment_record.get("institution_id")
+        amount = float(payment_record.get("amount", 0))
+        
+        new_tier = "PRO"
+        if amount >= 350000:
+            new_tier = "FEATURED"
+        
+        supabase.table("institutions").update({"subscription_tier": new_tier}).eq("id", inst_id).execute()
 
     return {"ok": True}

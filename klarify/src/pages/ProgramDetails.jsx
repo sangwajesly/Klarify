@@ -181,10 +181,10 @@ const ProgramDetails = () => {
                     <span>{program.faculty}</span>
                   </div>
                 )}
-                {program.degree_obtained && (
+                {program.degreeObtained && (
                   <div className="flex items-center gap-1.5">
                     <Award size={16} className="text-orange-400" />
-                    <span>{program.degree_obtained}</span>
+                    <span>{program.degreeObtained}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1.5">

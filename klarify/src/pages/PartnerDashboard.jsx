@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Building2, BookOpen, PlusCircle, CheckCircle2, MapPin, Globe, Phone, Loader2, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  BookOpen,
+  PlusCircle,
+  CheckCircle2,
+  MapPin,
+  Globe,
+  Phone,
+  Loader2,
+  ArrowRight,
+} from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import { useAuth } from "../context/AuthContext";
-import { getPartnerProfile, fetchPartnerInstitutionPrograms } from "../services/api";
+import {
+  getPartnerProfile,
+  fetchPartnerInstitutionPrograms,
+  initiateSubscriptionPayment,
+} from "../services/api";
 
 const PartnerDashboard = () => {
   const { user, loading: authLoading } = useAuth();
@@ -14,6 +28,7 @@ const PartnerDashboard = () => {
   const [institution, setInstitution] = useState(null);
   const [programsCount, setProgramsCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -28,14 +43,20 @@ const PartnerDashboard = () => {
         try {
           const profile = await getPartnerProfile(user.id);
           const inst = profile || {
-            name: user.user_metadata?.full_name ? `${user.user_metadata.full_name}'s Institute` : "Private University Partner",
+            name: user.user_metadata?.full_name
+              ? `${user.user_metadata.full_name}'s Institute`
+              : "Private University Partner",
             city: "Douala / Yaounde",
             campus: "Main Campus",
             verification_status: "PENDING",
+            subscription_tier: "STARTER",
           };
           setInstitution(inst);
 
-          const progs = await fetchPartnerInstitutionPrograms(inst.id, inst.name);
+          const progs = await fetchPartnerInstitutionPrograms(
+            inst.id,
+            inst.name,
+          );
           setProgramsCount(progs.length);
         } catch (err) {
           console.error("Failed to load partner dashboard data:", err);
@@ -46,6 +67,22 @@ const PartnerDashboard = () => {
     };
     loadProfileData();
   }, [user]);
+
+  const handleUpgrade = async (amount, planName) => {
+    if (!institution?.id) return;
+    setPaymentLoading(true);
+    try {
+      const resp = await initiateSubscriptionPayment(institution.id, amount, `Upgrade to ${planName} Plan`);
+      if (resp.checkout_url) {
+        window.location.href = resp.checkout_url;
+      }
+    } catch (err) {
+      console.error("Payment initiation failed:", err);
+      alert("Failed to initiate payment. Please try again.");
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
 
   if (authLoading || loading) {
     return (
@@ -68,7 +105,10 @@ const PartnerDashboard = () => {
         {location.state?.justRegistered && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-2xl flex items-center gap-3 text-xs sm:text-sm font-semibold">
             <CheckCircle2 size={20} className="text-green-500 shrink-0" />
-            <span>Welcome to Klarify! Your university portal profile has been created. Start adding your courses below.</span>
+            <span>
+              Welcome to Klarify! Your university portal profile has been
+              created. Start adding your courses below.
+            </span>
           </div>
         )}
 
@@ -105,12 +145,13 @@ const PartnerDashboard = () => {
                 <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300 mt-1">
                   <span className="flex items-center gap-1">
                     <MapPin size={12} className="text-orange-400" />
-                    {institution?.city || "Cameroon"} ({institution?.campus || "Main Campus"})
+                    {institution?.city || "Cameroon"} (
+                    {institution?.campus || "Main Campus"})
                   </span>
                   {institution?.whatsapp_number && (
                     <span className="flex items-center gap-1">
-                      <Phone size={12} className="text-orange-400" />
-                      +{institution.whatsapp_number}
+                      <Phone size={12} className="text-orange-400" />+
+                      {institution.whatsapp_number}
                     </span>
                   )}
                 </div>
@@ -131,8 +172,12 @@ const PartnerDashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
             <div>
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Listed Programs</span>
-              <span className="text-3xl font-extrabold text-slate-900">{programsCount}</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
+                Listed Programs
+              </span>
+              <span className="text-3xl font-extrabold text-slate-900">
+                {programsCount}
+              </span>
             </div>
             <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center font-bold">
               <BookOpen size={24} />
@@ -141,8 +186,12 @@ const PartnerDashboard = () => {
 
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
             <div>
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Active Status</span>
-              <span className="text-base font-bold text-green-600">Pro Active</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
+                Active Status
+              </span>
+              <span className="text-base font-bold text-green-600">
+                {institution?.subscription_tier || "STARTER"} Plan
+              </span>
             </div>
             <div className="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center font-bold">
               <CheckCircle2 size={24} />
@@ -151,8 +200,12 @@ const PartnerDashboard = () => {
 
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
             <div>
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">WhatsApp Leads</span>
-              <span className="text-base font-bold text-slate-900">Direct Contact</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
+                WhatsApp Leads
+              </span>
+              <span className="text-base font-bold text-slate-900">
+                Direct Contact
+              </span>
             </div>
             <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
               <Phone size={24} />
@@ -160,9 +213,39 @@ const PartnerDashboard = () => {
           </div>
         </div>
 
+        {/* Subscription Upgrades */}
+        {(institution?.subscription_tier === "STARTER" || !institution?.subscription_tier) && (
+          <div className="bg-orange-50 rounded-3xl p-6 sm:p-8 border border-orange-200 shadow-xs mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div>
+              <h2 className="text-lg font-bold text-slate-900 mb-1">Upgrade your Portal Plan</h2>
+              <p className="text-sm text-slate-600">
+                You are currently on the Free Starter plan. Upgrade to unlock unlimited programs, direct WhatsApp leads, and priority ranking.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
+              <button
+                onClick={() => handleUpgrade(150000, "PRO")}
+                disabled={paymentLoading}
+                className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-100 transition-colors disabled:opacity-50"
+              >
+                {paymentLoading ? "Please wait..." : "Upgrade to PRO (150k XAF)"}
+              </button>
+              <button
+                onClick={() => handleUpgrade(350000, "FEATURED")}
+                disabled={paymentLoading}
+                className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 transition-colors disabled:opacity-50"
+              >
+                {paymentLoading ? "Please wait..." : "Get FEATURED (350k XAF)"}
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Management Quick Actions */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs mb-8">
-          <h2 className="text-lg font-bold text-slate-900 mb-4">Portal Management Actions</h2>
+          <h2 className="text-lg font-bold text-slate-900 mb-4">
+            Portal Management Actions
+          </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
@@ -178,7 +261,8 @@ const PartnerDashboard = () => {
                   <ArrowRight size={16} />
                 </h3>
                 <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                  Add new Bachelor's, HNDs, or Master's programs with tuition fees, prerequisites, and campus locations.
+                  Add new Bachelor's, HNDs, or Master's programs with tuition
+                  fees, prerequisites, and campus locations.
                 </p>
               </div>
             </Link>
@@ -196,7 +280,8 @@ const PartnerDashboard = () => {
                   <Globe size={16} />
                 </h3>
                 <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                  See how students view your university campus and courses in the main Klarify Directory.
+                  See how students view your university campus and courses in
+                  the main Klarify Directory.
                 </p>
               </div>
             </Link>

@@ -52,6 +52,7 @@ const PartnerPrograms = () => {
     requiresConcour: "false",
     requiredALSubjects: "",
     portalUrl: "",
+    degreeObtained: "",
     careers: "",
     descriptions: "",
   };
@@ -208,6 +209,7 @@ const PartnerPrograms = () => {
         requiredALSubjects:
           program.required_al_subjects || program.requiredALSubjects || "",
         portalUrl: program.portal_url || program.portalUrl || "",
+        degreeObtained: program.degree_obtained || program.degreeObtained || "",
         careers: Array.isArray(program.careers)
           ? program.careers.join(", ")
           : program.careers || "",
@@ -644,19 +646,44 @@ const PartnerPrograms = () => {
                   </div>
                 </div>
 
-                {/* Required A-Level Subjects */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Required GCE A-Level Subjects
-                  </label>
-                  <input
-                    type="text"
-                    name="requiredALSubjects"
-                    value={formData.requiredALSubjects}
-                    onChange={handleFormChange}
-                    placeholder="e.g. Mathematics, Physics, Chemistry"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
-                  />
+                {/* Degree Obtained & Required A-Level Subjects */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Degree Obtained *
+                    </label>
+                    <select
+                      name="degreeObtained"
+                      value={formData.degreeObtained}
+                      onChange={handleFormChange}
+                      required
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                    >
+                      <option value="">Select Degree Type...</option>
+                      <option value="HND">Higher National Diploma (HND)</option>
+                      <option value="BSc">Bachelor of Science (BSc)</option>
+                      <option value="BA">Bachelor of Arts (BA)</option>
+                      <option value="BTech">Bachelor of Technology (BTech)</option>
+                      <option value="BEng">Bachelor of Engineering (BEng)</option>
+                      <option value="Master">Master's Degree</option>
+                      <option value="PhD">Doctorate (PhD)</option>
+                      <option value="Other">Other Certificate / Diploma</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Required GCE A-Level Subjects
+                    </label>
+                    <input
+                      type="text"
+                      name="requiredALSubjects"
+                      value={formData.requiredALSubjects}
+                      onChange={handleFormChange}
+                      placeholder="e.g. Mathematics, Physics, Chemistry"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                    />
+                  </div>
                 </div>
 
                 {/* Application Portal Link */}

@@ -161,6 +161,7 @@ const formatProgramRecord = (p, cMap = {}) => {
     requiresConcours: requiresConc,
     portalUrl: p.portal_url || p.portalUrl,
     requiredALSubjects: p.required_al_subjects,
+    degreeObtained: p.degree_obtained || p.degreeObtained,
     tags: p.tags || [],
     careers: p.careers || p.Careers || [],
     descriptions: p.descriptions,
@@ -374,7 +375,7 @@ export const registerPartnerAccount = async ({
 };
 
 export const getPartnerProfile = async (userId) => {
-  try {
+    try {
     const { data, error } = await supabase
       .from("institution_members")
       .select(
@@ -389,6 +390,7 @@ export const getPartnerProfile = async (userId) => {
     if (error || !data || !data.institutions) {
       return null;
     }
+    // Return institution with subscription_tier (added to DB)
     return data.institutions;
   } catch (err) {
     console.error("Failed to load partner profile:", err);
@@ -440,6 +442,7 @@ export const createPartnerProgram = async (programData) => {
           .split(",")
           .map((t) => t.trim())
           .filter(Boolean),
+    degree_obtained: programData.degreeObtained || "",
     careers: Array.isArray(programData.careers)
       ? programData.careers
       : (programData.careers || "")
@@ -494,6 +497,7 @@ export const createPartnerProgramsBulk = async (programsArray = []) => {
           .split(",")
           .map((t) => t.trim())
           .filter(Boolean),
+    degree_obtained: programData.degree_obtained || programData.degreeObtained || "",
     careers: Array.isArray(programData.careers)
       ? programData.careers
       : (programData.careers || "")
@@ -546,6 +550,7 @@ export const updatePartnerProgram = async (programId, programData) => {
           .split(",")
           .map((t) => t.trim())
           .filter(Boolean),
+    degree_obtained: programData.degreeObtained,
     careers: Array.isArray(programData.careers)
       ? programData.careers
       : (programData.careers || "")
@@ -577,4 +582,19 @@ export const deletePartnerProgram = async (programId) => {
     throw error;
   }
   return data;
+};
+
+// --- Payments API ---
+export const initiateSubscriptionPayment = async (institutionId, amount, description) => {
+  const headers = await getAuthHeaders();
+  const response = await axios.post(
+    `${API_URL}/create-intent`,
+    {
+      institution_id: institutionId,
+      amount: parseFloat(amount),
+      description: description,
+    },
+    { headers }
+  );
+  return response.data;
 };
