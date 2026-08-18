@@ -609,3 +609,43 @@ export const initiateSubscriptionPayment = async (institutionId, amount, descrip
   );
   return response.data;
 };
+
+// --- Resilient Auto-recovery Helper for Broken Registrations ---
+export const recoverPartnerProfile = async (user) => {
+  const institutionId = typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+      });
+
+  const slug = `recovered-${user.id.substring(0, 8)}`;
+  const institutionRecord = {
+    id: institutionId,
+    name: user.user_metadata?.full_name 
+      ? `${user.user_metadata.full_name}'s Institute` 
+      : "My Private Institute",
+    slug,
+    type: "PRIVATE_IPES",
+    city: "Douala",
+    campus: "Main Campus",
+    whatsapp_number: "237600000000",
+    website_url: "",
+    verification_status: "PENDING",
+    subscription_tier: "STARTER",
+  };
+
+  // 1. Create Institution
+  await supabase.from("institutions").insert([institutionRecord]);
+  
+  // 2. Create Membership Linkage
+  await supabase.from("institution_members").insert([
+    {
+      user_id: user.id,
+      institution_id: institutionId,
+      role: "INSTITUTION_ADMIN",
+    },
+  ]);
+
+  return institutionRecord;
+};
