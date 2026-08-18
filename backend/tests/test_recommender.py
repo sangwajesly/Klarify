@@ -6,6 +6,8 @@ Verifies that TF-IDF vectorization and precomputation work correctly.
 import pytest
 import numpy as np
 from app.core.recommender import Recommender
+from app.models.request_models import RecommendationRequest
+from app.services.recommendation_service import get_recommendations
 
 
 class TestRecommender:
@@ -75,6 +77,20 @@ class TestRecommender:
         web_ml_score = web_similarities[0]
         
         assert ml_score > web_ml_score
+
+
+def test_recommendation_service_accepts_subject_inputs_and_returns_results():
+    """The service should accept real subject-interest input and return a valid result payload."""
+    request = RecommendationRequest(
+        subjects=["Mathematics", "Physics"],
+        interest=["technology", "innovation"],
+    )
+
+    response = get_recommendations(request)
+
+    assert len(response.programs) > 0
+    assert all(program.portalUrl for program in response.programs)
+    assert response.programs[0].score >= 0
 
 
 if __name__ == "__main__":

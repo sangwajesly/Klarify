@@ -197,7 +197,7 @@ def get_recommendations(request: RecommendationRequest) -> RecommendationRespons
                 faculty=prog.get("faculty") or "Unknown",
                 duration=duration_val,
                 requiresConcours=requires_conc,
-                portalUrl=prog.get("portalUrl", "#"),
+                portalUrl=prog.get("portalUrl") or "#",
                 descriptions=prog.get("descriptions") or prog.get("description"),
                 degree_obtained=prog.get("degree_obtained"),
                 tuition_fee_xaf=(float(prog.get("tuition_fee_xaf")) if prog.get("tuition_fee_xaf") is not None else None),
