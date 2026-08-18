@@ -14,6 +14,13 @@ import {
   MapPin,
   Clock,
   GraduationCap,
+  Upload,
+  FileSpreadsheet,
+  Download,
+  AlertCircle,
+  HelpCircle,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
@@ -63,6 +70,47 @@ const PartnerPrograms = () => {
   const [csvPreview, setCsvPreview] = useState([]);
   const [parsing, setParsing] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+
+  const CSV_TEMPLATE = 
+    "name,faculty,campus,durations,tuitionFee,requiresConcour,degreeObtained,requiredALSubjects,careers,descriptions\n" +
+    '"Software Engineering","Faculty of Engineering & Technology","Main Campus",4,350000,false,"B.Tech","Mathematics, Physics","Software Engineer, DevOps Engineer, Fullstack Developer","Learn modern software engineering concepts and build scalable applications."\n' +
+    '"Computer Science","Faculty of Science","Molyko Campus",3,200000,false,"B.Sc","Mathematics","Data Scientist, System Administrator, IT Consultant","Deep dive into computer architecture, programming, algorithms, and theory."\n' +
+    '"Medicine and Surgery","Faculty of Health Sciences","Main Campus",7,900000,true,"M.D.","Biology, Chemistry","Medical Doctor, Surgeon, General Practitioner","Become a certified medical practitioner equipped to serve local communities."';
+
+  const downloadSampleCsv = () => {
+    const blob = new Blob([CSV_TEMPLATE], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "klarify_programs_sample.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      if (file.type === "text/csv" || file.name.endsWith(".csv")) {
+        handleCsvFile(file);
+      } else {
+        alert("Please upload a valid CSV file.");
+      }
+    }
+  };
 
   const handleCsvFile = (file) => {
     setCsvFile(file || null);
@@ -330,81 +378,201 @@ const PartnerPrograms = () => {
         </div>
 
         {/* Bulk CSV Upload */}
-        <div className="mb-6">
-          <div className="bg-white rounded-2xl border border-slate-200/80 p-4 text-sm">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
-                <BookOpen size={20} />
+        <div className="mb-8">
+          <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-100 pb-4">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <FileSpreadsheet className="text-orange-500" size={22} />
+                  Bulk Upload Academic Programs
+                </h2>
+                <p className="text-xs text-slate-500 mt-1">
+                  Upload a CSV file to add multiple Bachelor's degrees, HNDs, or Master's programs at once.
+                </p>
               </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-bold text-slate-900">
-                      Bulk Upload Programs
-                    </div>
-                    <div className="text-xs text-slate-500">
-                      Upload a CSV of your programs to add them in bulk.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-3 flex items-center gap-3">
-                  <input
-                    type="file"
-                    accept="text/csv"
-                    onChange={(e) =>
-                      handleCsvFile(e.target.files && e.target.files[0])
-                    }
-                  />
-                  <button
-                    onClick={parseCsvPreview}
-                    disabled={!csvFile || parsing}
-                    className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs"
-                  >
-                    {parsing ? "Parsing..." : "Preview"}
-                  </button>
-                  <button
-                    onClick={uploadCsv}
-                    disabled={csvPreview.length === 0 || uploading}
-                    className="px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs"
-                  >
-                    {uploading ? "Uploading..." : "Upload"}
-                  </button>
-                </div>
-
-                {csvPreview.length > 0 && (
-                  <div className="mt-3 text-xs text-slate-600">
-                    <div className="font-semibold mb-2">
-                      Preview ({csvPreview.length} rows)
-                    </div>
-                    <div className="overflow-x-auto max-h-40">
-                      <table className="text-left text-[11px] w-full">
-                        <thead>
-                          <tr className="text-slate-500">
-                            <th className="pr-3">Name</th>
-                            <th className="pr-3">Faculty</th>
-                            <th className="pr-3">Tuition</th>
-                            <th className="pr-3">Campus</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {csvPreview.slice(0, 8).map((r, i) => (
-                            <tr key={i} className="odd:bg-slate-50">
-                              <td className="pr-3 py-1">{r.name}</td>
-                              <td className="pr-3 py-1">{r.faculty}</td>
-                              <td className="pr-3 py-1">
-                                {r.tuition_fee_xaf || r.tuitionFee || ""}
-                              </td>
-                              <td className="pr-3 py-1">{r.campus || ""}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <button
+                type="button"
+                onClick={downloadSampleCsv}
+                className="inline-flex items-center gap-2 px-4 py-2 border border-orange-200 text-orange-600 font-bold text-xs rounded-xl hover:bg-orange-50 transition-colors cursor-pointer shrink-0"
+              >
+                <Download size={14} />
+                Download Sample CSV
+              </button>
             </div>
+
+            {/* Custom Drag & Drop Zone */}
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              onClick={() => document.getElementById("csv-file-input").click()}
+              className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${
+                isDragging
+                  ? "border-orange-500 bg-orange-50/20"
+                  : csvFile
+                  ? "border-green-400 bg-green-50/10"
+                  : "border-slate-200 hover:border-orange-400 bg-slate-50/50 hover:bg-orange-50/10"
+              }`}
+            >
+              <input
+                id="csv-file-input"
+                type="file"
+                accept="text/csv"
+                className="hidden"
+                onChange={(e) => handleCsvFile(e.target.files && e.target.files[0])}
+              />
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
+                csvFile ? "bg-green-100 text-green-600" : "bg-slate-100 text-slate-400"
+              }`}>
+                {csvFile ? <CheckCircle2 size={24} /> : <Upload size={24} />}
+              </div>
+              {csvFile ? (
+                <div>
+                  <p className="text-sm font-bold text-slate-900">{csvFile.name}</p>
+                  <p className="text-xs text-slate-500 mt-1">
+                    {(csvFile.size / 1024).toFixed(1)} KB &bull; File ready to parse
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-sm font-bold text-slate-900">
+                    Drag & drop your CSV file here, or <span className="text-orange-500">browse</span>
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Only CSV format is supported. Max file size: 10MB.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Collapsible Headers Guide */}
+            <div className="mt-4 border border-slate-150 rounded-2xl overflow-hidden bg-slate-50/40">
+              <button
+                type="button"
+                onClick={() => setShowInstructions(!showInstructions)}
+                className="w-full px-5 py-3.5 flex items-center justify-between font-bold text-slate-700 text-xs hover:bg-slate-55 transition-colors cursor-pointer"
+              >
+                <span className="flex items-center gap-2">
+                  <HelpCircle size={15} className="text-orange-500" />
+                  View CSV File Format & Columns Guide
+                </span>
+                {showInstructions ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              </button>
+              {showInstructions && (
+                <div className="px-5 pb-5 pt-2 border-t border-slate-100 text-[11px] text-slate-650 leading-relaxed space-y-4">
+                  <p>
+                    Ensure your CSV file contains the following column header row exactly as listed. The columns can be in any order:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white p-4 rounded-xl border border-slate-100">
+                    <div>
+                      <strong className="text-slate-900">name*</strong>: Name of the course (e.g. <code>Software Engineering</code>)
+                    </div>
+                    <div>
+                      <strong className="text-slate-900">faculty*</strong>: Faculty name (e.g. <code>Faculty of Engineering</code>)
+                    </div>
+                    <div>
+                      <strong className="text-slate-900">tuitionFee</strong>: Tuition amount in XAF (e.g. <code>350000</code>)
+                    </div>
+                    <div>
+                      <strong className="text-slate-900">campus</strong>: Campus location (e.g. <code>Main Campus</code>)
+                    </div>
+                    <div>
+                      <strong className="text-slate-900">durations</strong>: Duration in years (e.g. <code>4</code>)
+                    </div>
+                    <div>
+                      <strong className="text-slate-900">requiresConcour</strong>: <code>true</code> or <code>false</code>
+                    </div>
+                    <div>
+                      <strong className="text-slate-900">degreeObtained</strong>: Degree title (e.g. <code>B.Tech</code>, <code>HND</code>)
+                    </div>
+                    <div>
+                      <strong className="text-slate-900">requiredALSubjects</strong>: Comma-separated (e.g. <code>Mathematics, Physics</code>)
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2 bg-orange-50 text-orange-850 p-3.5 rounded-xl border border-orange-100 text-xs">
+                    <AlertCircle size={18} className="shrink-0 mt-0.5" />
+                    <div>
+                      <strong>Note:</strong> Columns marked with (*) are required. Download our sample CSV template using the button above to get started immediately.
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Parse / Action Buttons */}
+            {csvFile && (
+              <div className="mt-4 flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  onClick={() => handleCsvFile(null)}
+                  className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                >
+                  Clear File
+                </button>
+                <button
+                  type="button"
+                  onClick={parseCsvPreview}
+                  disabled={parsing}
+                  className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-md transition-colors disabled:opacity-50 cursor-pointer"
+                >
+                  {parsing ? "Parsing File..." : "Preview Program List"}
+                </button>
+              </div>
+            )}
+
+            {/* Preview Section */}
+            {csvPreview.length > 0 && (
+              <div className="mt-6 border-t border-slate-100 pt-6">
+                <div className="flex justify-between items-center mb-3">
+                  <div className="text-xs font-bold text-slate-900">
+                    Previewing {csvPreview.length} Programs
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCsvPreview([])}
+                    className="text-[11px] font-semibold text-red-500 hover:text-red-400 cursor-pointer"
+                  >
+                    Clear Preview
+                  </button>
+                </div>
+                
+                <div className="border border-slate-150 rounded-2xl overflow-hidden bg-slate-50/30 mb-4 max-h-60 overflow-y-auto">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200/80 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">
+                        <th className="py-2.5 px-4">Name</th>
+                        <th className="py-2.5 px-4">Faculty</th>
+                        <th className="py-2.5 px-4">Tuition (XAF)</th>
+                        <th className="py-2.5 px-4">Campus</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {csvPreview.map((row, idx) => (
+                        <tr key={idx} className="hover:bg-slate-50/50 bg-white transition-colors">
+                          <td className="py-2 px-4 font-semibold text-slate-900">{row.name}</td>
+                          <td className="py-2 px-4 text-slate-600">{row.faculty}</td>
+                          <td className="py-2 px-4 text-slate-600">
+                            {row.tuition_fee_xaf || row.tuitionFee || "N/A"}
+                          </td>
+                          <td className="py-2 px-4 text-slate-500">{row.campus || "Main Campus"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={uploadCsv}
+                    disabled={uploading}
+                    className="px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs rounded-xl shadow-lg shadow-orange-500/25 transition-all disabled:opacity-50 cursor-pointer"
+                  >
+                    {uploading ? "Uploading Programs..." : `Confirm & Upload ${csvPreview.length} Programs`}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
