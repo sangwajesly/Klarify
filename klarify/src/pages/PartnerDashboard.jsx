@@ -401,7 +401,7 @@ const PartnerDashboard = () => {
         </div>
 
         {/* Subscription Upgrades */}
-        {(institution?.subscription_tier === "STARTER" || !institution?.subscription_tier) && (
+        {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") && (
           <div className="bg-orange-50 rounded-3xl p-6 sm:p-8 border border-orange-200 shadow-xs mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
               <h2 className="text-lg font-bold text-slate-900 mb-1">Upgrade your Portal Plan</h2>
@@ -441,6 +441,46 @@ const PartnerDashboard = () => {
                   </button>
                 </>
               )}
+            </div>
+          </div>
+        )}
+
+        {institution?.subscription_tier === "PRO" && (
+          <div className="bg-gradient-to-r from-orange-500/5 to-amber-500/5 rounded-3xl p-6 sm:p-8 border border-orange-200/50 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-600 text-[10px] font-bold uppercase tracking-wider mb-2">
+                Active: PRO Portal
+              </div>
+              <h2 className="text-lg font-bold text-slate-900 mb-1">Boost Your Visibility to FEATURED</h2>
+              <p className="text-sm text-slate-600">
+                Pin your university to the top of student searches and orientation recommendations to maximize direct WhatsApp admissions leads.
+              </p>
+            </div>
+            <div className="shrink-0 w-full sm:w-auto">
+              <button
+                onClick={() => handleUpgrade(user?.email === "sangwajesly82@gmail.com" ? 200 : 350000, "FEATURED")}
+                className="w-full sm:w-auto px-6 py-3.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/25 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+              >
+                {user?.email === "sangwajesly82@gmail.com" ? "Test FEATURED (200 XAF)" : "Get FEATURED (350k XAF)"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {institution?.subscription_tier === "FEATURED" && (
+          <div className="bg-slate-900 border border-slate-800/80 rounded-3xl p-6 sm:p-8 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[10px] font-bold uppercase tracking-wider mb-2">
+                Featured Partner Active
+              </div>
+              <h2 className="text-lg font-bold text-white mb-1">Max Level Portal Active</h2>
+              <p className="text-sm text-slate-400">
+                Your university has maximum priority ranking and is actively recommended to students matching your courses.
+              </p>
+            </div>
+            <div className="px-4 py-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold shrink-0">
+              Priority Ranking Enabled
             </div>
           </div>
         )}

@@ -25,7 +25,13 @@ const Login = () => {
   const usingPhone = isPhone(identifier);
 
   React.useEffect(() => {
-    if (user) navigate("/flow");
+    if (user) {
+      if (user.user_metadata?.user_type === "INSTITUTION_ADMIN") {
+        navigate("/partner/dashboard");
+      } else {
+        navigate("/flow");
+      }
+    }
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
@@ -49,12 +55,18 @@ const Login = () => {
 
     setLoading(true);
     try {
+      let loginData;
       if (usingPhone) {
         const phone = normalizePhone(identifier);
-        await signInWithPhone(phone, password);
-        navigate("/flow");
+        loginData = await signInWithPhone(phone, password);
       } else {
-        await signIn(identifier, password);
+        loginData = await signIn(identifier, password);
+      }
+      
+      const loggedUser = loginData?.user;
+      if (loggedUser?.user_metadata?.user_type === "INSTITUTION_ADMIN") {
+        navigate("/partner/dashboard");
+      } else {
         navigate("/flow");
       }
     } catch (err) {

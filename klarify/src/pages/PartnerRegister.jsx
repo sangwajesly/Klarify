@@ -16,9 +16,18 @@ import { trackEvent } from "../utils/analytics";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import { registerPartnerAccount } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 const PartnerRegister = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  React.useEffect(() => {
+    if (user && user.user_metadata?.user_type === "INSTITUTION_ADMIN") {
+      navigate("/partner/dashboard");
+    }
+  }, [user, navigate]);
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -336,6 +345,16 @@ const PartnerRegister = () => {
               )}
             </button>
           </form>
+          
+          <div className="mt-6 pt-5 border-t border-slate-100 text-center text-xs text-slate-500">
+            Already registered?{" "}
+            <Link
+              to="/partner/login"
+              className="text-orange-500 hover:text-orange-600 font-bold hover:underline transition-colors"
+            >
+              Sign in to your portal
+            </Link>
+          </div>
         </div>
       </main>
     </Layout>

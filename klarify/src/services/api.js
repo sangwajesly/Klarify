@@ -424,11 +424,14 @@ export const fetchPartnerInstitutionPrograms = async (
   institutionId,
   uniName,
 ) => {
+  if (!institutionId && !uniName) {
+    return [];
+  }
   try {
     let query = supabase.from("programs").select("*");
     if (institutionId) {
       query = query.eq("institution_id", institutionId);
-    } else if (uniName) {
+    } else {
       query = query.eq("university", uniName);
     }
     const { data, error } = await query;

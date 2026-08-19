@@ -73,6 +73,14 @@ const PartnerPrograms = () => {
   const [uploading, setUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [toast, setToast] = useState(null); // { message, type: "success" | "error" }
+
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => {
+      setToast(null);
+    }, 4000);
+  };
 
   const CSV_TEMPLATE = 
     "name,faculty,campus,durations,tuitionFee,requiresConcour,degreeObtained,requiredALSubjects,careers,descriptions\n" +
@@ -108,7 +116,7 @@ const PartnerPrograms = () => {
       if (file.type === "text/csv" || file.name.endsWith(".csv")) {
         handleCsvFile(file);
       } else {
-        alert("Please upload a valid CSV file.");
+        showToast("Please upload a valid CSV file.", "error");
       }
     }
   };
@@ -193,10 +201,10 @@ const PartnerPrograms = () => {
       await loadData();
       setCsvFile(null);
       setCsvPreview([]);
-      alert("Programs uploaded successfully");
+      showToast(`Successfully imported ${payload.length} courses to your catalog!`, "success");
     } catch (err) {
       console.error("Bulk upload failed", err);
-      alert("Upload failed. Check console for details.");
+      showToast("Failed to process bulk upload. Please verify the CSV columns and try again.", "error");
     } finally {
       setUploading(false);
     }
@@ -302,6 +310,12 @@ const PartnerPrograms = () => {
     e.preventDefault();
     setFormError("");
 
+    const isStarter = !institution?.subscription_tier || institution?.subscription_tier === "STARTER";
+    if (!editingProgram && isStarter && programs.length >= 3) {
+      setFormError("You have reached the limit of 3 programs allowed on the Free Starter plan. Please upgrade your plan to list unlimited courses!");
+      return;
+    }
+
     if (!formData.name || !formData.faculty) {
       setFormError("Program Name and Faculty / School are required.");
       return;
@@ -379,13 +393,29 @@ const PartnerPrograms = () => {
             </p>
           </div>
 
-          <button
-            onClick={() => handleOpenModal()}
-            className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md shadow-orange-500/25 shrink-0 cursor-pointer"
-          >
-            <Plus size={18} />
-            Add New Program
-          </button>
+          {/* Action button container */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") && programs.length >= 3 && (
+              <span className="px-3 py-1.5 rounded-xl bg-orange-500/10 border border-orange-500/25 text-orange-600 text-xs font-bold flex items-center gap-1.5 justify-center">
+                <AlertCircle size={14} className="text-orange-500" />
+                Limit of 3 courses reached
+              </span>
+            )}
+            <button
+              onClick={() => {
+                const isStarter = !institution?.subscription_tier || institution?.subscription_tier === "STARTER";
+                if (isStarter && programs.length >= 3) {
+                  showToast("You have reached the limit of 3 programs allowed on the Free Starter plan. Please upgrade to add more!", "error");
+                } else {
+                  handleOpenModal();
+                }
+              }}
+              className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md shadow-orange-500/25 shrink-0 cursor-pointer"
+            >
+              <Plus size={18} />
+              Add New Program
+            </button>
+          </div>
         </div>
 
         {/* Bulk CSV Upload */}
@@ -412,49 +442,63 @@ const PartnerPrograms = () => {
             </div>
 
             {/* Custom Drag & Drop Zone */}
-            <div
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              onClick={() => document.getElementById("csv-file-input").click()}
-              className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${
-                isDragging
-                  ? "border-orange-500 bg-orange-50/20"
-                  : csvFile
-                  ? "border-green-400 bg-green-50/10"
-                  : "border-slate-200 hover:border-orange-400 bg-slate-50/50 hover:bg-orange-50/10"
-              }`}
-            >
-              <input
-                id="csv-file-input"
-                type="file"
-                accept="text/csv"
-                className="hidden"
-                onChange={(e) => handleCsvFile(e.target.files && e.target.files[0])}
-              />
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
-                csvFile ? "bg-green-100 text-green-600" : "bg-slate-100 text-slate-400"
-              }`}>
-                {csvFile ? <CheckCircle2 size={24} /> : <Upload size={24} />}
+            {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") ? (
+              <div className="border-2 border-dashed border-slate-200 bg-slate-50/50 rounded-2xl p-10 text-center flex flex-col items-center justify-center relative overflow-hidden min-h-[180px]">
+                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-3">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <h3 className="font-extrabold text-slate-800 text-sm">Bulk CSV Upload Locked</h3>
+                <p className="text-slate-500 text-xs mt-1.5 max-w-xs leading-relaxed">
+                  Bulk course importing via CSV is a premium feature. Upgrade to a paid plan to instantly import your entire curriculum!
+                </p>
               </div>
-              {csvFile ? (
-                <div>
-                  <p className="text-sm font-bold text-slate-900">{csvFile.name}</p>
-                  <p className="text-xs text-slate-500 mt-1">
-                    {(csvFile.size / 1024).toFixed(1)} KB &bull; File ready to parse
-                  </p>
+            ) : (
+              <div
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={() => document.getElementById("csv-file-input").click()}
+                className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${
+                  isDragging
+                    ? "border-orange-500 bg-orange-50/20"
+                    : csvFile
+                    ? "border-green-400 bg-green-50/10"
+                    : "border-slate-200 hover:border-orange-400 bg-slate-50/50 hover:bg-orange-50/10"
+                }`}
+              >
+                <input
+                  id="csv-file-input"
+                  type="file"
+                  accept="text/csv"
+                  className="hidden"
+                  onChange={(e) => handleCsvFile(e.target.files && e.target.files[0])}
+                />
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
+                  csvFile ? "bg-green-100 text-green-600" : "bg-slate-100 text-slate-400"
+                }`}>
+                  {csvFile ? <CheckCircle2 size={24} /> : <Upload size={24} />}
                 </div>
-              ) : (
-                <div>
-                  <p className="text-sm font-bold text-slate-900">
-                    Drag & drop your CSV file here, or <span className="text-orange-500">browse</span>
-                  </p>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Only CSV format is supported. Max file size: 10MB.
-                  </p>
-                </div>
-              )}
-            </div>
+                {csvFile ? (
+                  <div>
+                    <p className="text-sm font-bold text-slate-900">{csvFile.name}</p>
+                    <p className="text-xs text-slate-500 mt-1">
+                      {(csvFile.size / 1024).toFixed(1)} KB &bull; File ready to parse
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-sm font-bold text-slate-900">
+                      Drag & drop your CSV file here, or <span className="text-orange-500">browse</span>
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Only CSV format is supported. Max file size: 10MB.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Collapsible Headers Guide */}
             <div className="mt-4 border border-slate-150 rounded-2xl overflow-hidden bg-slate-50/40">
@@ -941,6 +985,19 @@ const PartnerPrograms = () => {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+        {/* Toast Notification Container */}
+        {toast && (
+          <div className="fixed bottom-5 right-5 z-50 animate-slide-up">
+            <div className={`flex items-center gap-3 px-5 py-4 rounded-2xl shadow-xl border text-xs sm:text-sm font-bold transition-all ${
+              toast.type === "success" 
+                ? "bg-emerald-950/95 border-emerald-800/80 text-emerald-400 backdrop-blur-md" 
+                : "bg-red-950/95 border-red-900/80 text-red-400 backdrop-blur-md"
+            }`}>
+              <CheckCircle2 size={18} className={toast.type === "success" ? "text-emerald-400" : "text-red-400"} />
+              <span>{toast.message}</span>
             </div>
           </div>
         )}
