@@ -9,7 +9,7 @@ class PaymentProvider:
 
     def __init__(self) -> None:
         self.frontend_url = os.getenv(
-            "FRONTEND_URL", "http://localhost:5173"
+            "FRONTEND_URL", "https://www.klarifypath.com"
         )
 
     def create_payment_intent(self, institution_id: str, amount: float, currency: str = "XAF", metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
