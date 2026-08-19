@@ -621,6 +621,35 @@ export const initiateSubscriptionPayment = async (institutionId, amount, descrip
   return response.data;
 };
 
+export const initiateDirectPayment = async ({
+  institutionId,
+  amount,
+  phone,
+  name,
+  email,
+  description,
+}) => {
+  const headers = await getAuthHeaders();
+  const response = await axios.post(
+    `${API_URL}/create-direct-pay`,
+    {
+      institution_id: institutionId,
+      amount: parseFloat(amount),
+      phone,
+      name,
+      email,
+      description,
+    },
+    { headers }
+  );
+  return response.data;
+};
+
+export const checkPaymentStatus = async (transId) => {
+  const response = await axios.get(`${API_URL}/status/${transId}`);
+  return response.data;
+};
+
 // --- Resilient Auto-recovery Helper for Broken Registrations ---
 export const recoverPartnerProfile = async (user) => {
   const institutionId = typeof crypto !== "undefined" && crypto.randomUUID

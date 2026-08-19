@@ -74,6 +74,86 @@ async def create_payment_intent(payload: CreatePaymentRequest, current_user: dic
     }
 
 
+class CreateDirectPaymentRequest(BaseModel):
+    institution_id: str
+    amount: float
+    phone: str
+    name: Optional[str] = None
+    email: Optional[str] = None
+    description: Optional[str] = None
+
+
+@router.post("/create-direct-pay")
+async def create_direct_payment(payload: CreateDirectPaymentRequest, current_user: dict = Depends(get_current_user)):
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database connection not configured.")
+
+    # Secure Auth Check: Verify that user is a member of this institution
+    user_id = current_user.get("sub") or current_user.get("id")
+    try:
+        member_check = supabase.table("institution_members").select("role").eq("user_id", user_id).eq("institution_id", payload.institution_id).execute()
+        if not member_check.data:
+            raise HTTPException(status_code=403, detail="Access denied. You are not a member of this institution.")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to verify membership: {str(e)}")
+
+    # Clean the phone number client-side/server-side validation
+    clean_phone = "".join(filter(str.isdigit, payload.phone))
+    if clean_phone.startswith("237") and len(clean_phone) > 9:
+        clean_phone = clean_phone[3:]
+    
+    import re
+    if not re.match(r"^6[0-9]{8}$", clean_phone):
+        raise HTTPException(status_code=400, detail="Please enter a valid 9-digit Cameroonian MTN MoMo or Orange Money phone number starting with 6.")
+
+    try:
+        result = provider.create_direct_payment(
+            institution_id=payload.institution_id,
+            amount=payload.amount,
+            phone=clean_phone,
+            name=payload.name or "Klarify Partner",
+            email=payload.email or "admin@klarifypath.com",
+            description=payload.description,
+        )
+    except Exception as err:
+        raise HTTPException(status_code=400, detail=f"Fapshi direct payment failed: {str(err)}")
+
+    # persist a payment record with client-side UUID to prevent RLS SELECT issues
+    payment_id = str(uuid4())
+    record = {
+        "id": payment_id,
+        "institution_id": payload.institution_id,
+        "amount": float(payload.amount),
+        "currency": "XAF",
+        "provider": "FAPSHI",
+        "provider_reference": result.get("provider_reference"),
+        "status": "PENDING",
+        "metadata": {"description": payload.description, "raw": result.get("raw", {})},
+    }
+
+    try:
+        supabase.table("partner_payments").insert(record).execute()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database write failed: {str(e)}")
+
+    return {
+        "success": True,
+        "provider_reference": result.get("provider_reference"),
+        "payment_id": payment_id,
+    }
+
+
+@router.get("/status/{trans_id}")
+async def get_payment_status(trans_id: str):
+    try:
+        res = provider.check_status(trans_id)
+        return res
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 @router.post("/webhook")
 async def payments_webhook(request: Request, x_provider_signature: Optional[str] = Header(None)):
     """Generic webhook receiver to update `partner_payments`.

@@ -10,6 +10,9 @@ import {
   Phone,
   Loader2,
   ArrowRight,
+  X,
+  AlertCircle,
+  CreditCard,
 } from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
@@ -19,6 +22,8 @@ import {
   fetchPartnerInstitutionPrograms,
   initiateSubscriptionPayment,
   recoverPartnerProfile,
+  initiateDirectPayment,
+  checkPaymentStatus,
 } from "../services/api";
 
 const PartnerDashboard = () => {
@@ -30,6 +35,15 @@ const PartnerDashboard = () => {
   const [programsCount, setProgramsCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [paymentLoading, setPaymentLoading] = useState(false);
+
+  // Custom Direct Payment Modal State
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null); // { amount, name }
+  const [payerPhone, setPayerPhone] = useState("");
+  const [payerName, setPayerName] = useState("");
+  const [paymentStep, setPaymentStep] = useState("input"); // "input", "processing", "success", "failed"
+  const [paymentError, setPaymentError] = useState("");
+  const [activeTransId, setActiveTransId] = useState(null);
 
   useEffect(() => {
     if (!authLoading) {
@@ -83,20 +97,84 @@ const PartnerDashboard = () => {
     loadProfileData();
   }, [user]);
 
-  const handleUpgrade = async (amount, planName) => {
-    if (!institution?.id) return;
-    setPaymentLoading(true);
+  const handleUpgrade = (amount, planName) => {
+    setSelectedPlan({ amount, name: planName });
+    setPayerName(institution?.name || user?.user_metadata?.full_name || "");
+    setPayerPhone("");
+    setPaymentStep("input");
+    setPaymentError("");
+    setShowPaymentModal(true);
+  };
+
+  const processDirectPayment = async (e) => {
+    e.preventDefault();
+    if (!payerPhone || payerPhone.trim().length < 9) {
+      setPaymentError("Please enter a valid 9-digit mobile phone number.");
+      return;
+    }
+
+    setPaymentStep("processing");
+    setPaymentError("");
+
     try {
-      const resp = await initiateSubscriptionPayment(institution.id, amount, `Upgrade to ${planName} Plan`);
-      if (resp.checkout_url) {
-        window.location.href = resp.checkout_url;
+      const resp = await initiateDirectPayment({
+        institutionId: institution.id,
+        amount: selectedPlan.amount,
+        phone: payerPhone.trim(),
+        name: payerName,
+        email: user?.email,
+        description: `Upgrade to ${selectedPlan.name} Plan`,
+      });
+
+      if (resp.success && resp.provider_reference) {
+        setActiveTransId(resp.provider_reference);
+        startPaymentStatusPolling(resp.provider_reference);
+      } else {
+        throw new Error("Failed to initiate direct payment prompt.");
       }
     } catch (err) {
-      console.error("Payment initiation failed:", err);
-      alert("Failed to initiate payment. Please try again.");
-    } finally {
-      setPaymentLoading(false);
+      console.error("Direct payment initiation error:", err);
+      setPaymentError(
+        err.response?.data?.detail ||
+          err.message ||
+          "Payment failed. Please confirm the number is active and try again."
+      );
+      setPaymentStep("failed");
     }
+  };
+
+  const startPaymentStatusPolling = (transId) => {
+    let attempts = 0;
+    const maxAttempts = 60; // 5 minutes (every 5 seconds)
+
+    const interval = setInterval(async () => {
+      attempts++;
+      if (attempts > maxAttempts) {
+        clearInterval(interval);
+        setPaymentStep("failed");
+        setPaymentError("Payment authorization timed out. Please try again.");
+        return;
+      }
+
+      try {
+        const statusResp = await checkPaymentStatus(transId);
+        const status = (statusResp.status || "").toUpperCase();
+
+        if (status === "SUCCESSFUL") {
+          clearInterval(interval);
+          setPaymentStep("success");
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        } else if (status === "FAILED" || status === "EXPIRED") {
+          clearInterval(interval);
+          setPaymentStep("failed");
+          setPaymentError(statusResp.message || "Transaction was declined or failed on your device.");
+        }
+      } catch (err) {
+        console.error("Error polling payment status:", err);
+      }
+    }, 5000);
   };
 
   if (authLoading || loading) {
@@ -302,6 +380,176 @@ const PartnerDashboard = () => {
             </Link>
           </div>
         </div>
+
+        {/* Custom Direct Payment Modal Overlay */}
+        {showPaymentModal && selectedPlan && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
+            <div className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-left">
+              {/* Background accent */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Close Button */}
+              {paymentStep !== "processing" && paymentStep !== "success" && (
+                <button
+                  onClick={() => setShowPaymentModal(false)}
+                  className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <X size={20} />
+                </button>
+              )}
+
+              {/* Modal Body: INPUT state */}
+              {paymentStep === "input" && (
+                <form onSubmit={processDirectPayment} className="space-y-6">
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-orange-400">Upgrade Portal</span>
+                    <h3 className="text-xl font-extrabold text-white mt-1">
+                      Upgrade to {selectedPlan.name} Plan
+                    </h3>
+                    <p className="text-slate-400 text-xs mt-1">
+                      Unlock full orientation analytics, priority ranking, and direct WhatsApp student leads.
+                    </p>
+                  </div>
+
+                  {/* Pricing info badge */}
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-between">
+                    <div>
+                      <span className="text-xs text-slate-400">Total Price</span>
+                      <span className="block text-xl font-black text-white mt-0.5">
+                        {selectedPlan.amount.toLocaleString()} XAF
+                      </span>
+                    </div>
+                    <div className="px-3 py-1.5 rounded-lg bg-orange-500/20 text-orange-400 text-xs font-bold border border-orange-500/30">
+                      One-time charge
+                    </div>
+                  </div>
+
+                  {/* Custom direct payment inputs */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                        Payer Name
+                      </label>
+                      <input
+                        type="text"
+                        value={payerName}
+                        onChange={(e) => setPayerName(e.target.value)}
+                        required
+                        placeholder="e.g. Sangwa Jesly"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                        Mobile Money Phone Number (MTN / Orange)
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="tel"
+                          value={payerPhone}
+                          onChange={(e) => setPayerPhone(e.target.value)}
+                          required
+                          placeholder="e.g. 682833601"
+                          className="w-full pl-4 pr-16 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all placeholder:text-slate-500"
+                        />
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1.5 pointer-events-none select-none">
+                          <span className="px-1.5 py-0.5 rounded text-[8px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">MoMo</span>
+                          <span className="px-1.5 py-0.5 rounded text-[8px] font-black bg-orange-500/20 text-orange-400 border border-orange-500/30">OM</span>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
+                        Enter your Cameroonian mobile money number without country code (e.g. 6xxxxxxxx). A payment validation prompt will be pushed to your handset.
+                      </p>
+                    </div>
+                  </div>
+
+                  {paymentError && (
+                    <div className="p-3.5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-xs flex items-start gap-2.5 leading-relaxed">
+                      <AlertCircle className="shrink-0 mt-0.5" size={16} />
+                      <span>{paymentError}</span>
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="w-full py-4 bg-orange-500 hover:bg-orange-400 text-white font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02]"
+                  >
+                    <CreditCard size={18} />
+                    Pay {selectedPlan.amount.toLocaleString()} XAF
+                  </button>
+                </form>
+              )}
+
+              {/* Modal Body: PROCESSING state */}
+              {paymentStep === "processing" && (
+                <div className="py-8 text-center space-y-6">
+                  <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
+                    <Loader2 className="animate-spin text-orange-500 absolute" size={56} />
+                    <div className="w-10 h-10 rounded-full bg-orange-500/10" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-extrabold text-white">Payment Request Sent</h3>
+                    <p className="text-slate-400 text-xs mt-2 max-w-xs mx-auto leading-relaxed">
+                      We have sent an authorization prompt to <strong className="text-white">{payerPhone}</strong>. Please check your screen, enter your Mobile Money PIN, and confirm.
+                    </p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+                    <span className="text-[10px] font-black text-orange-400 uppercase block mb-1">Status</span>
+                    Waiting for your handset authorization...
+                  </div>
+                </div>
+              )}
+
+              {/* Modal Body: SUCCESS state */}
+              {paymentStep === "success" && (
+                <div className="py-8 text-center space-y-6">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-green-500/10 text-green-400 border border-green-500/30 flex items-center justify-center">
+                    <CheckCircle2 size={36} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-extrabold text-white">Upgrade Successful!</h3>
+                    <p className="text-slate-400 text-xs mt-2 leading-relaxed">
+                      Thank you! Your transaction completed successfully. We are upgrading your dashboard to <span className="text-orange-400 font-bold">{selectedPlan.name}</span>...
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Modal Body: FAILED state */}
+              {paymentStep === "failed" && (
+                <div className="py-6 text-center space-y-6">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-red-500/10 text-red-400 border border-red-500/30 flex items-center justify-center">
+                    <AlertCircle size={36} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-extrabold text-white">Payment Failed</h3>
+                    <p className="text-slate-400 text-xs mt-2 leading-relaxed max-w-xs mx-auto">
+                      {paymentError || "The transaction could not be processed. Please try again."}
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowPaymentModal(false)}
+                      className="flex-1 py-3 bg-white/5 border border-white/10 text-slate-300 hover:text-white font-bold text-sm rounded-xl transition-all cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => {
+                        setPaymentStep("input");
+                        setPaymentError("");
+                      }}
+                      className="flex-1 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-orange-500/25 cursor-pointer"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </main>
     </Layout>
   );
