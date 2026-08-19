@@ -155,8 +155,50 @@ async def create_direct_payment(payload: CreateDirectPaymentRequest, current_use
 
 @router.get("/status/{trans_id}")
 async def get_payment_status(trans_id: str):
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database connection not configured.")
     try:
+        # 1. Fetch latest status from Fapshi
         res = provider.check_status(trans_id)
+        
+        # 2. Extract transaction status
+        fapshi_status = res.get("status")
+        if fapshi_status:
+            # Map status
+            mapped_status = "PENDING"
+            if str(fapshi_status).upper() == "SUCCESSFUL":
+                mapped_status = "COMPLETED"
+            elif str(fapshi_status).upper() in ("FAILED", "EXPIRED"):
+                mapped_status = "FAILED"
+            
+            # 3. Update database if status changed from PENDING
+            if mapped_status != "PENDING":
+                try:
+                    db_payment = supabase.table("partner_payments").select("status", "institution_id", "amount").eq("provider_reference", trans_id).execute()
+                    if db_payment.data:
+                        current_db_status = db_payment.data[0].get("status")
+                        if current_db_status == "PENDING":
+                            # Update payment status
+                            supabase.table("partner_payments").update({
+                                "status": mapped_status,
+                                "metadata": res
+                            }).eq("provider_reference", trans_id).execute()
+                            
+                            # If transaction is completed, update the institution subscription_tier
+                            if mapped_status == "COMPLETED":
+                                inst_id = db_payment.data[0].get("institution_id")
+                                amount = float(db_payment.data[0].get("amount", 0))
+                                
+                                new_tier = "PRO"
+                                if amount == 200.0 or amount >= 350000.0:
+                                    new_tier = "FEATURED"
+                                
+                                supabase.table("institutions").update({"subscription_tier": new_tier}).eq("id", inst_id).execute()
+                                print(f"Successfully upgraded institution {inst_id} to {new_tier} via status query fallback")
+                except Exception as db_err:
+                    # Log database error but don't fail the API call return
+                    print(f"Database status sync failed: {db_err}")
+                                
         return res
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
