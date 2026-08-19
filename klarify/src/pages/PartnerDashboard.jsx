@@ -17,6 +17,7 @@ import {
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import { useAuth } from "../context/AuthContext";
+import { supabase } from "../services/supabase";
 import {
   getPartnerProfile,
   fetchPartnerInstitutionPrograms,
@@ -44,6 +45,56 @@ const PartnerDashboard = () => {
   const [paymentStep, setPaymentStep] = useState("input"); // "input", "processing", "success", "failed"
   const [paymentError, setPaymentError] = useState("");
   const [activeTransId, setActiveTransId] = useState(null);
+
+  // Edit Profile Modal State
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editCity, setEditCity] = useState("");
+  const [editCampus, setEditCampus] = useState("");
+  const [editWhatsapp, setEditWhatsapp] = useState("");
+  const [editWebsite, setEditWebsite] = useState("");
+  const [editLoading, setEditLoading] = useState(false);
+  const [editError, setEditError] = useState("");
+
+  const handleSaveProfile = async (e) => {
+    e.preventDefault();
+    if (!editName.trim()) {
+      setEditError("Institution name is required.");
+      return;
+    }
+    setEditLoading(true);
+    setEditError("");
+    try {
+      const { data, error } = await supabase
+        .from("institutions")
+        .update({
+          name: editName.trim(),
+          city: editCity.trim(),
+          campus: editCampus.trim(),
+          whatsapp_number: editWhatsapp.trim(),
+          website_url: editWebsite.trim(),
+        })
+        .eq("id", institution.id)
+        .select();
+
+      if (error) throw error;
+
+      setInstitution({
+        ...institution,
+        name: editName.trim(),
+        city: editCity.trim(),
+        campus: editCampus.trim(),
+        whatsapp_number: editWhatsapp.trim(),
+        website_url: editWebsite.trim(),
+      });
+      setShowEditModal(false);
+    } catch (err) {
+      console.error("Failed to update profile:", err);
+      setEditError(err.message || "Failed to update profile. Please try again.");
+    } finally {
+      setEditLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!authLoading) {
@@ -99,7 +150,7 @@ const PartnerDashboard = () => {
 
   const handleUpgrade = (amount, planName) => {
     setSelectedPlan({ amount, name: planName });
-    setPayerName(institution?.name || user?.user_metadata?.full_name || "");
+    setPayerName(user?.user_metadata?.full_name || "");
     setPayerPhone("");
     setPaymentStep("input");
     setPaymentError("");
@@ -232,8 +283,22 @@ const PartnerDashboard = () => {
                     </span>
                   )}
                 </div>
-                <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white">
+                <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white flex flex-wrap items-center gap-3">
                   {institution?.name}
+                  <button
+                    onClick={() => {
+                      setEditName(institution?.name || "");
+                      setEditCity(institution?.city || "");
+                      setEditCampus(institution?.campus || "");
+                      setEditWhatsapp(institution?.whatsapp_number || "");
+                      setEditWebsite(institution?.website_url || "");
+                      setEditError("");
+                      setShowEditModal(true);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-orange-400 hover:text-orange-300 border border-orange-500/25 hover:border-orange-500 bg-orange-500/10 rounded-lg transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                  >
+                    Edit Profile
+                  </button>
                 </h1>
                 <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300 mt-1">
                   <span className="flex items-center gap-1">
@@ -318,17 +383,15 @@ const PartnerDashboard = () => {
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
               <button
                 onClick={() => handleUpgrade(150000, "PRO")}
-                disabled={paymentLoading}
-                className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-100 transition-colors disabled:opacity-50"
+                className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
               >
-                {paymentLoading ? "Please wait..." : "Upgrade to PRO (150k XAF)"}
+                Upgrade to PRO (150k XAF)
               </button>
               <button
                 onClick={() => handleUpgrade(350000, "FEATURED")}
-                disabled={paymentLoading}
-                className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 transition-colors disabled:opacity-50"
+                className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
               >
-                {paymentLoading ? "Please wait..." : "Get FEATURED (350k XAF)"}
+                Get FEATURED (350k XAF)
               </button>
             </div>
           </div>
@@ -547,6 +610,140 @@ const PartnerDashboard = () => {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+        {/* Edit Profile Modal Overlay */}
+        {showEditModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+            <div className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-left">
+              {/* Background accent */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Close Button */}
+              {!editLoading && (
+                <button
+                  onClick={() => setShowEditModal(false)}
+                  className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <X size={20} />
+                </button>
+              )}
+
+              <form onSubmit={handleSaveProfile} className="space-y-6">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-orange-400">Settings</span>
+                  <h3 className="text-xl font-extrabold text-white mt-1">
+                    Edit Portal Profile
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-1">
+                    Update your official institution details displayed on Klarify.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                      Institution Name
+                    </label>
+                    <input
+                      type="text"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      required
+                      placeholder="e.g. Saint Jerome University"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        value={editCity}
+                        onChange={(e) => setEditCity(e.target.value)}
+                        required
+                        placeholder="e.g. Douala"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                        Campus Name
+                      </label>
+                      <input
+                        type="text"
+                        value={editCampus}
+                        onChange={(e) => setEditCampus(e.target.value)}
+                        placeholder="e.g. Main Campus"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                      WhatsApp Contact (without +/country code)
+                    </label>
+                    <input
+                      type="tel"
+                      value={editWhatsapp}
+                      onChange={(e) => setEditWhatsapp(e.target.value)}
+                      required
+                      placeholder="e.g. 67xxxxxxx"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                      Official Website URL
+                    </label>
+                    <input
+                      type="url"
+                      value={editWebsite}
+                      onChange={(e) => setEditWebsite(e.target.value)}
+                      placeholder="https://example.cm"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                    />
+                  </div>
+                </div>
+
+                {editError && (
+                  <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-xs flex items-center gap-2">
+                    <AlertCircle size={16} />
+                    <span>{editError}</span>
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    disabled={editLoading}
+                    onClick={() => setShowEditModal(false)}
+                    className="flex-1 py-3 bg-white/5 border border-white/10 text-slate-300 hover:text-white font-bold text-sm rounded-xl transition-all cursor-pointer disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={editLoading}
+                    className="flex-1 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-orange-500/25 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    {editLoading ? (
+                      <>
+                        <Loader2 className="animate-spin" size={16} />
+                        Saving...
+                      </>
+                    ) : (
+                      "Save Changes"
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

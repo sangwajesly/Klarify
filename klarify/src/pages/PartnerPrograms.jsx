@@ -32,6 +32,7 @@ import {
   updatePartnerProgram,
   deletePartnerProgram,
   createPartnerProgramsBulk,
+  recoverPartnerProfile,
 } from "../services/api";
 import { trackEvent } from "../utils/analytics";
 
@@ -215,8 +216,18 @@ const PartnerPrograms = () => {
     if (user) {
       setLoading(true);
       try {
-        const profile = await getPartnerProfile(user.id);
+        let profile = await getPartnerProfile(user.id);
+
+        if (!profile && user.user_metadata?.user_type === "INSTITUTION_ADMIN") {
+          try {
+            profile = await recoverPartnerProfile(user);
+          } catch (recoveryErr) {
+            console.error("Auto-recovery of partner profile failed:", recoveryErr);
+          }
+        }
+
         const inst = profile || {
+          id: "temp-ipes-id",
           name: user.user_metadata?.full_name
             ? `${user.user_metadata.full_name}'s Institute`
             : "Private University Partner",
