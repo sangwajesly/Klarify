@@ -203,7 +203,7 @@ async def payments_webhook(request: Request, x_provider_signature: Optional[str]
         amount = float(payment_record.get("amount", 0))
         
         new_tier = "PRO"
-        if amount >= 350000:
+        if amount == 200.0 or amount >= 350000.0:
             new_tier = "FEATURED"
         
         try:

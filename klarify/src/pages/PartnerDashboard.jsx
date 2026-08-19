@@ -409,19 +409,38 @@ const PartnerDashboard = () => {
                 You are currently on the Free Starter plan. Upgrade to unlock unlimited programs, direct WhatsApp leads, and priority ranking.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
-              <button
-                onClick={() => handleUpgrade(150000, "PRO")}
-                className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
-              >
-                Upgrade to PRO (150k XAF)
-              </button>
-              <button
-                onClick={() => handleUpgrade(350000, "FEATURED")}
-                className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
-              >
-                Get FEATURED (350k XAF)
-              </button>
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0 animate-fade-in">
+              {user?.email === "sangwajesly82@gmail.com" ? (
+                <>
+                  <button
+                    onClick={() => handleUpgrade(100, "PRO")}
+                    className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                  >
+                    Test Upgrade PRO (100 XAF)
+                  </button>
+                  <button
+                    onClick={() => handleUpgrade(200, "FEATURED")}
+                    className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                  >
+                    Test FEATURED (200 XAF)
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => handleUpgrade(150000, "PRO")}
+                    className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                  >
+                    Upgrade to PRO (150k XAF)
+                  </button>
+                  <button
+                    onClick={() => handleUpgrade(350000, "FEATURED")}
+                    className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                  >
+                    Get FEATURED (350k XAF)
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}
