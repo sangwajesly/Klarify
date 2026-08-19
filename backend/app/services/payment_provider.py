@@ -21,7 +21,7 @@ class PaymentProvider:
 
         payment_data = {
             'amount': int(amount), 
-            'email': metadata.get('email', 'admin@klarifypath.com'),
+            'email': metadata.get('email', 'sangwajesly82@gmail.com'),
             'externalId': external_id,
             'userId': str(institution_id),
             'redirectUrl': f"{self.frontend_url}/partner/dashboard?payment=success",

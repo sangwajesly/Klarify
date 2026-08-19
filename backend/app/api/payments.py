@@ -42,9 +42,9 @@ async def create_payment_intent(payload: CreatePaymentRequest, current_user: dic
         raise HTTPException(status_code=500, detail=f"Failed to verify membership: {str(e)}")
 
     # Extract and clean user email to avoid invalid email format issues
-    user_email = current_user.get("email") or "hello@klarifypath.com"
+    user_email = current_user.get("email") or "sangwajesly82@gmail.com"
     if "@phone.klarify.app" in user_email or "@" not in user_email:
-        user_email = "hello@klarifypath.com"
+        user_email = "sangwajesly82@gmail.com"
 
     # create a provider payment intent/session
     result = provider.create_payment_intent(
