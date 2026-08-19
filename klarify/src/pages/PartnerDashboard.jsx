@@ -185,10 +185,39 @@ const PartnerDashboard = () => {
       }
     } catch (err) {
       console.error("Direct payment initiation error:", err);
+      const errMsg = err.response?.data?.detail || err.message || "";
+      
+      // If Fapshi returns a Forbidden error regarding Direct Pay activation:
+      if (errMsg.includes("Forbidden request") || errMsg.includes("activate-direct-pay")) {
+        setPaymentError("Direct MoMo prompt is not activated on your Fapshi merchant account. Redirecting you to the secure checkout page...");
+        try {
+          // Trigger fallback hosted checkout redirect after a short delay
+          setTimeout(async () => {
+            try {
+              const hostedResp = await initiateSubscriptionPayment(
+                institution.id,
+                selectedPlan.amount,
+                `Upgrade to ${selectedPlan.name} Plan`
+              );
+              if (hostedResp.checkout_url) {
+                window.location.href = hostedResp.checkout_url;
+              } else {
+                throw new Error("Hosted payment link generation failed.");
+              }
+            } catch (hostedErr) {
+              console.error("Fallback payment link generation failed:", hostedErr);
+              setPaymentError("Fallback payment generation failed. Please contact Fapshi to activate Direct Pay, or try again later.");
+              setPaymentStep("failed");
+            }
+          }, 3000);
+          return;
+        } catch (fallbackErr) {
+          // Fall through
+        }
+      }
+
       setPaymentError(
-        err.response?.data?.detail ||
-          err.message ||
-          "Payment failed. Please confirm the number is active and try again."
+        errMsg || "Payment failed. Please confirm the number is active and try again."
       );
       setPaymentStep("failed");
     }
