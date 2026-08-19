@@ -41,12 +41,20 @@ async def create_payment_intent(payload: CreatePaymentRequest, current_user: dic
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to verify membership: {str(e)}")
 
+    # Extract and clean user email to avoid invalid email format issues
+    user_email = current_user.get("email") or "hello@klarifypath.com"
+    if "@phone.klarify.app" in user_email or "@" not in user_email:
+        user_email = "hello@klarifypath.com"
+
     # create a provider payment intent/session
     result = provider.create_payment_intent(
         institution_id=payload.institution_id,
         amount=payload.amount,
         currency=payload.currency,
-        metadata={"description": payload.description} if payload.description else {},
+        metadata={
+            "description": payload.description or "Klarify IPES Subscription Upgrade",
+            "email": user_email.strip(),
+        },
     )
 
     # persist a payment record with client-side UUID to prevent RLS SELECT issues
