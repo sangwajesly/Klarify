@@ -107,30 +107,40 @@ export const removeSavedProgram = async (userId, programId) => {
 };
 
 export const getSavedPrograms = async (userId) => {
-  const { data, error } = await supabase
-    .from("saved_programs")
-    .select(
-      `
-      id,
-      created_at,
-      programs (*)
-    `,
-    )
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false });
+  try {
+    const { data, error } = await supabase
+      .from("saved_programs")
+      .select(
+        `
+        id,
+        created_at,
+        programs (*)
+      `,
+      )
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error("Error fetching saved programs:", error);
-    throw error;
+    if (error) {
+      console.error("Error fetching saved programs:", error);
+      if (error.status === 401 || error.code === "PGRST301" || error.code === "401") {
+        console.warn("Session may have expired. Returning empty saved programs list.");
+        return [];
+      }
+      throw error;
+    }
+
+    if (!data) return [];
+
+    // Flatten the response so it's easier to use in the UI
+    return data.map((item) => ({
+      save_id: item.id,
+      saved_at: item.created_at,
+      ...item.programs,
+    }));
+  } catch (err) {
+    console.error("Failed to fetch saved programs:", err);
+    return [];
   }
-
-  // Flatten the response so it's easier to use in the UI
-  // data is an array of { id, created_at, programs: { ...program details } }
-  return data.map((item) => ({
-    save_id: item.id,
-    saved_at: item.created_at,
-    ...item.programs,
-  }));
 };
 
 // --- Programs Catalog & Details Queries ---
@@ -292,6 +302,7 @@ export const fetchUniversityDetails = async (uniName) => {
 
   return {
     name: uniName,
+    programs,
     programCount: programs.length,
     concoursCount: programs.filter((p) => p.requiresConcours).length,
     faculties: Array.from(facultiesSet).sort(),
@@ -632,7 +643,6 @@ export const recoverPartnerProfile = async (user) => {
     whatsapp_number: "237600000000",
     website_url: "",
     verification_status: "PENDING",
-    subscription_tier: "STARTER",
   };
 
   // 1. Create Institution
