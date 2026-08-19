@@ -92,7 +92,7 @@ const UniversityDetails = () => {
     );
   }
 
-  if (!details || details.programs.length === 0) {
+  if (!details || !details.programs || details.programs.length === 0) {
     return (
       <Layout>
         <div className="max-w-2xl mx-auto py-16 text-center">
@@ -186,10 +186,10 @@ const UniversityDetails = () => {
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                 }`}
               >
-                All Faculties ({details.programs.length})
+                All Faculties ({details.programs?.length || 0})
               </button>
               {details.faculties.map((fac) => {
-                const count = details.programs.filter((p) => p.faculty === fac).length;
+                const count = (details.programs || []).filter((p) => p.faculty === fac).length;
                 return (
                   <button
                     key={fac}
