@@ -62,7 +62,7 @@ const AlevelOrientationGuide = () => {
             What Can I Study After A-Level in Cameroon?
           </h1>
           <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
-            <span>By Hannah Frank</span>
+            <span>By Sangwa Jesly</span>
             <span>&bull;</span>
             <span>5 min read</span>
           </div>

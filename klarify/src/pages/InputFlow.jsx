@@ -159,10 +159,10 @@ const InputFlow = () => {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "KlarifyPath AI Career Recommender",
+    name: "KlarifyPath Academic Recommender",
     url: "https://www.klarifypath.com/flow",
     description:
-      "AI-powered tool that recommends university programs and career paths in Cameroon based on GCE A-Level subjects.",
+      "Intelligent tool that recommends university programs and career paths in Cameroon based on GCE A-Level subjects.",
     applicationCategory: "EducationalApplication",
     operatingSystem: "All",
   };
@@ -171,7 +171,7 @@ const InputFlow = () => {
     {
       question: "How are the university programs recommended?",
       answer:
-        "Our AI engine uses advanced natural language processing (TF-IDF and Cosine Similarity) to match your A-Level subjects and personal interests against a database of hundreds of university programs across Cameroon.",
+        "Our system matches your A-Level subjects and personal interests against a database of hundreds of university programs across Cameroon.",
     },
     {
       question: "What information do I need to provide?",
@@ -197,8 +197,8 @@ const InputFlow = () => {
   return (
     <Layout>
       <SEOHead
-        title="AI Career & University Recommender Cameroon"
-        description="Get personalized university program and career recommendations in Cameroon based on your GCE A-Level subjects using our advanced AI matching engine."
+        title="Academic & Career Recommender | KlarifyPath"
+        description="Get personalized university program and career recommendations in Cameroon based on your GCE A-Level subjects using our advanced matching engine."
         canonicalUrl="https://www.klarifypath.com/flow"
         structuredData={schemaData}
       />
@@ -210,7 +210,7 @@ const InputFlow = () => {
       <main className="pt-4 pb-16">
         {/* Intro */}
         <section className="max-w-2xl mx-auto px-4 mb-10">
-          <span className="section-eyebrow block mb-3">AI Recommender</span>
+          <span className="section-eyebrow block mb-3">Orientation Recommender</span>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
             Discover Your Perfect Academic Path
           </h1>
@@ -336,8 +336,8 @@ const InputFlow = () => {
                           Coming Soon
                         </h2>
                         <p className="text-slate-500 text-sm max-w-sm leading-relaxed">
-                          We are currently fine-tuning our AI recommendation
-                          engine for{" "}
+                          We are currently fine-tuning our program recommendations
+                          for{" "}
                           {persona === "graduate"
                             ? "University Graduates"
                             : "Professionals and Self-Learners"}

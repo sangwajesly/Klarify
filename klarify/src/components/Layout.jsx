@@ -371,7 +371,7 @@ const Layout = ({ children, noPadding = false }) => {
                 </span>
               </div>
               <p className="text-sm leading-relaxed max-w-xs text-slate-400">
-                AI-powered academic recommendations to help students find the
+                Personalized academic recommendations to help students find the
                 right university programs and career paths based on their unique
                 strengths.
               </p>

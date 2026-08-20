@@ -82,7 +82,7 @@ const About = () => {
               </span>
             </h1>
             <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Klarify was born on results day &mdash; in the middle of the
+              Klarify was born on results day, in the middle of the
               celebration, confusion, and the silent question nobody could
               answer:{" "}
               <em className="text-white not-italic font-medium">
@@ -120,15 +120,15 @@ const About = () => {
                   <p>
                     Some of us made rushed decisions. Some followed friends into
                     programs that weren't right for them. Some are now studying
-                    things they never imagined — not because they chose poorly,
+                    things they never imagined, not because they chose poorly,
                     but because{" "}
                     <strong className="text-slate-900 font-bold">
                       nobody gave them the right information at the right time.
                     </strong>
                   </p>
                   <p>
-                    That experience — that confusion in the middle of the
-                    celebration — is exactly why Klarify exists.
+                    That experience, that confusion in the middle of the
+                    celebration, is exactly why Klarify exists.
                   </p>
                 </div>
               </div>
@@ -145,7 +145,7 @@ const About = () => {
                   </p>
                   <p className="text-slate-600 text-sm md:text-base leading-relaxed">
                     Cameroonian students end up in a university program they
-                    didn't originally want — not from lack of ambition, but lack
+                    didn't originally want, not from lack of ambition, but lack
                     of guidance at the critical moment.
                   </p>
                 </div>
@@ -156,7 +156,7 @@ const About = () => {
                     looked like."
                   </p>
                   <p className="text-orange-500 font-semibold text-sm mt-3">
-                    — The Klarify Team
+                    - The Klarify Team
                   </p>
                 </div>
               </div>
@@ -175,7 +175,7 @@ const About = () => {
                 Our Mission & Values
               </h2>
               <p className="text-slate-600 text-sm md:text-base mt-2 max-w-xl">
-                Everything we build is guided by a single belief — that every
+                Everything we build is guided by a single belief: that every
                 Cameroonian student deserves access to the right information at
                 the right time.
               </p>
@@ -185,7 +185,7 @@ const About = () => {
               <ValueCard
                 icon={Lightbulb}
                 title="Clarity Over Confusion"
-                description="We transform raw academic data — GCE subjects, interests, grades — into clear, actionable paths. No jargon. No guesswork."
+                description="We transform raw academic data (GCE subjects, interests, and grades) into clear, actionable paths. No jargon. No guesswork."
               />
               <ValueCard
                 icon={Heart}
@@ -200,7 +200,7 @@ const About = () => {
               <ValueCard
                 icon={Users}
                 title="Community-Driven"
-                description="From parents sharing GCE results links on WhatsApp to students using our orientation engine — Klarify grows because the community believes in it."
+                description="From parents sharing GCE results links on WhatsApp to students using our orientation engine, Klarify grows because the community believes in it."
               />
             </div>
           </div>
@@ -401,7 +401,7 @@ const About = () => {
               </h2>
               <p className="text-slate-600 text-sm md:text-base mt-2">
                 We are building Cameroon's most comprehensive academic
-                orientation and results platform — one feature at a time.
+                orientation and results platform, one feature at a time.
               </p>
             </div>
 
@@ -410,7 +410,7 @@ const About = () => {
                 {
                   num: "01",
                   title: "GCE Results Search",
-                  desc: "Search your GCE O/L, A/L, and TVE results instantly by name — no PDFs, no stress.",
+                  desc: "Search your GCE O/L, A/L, and TVE results instantly by name without PDFs or stress.",
                 },
                 {
                   num: "02",
@@ -420,7 +420,7 @@ const About = () => {
                 {
                   num: "03",
                   title: "Concours & Career Guides",
-                  desc: "Get details on entrance exams, deadlines, fees, and the career paths that each program leads to — all in one place.",
+                  desc: "Get details on entrance exams, deadlines, fees, and the career paths that each program leads to, all in one place.",
                 },
               ].map(({ num, title, desc }) => (
                 <article

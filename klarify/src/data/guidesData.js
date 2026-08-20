@@ -21,7 +21,7 @@ export const guidesData = [
       { type: "p", text: "A concours determines whether you enter a particular school at a particular time. It does not determine your intelligence, your potential, or the rest of your life." },
       {
         type: "callout",
-        text: "I know this feeling because I've been there. When I didn't make it, I felt completely lost. I thought the only door had closed. But I learned that other pathways exist—and often, they lead to even better opportunities."
+        text: "I know this feeling because I've been there. When I didn't make it, I felt completely lost. I thought the only door had closed. But I learned that other pathways exist, and often, they lead to even better opportunities."
       },
       { type: "h2", text: "What a Concours Actually Means" },
       { type: "p", text: "Look, a concours is just a competition where they pick a few people because there are too many students and not enough desks." },
@@ -60,7 +60,7 @@ export const guidesData = [
     id: "what-to-study-after-alevel",
     title: "What Can I Study After A-Level in Cameroon?",
     slug: "what-to-study-after-alevel",
-    description: "A complete guide on how to choose university courses based on your specific A-Level subject combination—from Science to Arts.",
+    description: "A complete guide on how to choose university courses based on your specific A-Level subject combination, from Science to Arts.",
     category: "Orientation",
     author: "Sangwa Jesly",
     date: "Aug 20, 2026",

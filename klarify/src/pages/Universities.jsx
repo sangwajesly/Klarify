@@ -18,7 +18,7 @@ const UNI_METADATA = {
     city: "Buea, South West",
     established: "1993",
     type: "Public State University",
-    tagline: "The Place to Be — Anglo-Saxon Excellence in Cameroon.",
+    tagline: "The Place to Be: Anglo-Saxon Excellence in Cameroon.",
     description:
       "The University of Buea is Cameroon's premier Anglo-Saxon university offering programs across Arts, Social Sciences, Engineering, Education, and Health Sciences.",
   },

@@ -73,19 +73,19 @@ const Home = () => {
       "query-input": "required name=search_term_string",
     },
     description:
-      "KlarifyPath is an AI-powered academic and career guidance platform focused on Cameroon. Get A-Level university program recommendations and GCE result searches.",
+      "KlarifyPath is an academic and career guidance platform focused on Cameroon. Get A-Level university program recommendations and GCE result searches.",
   };
 
   const homeFaqs = [
     {
       question: "What is KlarifyPath?",
       answer:
-        "KlarifyPath is an AI-powered educational platform designed specifically for Cameroonian students. It helps A-Level students find the best university programs and career paths based on their subjects and interests.",
+        "KlarifyPath is an educational platform designed specifically for Cameroonian students. It helps A-Level students find the best university programs and career paths based on their subjects and interests.",
     },
     {
       question: "How do I choose a university program in Cameroon?",
       answer:
-        "Choosing a program depends on your A-Level subjects, grades, and career interests. Our AI Recommender analyzes your specific subject combination (e.g., Biology, Chemistry, Math) and matches you with eligible degrees in Cameroonian universities.",
+        "Choosing a program depends on your A-Level subjects, grades, and career interests. Our academic recommender analyzes your specific subject combination (e.g., Biology, Chemistry, Math) and matches you with eligible degrees in Cameroonian universities.",
     },
     {
       question: "Which programs require concours?",
@@ -100,7 +100,7 @@ const Home = () => {
     {
       question: "Is KlarifyPath free to use?",
       answer:
-        "Yes! Searching for GCE results and getting your initial AI-powered career and university recommendations is completely free for all Cameroonian students.",
+        "Yes! Searching for GCE results and getting your initial career and university recommendations is completely free for all Cameroonian students.",
     },
   ];
 
@@ -108,7 +108,7 @@ const Home = () => {
     <Layout noPadding={true}>
       <SEOHead
         title="KlarifyPath - University & Career Guidance in Cameroon"
-        description="Discover the best university programs and career paths in Cameroon. Use our AI recommender based on your A-Level subjects and interests. Check GCE results instantly."
+        description="Discover the best university programs and career paths in Cameroon. Use our orientation recommender based on your A-Level subjects and interests. Check GCE results instantly."
         canonicalUrl="https://www.klarifypath.com"
         structuredData={homeSchema}
       />
@@ -242,7 +242,7 @@ const Home = () => {
                   education system.
                 </p>
                 <p>
-                  We solve this by providing an intelligent, AI-driven
+                  We solve this by providing an intelligent, personalized
                   recommendation engine that analyzes your academic strengths
                   (like GCE A-Level subjects) and personal interests to suggest
                   the most appropriate public and private university programs,
@@ -280,8 +280,8 @@ const Home = () => {
               />
               <FeatureCard
                 icon={Zap}
-                title="AI-Powered Matching"
-                description="No more scrolling through endless prospectuses. Get tailored degree and career results instantly based on TF-IDF and Cosine Similarity."
+                title="Personalized Matching"
+                description="No more scrolling through endless prospectuses. Get tailored degree and career results instantly matched to your subjects."
               />
               <FeatureCard
                 icon={ShieldCheck}

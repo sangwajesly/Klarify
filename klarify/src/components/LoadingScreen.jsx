@@ -20,7 +20,7 @@ const LoadingScreen = () => {
         </div>
         
         <h3 className="text-xl font-bold text-slate-900 mb-2">Analyzing your profile</h3>
-        <p className="text-slate-500 text-sm">Our AI is matching your subjects and interests with the best academic paths.</p>
+        <p className="text-slate-500 text-sm">Our system is matching your subjects and interests with the best academic paths.</p>
       </div>
     </motion.div>
   );

@@ -106,7 +106,7 @@ export default function InstallPrompt() {
             <p className="text-sm text-slate-300 mt-1 leading-relaxed">
               {iosMode
                 ? "Add Klarify to your home screen for quick access to GCE results and orientation tools."
-                : "Install the app for faster access to GCE results, orientation, and career guides — even offline."}
+                : "Install the app for faster access to GCE results, orientation, and career guides, even offline."}
             </p>
           </div>
         </div>

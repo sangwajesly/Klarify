@@ -56,8 +56,8 @@ const Privacy = () => (
         <Section title="3. Data Sharing">
           <p>We do not sell your personal data. We may share it only with:</p>
           <ul className="list-disc list-inside space-y-2 mt-2 text-slate-600 text-sm md:text-base">
-            <li><span className="text-slate-900 font-semibold">Supabase</span> — our secure database and authentication provider</li>
-            <li><span className="text-slate-900 font-semibold">Vercel</span> — our hosting infrastructure</li>
+            <li><span className="text-slate-900 font-semibold">Supabase</span>, our secure database and authentication provider</li>
+            <li><span className="text-slate-900 font-semibold">Vercel</span>, our hosting infrastructure</li>
           </ul>
           <p className="mt-3">All third-party providers we use are bound by their own privacy and security policies.</p>
         </Section>
@@ -86,7 +86,7 @@ const Privacy = () => (
 
         <Section title="7. Security">
           <p>
-            We use industry-standard encryption and secure infrastructure (Supabase + Vercel) to protect your data. However, no system is 100% secure — please use a strong, unique password.
+            We use industry-standard encryption and secure infrastructure (Supabase + Vercel) to protect your data. However, no system is 100% secure, so please use a strong, unique password.
           </p>
         </Section>
 

@@ -31,7 +31,7 @@ const ConcoursRecovery = () => {
             Failed a Concours? Here's What to Do Next
           </h1>
           <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
-            <span>By Hannah Frank</span>
+            <span>By Sangwa Jesly</span>
             <span>&bull;</span>
             <span>6 min read</span>
           </div>
@@ -64,7 +64,7 @@ const ConcoursRecovery = () => {
           <div className="p-5 bg-slate-50 border border-slate-200/60 rounded-2xl flex gap-3 text-sm my-6">
             <Compass className="text-orange-500 shrink-0 mt-0.5" size={18} />
             <p className="text-slate-600">
-              <strong>I know this feeling because I've been there.</strong> When I didn't make it, I felt completely lost. I thought the only door had closed. But I learned that other pathways exist—and often, they lead to even better opportunities.
+              <strong>I know this feeling because I've been there.</strong> When I didn't make it, I felt completely lost. I thought the only door had closed. But I learned that other pathways exist, and often, they lead to even better opportunities.
             </p>
           </div>
 

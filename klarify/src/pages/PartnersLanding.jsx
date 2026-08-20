@@ -55,7 +55,7 @@ const PartnersLanding = () => {
             <p className="text-base md:text-lg text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
               Join Cameroon's top private institutes (IPES). Self-onboard your
               campus, upload degree & HND programs, display tuition fees, and
-              receive direct student leads on WhatsApp — all from your partner
+              receive direct student leads on WhatsApp, all from your partner
               dashboard.
             </p>
 
@@ -110,12 +110,11 @@ const PartnersLanding = () => {
                 <Zap size={24} />
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">
-                AI Matching Placement
+                Intelligent Student Matching
               </h3>
               <p className="text-slate-600 text-sm leading-relaxed">
                 When students enter their GCE A-Level subject combinations, our
-                AI recommender matches eligible students directly to your degree
-                programs.
+                matching engine highlights your eligible degree programs directly.
               </p>
             </div>
 

@@ -121,7 +121,7 @@ const GceResults = () => {
     },
     {
       question: "What should I do after checking my A-Level results?",
-      answer: "Once you have confirmed your passed subjects, use our 'AI Recommender' tool right from this page! Input your passed subjects and interests to find out which university programs and professional concours you are eligible for."
+      answer: "Once you have confirmed your passed subjects, use our 'Academic Recommender' tool right from this page! Input your passed subjects and interests to find out which university programs and professional concours you are eligible for."
     },
     {
       question: "What should I do after checking my O-Level results?",
@@ -284,7 +284,7 @@ const GceResults = () => {
                         </h3>
                         <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mt-1">
                           <Building2 size={14} className="shrink-0 text-slate-400" aria-hidden="true" />
-                          <span className="truncate">{result.center_number} — {result.center_name}</span>
+                          <span className="truncate">{result.center_number} | {result.center_name}</span>
                         </div>
                       </div>
                     </div>
