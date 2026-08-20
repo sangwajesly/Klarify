@@ -1,5 +1,6 @@
 import axios from "axios";
 import { supabase } from "./supabase";
+import { guidesData } from "../data/guidesData";
 
 let rawUrl = import.meta.env.VITE_API_URL;
 if (
@@ -729,13 +730,17 @@ export const fetchGuides = async () => {
       .eq("published", true)
       .order("created_at", { ascending: false });
 
-    if (error || !data || data.length === 0) {
-      const { guidesData } = await import("../data/guidesData");
+    if (error) {
+      console.warn("Supabase fetchGuides error, falling back to local data:", error);
+      return guidesData.filter(g => g.published);
+    }
+
+    if (!data || data.length === 0) {
       return guidesData.filter(g => g.published);
     }
     return data;
   } catch (err) {
-    const { guidesData } = await import("../data/guidesData");
+    console.warn("Exception during fetchGuides, falling back to local data:", err);
     return guidesData.filter(g => g.published);
   }
 };
@@ -752,13 +757,17 @@ export const fetchGuideBySlug = async (slug) => {
       .eq("slug", slug)
       .single();
 
-    if (error || !data) {
-      const { guidesData } = await import("../data/guidesData");
+    if (error) {
+      console.warn(`Supabase fetchGuideBySlug error for ${slug}, falling back to local data:`, error);
+      return guidesData.find(g => g.slug === slug);
+    }
+
+    if (!data) {
       return guidesData.find(g => g.slug === slug);
     }
     return data;
   } catch (err) {
-    const { guidesData } = await import("../data/guidesData");
+    console.warn(`Exception during fetchGuideBySlug for ${slug}, falling back to local data:`, err);
     return guidesData.find(g => g.slug === slug);
   }
 };
