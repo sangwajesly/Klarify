@@ -21,6 +21,8 @@ import PartnerRegister from "./pages/PartnerRegister";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import PartnerPrograms from "./pages/PartnerPrograms";
 import PartnerLogin from "./pages/PartnerLogin";
+import GuideDetails from "./pages/GuideDetails";
+import Guides from "./pages/Guides";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -70,10 +72,8 @@ function App() {
         <Route path="/universities/:id" element={<UniversityDetails />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/programs/:id" element={<ProgramDetails />} />
-        <Route
-          path="/guides"
-          element={<ComingSoon title="Educational Guides" />}
-        />
+        <Route path="/guides" element={<Guides />} />
+        <Route path="/guides/:slug" element={<GuideDetails />} />
         <Route
           path="/careers"
           element={<ComingSoon title="Career Pathways" />}

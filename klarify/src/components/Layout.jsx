@@ -171,6 +171,45 @@ const Layout = ({ children, noPadding = false }) => {
                 GCE Results
               </Link>
               <Link
+                to="/universities"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  trackEvent("nav_click", {
+                    label: "universities",
+                    location: "mobile_menu",
+                  });
+                }}
+                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+              >
+                Universities
+              </Link>
+              <Link
+                to="/programs"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  trackEvent("nav_click", {
+                    label: "programs",
+                    location: "mobile_menu",
+                  });
+                }}
+                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+              >
+                Academic Programs
+              </Link>
+              <Link
+                to="/guides"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  trackEvent("nav_click", {
+                    label: "guides",
+                    location: "mobile_menu",
+                  });
+                }}
+                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+              >
+                Educational Guides
+              </Link>
+              <Link
                 to="/partners?utm_source=site&utm_medium=mobile_menu&utm_campaign=partner_acquisition"
                 onClick={() => {
                   setIsMobileMenuOpen(false);

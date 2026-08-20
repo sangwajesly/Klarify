@@ -716,3 +716,49 @@ export const recoverPartnerProfile = async (user) => {
 
   return institutionRecord;
 };
+
+/**
+ * Fetch all published educational guides from Supabase.
+ * Gracefully falls back to local data if the database table is missing/empty.
+ */
+export const fetchGuides = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("guides")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      const { guidesData } = await import("../data/guidesData");
+      return guidesData.filter(g => g.published);
+    }
+    return data;
+  } catch (err) {
+    const { guidesData } = await import("../data/guidesData");
+    return guidesData.filter(g => g.published);
+  }
+};
+
+/**
+ * Fetch a single guide from Supabase by slug.
+ * Gracefully falls back to local data if the database table is missing/empty.
+ */
+export const fetchGuideBySlug = async (slug) => {
+  try {
+    const { data, error } = await supabase
+      .from("guides")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+
+    if (error || !data) {
+      const { guidesData } = await import("../data/guidesData");
+      return guidesData.find(g => g.slug === slug);
+    }
+    return data;
+  } catch (err) {
+    const { guidesData } = await import("../data/guidesData");
+    return guidesData.find(g => g.slug === slug);
+  }
+};
