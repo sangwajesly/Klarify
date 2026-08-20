@@ -88,23 +88,40 @@ const Results = () => {
 
   if (!results) return null;
 
-  const filteredPrograms = results.programs.filter((program) => {
-    // Filter by type
-    if (activeFilter === "Entrance Required" && !program.requiresConcours)
-      return false;
-    if (activeFilter === "Upcoming Deadline" && !program.examDetails?.deadline)
-      return false;
+  const filteredPrograms = useMemo(() => {
+    if (!results?.programs) return [];
+    
+    const list = results.programs.filter((program) => {
+      // Filter by type
+      if (activeFilter === "Entrance Required" && !program.requiresConcours)
+        return false;
+      if (activeFilter === "Upcoming Deadline" && !program.examDetails?.deadline)
+        return false;
 
-    // Filter by university
-    if (
-      selectedUniversity !== "All Universities" &&
-      program.university !== selectedUniversity
-    ) {
-      return false;
-    }
+      // Filter by university
+      if (
+        selectedUniversity !== "All Universities" &&
+        program.university !== selectedUniversity
+      ) {
+        return false;
+      }
 
-    return true;
-  });
+      return true;
+    });
+
+    // Bubble FEATURED and PRO programs to the top of recommendations
+    return list.sort((a, b) => {
+      const aFeatured = a.subscription_tier === "FEATURED" ? 1 : 0;
+      const bFeatured = b.subscription_tier === "FEATURED" ? 1 : 0;
+      if (bFeatured !== aFeatured) return bFeatured - aFeatured;
+
+      const aPro = a.subscription_tier === "PRO" ? 1 : 0;
+      const bPro = b.subscription_tier === "PRO" ? 1 : 0;
+      if (bPro !== aPro) return bPro - aPro;
+
+      return 0;
+    });
+  }, [results, activeFilter, selectedUniversity]);
 
   const handleClearFilters = () => {
     setActiveFilter("All");

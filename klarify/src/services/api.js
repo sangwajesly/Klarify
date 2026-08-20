@@ -175,6 +175,10 @@ const formatProgramRecord = (p, cMap = {}) => {
     tags: p.tags || [],
     careers: p.careers || p.Careers || [],
     descriptions: p.descriptions,
+    tuition_fee_xaf: p.tuition_fee_xaf || p.tuitionFee || null,
+    institution_id: p.institution_id || null,
+    subscription_tier: p.institutions?.subscription_tier || p.subscription_tier || "STARTER",
+    whatsapp_number: p.institutions?.whatsapp_number || p.whatsapp_number || "",
     examDetails: concourObj
       ? {
           id: concourObj.id,
@@ -211,7 +215,8 @@ export const fetchAllPrograms = async () => {
       .select(
         `
         *,
-        concours:concours_id (*)
+        concours:concours_id (*),
+        institutions:institution_id (subscription_tier, whatsapp_number)
       `,
       )
       .order("name", { ascending: true });
@@ -238,7 +243,8 @@ export const fetchProgramById = async (programId) => {
       .select(
         `
         *,
-        concours:concours_id (*)
+        concours:concours_id (*),
+        institutions:institution_id (subscription_tier, whatsapp_number)
       `,
       )
       .eq("id", programId)
@@ -308,6 +314,22 @@ export const fetchUniversityDetails = async (uniName) => {
     faculties: Array.from(facultiesSet).sort(),
     isPrivate: programs.some((p) => p.institution_id),
   };
+};
+
+export const fetchFeaturedInstitutions = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("institutions")
+      .select("id, name, city, campus, whatsapp_number, website_url")
+      .eq("subscription_tier", "FEATURED")
+      .eq("verification_status", "VERIFIED");
+
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error("Failed to fetch featured institutions:", err);
+    return [];
+  }
 };
 
 // --- Partner Portal API Queries ---
@@ -428,7 +450,10 @@ export const fetchPartnerInstitutionPrograms = async (
     return [];
   }
   try {
-    let query = supabase.from("programs").select("*");
+    let query = supabase.from("programs").select(`
+      *,
+      institutions:institution_id (subscription_tier, whatsapp_number)
+    `);
     if (institutionId) {
       query = query.eq("institution_id", institutionId);
     } else {

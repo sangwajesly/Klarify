@@ -10,12 +10,15 @@ import {
   GraduationCap,
   Briefcase,
   Bookmark,
+  MessageCircle,
 } from "lucide-react";
 
 const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  const isPaidTier = !program.institution_id || program.subscription_tier === "PRO" || program.subscription_tier === "FEATURED";
 
   const handleToggleSave = async () => {
     if (isSaving) return;
@@ -55,9 +58,14 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
             )}
           </div>
           <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-600">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <Building2 size={16} className="text-slate-400" />
-              {program.university}
+              <span>{program.university}</span>
+              {isPaidTier && program.institution_id && (
+                <span className="inline-flex items-center gap-0.5 text-[9px] font-black text-emerald-600 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/25 uppercase tracking-wider scale-[0.9] origin-left select-none">
+                  Verified Partner
+                </span>
+              )}
             </div>
             {program.faculty && (
               <div className="flex items-center gap-1.5">
@@ -84,22 +92,48 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
               Entrance Exam Required
             </div>
           )}
-          {program.portalUrl && (
-            <a
-              href={program.portalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors w-full md:w-auto justify-center shadow-sm"
-            >
-              Apply / Visit Portal
-              <ExternalLink size={16} />
-            </a>
-          )}
+          <div className="flex flex-row md:flex-col gap-2 w-full md:w-auto">
+            {program.portalUrl && (
+              <a
+                href={program.portalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-all w-full md:w-auto justify-center shadow-sm cursor-pointer"
+              >
+                Apply / Visit Portal
+                <ExternalLink size={16} />
+              </a>
+            )}
+            {isPaidTier && program.whatsapp_number && (
+              <a
+                href={`https://wa.me/${String(program.whatsapp_number).replace(/\D/g, "")}?text=${encodeURIComponent(
+                  `Hello Admissions Office, I found your "${program.name}" program on Klarify and would like to inquire about current registration procedures.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold transition-all w-full md:w-auto justify-center shadow-sm cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+              >
+                <MessageCircle size={16} />
+                Chat Admissions
+              </a>
+            )}
+          </div>
           {program.tuition_fee_xaf && (
             <div className="mt-2 text-sm font-semibold text-slate-800 bg-white/80 px-3 py-1.5 rounded-lg border border-slate-100 w-full md:w-auto text-center">
-              {typeof program.tuition_fee_xaf === "number"
-                ? program.tuition_fee_xaf.toLocaleString() + " XAF"
-                : program.tuition_fee_xaf + " XAF"}
+              {isPaidTier ? (
+                <>
+                  <span className="text-[10px] text-slate-400 block font-normal uppercase tracking-wider">Tuition Fee</span>
+                  <span>
+                    {typeof program.tuition_fee_xaf === "number"
+                      ? program.tuition_fee_xaf.toLocaleString() + " XAF"
+                      : program.tuition_fee_xaf + " XAF"}
+                  </span>
+                </>
+              ) : (
+                <span className="text-slate-400 italic font-normal text-xs block">
+                  Fees: Contact Registrar
+                </span>
+              )}
             </div>
           )}
         </div>
@@ -151,7 +185,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
                         Deadline
                       </div>
                       <div className="text-sm font-bold text-slate-900">
-                        {program.examDetails.deadline}
+                        {isPaidTier ? program.examDetails.deadline : "Locked (Upgrade)"}
                       </div>
                     </div>
                     <div className="bg-white/70 rounded-lg px-3 py-2.5 border border-blue-100/60">
@@ -159,7 +193,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
                         Exam Fee
                       </div>
                       <div className="text-sm font-bold text-slate-900">
-                        {program.examDetails.fee}
+                        {isPaidTier ? program.examDetails.fee : "Locked (Upgrade)"}
                       </div>
                     </div>
                   </div>

@@ -121,9 +121,9 @@ const Programs = () => {
     return ["All Faculties", ...Array.from(set).sort()];
   }, [programs, selectedUniversity]);
 
-  // Filtering logic
+  // Filtering & Priority Sorting logic
   const filteredPrograms = useMemo(() => {
-    return programs.filter((p) => {
+    const list = programs.filter((p) => {
       // Search match
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
@@ -170,6 +170,19 @@ const Programs = () => {
       }
 
       return true;
+    });
+
+    // Bubble FEATURED and PRO university programs to the top
+    return list.sort((a, b) => {
+      const aFeatured = a.subscription_tier === "FEATURED" ? 1 : 0;
+      const bFeatured = b.subscription_tier === "FEATURED" ? 1 : 0;
+      if (bFeatured !== aFeatured) return bFeatured - aFeatured;
+
+      const aPro = a.subscription_tier === "PRO" ? 1 : 0;
+      const bPro = b.subscription_tier === "PRO" ? 1 : 0;
+      if (bPro !== aPro) return bPro - aPro;
+
+      return 0;
     });
   }, [
     programs,
