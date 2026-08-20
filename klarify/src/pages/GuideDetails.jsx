@@ -142,12 +142,31 @@ const GuideDetails = () => {
     );
   }
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.description,
+    "image": article.image,
+    "author": {
+      "@type": "Person",
+      "name": article.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "KlarifyPath",
+      "logo": "https://www.klarifypath.com/favicon.svg"
+    }
+  };
+
   return (
     <Layout noPadding={true}>
       <SEOHead
         title={`${article.title} | KlarifyPath Guides`}
         description={article.description}
         canonicalUrl={`https://www.klarifypath.com/guides/${article.slug}`}
+        type="article"
+        structuredData={articleSchema}
       />
 
       {/* Guide Header Banner */}
