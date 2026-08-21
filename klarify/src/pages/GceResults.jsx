@@ -23,7 +23,7 @@ const GceResults = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [examType, setExamType] = useState("");
-  const [examYear, setExamYear] = useState("2025");
+  const [examYear, setExamYear] = useState("2026");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -116,7 +116,7 @@ const GceResults = () => {
       answer: "No, KlarifyPath is an independent educational platform. We provide this search tool as a free public utility to help students check their results quickly and seamlessly transition into our career guidance and university recommendation tools."
     },
     {
-      question: "When do the 2025 GCE Results become available?",
+      question: "When do the 2026 GCE Results become available?",
       answer: "Results typically become available between late July and early August. Our database is updated within minutes of the official release by the Cameroon GCE Board."
     },
     {
@@ -218,6 +218,7 @@ const GceResults = () => {
                       onChange={(e) => setExamYear(e.target.value)}
                       className="w-full appearance-none pl-3.5 pr-8 py-3.5 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white text-sm font-semibold text-center focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 transition-all cursor-pointer"
                     >
+                      <option value="2026" className="text-slate-900 bg-white">2026</option>
                       <option value="2025" className="text-slate-900 bg-white">2025</option>
                       <option value="2024" className="text-slate-900 bg-white">2024</option>
                     </select>
