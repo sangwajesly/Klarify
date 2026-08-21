@@ -32,10 +32,10 @@ const GceResults = () => {
 
   const EXAM_TYPES = [
     { id: "", label: "All Levels" },
-    { id: "GEN_A", label: "A-Level" },
-    { id: "GEN_O", label: "O-Level" },
-    { id: "TVE_A", label: "Technical AL" },
-    { id: "TVE_O", label: "Technical OL" },
+    { id: "AL", label: "A-Level" },
+    { id: "OL", label: "O-Level" },
+    { id: "TVEE-AL", label: "Technical AL" },
+    { id: "TVEE-IL", label: "Technical IL" },
   ];
 
   const handleCopyLink = () => {
@@ -87,7 +87,7 @@ const GceResults = () => {
 
   const isOLevelResult = (result) => {
     if (result.exam_type) {
-      return result.exam_type === "GEN_O" || result.exam_type === "TVE_O";
+      return result.exam_type === "OL" || result.exam_type === "TVEE-IL";
     }
     const resultStr = JSON.stringify(result).toLowerCase();
     return resultStr.includes("o-level") || resultStr.includes("ordinary level") || resultStr.includes("o/l");
