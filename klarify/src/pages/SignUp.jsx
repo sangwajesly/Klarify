@@ -27,6 +27,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [confirmationSent, setConfirmationSent] = useState(false);
+  const [confirmedEmail, setConfirmedEmail] = useState("");
 
   const usingPhone = isPhone(formData.identifier);
 
@@ -92,7 +94,9 @@ const SignUp = () => {
         if (session) {
           navigate("/flow");
         } else {
-          setError("Account created! Please check your email to confirm, then sign in.");
+          // Supabase sent a confirmation email — show the check-your-email screen
+          setConfirmedEmail(formData.identifier);
+          setConfirmationSent(true);
         }
       }
     } catch (err) {
@@ -110,6 +114,46 @@ const SignUp = () => {
     if (/[^A-Za-z0-9]/.test(formData.password)) s++;
     return s;
   };
+
+  // ── Email confirmation sent screen ──────────────────────────────────────────
+  if (confirmationSent) {
+    return (
+      <Layout noPadding={true}>
+        <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-8 relative">
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,0.07) 0%, transparent 70%)" }}
+            aria-hidden="true"
+          />
+          <div className="relative z-10 w-full max-w-sm text-center">
+            <div className="w-16 h-16 rounded-2xl bg-orange-500/10 text-orange-400 flex items-center justify-center mx-auto mb-6">
+              <Mail size={32} />
+            </div>
+            <h1 className="text-2xl font-bold text-white mb-3">Check Your Email</h1>
+            <p className="text-slate-400 text-sm leading-relaxed mb-2">
+              We sent a confirmation link to:
+            </p>
+            <p className="text-orange-400 font-semibold text-sm mb-6 break-all">{confirmedEmail}</p>
+            <p className="text-slate-500 text-xs leading-relaxed mb-8">
+              Click the link in the email to activate your account, then come back to sign in. Check your spam folder if you don't see it within a minute.
+            </p>
+            <Link
+              to="/login"
+              className="inline-flex items-center justify-center gap-2 w-full bg-orange-500 hover:bg-orange-400 text-white font-semibold text-sm py-3 rounded-xl transition-colors duration-200"
+            >
+              Go to Sign In <ArrowRight size={16} />
+            </Link>
+            <button
+              onClick={() => { setConfirmationSent(false); setError(""); }}
+              className="mt-4 text-slate-500 hover:text-slate-300 text-xs transition-colors w-full"
+            >
+              Use a different email
+            </button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout noPadding={true}>
