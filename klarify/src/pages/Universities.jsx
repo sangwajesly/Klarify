@@ -105,7 +105,7 @@ const Universities = () => {
   return (
     <Layout>
       <SEOHead
-        title="State Universities & Higher Institutes in Cameroon | KlarifyPath"
+        title="State Universities & Higher Institutes in Cameroon | Klarify"
         description="Discover state universities in Cameroon including University of Buea, University of Bamenda, University of Yaounde I, Douala, and Dschang."
         canonicalUrl="https://www.klarifypath.com/universities"
       />

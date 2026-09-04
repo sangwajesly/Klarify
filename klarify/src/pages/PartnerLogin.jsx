@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Mail, Phone, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 
 const isPhone = (value) => /^[+\d]/.test(value.trim()) && !value.includes("@");
 
@@ -15,6 +16,7 @@ const normalizePhone = (value) => {
 const PartnerLogin = () => {
   const navigate = useNavigate();
   const { signIn, signInWithPhone, user, signOut } = useAuth();
+  const { t } = useLanguage();
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -35,21 +37,21 @@ const PartnerLogin = () => {
     setError("");
 
     if (!identifier.trim()) {
-      setError("Please enter your phone number or email.");
+      setError(t("auth.errors.enterIdentifier"));
       return;
     }
     if (usingPhone) {
       const digits = identifier.replace(/\D/g, "");
       if (digits.length < 9) {
-        setError("Phone number must be at least 9 digits.");
+        setError(t("auth.errors.invalidPhone"));
         return;
       }
     } else if (!identifier.includes("@")) {
-      setError("Please enter a valid email address.");
+      setError(t("auth.errors.invalidEmail"));
       return;
     }
     if (!password) {
-      setError("Please enter your password.");
+      setError(t("auth.errors.enterPassword"));
       return;
     }
 
@@ -64,14 +66,14 @@ const PartnerLogin = () => {
       }
 
       if (data?.user?.user_metadata?.user_type !== "INSTITUTION_ADMIN") {
-        setError("Access denied. Only institution accounts can access the partner portal.");
+        setError(t("partnerAuth.accessDenied"));
         await signOut();
       } else {
         navigate("/partner/dashboard");
       }
     } catch (err) {
       const msg = err.message || "";
-      setError(msg || "Login failed. Please try again.");
+      setError(msg || t("auth.errors.loginFailed"));
     } finally {
       setLoading(false);
     }
@@ -94,9 +96,11 @@ const PartnerLogin = () => {
             <div className="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center text-white font-bold text-base shadow-md mb-3">
               K
             </div>
-            <h1 className="text-2xl font-bold text-white">Institution Login</h1>
+            <h1 className="text-2xl font-bold text-white">
+              {t("partnerAuth.title")}
+            </h1>
             <p className="text-slate-500 text-sm mt-1">
-              Sign in to manage your campus portal
+              {t("partnerAuth.subtitle")}
             </p>
           </div>
 
@@ -110,7 +114,7 @@ const PartnerLogin = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
-                  Phone Number or Email
+                  {t("auth.identifierLabel")}
                 </label>
                 <div className="relative">
                   {usingPhone ? (
@@ -128,7 +132,7 @@ const PartnerLogin = () => {
                     type="text"
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
-                    placeholder="+237 6XX XXX XXX or you@example.com"
+                    placeholder={t("auth.identifierPlaceholder")}
                     className="w-full bg-slate-800/60 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-white text-sm placeholder-slate-600 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 transition-all"
                   />
                 </div>
@@ -136,7 +140,7 @@ const PartnerLogin = () => {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
-                  Password
+                  {t("auth.passwordLabel")}
                 </label>
                 <div className="relative">
                   <Lock
@@ -155,7 +159,9 @@ const PartnerLogin = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                     aria-label={
-                      showPassword ? "Hide password" : "Show password"
+                      showPassword
+                        ? t("auth.showPasswordHide")
+                        : t("auth.showPasswordShow")
                     }
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -169,10 +175,10 @@ const PartnerLogin = () => {
                 className="w-full bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/50 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 mt-2"
               >
                 {loading ? (
-                  "Signing in..."
+                  t("auth.signingIn")
                 ) : (
                   <>
-                    Sign In <ArrowRight size={16} />
+                    {t("auth.signIn")} <ArrowRight size={16} />
                   </>
                 )}
               </button>
@@ -180,7 +186,9 @@ const PartnerLogin = () => {
 
             <div className="my-6 flex items-center gap-3">
               <div className="flex-1 h-px bg-slate-800" />
-              <span className="text-slate-600 text-xs">Need an account?</span>
+              <span className="text-slate-600 text-xs">
+                {t("partnerAuth.needAccount")}
+              </span>
               <div className="flex-1 h-px bg-slate-800" />
             </div>
 
@@ -188,18 +196,18 @@ const PartnerLogin = () => {
               to="/partner/register"
               className="w-full border border-slate-700 text-slate-300 hover:text-white hover:border-slate-600 font-semibold text-sm py-3 rounded-xl transition-colors duration-200 flex items-center justify-center"
             >
-              Create Partner Account
+              {t("partnerAuth.createAccount")}
             </Link>
           </div>
 
           <p className="text-center text-slate-600 text-xs mt-5">
-            By signing in, you agree to our{" "}
+            {t("partnerAuth.agreePrefix")}{" "}
             <Link to="/terms" className="text-slate-400 hover:text-slate-200">
-              Terms of Service
+              {t("auth.termsLabel")}
             </Link>{" "}
-            and{" "}
+            {t("auth.and")}{" "}
             <Link to="/privacy" className="text-slate-400 hover:text-slate-200">
-              Privacy Policy
+              {t("auth.privacyLabel")}
             </Link>
           </p>
         </div>

@@ -122,7 +122,7 @@ async def create_direct_payment(payload: CreateDirectPaymentRequest, current_use
             amount=payload.amount,
             phone=clean_phone,
             name=payload.name or "Klarify Partner",
-            email=payload.email or "admin@klarifypath.com",
+            email=payload.email or "adminklarify@gmail.com",
             description=payload.description,
         )
     except Exception as err:

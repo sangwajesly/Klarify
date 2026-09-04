@@ -1,0 +1,565 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "gceResults": "Resultats GCE",
+    "partner": "Partenaire",
+    "about": "A propos",
+    "universities": "Universites",
+    "programs": "Filieres universitaires",
+    "guides": "Guides educatifs",
+    "signIn": "Se connecter",
+    "getStarted": "Commencer",
+    "profile": "Profil",
+    "signOut": "Se deconnecter"
+  },
+  "footer": {
+    "tagline": "Des recommandations academiques personnalisees pour aider les etudiants a trouver les bonnes filieres universitaires et parcours professionnels.",
+    "platform": "Plateforme",
+    "resources": "Ressources",
+    "contact": "Contact",
+    "legal": "Mentions legales",
+    "alPath": "Parcours etudiant A/L",
+    "checkGce": "Verifier les resultats GCE",
+    "partners": "Partenaires",
+    "aboutKlarify": "A propos de Klarify",
+    "careers": "Carrieres",
+    "privacyPolicy": "Politique de confidentialite",
+    "terms": "Conditions d'utilisation",
+    "joinWhatsapp": "Rejoindre la communaute WhatsApp",
+    "copyright": "Klarify Plateforme Academique. Tous droits reserves."
+  },
+  "home": {
+    "gceBanner": {
+      "short": "Verifier les resultats GCE",
+      "long": "Verifier vos resultats GCE maintenant.",
+      "searchNow": "Rechercher"
+    },
+    "badge": "Plateforme d'orientation academique N1 au Cameroun",
+    "headline": "Trouvez votre prochaine etape",
+    "headlineSub": "Apres le secondaire ou l'universite",
+    "subtext": "Arretez de deviner la suite. Decouvrez les meilleures filieres universitaires, concours professionnels et parcours de carriere au Cameroun, adaptes precisement a votre profil et vos objectifs.",
+    "ctaPrimary": "Commencer gratuitement",
+    "ctaSubtext": "Seulement 2 minutes - aucune carte bancaire requise.",
+    "trustedBy": "Fait confiance par",
+    "students": "etudiants",
+    "aboutSection": {
+      "eyebrow": "A propos de Klarify",
+      "heading": "La plateforme educative de reference au Cameroun",
+      "p1": "Klarify est concu pour combler le fosse entre l'enseignement secondaire et la reussite professionnelle. Chaque annee, des milliers d'etudiants camerounais peinent a naviguer dans le systeme d'enseignement superieur complexe.",
+      "p2": "Nous resolvons cela en fournissant un moteur de recommandation intelligent et personnalise qui analyse vos forces academiques (comme les matieres du GCE A-Level) et vos interets personnels pour suggerer les meilleures filieres universitaires publiques et privees, concours et parcours de carriere au Cameroun."
+    },
+    "features": {
+      "eyebrow": "Comment ca marche",
+      "heading": "Du GCE A-Level a votre carriere en 3 etapes",
+      "step1": {
+        "title": "Entrez votre profil",
+        "description": "Dites-nous vos matieres du GCE A-Level, vos notes et les domaines qui vous interessent le plus."
+      },
+      "step2": {
+        "title": "Obtenez des recommandations",
+        "description": "Notre moteur associe votre profil aux filieres universitaires, concours et parcours de carriere auxquels vous etes eligible."
+      },
+      "step3": {
+        "title": "Explorez et postulez",
+        "description": "Plongez dans les details des programmes, les conditions des concours et contactez directement les institutions."
+      }
+    },
+    "whySection": {
+      "eyebrow": "Pourquoi Klarify",
+      "heading": "Concu pour l'experience de l'etudiant camerounais",
+      "card1": {
+        "title": "Correspondance basee sur le GCE",
+        "description": "Notre base de donnees est construite specifiquement autour des combinaisons de matieres GCE A/L et O/L du Cameroun pour des verifications d'eligibilite precises."
+      },
+      "card2": {
+        "title": "Resultats instantanes",
+        "description": "Plus besoin de parcourir des PDF. Obtenez vos resultats GCE et des recommandations de programmes en quelques secondes."
+      },
+      "card3": {
+        "title": "Donnees fiables",
+        "description": "Toutes les donnees des institutions, les conditions des concours et les perspectives de carriere sont verifiees et regulierement mises a jour."
+      }
+    },
+    "partnerPromo": {
+      "title": "Partenaire de Klarify",
+      "text": "Inscrivez votre institution, telechargez les programmes et frais de scolarite, et recevez des etudiants A-Level hautement motivees via WhatsApp avec une mise en avant prioritaire.",
+      "items": [
+        "Integration simple de votre campus",
+        "Affichage des frais de scolarite et des details des programmes",
+        "Leads WhatsApp directs et statistiques de programmes"
+      ],
+      "button": "Devenir partenaire",
+      "login": "Connexion institution"
+    },
+    "featured": {
+      "label": "Institutions a la une",
+      "heading": "Partenaires d'orientation premium",
+      "programs": "Voir les programmes",
+      "campus": "Campus principal",
+      "whatsapp": "Admissions WhatsApp"
+    },
+    "coverage": {
+      "eyebrow": "Couverture",
+      "heading": "Universites et etablissements couverts",
+      "text": "Notre moteur de recommandation couvre des programmes de grandes institutions sur l'ensemble du territoire national."
+    },
+    "ctaSection": {
+      "heading": "Pret a trouver votre voie?",
+      "subtext": "Rejoignez des milliers d'etudiants qui savent deja ou ils vont.",
+      "button": "Demarrer mon orientation"
+    },
+    "bottomCta": {
+      "heading": "Pret a trouver votre voie?",
+      "subtext": "Rejoignez des milliers d'etudiants camerounais qui ont deja decouvert leurs programmes universitaires et parcours de carriere ideaux avec Klarify.",
+      "button": "Demarrer mon evaluation gratuite"
+    },
+    "faq": {
+      "heading": "Questions frequemment posees"
+    },
+    "faqs": [
+      {
+        "q": "Qu'est-ce que Klarify ?",
+        "a": "Klarify est une plateforme educative conue specialement pour les etudiants camerounais. Elle aide les etudiants de Niveau A a trouver les meilleurs programmes universitaires et parcours de carriere selon leurs matieres et leurs interets."
+      },
+      {
+        "q": "Comment choisir un programme universitaire au Cameroun ?",
+        "a": "Le choix d'un programme depend de vos matieres de Niveau A, de vos notes et de vos centres d'interet. Notre moteur de recommandation analyse votre combinaison de matieres (par exemple Biologie, Chimie, Mathematiques) et vous propose les filieres admissibles dans les universites camerounaises."
+      },
+      {
+        "q": "Quels programmes exigent un concours ?",
+        "a": "De nombreux programmes professionnels au Cameroun (comme la Medecine a la FMSB, l'Ingenierie a l'ENSP ou l'Enseignement a l'ENS) exigent un examen d'entree competitif appele concours. Klarify indique clairement quels programmes recommandes necessitent un concours."
+      },
+      {
+        "q": "Quelles universites sont publiques au Cameroun ?",
+        "a": "Le Cameroun compte plusieurs universites d'Etat dont l'Universite de Buea, l'Universite de Bamenda, l'Universite de Yaounde I & II, l'Universite de Douala, l'Universite de Dschang, l'Universite de Maroua et l'Universite de Ngaoundere. Notre plateforme recommande des programmes dans ces etablissements."
+      },
+      {
+        "q": "Klarify est-il gratuit ?",
+        "a": "Oui ! La recherche des resultats GCE et l'obtention de vos recommandations universitaires et professionnelles initiales est totalement gratuite pour tous les etudiants camerounais."
+      }
+    ]
+  },
+  "gceResults": {
+    "badge": "Moteur de resultats Klarify",
+    "heading": "Verifiez vos",
+    "headingHighlight": "Resultats GCE",
+    "subtext": "Plus besoin de faire defiler d'enormes PDF. Retrouvez vos resultats GCE instantanement en quelques secondes.",
+    "tabs": {
+      "all": "Tous les niveaux",
+      "al": "Niveau A",
+      "ol": "Niveau O",
+      "tveal": "Technique AL",
+      "tveil": "Technique IL"
+    },
+    "searchPlaceholder": "Entrez le nom du candidat ou le numero du centre...",
+    "searchAriaLabel": "Rechercher par nom de candidat ou numero de centre",
+    "yearAriaLabel": "Selectionner l'annee d'examen",
+    "searchButton": "Rechercher",
+    "minCharsError": "Veuillez saisir au moins 3 caracteres.",
+    "noResults": "Aucun resultat trouve pour \"{query}\" en {year}.",
+    "noResultsHint": "Assurez-vous d'avoir orthographie votre nom exactement comme il apparait sur votre fiche d'inscription officielle au GCE.",
+    "candidateNumber": "N candidat",
+    "center": "Centre",
+    "passed": "Reussi",
+    "subject": "matiere",
+    "subjects": "matieres",
+    "grade": "Note",
+    "oLevelResult": "Resultat Niveau O",
+    "aLevelResult": "Resultat Niveau A",
+    "getOrientation": "Obtenir une orientation",
+    "shareResult": "Partager le resultat",
+    "copyLink": "Copier le lien",
+    "copied": "Copie!",
+    "ctaHeading": "Vous connaissez vos resultats?",
+    "ctaSubtext": "Decouvrez quelles filieres universitaires et concours professionnels vous correspondent selon vos matieres du GCE A-Level.",
+    "ctaButton": "Obtenir mes recommandations universitaires",
+    "features": [
+      {
+        "title": "Rapide et economique en donnees",
+        "body": "N'utilisez plus vos donnees mobiles pour telecharger des PDF volumineux de plus de 500 pages. Recherchez votre nom et obtenez votre statut en quelques millisecondes."
+      },
+      {
+        "title": "Indexation souple des noms",
+        "body": "Notre moteur prend en charge les deuxiemes prenoms, les espaces et les petites fautes. Entrez simplement une partie de votre nom pour commencer."
+      },
+      {
+        "title": "Au-dela des resultats",
+        "body": "Trouver votre nom n'est que la premiere etape. Reliez directement vos matieres aux cours universitaires et aux regles des concours au Cameroun."
+      }
+    ],
+    "faqHeading": "Questions frequemment posees",
+    "faqs": [
+      {
+        "q": "Comment fonctionne le moteur de recherche GCE?",
+        "a": "Notre moteur de recherche se connecte a une base de donnees numerisee et hautement optimisee des resultats officiels du GCE. Lorsque vous tapez votre nom, il utilise la correspondance de texte floue pour trouver instantanement votre numero de candidat, votre centre et vos matieres reussies, sans telechargement de PDF."
+      },
+      {
+        "q": "Est-ce le site officiel du bureau GCE?",
+        "a": "Non, Klarify est une plateforme educative independante. Nous proposons cet outil de recherche comme un service public gratuit pour aider les etudiants a verifier rapidement leurs resultats et acceder a nos outils d'orientation universitaire et professionnelle."
+      },
+      {
+        "q": "Quand les resultats GCE 2026 seront-ils disponibles?",
+        "a": "Les resultats sont generalement disponibles entre fin juillet et debut aout. Notre base de donnees est mise a jour dans les minutes qui suivent la publication officielle par le Bureau GCE du Cameroun."
+      },
+      {
+        "q": "Que faire apres avoir consulte mes resultats de Niveau A?",
+        "a": "Une fois vos matieres reussies confirmees, utilisez notre outil Recommandeur academique directement sur cette page! Entrez vos matieres et vos interets pour decouvrir les filieres universitaires et concours professionnels auxquels vous etes eligible."
+      },
+      {
+        "q": "Que faire apres avoir consulte mes resultats de Niveau O?",
+        "a": "Si vous venez de reussir votre Niveau O, votre prochaine etape est de choisir les bonnes matieres de Niveau A (Lettres ou Sciences) qui correspondent a vos objectifs de carriere. Vous pouvez aussi explorer les voies professionnelles ou les lycees techniques."
+      }
+    ]
+  },
+  "legal": {
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "lastUpdated": "Derniere mise a jour : juin 2025",
+      "intro": "Bienvenue sur Klarify. En accedant ou en utilisant notre plateforme a l'adresse {domain}, vous acceptez d'etre lie par les presentes Conditions d'utilisation. Veuillez les lire attentivement.",
+      "aboutTitle": "1. A propos du service",
+      "aboutText": "Klarify est une plateforme d'orientation academique conue pour aider les etudiants camerounais a explorer les filieres universitaires, consulter les resultats du GCE et planifier leur parcours academique. Nos services sont fournis gratuitement et sont destines a des fins d'information et d'orientation.",
+      "eligibilityTitle": "2. Eligibilite",
+      "eligibilityText": "Vous devez avoir au moins 13 ans pour utiliser Klarify. En utilisant cette plateforme, vous confirmez remplir cette condition. Les etudiants de moins de 18 ans doivent utiliser la plateforme avec la connaissance de leurs parents.",
+      "accountsTitle": "3. Comptes utilisateur",
+      "accountsIntro": "Lorsque vous creez un compte :",
+      "accounts1": "Vous etes responsable de la securite de vos identifiants de connexion",
+      "accounts2": "Vous acceptez de fournir des informations exactes",
+      "accounts3": "Vous ne pouvez pas creer de comptes au nom d'autrui sans leur consentement",
+      "accounts4": "Nous nous reservons le droit de suspendre les comptes qui enfreignent ces conditions",
+      "gceTitle": "4. Avertissement sur les resultats GCE",
+      "gceText": "Les resultats GCE disponibles sur cette plateforme proviennent de publications officielles du Bureau GCE. Klarify n'est pas affili a l'Office du GCE du Cameroun. Nous ne modifions, ne certifions ni ne garantissons l'exactitude des resultats affiches. Pour une confirmation officielle, veuillez toujours vous referer directement au Bureau GCE du Cameroun.",
+      "recommendationsTitle": "5. Recommandations academiques",
+      "recommendationsText": "Les recommandations fournies par notre plateforme sont generees par un moteur automatise a partir des informations que vous fournissez. Elles sont destinees uniquement a des fins d'information et d'orientation et ne remplacent pas un conseil academique professionnel. Verifiez toujours les exigences du programme avec l'etablissement concerne.",
+      "conductTitle": "6. Conduite interdite",
+      "conductIntro": "Vous acceptez de ne pas :",
+      "conduct1": "Utiliser la plateforme dans un but illégal",
+      "conduct2": "Tenter d'acceder au compte d'un autre utilisateur",
+      "conduct3": "Extraire, copier ou redistribuer nos donnees sans autorisation ecrite",
+      "conduct4": "Abuser ou perturber les services de la plateforme",
+      "ipTitle": "7. Propriete intellectuelle",
+      "ipText": "Tout le contenu, la marque, le code et le design de Klarify sont la propriete de l'equipe Klarify. Vous ne pouvez reproduire ou redistribuer aucune partie de la plateforme sans autorisation ecrite explicite.",
+      "liabilityTitle": "8. Limitation de responsabilite",
+      "liabilityText": "Klarify est fourni \"tel quel\" sans aucune garantie. Nous ne sommes pas responsables des decisions prises sur la base des informations fournies par la plateforme. Les resultats academiques relevent uniquement de la responsabilite de l'etudiant et de son institution.",
+      "changesTitle": "9. Modifications des conditions",
+      "changesText": "Nous nous reservons le droit de mettre a jour ces Conditions a tout moment. L'utilisation continue de la plateforme apres leur publication constitue une acceptance des Conditions revisees.",
+      "contactTitle": "10. Contact",
+      "contactText": "Pour toute question concernant ces Conditions, veuillez nous contacter a :",
+      "footerText": "En utilisant Klarify, vous acceptez ces Conditions d'utilisation et notre Politique de confidentialite."
+    },
+    "privacy": {
+      "title": "Politique de confidentialite",
+      "lastUpdated": "Derniere mise a jour : juin 2025",
+      "intro": "Chez Klarify, votre vie privee est importante pour nous. Cette Politique de confidentialite explique comment nous collectons, utilisons et protegeons vos informations lorsque vous utilisez notre plateforme sur {domain}.",
+      "collectTitle": "1. Informations que nous collectons",
+      "collectIntro": "Nous collectons les types d'informations suivants :",
+      "collect1": "Informations du compte : lorsque vous vous inscrivez, nous collectons votre nom, votre adresse e-mail et votre mot de passe (stockes de maniere securisee via Supabase Auth).",
+      "collect2": "Donnees d'utilisation : nous collectons des donnees anonymes sur votre interaction avec la plateforme pour ameliorer l'experience.",
+      "collect3": "Recherches GCE : les noms saisis sur la page Resultats GCE ne sont utilises que pour retrouver les resultats correspondants et ne sont pas enregistres sur votre compte.",
+      "useTitle": "2. Comment nous utilisons vos informations",
+      "useIntro": "Vos informations sont utilisees pour :",
+      "use1": "Fournir et ameliorer nos services d'orientation academique",
+      "use2": "Personnaliser votre experience de recommandation",
+      "use3": "Vous envoyer des mises a jour importantes du service (sans spam)",
+      "use4": "Securiser votre compte et prevenir la fraude",
+      "sharingTitle": "3. Partage de donnees",
+      "sharingIntro": "Nous ne vendons pas vos donnees personnelles. Nous pouvons les partager uniquement avec :",
+      "sharing1": "Supabase, notre fournisseur securise de base de donnees et d'authentification",
+      "sharing2": "Vercel, notre infrastructure d'hebergement",
+      "sharing3": "Tous les fournisseurs tiers que nous utilisons sont soumis a leurs propres politiques de confidentialite et de securite.",
+      "gceTitle": "4. Donnees des resultats GCE",
+      "gceText": "Les donnees sur les resultats GCE disponibles sur Klarify sont issues de publications officielles du Bureau GCE et traitees uniquement pour la recherche. Nous ne modifions ni ne manipulons aucun resultat officiel. Ce service est fourni tel quel et n'est pas affili au Bureau GCE du Cameroun.",
+      "cookiesTitle": "5. Cookies",
+      "cookiesText": "Nous utilisons des cookies minimaux necessaires aux sessions d'authentification. Nous n'utilisons pas de cookies de suivi ou publicitaires.",
+      "rightsTitle": "6. Vos droits",
+      "rightsIntro": "Vous avez le droit de :",
+      "rights1": "Acceder aux donnees que nous detenons sur vous",
+      "rights2": "Demander la suppression de votre compte et des donnees associees",
+      "rights3": "Vous opposer a toute communication non essentielle",
+      "rights4": "Pour exercer ces droits, contactez-nous a {email}",
+      "securityTitle": "7. Securite",
+      "securityText": "Nous utilisons un chiffrement standard de l'industrie et une infrastructure securisee (Supabase + Vercel) pour proteger vos donnees. Cependant, aucun systeme n'est 100 % securise, aussi veuillez utiliser un mot de passe fort et unique.",
+      "changesTitle": "8. Modifications de cette politique",
+      "changesText": "Nous pouvons mettre a jour cette Politique de confidentialite de temps a autre. Les modifications seront publiees sur cette page avec une date de mise a jour. L'utilisation continue de la plateforme apres les changements constitue votre acceptation.",
+      "questionsText": "Des questions sur cette politique ? Contactez-nous a",
+      "footerEmail": "adminklarify@gmail.com"
+    }
+  },
+  "auth": {
+    "welcomeBack": "Bon retour",
+    "identifierLabel": "Numero de telephone ou Email",
+    "identifierPlaceholder": "+237 6XX XXX XXX ou vous@exemple.com",
+    "passwordLabel": "Mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublie?",
+    "signingIn": "Connexion en cours...",
+    "signIn": "Se connecter",
+    "newToKlarify": "Nouveau sur Klarify?",
+    "createAccount": "Creer un compte",
+    "agreePrefix": "En vous connectant, vous acceptez nos",
+    "termsLabel": "Conditions d'utilisation",
+    "and": "et",
+    "privacyLabel": "Politique de confidentialite",
+    "showPasswordHide": "Masquer le mot de passe",
+    "showPasswordShow": "Afficher le mot de passe",
+    "errors": {
+      "enterIdentifier": "Veuillez saisir votre numero de telephone ou email.",
+      "invalidPhone": "Le numero de telephone doit contenir au moins 9 chiffres.",
+      "invalidEmail": "Veuillez saisir une adresse email valide.",
+      "enterPassword": "Veuillez saisir votre mot de passe.",
+      "noAccount": "Aucun compte trouve pour ce numero. Veuillez d'abord vous inscrire ou verifier votre mot de passe.",
+      "loginFailed": "Echec de la connexion. Veuillez reessayer."
+    },
+    "signUp": {
+      "createYourAccount": "Creez votre compte",
+      "nameLabel": "Nom complet",
+      "namePlaceholder": "ex. Tchinda Marie",
+      "agreeToTerms": "J'accepte les",
+      "alreadyHaveAccount": "Vous avez deja un compte?",
+      "creating": "Creation du compte...",
+      "createButton": "Creer un compte",
+      "createPhoneButton": "Creer un compte et continuer",
+      "confirmPassword": "Confirmer le mot de passe",
+      "joinCommunity": "Rejoignez notre communaute academique",
+      "phoneNote": "L'inscription par telephone est actuellement active sans etape de verification par SMS.",
+      "sendingCode": "Envoi du code...",
+      "sendVerificationCode": "Envoyer le code de verification",
+      "readyText": "Pret a clarifier votre voie academique?",
+      "readyAction": "Commencons!",
+      "errors": {
+        "fullName": "Veuillez saisir votre nom complet.",
+        "passwordLength": "Le mot de passe doit contenir au moins 6 caracteres.",
+        "passwordMatch": "Les mots de passe ne correspondent pas.",
+        "agreeTerms": "Veuillez accepter les Conditions d'utilisation."
+      },
+      "messages": {
+        "accountCreated": "Compte cree! Veuillez vous connecter pour continuer."
+      },
+      "confirmEmail": {
+        "heading": "Verifiez votre messagerie",
+        "sentTo": "Nous avons envoye un lien de confirmation a:",
+        "instruction": "Cliquez sur le lien dans l'email pour activer votre compte, puis revenez pour vous connecter. Verifiez vos spams si vous ne le voyez pas dans une minute.",
+        "goToSignIn": "Aller a la connexion",
+        "useDifferent": "Utiliser une autre adresse email"
+      }
+    }
+  },
+  "partnerAuth": {
+    "title": "Connexion institution",
+    "subtitle": "Connectez-vous pour gerer votre portail campus",
+    "accessDenied": "Acces refuse. Seuls les comptes institutionnels peuvent acceder au portail partenaire.",
+    "needAccount": "Besoin d'un compte ?",
+    "createAccount": "Creer un compte partenaire",
+    "agreePrefix": "En vous connectant, vous acceptez nos"
+  },
+  "about": {
+    "hero": {
+      "badge": "Notre histoire",
+      "title": "Construit par des etudiants,",
+      "titleHighlight": "Pour les etudiants",
+      "text": "Klarify est nee le jour des resultats, au milieu des celebrations, de la confusion et de la question silencieuse que personne ne pouvait repondre :",
+      "quote": "Que faire ensuite ?"
+    },
+    "story": {
+      "eyebrow": "Comment ca a commence",
+      "heading": "La confusion que personne n'aborde",
+      "p1": "Chaque annee au Cameroun, des milliers d'etudiants ouvrent leurs resultats GCE et ressentent deux emotions a la fois : la joie d'avoir reussi et une confusion soudaine face a l'avenir.",
+      "p2": "Nous avons ete ces etudiants. Un groupe de jeunes qui, au milieu de l'excitation et des celebrations du jour des resultats GCE, se sont sentis totalement perdus. Nous ne savions pas quelles filieres universitaires nos matieres qualifiaient. Nous ne savions pas quel",
+      "concours": "concours",
+      "p2b": "passer. Nous ne savions pas quels metiers etaient vraiment realistes.",
+      "p3": "Certains d'entre nous ont pris des decisions hativees. D'autres ont suivi leurs amis vers des programmes qui ne leur convenaient pas. Certains etudient maintenant des choses qu'ils n'auraient jamais imaginees, pas parce qu'ils ont choisi a tort, mais parce que",
+      "p3Strong": "personne ne leur a donne les bonnes informations au bon moment.",
+      "p4": "Cette experience, cette confusion au milieu de la celebration, est exactement la raison d'etre de Klarify."
+    },
+    "mission": {
+      "stat": "2 sur 3",
+      "statText": "Les etudiants camerounais se retrouvent dans une filiere universitaire qu'ils n'avaient pas initialement voulu, non pas par manque d'ambition, mais par manque de guidance au moment crucial.",
+      "quote": "Nous avons construit l'outil dont nous avions desesperement besoin quand nous avions 17 ans et que nous contemplions un PDF de resultats GCE en nous demandant ce que nous allions faire de notre vie.",
+      "quoteAuthor": "- L'equipe Klarify"
+    },
+    "values": {
+      "eyebrow": "Ce qui nous motive",
+      "heading": "Notre mission et nos valeurs",
+      "text": "Tout ce que nous construisons est guide par une conviction simple : chaque etudiant camerounais merite d'avoir acces aux bonnes informations au bon moment."
+    },
+    "team": {
+      "eyebrow": "Les fondateurs",
+      "heading1": "Rencontrez les passionnes",
+      "heading2": "qui ont construit Klarify",
+      "sangwa": {
+        "role": "Co-fondateur, developpeur & designer",
+        "degree": "B.Tech en ingenierie logicielle"
+      },
+      "desmond": {
+        "role": "Co-fondateur, analyste de donnees & ingenieur",
+        "degree": "B.Tech en data science"
+      },
+      "joyce": {
+        "role": "Co-fondatrice, data scientist & community manager",
+        "degree": "B.Tech en data science"
+      }
+    },
+    "platform": {
+      "eyebrow": "La plateforme",
+      "heading": "Ce que fait Klarify",
+      "text": "Nous construisons la plateforme d'orientation academique et de resultats la plus complete du Cameroun, fonctionnalite par fonctionnalite.",
+      "cards": {
+        "gce": {
+          "title": "Recherche de resultats GCE",
+          "desc": "Recherchez instantanement vos resultats GCE O/L, A/L et TVE par nom, sans PDF ni stress."
+        },
+        "orientation": {
+          "title": "Orientation academique",
+          "desc": "Selon vos matieres de Niveau A et vos centres d'interet, obtenez des recommandations personnalisees de filieres universitaires conformes au systeme educatif camerounais."
+        },
+        "concours": {
+          "title": "Guides concours et carriere",
+          "desc": "Obtenez les details sur les examens d'entree, les delais, les frais et les parcours de carriere auxquels chaque programme conduit."
+        }
+      },
+      "cta": "Commencer mon evaluation gratuite",
+      "ctaAria": "Commencer mon evaluation gratuite"
+    }
+  },
+  "flow": {
+    "intro": {
+      "eyebrow": "Recommendeur d'orientation",
+      "heading": "Decouvrez votre voie academique ideale",
+      "text": "En analysant votre profil exact et vos centres d'interet, nous vous associons aux meilleurs diplômes, BTS et concours professionnels disponibles sur tout le territoire national."
+    },
+    "backHome": "Retour a l'accueil",
+    "previousStep": "Etape precedente",
+    "backAria": "Retourner a l'etape precedente",
+    "step1": {
+      "title": "Qui vous decrit le mieux ?",
+      "subtitle": "Selectionnez votre situation academique ou professionnelle pour personnaliser vos recommandations."
+    },
+    "persona": {
+      "alevel": {
+        "title": "Eleve du secondaire",
+        "subtitle": "J'ai passe ou je prepare le GCE A-Level."
+      },
+      "graduate": {
+        "title": "Etudiant universitaire",
+        "subtitle": "J'ai un diplome et je cherche des options de postgrade."
+      },
+      "professional": {
+        "title": "Auto-formation / Professionnel",
+        "subtitle": "Je veux me perfectionner ou trouver des parcours de certification professionnelle."
+      }
+    },
+    "step2": {
+      "alevel": {
+        "title": "Selectionnez vos matieres de Niveau A",
+        "subtitle": "Choisissez au moins 2 matieres que vous avez etudiees en terminale.",
+        "minSubjects": "Veuillez selectionner au moins 2 matieres."
+      },
+      "comingSoon": {
+        "title": "Bientot disponible",
+        "text": "Nous affinons actuellement nos recommandations de programmes pour {audience}. Cette fonctionnalite sera disponible tres prochainement. Restez a l'affut !",
+        "gradAudience": "les etudiants universitaires",
+        "profAudience": "les professionnels et autodidactes"
+      }
+    },
+    "step3": {
+      "title": "Dans quels domaines vous interessez-vous ?",
+      "subtitle": "Selectionnez un ou plusieurs parcours professionnels ou sujets qui vous passionnent.",
+      "minInterest": "Veuillez selectionner au moins 1 domaine d'interet."
+    },
+    "nextStep": "Etape suivante",
+    "submit": "Voir mes recommandations",
+    "benefits": {
+      "heading": "Pourquoi utiliser notre recommendeur ?",
+      "saveTime": {
+        "label": "Gagnez du temps",
+        "detail": "Arretez de parcourir des centaines de brochures universitaires manuellement."
+      },
+      "hiddenPaths": {
+        "label": "Decouvrez des voies cachées",
+        "detail": "Trouvez des programmes que vous ne connaissiez pas mais qui correspondent parfaitement a vos competences."
+      },
+      "concours": {
+        "label": "Sensibilisation aux concours",
+        "detail": "Sachez instantanement quelles ecoles professionnelles (comme l'ENS ou la FMSB) exigent des examens competitifs."
+      }
+    },
+    "faq": {
+      "title": "FAQ du recommendeur",
+      "q1": "Comment les programmes universitaires sont-ils recommandes ?",
+      "a1": "Notre systeme associe vos matieres de Niveau A et vos centres d'interet personnels a une base de donnees de centaines de programmes universitaires au Cameroun.",
+      "q2": "Quelle information dois-je fournir ?",
+      "a2": "Vous devez simplement selectionner au moins 2 matieres de Niveau A que vous avez etudiees et choisir vos grands domaines d'interet (ex. Technologie, Sante, Commerce).",
+      "q3": "Ces recommandations sont-elles garanties pour l'admission ?",
+      "a3": "Les recommandations indiquent les programmes auxquels vous etes académiquement éligible. Toutefois, l'admission depend de vos notes finales et de votre performance dans les concours requis.",
+      "q4": "Et si mon metier ideal n'est pas liste ?",
+      "a4": "Notre base de donnees est constamment mise a jour. Si vous ne voyez pas un secteur precis, essayez de selectionner une categorie plus large comme 'Sciences' ou 'Lettres' pour trouver des filieres de base qui mènent vers votre metier ideal."
+    }
+  },
+  "partners": {
+    "hero": {
+      "badge": "Portail partenaire des universites privees",
+      "heading1": "Atteignez des",
+      "heading2": "etudiants A-Level",
+      "heading3": "au moment ou ils decident",
+      "text": "Rejoignez les meilleurs instituts prives du Cameroun (IPES). Créez votre campus, téléchargez vos programmes de licence et de BTS, affichez vos frais de scolarite et recevez des demandes directes sur WhatsApp depuis votre tableau de bord partenaire.",
+      "primaryCta": "Inscrire votre universite",
+      "login": "Connexion institution",
+      "featuresCta": "Voir les fonctionnalites du portail"
+    },
+    "value": {
+      "eyebrow": "Pourquoi nous choisir ?",
+      "heading": "Concu pour les instituts prives camerounais (IPES)",
+      "cards": [
+        {
+          "title": "Correspondance intelligente des etudiants",
+          "desc": "Lorsque les etudiants saisissent leurs combinaisons de matieres du GCE A-Level, notre moteur met en avant directement les programmes universitaires auxquels ils sont admissibles."
+        },
+        {
+          "title": "Leads WhatsApp directs",
+          "desc": "Les etudiants peuvent cliquer sur un bouton unique sur vos fiches de programme pour discuter directement avec votre bureau d'admissions ou votre secretaire sur WhatsApp."
+        },
+        {
+          "title": "Service autonome complet",
+          "desc": "Fini les mises a jour manuelles. Ajoutez, modifiez ou supprimez les programmes de votre campus, les frais de scolarite et les dates d'admission directement depuis votre tableau de bord."
+        }
+      ]
+    },
+    "pricing": {
+      "eyebrow": "Tarification transparente",
+      "heading": "Plans de listing simples",
+      "subtitle": "Paiements securises via Mobile Money (MTN MoMo et Orange Money).",
+      "starter": "Debutant",
+      "basicListing": "Listing de base",
+      "free": "Gratuit",
+      "idealFor": "Idee pour les petits instituts prives en demarrage.",
+      "listUpTo3": "Jusqu'a 3 programmes",
+      "basicCampus": "Profil campus et ville de base",
+      "whatsappLead": "Bouton de lead WhatsApp",
+      "getStartedFree": "Commencer gratuitement",
+      "mostPopular": "Le plus populaire",
+      "proPartner": "Partenaire Pro",
+      "unlimited": "IPES illimites",
+      "annual": "/ an",
+      "fullFeatures": "Fonctionnalites complètes pour les universites en croissance.",
+      "directWhatsApp": "Bouton de lead WhatsApp direct",
+      "displayFees": "Affichage des frais de scolarite annuels et des delais",
+      "verifiedBadge": "Badge institution verifiee",
+      "registerProCampus": "Inscrire un campus Pro",
+      "featured": "En vedette",
+      "featuredCampus": "Campus vedette",
+      "maxVisibility": "Visibilite maximale pendant la publication des resultats GCE.",
+      "everythingInPro": "Tout ce qu'il y a dans le plan Pro",
+      "topPriority": "Classement prioritaire dans le recommandeur",
+      "featuredBanner": "Bannière mise en avant sur la page d'accueil",
+      "getFeatured": "Être mis en avant",
+      "ctaHeading": "Pret a lister vos programmes?",
+      "ctaText": "La configuration prend moins de 3 minutes. Commencez a ajouter votre campus et vos cours universitaires aujourd'hui.",
+      "ctaButton": "Creer un compte partenaire"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite. Veuillez reessayer.",
+    "backToTop": "Retour en haut",
+    "language": "Langue"
+  }
+}

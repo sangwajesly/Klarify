@@ -1,10 +1,23 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Building2, GraduationCap, Award, Search, Loader2, BookOpen } from "lucide-react";
+import {
+  ArrowLeft,
+  Building2,
+  GraduationCap,
+  Award,
+  Search,
+  Loader2,
+  BookOpen,
+} from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import ProgramCard from "../components/ProgramCard";
-import { fetchUniversityDetails, getSavedPrograms, saveProgram, removeSavedProgram } from "../services/api";
+import {
+  fetchUniversityDetails,
+  getSavedPrograms,
+  saveProgram,
+  removeSavedProgram,
+} from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
 const UniversityDetails = () => {
@@ -97,8 +110,12 @@ const UniversityDetails = () => {
       <Layout>
         <div className="max-w-2xl mx-auto py-16 text-center">
           <Building2 size={48} className="mx-auto text-slate-300 mb-4" />
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">University Not Found</h1>
-          <p className="text-slate-500 mb-6">No program details found for "{uniName}".</p>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">
+            University Not Found
+          </h1>
+          <p className="text-slate-500 mb-6">
+            No program details found for "{uniName}".
+          </p>
           <button
             onClick={() => navigate("/universities")}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-colors"
@@ -114,7 +131,7 @@ const UniversityDetails = () => {
   return (
     <Layout>
       <SEOHead
-        title={`${uniName} - Programs & Faculties | KlarifyPath`}
+        title={`${uniName} - Programs & Faculties | Klarify`}
         description={`Explore degree programs, entrance exam courses, and faculties offered at ${uniName}.`}
         canonicalUrl={`https://www.klarifypath.com/universities/${encodeURIComponent(uniName)}`}
       />
@@ -148,16 +165,28 @@ const UniversityDetails = () => {
           {/* Stats bar */}
           <div className="grid grid-cols-3 gap-3 pt-6 border-t border-white/10 max-w-xl">
             <div className="bg-white/5 rounded-xl p-3 border border-white/10 text-center">
-              <span className="block text-[10px] uppercase font-bold text-slate-400">Total Programs</span>
-              <span className="block text-lg font-extrabold text-white">{details.programCount}</span>
+              <span className="block text-[10px] uppercase font-bold text-slate-400">
+                Total Programs
+              </span>
+              <span className="block text-lg font-extrabold text-white">
+                {details.programCount}
+              </span>
             </div>
             <div className="bg-white/5 rounded-xl p-3 border border-white/10 text-center">
-              <span className="block text-[10px] uppercase font-bold text-slate-400">Faculties/Schools</span>
-              <span className="block text-lg font-extrabold text-white">{details.faculties.length}</span>
+              <span className="block text-[10px] uppercase font-bold text-slate-400">
+                Faculties/Schools
+              </span>
+              <span className="block text-lg font-extrabold text-white">
+                {details.faculties.length}
+              </span>
             </div>
             <div className="bg-white/5 rounded-xl p-3 border border-white/10 text-center">
-              <span className="block text-[10px] uppercase font-bold text-slate-400">Concours Exams</span>
-              <span className="block text-lg font-extrabold text-white">{details.concoursCount}</span>
+              <span className="block text-[10px] uppercase font-bold text-slate-400">
+                Concours Exams
+              </span>
+              <span className="block text-lg font-extrabold text-white">
+                {details.concoursCount}
+              </span>
             </div>
           </div>
         </div>
@@ -165,7 +194,10 @@ const UniversityDetails = () => {
         {/* Filter & Search Bar */}
         <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs mb-8 space-y-4">
           <div className="relative w-full">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              size={18}
+            />
             <input
               type="text"
               value={searchQuery}
@@ -189,7 +221,9 @@ const UniversityDetails = () => {
                 All Faculties ({details.programs?.length || 0})
               </button>
               {details.faculties.map((fac) => {
-                const count = (details.programs || []).filter((p) => p.faculty === fac).length;
+                const count = (details.programs || []).filter(
+                  (p) => p.faculty === fac,
+                ).length;
                 return (
                   <button
                     key={fac}
@@ -229,7 +263,9 @@ const UniversityDetails = () => {
           ) : (
             <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8 shadow-xs">
               <BookOpen className="mx-auto text-slate-300 mb-3" size={40} />
-              <h3 className="text-lg font-bold text-slate-900 mb-1">No programs found</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-1">
+                No programs found
+              </h3>
               <p className="text-slate-500 text-sm max-w-md mx-auto mb-4">
                 No programs match your search or faculty filter at {uniName}.
               </p>

@@ -17,6 +17,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import SEOHead from "../components/SEOHead";
 import FAQBlock from "../components/FAQBlock";
 import { getRecommendations } from "../services/api";
+import { useLanguage } from "../context/LanguageContext";
 
 const PersonaButton = ({ icon: Icon, title, subtitle, selected, onClick }) => (
   <button
@@ -72,6 +73,7 @@ const InputFlow = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -159,7 +161,7 @@ const InputFlow = () => {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "KlarifyPath Academic Recommender",
+    name: "Klarify Academic Recommender",
     url: "https://www.klarifypath.com/flow",
     description:
       "Intelligent tool that recommends university programs and career paths in Cameroon based on GCE A-Level subjects.",
@@ -169,24 +171,20 @@ const InputFlow = () => {
 
   const recommenderFaqs = [
     {
-      question: "How are the university programs recommended?",
-      answer:
-        "Our system matches your A-Level subjects and personal interests against a database of hundreds of university programs across Cameroon.",
+      question: t("flow.faq.q1"),
+      answer: t("flow.faq.a1"),
     },
     {
-      question: "What information do I need to provide?",
-      answer:
-        "You only need to select at least 2 A-Level subjects you have studied and select your broad fields of interest (e.g., Technology, Health, Business).",
+      question: t("flow.faq.q2"),
+      answer: t("flow.faq.a2"),
     },
     {
-      question: "Are these recommendations guaranteed for admission?",
-      answer:
-        "The recommendations show what programs you are academically eligible for. However, admission depends on your final grades and performance in any required concours (entrance exams).",
+      question: t("flow.faq.q3"),
+      answer: t("flow.faq.a3"),
     },
     {
-      question: "What if my desired career isn't listed?",
-      answer:
-        "Our database is constantly updating. If you don't see a specific niche, try selecting a broader category like 'Sciences' or 'Arts' to see foundational degrees that lead to your desired career.",
+      question: t("flow.faq.q4"),
+      answer: t("flow.faq.a4"),
     },
   ];
 
@@ -197,7 +195,7 @@ const InputFlow = () => {
   return (
     <Layout>
       <SEOHead
-        title="Academic & Career Recommender | KlarifyPath"
+        title="Academic & Career Recommender | Klarify"
         description="Get personalized university program and career recommendations in Cameroon based on your GCE A-Level subjects using our advanced matching engine."
         canonicalUrl="https://www.klarifypath.com/flow"
         structuredData={schemaData}
@@ -210,14 +208,14 @@ const InputFlow = () => {
       <main className="pt-4 pb-16">
         {/* Intro */}
         <section className="max-w-2xl mx-auto px-4 mb-10">
-          <span className="section-eyebrow block mb-3">Orientation Recommender</span>
+          <span className="section-eyebrow block mb-3">
+            {t("flow.intro.eyebrow")}
+          </span>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-            Discover Your Perfect Academic Path
+            {t("flow.intro.heading")}
           </h1>
           <p className="text-slate-500 text-sm md:text-base leading-relaxed">
-            By analyzing your exact profile and personal interests, we match you
-            with the most suitable degrees, HNDs, and professional concours
-            available across the national territory.
+            {t("flow.intro.text")}
           </p>
         </section>
 
@@ -226,13 +224,13 @@ const InputFlow = () => {
           <button
             onClick={handleBack}
             className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors mb-6 focus:outline-none"
-            aria-label="Go back to previous step"
+            aria-label={t("flow.backAria")}
           >
             <ArrowLeft size={16} aria-hidden="true" />
-            {step === 1 ? "Back to Home" : "Previous Step"}
+            {step === 1 ? t("flow.backHome") : t("flow.previousStep")}
           </button>
 
-          <div className="bg-white rounded-2xl p-7 md:p-9 shadow-sm border border-slate-100 min-h-[380px] flex flex-col">
+          <div className="bg-white rounded-2xl p-7 md:p-9 shadow-sm border border-slate-100 min-h-95 flex flex-col">
             {persona === "alevel" && (
               <ProgressBar currentStep={step} totalSteps={3} />
             )}
@@ -254,32 +252,31 @@ const InputFlow = () => {
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <h2 className="text-xl font-bold text-slate-900 mb-1">
-                      Which best describes you?
+                      {t("flow.step1.title")}
                     </h2>
                     <p className="text-slate-500 text-sm mb-7">
-                      Select your current academic or professional status to
-                      tailor your recommendations.
+                      {t("flow.step1.subtitle")}
                     </p>
 
                     <div className="space-y-3">
                       <PersonaButton
                         icon={GraduationCap}
-                        title="Secondary School Student"
-                        subtitle="I have written or am preparing for the GCE A-Levels."
+                        title={t("flow.persona.alevel.title")}
+                        subtitle={t("flow.persona.alevel.subtitle")}
                         selected={persona === "alevel"}
                         onClick={() => setPersona("alevel")}
                       />
                       <PersonaButton
                         icon={BookOpen}
-                        title="University Graduate"
-                        subtitle="I have a degree and am looking for postgraduate options."
+                        title={t("flow.persona.graduate.title")}
+                        subtitle={t("flow.persona.graduate.subtitle")}
                         selected={persona === "graduate"}
                         onClick={() => setPersona("graduate")}
                       />
                       <PersonaButton
                         icon={User}
-                        title="Self-Learner / Professional"
-                        subtitle="I want to upskill or find professional certification paths."
+                        title={t("flow.persona.professional.title")}
+                        subtitle={t("flow.persona.professional.subtitle")}
                         selected={persona === "professional"}
                         onClick={() => setPersona("professional")}
                       />
@@ -301,11 +298,10 @@ const InputFlow = () => {
                     {persona === "alevel" ? (
                       <>
                         <h2 className="text-xl font-bold text-slate-900 mb-1">
-                          Select Your A-Level Subjects
+                          {t("flow.step2.alevel.title")}
                         </h2>
                         <p className="text-slate-500 text-sm mb-7">
-                          Choose at least 2 subjects you studied for your
-                          Advanced Levels.
+                          {t("flow.step2.alevel.subtitle")}
                         </p>
 
                         <SubjectSelector
@@ -319,7 +315,7 @@ const InputFlow = () => {
                               className="text-xs text-orange-500 mt-4"
                               role="alert"
                             >
-                              Please select at least 2 subjects.
+                              {t("flow.step2.alevel.minSubjects")}
                             </p>
                           )}
                       </>
@@ -333,16 +329,15 @@ const InputFlow = () => {
                           )}
                         </div>
                         <h2 className="text-xl font-bold text-slate-900 mb-3">
-                          Coming Soon
+                          {t("flow.step2.comingSoon.title")}
                         </h2>
                         <p className="text-slate-500 text-sm max-w-sm leading-relaxed">
-                          We are currently fine-tuning our program recommendations
-                          for{" "}
-                          {persona === "graduate"
-                            ? "University Graduates"
-                            : "Professionals and Self-Learners"}
-                          . This feature will be available very soon. Stay
-                          tuned!
+                          {t("flow.step2.comingSoon.text", {
+                            audience:
+                              persona === "graduate"
+                                ? t("flow.step2.comingSoon.gradAudience")
+                                : t("flow.step2.comingSoon.profAudience"),
+                          })}
                         </p>
                       </div>
                     )}
@@ -361,11 +356,10 @@ const InputFlow = () => {
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <h2 className="text-xl font-bold text-slate-900 mb-1">
-                      What fields are you interested in?
+                      {t("flow.step3.title")}
                     </h2>
                     <p className="text-slate-500 text-sm mb-7">
-                      Select one or more career paths or topics you are
-                      passionate about.
+                      {t("flow.step3.subtitle")}
                     </p>
 
                     <InterestSelector
@@ -375,7 +369,7 @@ const InputFlow = () => {
 
                     {interest.length === 0 && (
                       <p className="text-xs text-orange-500 mt-4" role="alert">
-                        Please select at least 1 field of interest.
+                        {t("flow.step3.minInterest")}
                       </p>
                     )}
                   </motion.div>
@@ -395,9 +389,9 @@ const InputFlow = () => {
                   onClick={handleNext}
                   disabled={!persona}
                   className="btn-primary flex items-center gap-2"
-                  aria-label="Proceed to next step"
+                  aria-label={t("flow.nextStep")}
                 >
-                  Next Step
+                  {t("flow.nextStep")}
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
               ) : step === 2 && persona === "alevel" ? (
@@ -405,9 +399,9 @@ const InputFlow = () => {
                   onClick={handleNext}
                   disabled={selectedSubjects.length < 2}
                   className="btn-primary flex items-center gap-2"
-                  aria-label="Proceed to next step"
+                  aria-label={t("flow.nextStep")}
                 >
-                  Next Step
+                  {t("flow.nextStep")}
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
               ) : step === 3 && persona === "alevel" ? (
@@ -417,7 +411,7 @@ const InputFlow = () => {
                   className="btn-primary bg-orange-500 hover:bg-orange-400 flex items-center gap-2"
                   aria-label="Submit for recommendations"
                 >
-                  Get My Recommendations
+                  {t("flow.submit")}
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
               ) : null}
@@ -429,24 +423,21 @@ const InputFlow = () => {
         <section className="max-w-2xl mx-auto mt-16 px-4">
           <div className="bg-slate-50 rounded-xl p-7 mb-10 border border-slate-100">
             <h2 className="text-base font-bold text-slate-900 mb-4">
-              Why use our Recommender?
+              {t("flow.benefits.heading")}
             </h2>
             <ul className="space-y-3">
               {[
                 {
-                  label: "Save Time",
-                  detail:
-                    "Stop manually reading through hundreds of university brochures.",
+                  label: t("flow.benefits.saveTime.label"),
+                  detail: t("flow.benefits.saveTime.detail"),
                 },
                 {
-                  label: "Discover Hidden Paths",
-                  detail:
-                    "Find programs you didn't know existed but perfectly match your skills.",
+                  label: t("flow.benefits.hiddenPaths.label"),
+                  detail: t("flow.benefits.hiddenPaths.detail"),
                 },
                 {
-                  label: "Concours Awareness",
-                  detail:
-                    "Instantly know which professional schools (like ENS or FMSB) require competitive exams.",
+                  label: t("flow.benefits.concours.label"),
+                  detail: t("flow.benefits.concours.detail"),
                 },
               ].map(({ label, detail }) => (
                 <li key={label} className="flex items-start gap-3">
@@ -462,7 +453,7 @@ const InputFlow = () => {
             </ul>
           </div>
 
-          <FAQBlock faqs={recommenderFaqs} title="Recommender FAQs" />
+          <FAQBlock faqs={recommenderFaqs} title={t("flow.faq.title")} />
         </section>
       </main>
     </Layout>

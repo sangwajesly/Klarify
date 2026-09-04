@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Search,
-  Clock,
-  Compass,
-  ArrowUpRight,
-  Bell,
-  Zap,
-} from "lucide-react";
+import { Search, Clock, Compass, ArrowUpRight, Bell, Zap } from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import { fetchGuides } from "../services/api";
@@ -64,7 +57,9 @@ const BlogCard = ({ article, onClick }) => {
           <span className="px-2.5 py-1 text-[10px] font-bold text-slate-600 bg-slate-100 rounded-lg select-none">
             {article.category}
           </span>
-          <span className="text-xs font-semibold text-slate-400">{article.date}</span>
+          <span className="text-xs font-semibold text-slate-400">
+            {article.date}
+          </span>
         </div>
       </div>
     </div>
@@ -92,7 +87,7 @@ const Guides = () => {
       const matchesSearch =
         article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         article.description.toLowerCase().includes(searchQuery.toLowerCase());
-      
+
       const matchesCategory =
         activeCategory === "All" || article.category === activeCategory;
 
@@ -111,7 +106,7 @@ const Guides = () => {
   return (
     <Layout noPadding={true}>
       <SEOHead
-        title="Educational Guides & Reading Library | KlarifyPath"
+        title="Educational Guides & Reading Library | Klarify"
         description="Browse premium articles on university orientation, GCE results, concours preparation, and skill-building in Cameroon."
         canonicalUrl="https://www.klarifypath.com/guides"
       />
@@ -131,13 +126,18 @@ const Guides = () => {
               Educational Guides
             </h1>
             <p className="text-slate-400 text-sm md:text-base mt-2 max-w-xl">
-              Practical recovery roadmaps, concours alternative guides, and skill development articles customized for the Cameroonian education landscape.
+              Practical recovery roadmaps, concours alternative guides, and
+              skill development articles customized for the Cameroonian
+              education landscape.
             </p>
           </div>
 
           {/* Search bar */}
           <div className="relative w-full md:w-80 shrink-0">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              size={18}
+            />
             <input
               type="text"
               value={searchQuery}
@@ -150,7 +150,7 @@ const Guides = () => {
       </section>
 
       {/* Category Navigation Bar */}
-      <section className="bg-white border-b border-slate-200/80 sticky top-[57px] z-40 px-6 md:px-12">
+      <section className="bg-white border-b border-slate-200/80 sticky top-14.25 z-40 px-6 md:px-12">
         <div className="max-w-6xl mx-auto flex items-center gap-2 overflow-x-auto py-3.5 hide-scrollbar">
           {categories.map((cat) => (
             <button
@@ -173,13 +173,15 @@ const Guides = () => {
 
       <section className="bg-slate-50 py-16 px-6 md:px-12">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
-          
           {/* Blog Feed Grid */}
           <div className="lg:col-span-8 space-y-8">
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[1, 2].map((n) => (
-                  <div key={n} className="bg-white rounded-2xl border border-slate-250/80 p-5 space-y-4 animate-pulse">
+                  <div
+                    key={n}
+                    className="bg-white rounded-2xl border border-slate-250/80 p-5 space-y-4 animate-pulse"
+                  >
                     <div className="aspect-video w-full bg-slate-200 rounded-xl" />
                     <div className="h-4 bg-slate-200 rounded w-1/3" />
                     <div className="h-6 bg-slate-200 rounded w-3/4" />
@@ -189,7 +191,9 @@ const Guides = () => {
               </div>
             ) : filteredArticles.length === 0 ? (
               <div className="text-center py-12 bg-white rounded-3xl border border-slate-200/80 p-6">
-                <p className="text-slate-500 font-medium">No guides match your search or category selection.</p>
+                <p className="text-slate-500 font-medium">
+                  No guides match your search or category selection.
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -212,11 +216,15 @@ const Guides = () => {
               <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20 flex items-center justify-center mb-4">
                 <Bell size={20} />
               </div>
-              <h4 className="font-bold text-white text-base">Subscribe to Recovery Series</h4>
+              <h4 className="font-bold text-white text-base">
+                Subscribe to Recovery Series
+              </h4>
               <p className="text-xs text-slate-400 mt-2 leading-relaxed mb-6">
-                Enter your email address to receive immediate updates when our orientation counselors publish new guides on university and career resets.
+                Enter your email address to receive immediate updates when our
+                orientation counselors publish new guides on university and
+                career resets.
               </p>
-              
+
               {subscribed ? (
                 <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-xl text-center">
                   Successfully subscribed!
@@ -250,9 +258,12 @@ const Guides = () => {
               <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 border border-orange-500/20 flex items-center justify-center mx-auto mb-4">
                 <Zap size={22} className="text-orange-500" />
               </div>
-              <h4 className="font-black text-slate-900 text-sm">Orientation Recommender</h4>
+              <h4 className="font-black text-slate-900 text-sm">
+                Orientation Recommender
+              </h4>
               <p className="text-xs text-slate-500 leading-relaxed mt-1.5 mb-5">
-                Match your A-Level combination with state university programs and concours across Cameroon instantly.
+                Match your A-Level combination with state university programs
+                and concours across Cameroon instantly.
               </p>
               <button
                 onClick={() => navigate("/flow")}
@@ -262,7 +273,6 @@ const Guides = () => {
               </button>
             </div>
           </div>
-
         </div>
       </section>
     </Layout>

@@ -212,7 +212,7 @@ const Programs = () => {
   return (
     <Layout>
       <SEOHead
-        title="Academic Programs & Degrees in Cameroon | KlarifyPath"
+        title="Academic Programs & Degrees in Cameroon | Klarify"
         description="Browse hundreds of university degree programs, HNDs, and professional courses across public and private universities in Cameroon."
         canonicalUrl="https://www.klarifypath.com/programs"
       />

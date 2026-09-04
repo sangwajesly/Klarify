@@ -58,7 +58,7 @@ const Profile = () => {
   return (
     <Layout>
       <SEOHead
-        title="My Profile | KlarifyPath"
+        title="My Profile | Klarify"
         description="View your saved university and career recommendations in Cameroon."
       />
       <div className="max-w-4xl mx-auto py-8">
@@ -68,7 +68,9 @@ const Profile = () => {
             <User size={40} className="text-orange-500" />
           </div>
           <div className="text-center md:text-left flex-1">
-            <h1 className="text-2xl font-bold text-slate-900 mb-2">My Profile</h1>
+            <h1 className="text-2xl font-bold text-slate-900 mb-2">
+              My Profile
+            </h1>
             <div className="flex items-center justify-center md:justify-start gap-2 text-slate-600">
               <Mail size={16} />
               <span>{user.email || user.phone || "User"}</span>
@@ -80,7 +82,9 @@ const Profile = () => {
         <div>
           <div className="flex items-center gap-2 mb-6">
             <Bookmark className="text-orange-500" size={24} />
-            <h2 className="text-xl font-bold text-slate-900">Saved Recommendations</h2>
+            <h2 className="text-xl font-bold text-slate-900">
+              Saved Recommendations
+            </h2>
           </div>
 
           {loading ? (
@@ -103,9 +107,12 @@ const Profile = () => {
               <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Bookmark size={24} className="text-slate-400" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">No saved programs</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">
+                No saved programs
+              </h3>
               <p className="text-slate-500 text-sm max-w-sm mx-auto mb-6 leading-relaxed">
-                You haven't saved any recommendations yet. Go to the flow to discover and save programs you're interested in.
+                You haven't saved any recommendations yet. Go to the flow to
+                discover and save programs you're interested in.
               </p>
               <button
                 onClick={() => navigate("/flow")}

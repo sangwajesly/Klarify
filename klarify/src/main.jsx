@@ -4,6 +4,7 @@ import { registerSW } from "virtual:pwa-register";
 import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { LanguageProvider } from "./context/LanguageContext.jsx";
 import { initPwaInstallListener } from "./utils/pwaInstall.js";
 
 import { HelmetProvider } from "react-helmet-async";
@@ -18,9 +19,11 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </LanguageProvider>
       </QueryClientProvider>
     </HelmetProvider>
   </StrictMode>,

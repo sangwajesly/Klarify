@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { trackEvent } from "../utils/analytics";
@@ -23,8 +24,73 @@ const NavLink = ({ to, children, onClick }) => {
   );
 };
 
+// ── Language Toggle Button ────────────────────────────────────────────────────
+const LanguageToggle = ({ language, setLanguage, compact = false }) => (
+  <div
+    className={`flex items-center rounded-lg overflow-hidden border ${compact ? "border-slate-200" : "border-white/20"} shrink-0`}
+  >
+    {["en", "fr"].map((lang) => (
+      <button
+        key={lang}
+        type="button"
+        onClick={() => setLanguage(lang)}
+        aria-label={`Switch to ${lang === "en" ? "English" : "French"}`}
+        className={`px-2.5 py-1 text-xs font-bold uppercase transition-colors duration-150 ${
+          language === lang
+            ? compact
+              ? "bg-orange-500 text-white"
+              : "bg-orange-500 text-white"
+            : compact
+              ? "bg-transparent text-slate-500 hover:text-slate-800"
+              : "bg-transparent text-slate-400 hover:text-white"
+        }`}
+      >
+        {lang.toUpperCase()}
+      </button>
+    ))}
+  </div>
+);
+
+const GoogleTranslateWidget = () => {
+  useEffect(() => {
+    const scriptId = "google-translate-script";
+    const existingScript = document.getElementById(scriptId);
+
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src =
+        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    window.googleTranslateElementInit = () => {
+      if (!window.google || !window.google.translate) return;
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "en,fr",
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        },
+        "google_translate_element",
+      );
+    };
+  }, []);
+
+  return (
+    <div className="flex items-center gap-2">
+      <span className="hidden md:inline text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+        Translate
+      </span>
+      <div id="google_translate_element" className="min-w-27.5" />
+    </div>
+  );
+};
+
 const Layout = ({ children, noPadding = false }) => {
   const { user, loading, signOut } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -50,37 +116,28 @@ const Layout = ({ children, noPadding = false }) => {
             </Link>
           </div>
 
-          {/* Mobile GCE Results Quick Badge (Center) */}
-          <div className="md:hidden">
-            <Link
-              to="/gce-results"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-full shadow-xs transition-all"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-200 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-              </span>
-              <span>GCE Results</span>
-            </Link>
-          </div>
-
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             <nav className="flex items-center gap-7">
-              <NavLink to="/">Home</NavLink>
-              <NavLink to="/gce-results">GCE Results</NavLink>
+              <NavLink to="/">{t("nav.home")}</NavLink>
               <NavLink
                 to="/partners"
                 onClick={() =>
                   trackEvent("partner_cta_click", { location: "header_nav" })
                 }
               >
-                Partner
+                {t("nav.partner")}
               </NavLink>
-              <NavLink to="/about">About</NavLink>
+              <NavLink to="/about">{t("nav.about")}</NavLink>
             </nav>
 
             <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
+              <LanguageToggle
+                language={language}
+                setLanguage={setLanguage}
+                compact={true}
+              />
+              <GoogleTranslateWidget />
               {!loading && user ? (
                 <>
                   <span className="text-sm text-slate-500 hidden lg:inline truncate max-w-40">
@@ -90,14 +147,14 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/profile"
                     className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
                   >
-                    Profile
+                    {t("nav.profile")}
                   </Link>
                   <button
                     type="button"
                     onClick={handleSignOut}
                     className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
                   >
-                    Sign Out
+                    {t("nav.signOut")}
                   </button>
                 </>
               ) : (
@@ -106,13 +163,13 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/login"
                     className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
                   >
-                    Sign In
+                    {t("nav.signIn")}
                   </Link>
                   <Link
                     to="/flow"
                     className="px-5 py-2 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-colors"
                   >
-                    Get Started
+                    {t("nav.getStarted")}
                   </Link>
                 </>
               )}
@@ -141,9 +198,25 @@ const Layout = ({ children, noPadding = false }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white border-b border-slate-200/60 shadow-lg fixed top-[57px] left-0 right-0 z-50 overflow-hidden max-h-[calc(100vh-60px)]"
+            className="md:hidden bg-white border-b border-slate-200/60 shadow-lg fixed top-14.25 left-0 right-0 z-50 overflow-hidden max-h-[calc(100vh-60px)]"
           >
             <nav className="flex flex-col px-6 py-4 space-y-4">
+              {/* Language Switcher */}
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                  {t("common.language")}
+                </span>
+                <LanguageToggle
+                  language={language}
+                  setLanguage={setLanguage}
+                  compact={true}
+                />
+              </div>
+
+              <div className="pb-2 border-b border-slate-100">
+                <GoogleTranslateWidget />
+              </div>
+
               <Link
                 to="/"
                 onClick={() => {
@@ -155,20 +228,7 @@ const Layout = ({ children, noPadding = false }) => {
                 }}
                 className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
               >
-                Home
-              </Link>
-              <Link
-                to="/gce-results"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  trackEvent("nav_click", {
-                    label: "gce_results",
-                    location: "mobile_menu",
-                  });
-                }}
-                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
-              >
-                GCE Results
+                {t("nav.home")}
               </Link>
               <Link
                 to="/universities"
@@ -181,7 +241,7 @@ const Layout = ({ children, noPadding = false }) => {
                 }}
                 className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
               >
-                Universities
+                {t("nav.universities")}
               </Link>
               <Link
                 to="/programs"
@@ -194,7 +254,7 @@ const Layout = ({ children, noPadding = false }) => {
                 }}
                 className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
               >
-                Academic Programs
+                {t("nav.programs")}
               </Link>
               <Link
                 to="/guides"
@@ -207,7 +267,7 @@ const Layout = ({ children, noPadding = false }) => {
                 }}
                 className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
               >
-                Educational Guides
+                {t("nav.guides")}
               </Link>
               <Link
                 to="/partners?utm_source=site&utm_medium=mobile_menu&utm_campaign=partner_acquisition"
@@ -217,7 +277,7 @@ const Layout = ({ children, noPadding = false }) => {
                 }}
                 className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
               >
-                Partner
+                {t("nav.partner")}
               </Link>
               <Link
                 to="/about"
@@ -230,7 +290,7 @@ const Layout = ({ children, noPadding = false }) => {
                 }}
                 className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
               >
-                About
+                {t("nav.about")}
               </Link>
 
               <div className="pt-4 border-t border-slate-100 flex flex-col space-y-3">
@@ -250,7 +310,7 @@ const Layout = ({ children, noPadding = false }) => {
                       }}
                       className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
                     >
-                      Profile
+                      {t("nav.profile")}
                     </Link>
                     <button
                       type="button"
@@ -260,7 +320,7 @@ const Layout = ({ children, noPadding = false }) => {
                       }}
                       className="text-left text-base font-medium text-red-500 hover:text-red-600 transition-colors"
                     >
-                      Sign Out
+                      {t("nav.signOut")}
                     </button>
                   </>
                 ) : (
@@ -276,7 +336,7 @@ const Layout = ({ children, noPadding = false }) => {
                       }}
                       className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
                     >
-                      Sign In
+                      {t("nav.signIn")}
                     </Link>
                     <Link
                       to="/flow"
@@ -289,7 +349,7 @@ const Layout = ({ children, noPadding = false }) => {
                       }}
                       className="inline-block text-center px-5 py-3 bg-slate-900 text-white text-base font-semibold rounded-lg hover:bg-slate-800 transition-colors"
                     >
-                      Get Started
+                      {t("nav.getStarted")}
                     </Link>
                   </>
                 )}
@@ -380,7 +440,7 @@ const Layout = ({ children, noPadding = false }) => {
             {/* Platform col */}
             <div className="col-span-1 md:col-span-2 md:pl-6">
               <h4 className="text-white text-sm font-semibold mb-4 tracking-tight">
-                Platform
+                {t("footer.platform")}
               </h4>
               <ul className="space-y-3 text-sm">
                 <li>
@@ -388,15 +448,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/flow"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    A/L Student Path
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/gce-results"
-                    className="hover:text-white transition-colors duration-150"
-                  >
-                    Check GCE Results
+                    {t("footer.alPath")}
                   </Link>
                 </li>
                 <li>
@@ -404,7 +456,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/partners"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    Partners
+                    {t("footer.partners")}
                   </Link>
                 </li>
                 <li>
@@ -412,7 +464,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/about"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    About Klarify
+                    {t("footer.aboutKlarify")}
                   </Link>
                 </li>
               </ul>
@@ -421,7 +473,7 @@ const Layout = ({ children, noPadding = false }) => {
             {/* Resources col */}
             <div className="col-span-1 md:col-span-2">
               <h4 className="text-white text-sm font-semibold mb-4 tracking-tight">
-                Resources
+                {t("footer.resources")}
               </h4>
               <ul className="space-y-3 text-sm">
                 <li>
@@ -429,7 +481,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/universities"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    Universities
+                    {t("nav.universities")}
                   </Link>
                 </li>
                 <li>
@@ -437,7 +489,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/programs"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    Academic Programs
+                    {t("nav.programs")}
                   </Link>
                 </li>
                 <li>
@@ -445,7 +497,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/careers"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    Careers
+                    {t("footer.careers")}
                   </Link>
                 </li>
                 <li>
@@ -453,7 +505,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/guides"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    Educational Guides
+                    {t("nav.guides")}
                   </Link>
                 </li>
               </ul>
@@ -462,7 +514,7 @@ const Layout = ({ children, noPadding = false }) => {
             {/* Contacts col */}
             <div className="col-span-1 md:col-span-2">
               <h4 className="text-white text-sm font-semibold mb-4 tracking-tight">
-                Contact
+                {t("footer.contact")}
               </h4>
               <ul className="space-y-3 text-sm">
                 <li className="text-slate-400 leading-relaxed">
@@ -474,7 +526,7 @@ const Layout = ({ children, noPadding = false }) => {
                     href="https://chat.whatsapp.com/IJt9zyMnPj0Gm4q2V7fdLj"
                     className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba56] text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors"
                   >
-                    Join WhatsApp Community
+                    {t("footer.joinWhatsapp")}
                   </a>
                 </li>
               </ul>
@@ -483,7 +535,7 @@ const Layout = ({ children, noPadding = false }) => {
             {/* Legal col */}
             <div className="col-span-1 md:col-span-2">
               <h4 className="text-white text-sm font-semibold mb-4 tracking-tight">
-                Legal
+                {t("footer.legal")}
               </h4>
               <ul className="space-y-3 text-sm">
                 <li>
@@ -491,7 +543,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/privacy"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    Privacy Policy
+                    {t("footer.privacyPolicy")}
                   </Link>
                 </li>
                 <li>
@@ -499,7 +551,7 @@ const Layout = ({ children, noPadding = false }) => {
                     to="/terms"
                     className="hover:text-white transition-colors duration-150"
                   >
-                    Terms of Service
+                    {t("footer.terms")}
                   </Link>
                 </li>
               </ul>
@@ -509,8 +561,7 @@ const Layout = ({ children, noPadding = false }) => {
           {/* Bottom bar */}
           <div className="pt-6 text-xs text-slate-600 flex flex-col sm:flex-row justify-between items-center gap-2">
             <p>
-              &copy; {new Date().getFullYear()} Klarify Academic Platform. All
-              rights reserved.
+              &copy; {new Date().getFullYear()} {t("footer.copyright")}
             </p>
           </div>
         </div>

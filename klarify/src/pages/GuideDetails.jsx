@@ -3,7 +3,11 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Compass } from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
-import { fetchGuideBySlug, fetchFeaturedInstitutions, fetchGuides } from "../services/api";
+import {
+  fetchGuideBySlug,
+  fetchFeaturedInstitutions,
+  fetchGuides,
+} from "../services/api";
 
 // Interactive Stream Matcher Widget within the dynamic template
 const StreamMatcherWidget = () => {
@@ -12,29 +16,67 @@ const StreamMatcherWidget = () => {
   const combinations = {
     science: {
       title: "Science Stream (PCM, MCB, PMCs, etc.)",
-      description: "Passed Mathematics, Physics, Chemistry, or Biology? Your options are usually technical, medical, or research-based.",
+      description:
+        "Passed Mathematics, Physics, Chemistry, or Biology? Your options are usually technical, medical, or research-based.",
       options: [
-        { name: "Medicine & Health Sciences", details: "Requires Biology & Chemistry. If you passed these, you can sit for the National Medical Exams or apply for Nursing / Medical Lab degrees directly." },
-        { name: "Engineering & Tech", details: "Requires Mathematics & Physics. Perfect for Computer Engineering, Electrical Engineering, or Software Engineering." },
-        { name: "General Sciences", details: "Chemistry, Biochemistry, or Physics degrees. Offered as direct entry at state universities." },
+        {
+          name: "Medicine & Health Sciences",
+          details:
+            "Requires Biology & Chemistry. If you passed these, you can sit for the National Medical Exams or apply for Nursing / Medical Lab degrees directly.",
+        },
+        {
+          name: "Engineering & Tech",
+          details:
+            "Requires Mathematics & Physics. Perfect for Computer Engineering, Electrical Engineering, or Software Engineering.",
+        },
+        {
+          name: "General Sciences",
+          details:
+            "Chemistry, Biochemistry, or Physics degrees. Offered as direct entry at state universities.",
+        },
       ],
     },
     commercial: {
       title: "Commercial Stream (Eco, Accounting, Maths, etc.)",
-      description: "Economics, Accounting, and Business Management passes set you up for management, finance, and logistics.",
+      description:
+        "Economics, Accounting, and Business Management passes set you up for management, finance, and logistics.",
       options: [
-        { name: "Accounting & Finance", details: "Direct entry in major public and private campuses. Always a high-demand career path." },
-        { name: "Business Administration", details: "Covers management, human resources, and marketing." },
-        { name: "Logistics & Supply Chain", details: "Douala and Limbe ports create thousands of logistics jobs. HND programs are popular here." },
+        {
+          name: "Accounting & Finance",
+          details:
+            "Direct entry in major public and private campuses. Always a high-demand career path.",
+        },
+        {
+          name: "Business Administration",
+          details: "Covers management, human resources, and marketing.",
+        },
+        {
+          name: "Logistics & Supply Chain",
+          details:
+            "Douala and Limbe ports create thousands of logistics jobs. HND programs are popular here.",
+        },
       ],
     },
     arts: {
       title: "Arts & Humanities (LIT, HIS, PHI, etc.)",
-      description: "Literature, History, and Philosophy passes prepare you for communication, law, administration, and letters.",
+      description:
+        "Literature, History, and Philosophy passes prepare you for communication, law, administration, and letters.",
       options: [
-        { name: "English Common Law", details: "Highly respected pathway at University of Buea and University of Bamenda. No concours needed." },
-        { name: "Journalism & Mass Communication", details: "Great for writing and public speaking. Offers paths into media, PR, and advertising." },
-        { name: "Bilingual Letters / Linguistics", details: "Perfect if you pass French and English. Opens doors to translation and teaching careers." },
+        {
+          name: "English Common Law",
+          details:
+            "Highly respected pathway at University of Buea and University of Bamenda. No concours needed.",
+        },
+        {
+          name: "Journalism & Mass Communication",
+          details:
+            "Great for writing and public speaking. Offers paths into media, PR, and advertising.",
+        },
+        {
+          name: "Bilingual Letters / Linguistics",
+          details:
+            "Perfect if you pass French and English. Opens doors to translation and teaching careers.",
+        },
       ],
     },
   };
@@ -58,14 +100,25 @@ const StreamMatcherWidget = () => {
       </div>
 
       <div className="space-y-3 text-left">
-        <h4 className="font-extrabold text-slate-900 text-sm">{combinations[selectedGroup].title}</h4>
-        <p className="text-xs text-slate-500 leading-relaxed mb-4">{combinations[selectedGroup].description}</p>
-        
+        <h4 className="font-extrabold text-slate-900 text-sm">
+          {combinations[selectedGroup].title}
+        </h4>
+        <p className="text-xs text-slate-500 leading-relaxed mb-4">
+          {combinations[selectedGroup].description}
+        </p>
+
         <div className="space-y-3">
           {combinations[selectedGroup].options.map((opt, idx) => (
-            <div key={idx} className="p-3.5 bg-white border border-slate-200/60 rounded-xl">
-              <strong className="text-slate-950 text-xs sm:text-sm block mb-0.5">{opt.name}</strong>
-              <p className="text-xs text-slate-500 leading-relaxed">{opt.details}</p>
+            <div
+              key={idx}
+              className="p-3.5 bg-white border border-slate-200/60 rounded-xl"
+            >
+              <strong className="text-slate-950 text-xs sm:text-sm block mb-0.5">
+                {opt.name}
+              </strong>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                {opt.details}
+              </p>
             </div>
           ))}
         </div>
@@ -84,34 +137,40 @@ const GuideDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    
+
     Promise.all([
       fetchGuideBySlug(slug),
       fetchGuides(),
-      fetchFeaturedInstitutions()
-    ]).then(([currArticle, allGuides, partners]) => {
-      setArticle(currArticle || null);
+      fetchFeaturedInstitutions(),
+    ])
+      .then(([currArticle, allGuides, partners]) => {
+        setArticle(currArticle || null);
 
-      if (currArticle && allGuides) {
-        const candidates = allGuides.filter(g => g.slug !== slug);
-        let matched = candidates.filter(g => g.category === currArticle.category);
-        if (matched.length < 2) {
-          const leftovers = candidates.filter(g => g.category !== currArticle.category);
-          matched = [...matched, ...leftovers];
+        if (currArticle && allGuides) {
+          const candidates = allGuides.filter((g) => g.slug !== slug);
+          let matched = candidates.filter(
+            (g) => g.category === currArticle.category,
+          );
+          if (matched.length < 2) {
+            const leftovers = candidates.filter(
+              (g) => g.category !== currArticle.category,
+            );
+            matched = [...matched, ...leftovers];
+          }
+          setRelatedGuides(matched.slice(0, 2));
         }
-        setRelatedGuides(matched.slice(0, 2));
-      }
 
-      if (partners && partners.length > 0) {
-        const randomIndex = Math.floor(Math.random() * partners.length);
-        setFeaturedPartner(partners[randomIndex]);
-      }
+        if (partners && partners.length > 0) {
+          const randomIndex = Math.floor(Math.random() * partners.length);
+          setFeaturedPartner(partners[randomIndex]);
+        }
 
-      setLoading(false);
-    }).catch((err) => {
-      console.error("Error loading guide details and integrations:", err);
-      setLoading(false);
-    });
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error loading guide details and integrations:", err);
+        setLoading(false);
+      });
   }, [slug]);
 
   if (loading) {
@@ -129,8 +188,12 @@ const GuideDetails = () => {
     return (
       <Layout noPadding={false}>
         <div className="min-h-[60vh] flex flex-col items-center justify-center text-center p-6 bg-slate-50">
-          <h2 className="text-2xl font-bold text-slate-800">Article Not Found</h2>
-          <p className="text-slate-500 mt-2">The guide you are looking for does not exist or has been moved.</p>
+          <h2 className="text-2xl font-bold text-slate-800">
+            Article Not Found
+          </h2>
+          <p className="text-slate-500 mt-2">
+            The guide you are looking for does not exist or has been moved.
+          </p>
           <Link
             to="/guides"
             className="mt-6 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl"
@@ -145,24 +208,24 @@ const GuideDetails = () => {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": article.title,
-    "description": article.description,
-    "image": article.image,
-    "author": {
+    headline: article.title,
+    description: article.description,
+    image: article.image,
+    author: {
       "@type": "Person",
-      "name": article.author
+      name: article.author,
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "KlarifyPath",
-      "logo": "https://www.klarifypath.com/favicon.svg"
-    }
+      name: "Klarify",
+      logo: "https://www.klarifypath.com/favicon.svg",
+    },
   };
 
   return (
     <Layout noPadding={true}>
       <SEOHead
-        title={`${article.title} | KlarifyPath Guides`}
+        title={`${article.title} | Klarify Guides`}
         description={article.description}
         canonicalUrl={`https://www.klarifypath.com/guides/${article.slug}`}
         type="article"
@@ -172,7 +235,7 @@ const GuideDetails = () => {
       {/* Guide Header Banner */}
       <section className="bg-slate-950 text-white border-b border-slate-900 pt-28 pb-16 px-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
-        
+
         <div className="max-w-2xl mx-auto z-10 relative">
           <Link
             to="/guides"
@@ -207,29 +270,42 @@ const GuideDetails = () => {
                 );
               case "h2":
                 return (
-                  <h2 key={idx} className="text-xl sm:text-2xl font-black text-slate-900 pt-6">
+                  <h2
+                    key={idx}
+                    className="text-xl sm:text-2xl font-black text-slate-900 pt-6"
+                  >
                     {block.text}
                   </h2>
                 );
               case "blockquote":
                 return (
-                  <blockquote key={idx} className="border-l-4 border-orange-500 pl-4 italic text-slate-800 font-medium my-8">
+                  <blockquote
+                    key={idx}
+                    className="border-l-4 border-orange-500 pl-4 italic text-slate-800 font-medium my-8"
+                  >
                     "{block.text}"
                   </blockquote>
                 );
               case "callout":
                 return (
-                  <div key={idx} className="p-5 bg-slate-50 border border-slate-200/60 rounded-2xl flex gap-3 text-sm my-6">
-                    <Compass className="text-orange-500 shrink-0 mt-0.5" size={18} />
-                    <p className="text-slate-600">
-                      {block.text}
-                    </p>
+                  <div
+                    key={idx}
+                    className="p-5 bg-slate-50 border border-slate-200/60 rounded-2xl flex gap-3 text-sm my-6"
+                  >
+                    <Compass
+                      className="text-orange-500 shrink-0 mt-0.5"
+                      size={18}
+                    />
+                    <p className="text-slate-600">{block.text}</p>
                   </div>
                 );
               case "list":
                 const Tag = block.ordered ? "ol" : "ul";
                 return (
-                  <Tag key={idx} className={`${block.ordered ? "list-decimal" : "list-disc"} pl-6 space-y-2 text-slate-600 text-sm sm:text-base`}>
+                  <Tag
+                    key={idx}
+                    className={`${block.ordered ? "list-decimal" : "list-disc"} pl-6 space-y-2 text-slate-600 text-sm sm:text-base`}
+                  >
                     {block.items.map((item, itemIdx) => (
                       <li key={itemIdx}>{item}</li>
                     ))}
@@ -238,9 +314,16 @@ const GuideDetails = () => {
               case "widget":
                 if (block.widgetType === "flowCta") {
                   return (
-                    <div key={idx} className="my-8 p-6 bg-orange-50 border border-orange-200 rounded-2xl">
-                      <h4 className="font-bold text-slate-900 text-base">{block.text}</h4>
-                      <p className="text-sm text-slate-600 mt-1">{block.subtext}</p>
+                    <div
+                      key={idx}
+                      className="my-8 p-6 bg-orange-50 border border-orange-200 rounded-2xl"
+                    >
+                      <h4 className="font-bold text-slate-900 text-base">
+                        {block.text}
+                      </h4>
+                      <p className="text-sm text-slate-600 mt-1">
+                        {block.subtext}
+                      </p>
                       <button
                         onClick={() => navigate("/flow")}
                         className="mt-4 inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer border-none"
@@ -267,9 +350,13 @@ const GuideDetails = () => {
                 <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-orange-100/80 text-orange-600 text-[10px] font-bold uppercase tracking-wider">
                   Featured Partner Campus
                 </div>
-                <h4 className="font-bold text-slate-900 text-base">{featuredPartner.name}</h4>
+                <h4 className="font-bold text-slate-900 text-base">
+                  {featuredPartner.name}
+                </h4>
                 <p className="text-xs text-slate-500 leading-relaxed max-w-md">
-                  Looking for alternative admission pathways? Explore direct-entry degrees, expert training programs, and HND courses at {featuredPartner.campus} in {featuredPartner.city}.
+                  Looking for alternative admission pathways? Explore
+                  direct-entry degrees, expert training programs, and HND
+                  courses at {featuredPartner.campus} in {featuredPartner.city}.
                 </p>
               </div>
               <div className="flex sm:flex-col gap-2 w-full sm:w-auto shrink-0 pt-2 sm:pt-0">
@@ -285,7 +372,11 @@ const GuideDetails = () => {
                 )}
                 {featuredPartner.website_url && (
                   <a
-                    href={featuredPartner.website_url.startsWith("http") ? featuredPartner.website_url : `https://${featuredPartner.website_url}`}
+                    href={
+                      featuredPartner.website_url.startsWith("http")
+                        ? featuredPartner.website_url
+                        : `https://${featuredPartner.website_url}`
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 sm:flex-none text-center px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition-colors border-none decoration-none"
@@ -300,8 +391,12 @@ const GuideDetails = () => {
           {/* Bottom CTA block */}
           <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-              <p className="text-xs text-slate-400 uppercase tracking-widest font-black">Orientation Tool</p>
-              <h4 className="font-extrabold text-slate-900 text-base mt-0.5">Let Klarify help you explore your options</h4>
+              <p className="text-xs text-slate-400 uppercase tracking-widest font-black">
+                Orientation Tool
+              </p>
+              <h4 className="font-extrabold text-slate-900 text-base mt-0.5">
+                Let Klarify help you explore your options
+              </h4>
             </div>
             <button
               onClick={() => navigate("/flow")}
@@ -317,7 +412,9 @@ const GuideDetails = () => {
       {relatedGuides.length > 0 && (
         <section className="bg-slate-50 py-16 px-6 border-t border-slate-100">
           <div className="max-w-2xl mx-auto">
-            <h3 className="text-xl font-extrabold text-slate-900 mb-8 tracking-tight">Related Guides</h3>
+            <h3 className="text-xl font-extrabold text-slate-900 mb-8 tracking-tight">
+              Related Guides
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {relatedGuides.map((item) => (
                 <div

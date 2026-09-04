@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Supabase setup
-url: str = os.environ.get("SUPABASE_URL")
-key: str = os.environ.get("SUPABASE_KEY")
+url: str | None = os.environ.get("SUPABASE_URL")
+key: str | None = os.environ.get("SUPABASE_KEY")
 
 def determine_exam_type(filename: str) -> str:
     """

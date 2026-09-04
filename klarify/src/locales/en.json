@@ -1,0 +1,565 @@
+{
+  "nav": {
+    "home": "Home",
+    "gceResults": "GCE Results",
+    "partner": "Partner",
+    "about": "About",
+    "universities": "Universities",
+    "programs": "Academic Programs",
+    "guides": "Educational Guides",
+    "signIn": "Sign In",
+    "getStarted": "Get Started",
+    "profile": "Profile",
+    "signOut": "Sign Out"
+  },
+  "footer": {
+    "tagline": "Personalized academic recommendations to help students find the right university programs and career paths based on their unique strengths.",
+    "platform": "Platform",
+    "resources": "Resources",
+    "contact": "Contact",
+    "legal": "Legal",
+    "alPath": "A/L Student Path",
+    "checkGce": "Check GCE Results",
+    "partners": "Partners",
+    "aboutKlarify": "About Klarify",
+    "careers": "Careers",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "joinWhatsapp": "Join WhatsApp Community",
+    "copyright": "Klarify Academic Platform. All rights reserved."
+  },
+  "home": {
+    "gceBanner": {
+      "short": "Check GCE Results",
+      "long": "Check GCE Results Now.",
+      "searchNow": "Search Now"
+    },
+    "badge": "Cameroon's #1 Academic Guidance Platform",
+    "headline": "Find Your Next Step",
+    "headlineSub": "After Secondary School or University",
+    "subtext": "Stop guessing what comes next. Discover the perfect university programs, professional concours, and career paths in Cameroon tailored precisely to your unique profile and goals.",
+    "ctaPrimary": "Get Started Free",
+    "ctaSubtext": "Takes only 2 minutes - no credit card required.",
+    "trustedBy": "Trusted by",
+    "students": "students",
+    "aboutSection": {
+      "eyebrow": "About Klarify",
+      "heading": "Cameroon's premier educational platform",
+      "p1": "Klarify is designed to bridge the gap between high school education and career success. Every year, thousands of Cameroonian students struggle to navigate the complex higher education system.",
+      "p2": "We solve this by providing an intelligent, personalized recommendation engine that analyzes your academic strengths (like GCE A-Level subjects) and personal interests to suggest the most appropriate public and private university programs, concours, and career pathways in Cameroon."
+    },
+    "features": {
+      "eyebrow": "How it works",
+      "heading": "From A-Levels to your career path in 3 steps",
+      "step1": {
+        "title": "Enter Your Profile",
+        "description": "Tell us about your GCE A-Level subjects, grades, and what fields interest you most."
+      },
+      "step2": {
+        "title": "Get Recommendations",
+        "description": "Our engine matches your profile to eligible university programs, concours, and career paths."
+      },
+      "step3": {
+        "title": "Explore & Apply",
+        "description": "Dive deep into program details, concours requirements, and directly contact institutions."
+      }
+    },
+    "whySection": {
+      "eyebrow": "Why Klarify",
+      "heading": "Built for the Cameroonian student experience",
+      "card1": {
+        "title": "GCE-Aligned Matching",
+        "description": "Our database is built specifically around Cameroon GCE A/L and O/L subject combinations for precise eligibility checks."
+      },
+      "card2": {
+        "title": "Instant Results",
+        "description": "No more browsing through PDFs. Get your GCE results and program recommendations in seconds."
+      },
+      "card3": {
+        "title": "Trusted Data",
+        "description": "All institution data, concours requirements, and career insights are verified and regularly updated."
+      }
+    },
+    "partnerPromo": {
+      "title": "Partner With Klarify",
+      "text": "List your institution, upload programs and tuition fees, and get matched to high-intent A-Level students with direct WhatsApp leads and priority placement.",
+      "items": [
+        "Easy self-serve campus onboarding",
+        "Display tuition fees and program details",
+        "Direct WhatsApp leads and program analytics"
+      ],
+      "button": "Partner With Us",
+      "login": "Institution Login"
+    },
+    "featured": {
+      "label": "Featured Institutions",
+      "heading": "Premium Orientation Partners",
+      "programs": "View Programs",
+      "campus": "Main Campus",
+      "whatsapp": "WhatsApp Admissions"
+    },
+    "coverage": {
+      "eyebrow": "Coverage",
+      "heading": "Universities & Institutions Covered",
+      "text": "Our recommendation engine includes programs from top institutions across the national territory."
+    },
+    "ctaSection": {
+      "heading": "Ready to find your path?",
+      "subtext": "Join thousands of students who already know where they are headed.",
+      "button": "Start Your Orientation"
+    },
+    "bottomCta": {
+      "heading": "Ready to find your path?",
+      "subtext": "Join thousands of Cameroonian students who have already discovered their ideal university programs and careers with Klarify.",
+      "button": "Start Your Free Assessment"
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions"
+    },
+    "faqs": [
+      {
+        "q": "What is Klarify?",
+        "a": "Klarify is an educational platform designed specifically for Cameroonian students. It helps A-Level students find the best university programs and career paths based on their subjects and interests."
+      },
+      {
+        "q": "How do I choose a university program in Cameroon?",
+        "a": "Choosing a program depends on your A-Level subjects, grades, and career interests. Our academic recommender analyzes your specific subject combination (e.g., Biology, Chemistry, Math) and matches you with eligible degrees in Cameroonian universities."
+      },
+      {
+        "q": "Which programs require concours?",
+        "a": "Many professional programs in Cameroon (like Medicine at FMSB, Engineering at ENSP, or Teaching at ENS) require a competitive entrance examination known as a 'concours'. Klarify clearly labels which recommended programs require a concours."
+      },
+      {
+        "q": "Which universities are public in Cameroon?",
+        "a": "Cameroon has several state universities including the University of Buea, University of Bamenda, University of Yaounde I & II, University of Douala, University of Dschang, University of Maroua, and University of Ngaoundere. Our platform recommends programs across these institutions."
+      },
+      {
+        "q": "Is Klarify free to use?",
+        "a": "Yes! Searching for GCE results and getting your initial career and university recommendations is completely free for all Cameroonian students."
+      }
+    ]
+  },
+  "gceResults": {
+    "badge": "Klarify Results Engine",
+    "heading": "Check Your",
+    "headingHighlight": "GCE Results",
+    "subtext": "No more scrolling through massive PDFs. Find your GCE results instantly in just a few seconds.",
+    "tabs": {
+      "all": "All Levels",
+      "al": "A-Level",
+      "ol": "O-Level",
+      "tveal": "Technical AL",
+      "tveil": "Technical IL"
+    },
+    "searchPlaceholder": "Enter candidate name or center number...",
+    "searchAriaLabel": "Search by candidate name or center number",
+    "yearAriaLabel": "Select Examination Year",
+    "searchButton": "Search",
+    "minCharsError": "Please enter at least 3 characters.",
+    "noResults": "No results found for \"{query}\" in {year}.",
+    "noResultsHint": "Make sure you spelled your name exactly as it appears on your official GCE registration slip.",
+    "candidateNumber": "Candidate No.",
+    "center": "Center",
+    "passed": "Passed",
+    "subject": "subject",
+    "subjects": "subjects",
+    "grade": "Grade",
+    "oLevelResult": "O-Level Result",
+    "aLevelResult": "A-Level Result",
+    "getOrientation": "Get Orientation",
+    "shareResult": "Share Result",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "ctaHeading": "Know your results?",
+    "ctaSubtext": "Discover which university programs and professional concours you qualify for based on your A-Level subjects.",
+    "ctaButton": "Get My University Recommendations",
+    "features": [
+      {
+        "title": "Instant & Data-Saving",
+        "body": "Stop wasting mobile data downloading massive 500+ page PDFs. Search your name and find your status in milliseconds."
+      },
+      {
+        "title": "Fuzzy Name Indexing",
+        "body": "Our database engine handles middle names, spacing issues, and minor typos. Enter just a part of your name to start."
+      },
+      {
+        "title": "Beyond the Results",
+        "body": "Finding your name is just the first step. Map your subjects directly to Cameroonian university courses and concours guidelines."
+      }
+    ],
+    "faqHeading": "Frequently Asked Questions",
+    "faqs": [
+      {
+        "q": "How does the GCE Search Engine work?",
+        "a": "Our search engine connects to a digitized, highly optimized database of the official GCE results. When you type your name, it uses fuzzy text matching to find your candidate number, center, and passed subjects instantly without needing to download massive PDFs."
+      },
+      {
+        "q": "Is this the official GCE Board website?",
+        "a": "No, Klarify is an independent educational platform. We provide this search tool as a free public utility to help students check their results quickly and seamlessly transition into our career guidance and university recommendation tools."
+      },
+      {
+        "q": "When do the 2026 GCE Results become available?",
+        "a": "Results typically become available between late July and early August. Our database is updated within minutes of the official release by the Cameroon GCE Board."
+      },
+      {
+        "q": "What should I do after checking my A-Level results?",
+        "a": "Once you have confirmed your passed subjects, use our Academic Recommender tool right from this page! Input your passed subjects and interests to find out which university programs and professional concours you are eligible for."
+      },
+      {
+        "q": "What should I do after checking my O-Level results?",
+        "a": "If you just passed your O-Levels, your next step is choosing the right A-Level subjects (Arts or Sciences) that align with your future career goals. You can also explore professional pathways or technical high schools."
+      }
+    ]
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated: June 2025",
+      "intro": "Welcome to Klarify. By accessing or using our platform at {domain}, you agree to be bound by these Terms of Service. Please read them carefully.",
+      "aboutTitle": "1. About the Service",
+      "aboutText": "Klarify is an academic guidance platform designed to help Cameroonian students explore university programs, search GCE results, and plan their academic and career paths. Our services are provided free of charge and are intended for informational and orientation purposes.",
+      "eligibilityTitle": "2. Eligibility",
+      "eligibilityText": "You must be at least 13 years of age to use Klarify. By using this platform, you confirm that you meet this requirement. Students under 18 should use the platform with parental awareness.",
+      "accountsTitle": "3. User Accounts",
+      "accountsIntro": "When you create an account:",
+      "accounts1": "You are responsible for keeping your login credentials secure",
+      "accounts2": "You agree to provide accurate information",
+      "accounts3": "You may not create accounts on behalf of others without their consent",
+      "accounts4": "We reserve the right to suspend accounts that violate these terms",
+      "gceTitle": "4. GCE Results Disclaimer",
+      "gceText": "The GCE results available on this platform are sourced from official GCE Board publications. Klarify is not affiliated with the Cameroon GCE Board. We do not alter, certify, or guarantee the accuracy of any results displayed. For official confirmation of results, always refer to the Cameroon GCE Board directly.",
+      "recommendationsTitle": "5. Academic Recommendations",
+      "recommendationsText": "Recommendations provided by our platform are generated by an automated recommendation engine based on the information you provide. They are for informational and orientation purposes only and should not replace professional academic counseling. Always verify program requirements with the respective institution.",
+      "conductTitle": "6. Prohibited Conduct",
+      "conductIntro": "You agree not to:",
+      "conduct1": "Use the platform for any unlawful purpose",
+      "conduct2": "Attempt to access another user's account",
+      "conduct3": "Scrape, copy, or redistribute our data without written permission",
+      "conduct4": "Abuse or disrupt the platform's services",
+      "ipTitle": "7. Intellectual Property",
+      "ipText": "All content, branding, code, and design on Klarify is the property of the Klarify team. You may not reproduce or redistribute any part of the platform without explicit written permission.",
+      "liabilityTitle": "8. Limitation of Liability",
+      "liabilityText": "Klarify is provided \"as is\" without warranties of any kind. We are not liable for any decisions made based on information provided by the platform. Academic outcomes are solely the responsibility of the student and their institution.",
+      "changesTitle": "9. Changes to Terms",
+      "changesText": "We reserve the right to update these Terms at any time. Continued use of the platform after changes are posted constitutes acceptance of the revised Terms.",
+      "contactTitle": "10. Contact",
+      "contactText": "For any questions about these Terms, please contact us at:",
+      "footerText": "By using Klarify, you agree to these Terms of Service and our Privacy Policy."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated: June 2025",
+      "intro": "At Klarify, your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our platform at {domain}.",
+      "collectTitle": "1. Information We Collect",
+      "collectIntro": "We collect the following types of information:",
+      "collect1": "Account Information: When you sign up, we collect your name, email address, and password (stored securely via Supabase Auth).",
+      "collect2": "Usage Data: We collect anonymous data about how you interact with the platform to improve the experience.",
+      "collect3": "GCE Search Queries: Search names entered on the GCE Results page are used only to retrieve matching results and are not stored against your account.",
+      "useTitle": "2. How We Use Your Information",
+      "useIntro": "Your information is used to:",
+      "use1": "Provide and improve our academic orientation services",
+      "use2": "Personalize your recommendation experience",
+      "use3": "Send you important service updates (no spam)",
+      "use4": "Secure your account and prevent fraud",
+      "sharingTitle": "3. Data Sharing",
+      "sharingIntro": "We do not sell your personal data. We may share it only with:",
+      "sharing1": "Supabase, our secure database and authentication provider",
+      "sharing2": "Vercel, our hosting infrastructure",
+      "sharing3": "All third-party providers we use are bound by their own privacy and security policies.",
+      "gceTitle": "4. GCE Results Data",
+      "gceText": "The GCE result data available on Klarify is sourced from official GCE Board publications and processed solely for search functionality. We do not alter or manipulate any official results. This service is provided as-is and is not affiliated with the Cameroon GCE Board.",
+      "cookiesTitle": "5. Cookies",
+      "cookiesText": "We use minimal cookies required for authentication sessions. We do not use tracking or advertising cookies.",
+      "rightsTitle": "6. Your Rights",
+      "rightsIntro": "You have the right to:",
+      "rights1": "Access the data we hold about you",
+      "rights2": "Request deletion of your account and associated data",
+      "rights3": "Opt out of any non-essential communications",
+      "rights4": "To exercise these rights, contact us at {email}",
+      "securityTitle": "7. Security",
+      "securityText": "We use industry-standard encryption and secure infrastructure (Supabase + Vercel) to protect your data. However, no system is 100% secure, so please use a strong, unique password.",
+      "changesTitle": "8. Changes to This Policy",
+      "changesText": "We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. Continued use of the platform after changes constitutes your acceptance.",
+      "questionsText": "Questions about this policy? Reach us at",
+      "footerEmail": "adminklarify@gmail.com"
+    }
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "identifierLabel": "Phone Number or Email",
+    "identifierPlaceholder": "+237 6XX XXX XXX or you@example.com",
+    "passwordLabel": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signingIn": "Signing in...",
+    "signIn": "Sign In",
+    "newToKlarify": "New to Klarify?",
+    "createAccount": "Create Account",
+    "agreePrefix": "By signing in, you agree to our",
+    "termsLabel": "Terms of Service",
+    "and": "and",
+    "privacyLabel": "Privacy Policy",
+    "showPasswordHide": "Hide password",
+    "showPasswordShow": "Show password",
+    "errors": {
+      "enterIdentifier": "Please enter your phone number or email.",
+      "invalidPhone": "Phone number must be at least 9 digits.",
+      "invalidEmail": "Please enter a valid email address.",
+      "enterPassword": "Please enter your password.",
+      "noAccount": "No account found for this number. Please sign up first, or check your password.",
+      "loginFailed": "Login failed. Please try again."
+    },
+    "signUp": {
+      "createYourAccount": "Create your account",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "e.g. Tchinda Marie",
+      "agreeToTerms": "I agree to the",
+      "alreadyHaveAccount": "Already have an account?",
+      "creating": "Creating Account...",
+      "createButton": "Create Account",
+      "createPhoneButton": "Create Account & Continue",
+      "confirmPassword": "Confirm Password",
+      "joinCommunity": "Join our academic community",
+      "phoneNote": "Phone sign-up is currently enabled without an SMS verification step.",
+      "sendingCode": "Sending Code...",
+      "sendVerificationCode": "Send Verification Code",
+      "readyText": "Ready to clarify your academic path?",
+      "readyAction": "Let's get started!",
+      "errors": {
+        "fullName": "Please enter your full name.",
+        "passwordLength": "Password must be at least 6 characters.",
+        "passwordMatch": "Passwords do not match.",
+        "agreeTerms": "Please agree to the Terms of Service."
+      },
+      "messages": {
+        "accountCreated": "Account created! Please sign in to continue."
+      },
+      "confirmEmail": {
+        "heading": "Check Your Email",
+        "sentTo": "We sent a confirmation link to:",
+        "instruction": "Click the link in the email to activate your account, then come back to sign in. Check your spam folder if you do not see it within a minute.",
+        "goToSignIn": "Go to Sign In",
+        "useDifferent": "Use a different email"
+      }
+    }
+  },
+  "partnerAuth": {
+    "title": "Institution Login",
+    "subtitle": "Sign in to manage your campus portal",
+    "accessDenied": "Access denied. Only institution accounts can access the partner portal.",
+    "needAccount": "Need an account?",
+    "createAccount": "Create Partner Account",
+    "agreePrefix": "By signing in, you agree to our"
+  },
+  "about": {
+    "hero": {
+      "badge": "Our Story",
+      "title": "Built by Students,",
+      "titleHighlight": "For Students",
+      "text": "Klarify was born on results day, in the middle of the celebration, confusion, and the silent question nobody could answer:",
+      "quote": "What do I do next?"
+    },
+    "story": {
+      "eyebrow": "How It Started",
+      "heading": "The Confusion Nobody Talks About",
+      "p1": "Every year in Cameroon, thousands of students open their GCE results and feel two emotions at once: joy at passing, and sudden, overwhelming confusion about what comes next.",
+      "p2": "We were those students. A group of young people who, in the midst of the excitement and celebrations of GCE results day, found ourselves completely lost. We didn't know which university programs our subjects qualified us for. We didn't know which",
+      "concours": "Concours",
+      "p2b": "to sit. We didn't know which careers were actually realistic.",
+      "p3": "Some of us made rushed decisions. Some followed friends into programs that weren't right for them. Some are now studying things they never imagined, not because they chose poorly, but because",
+      "p3Strong": "nobody gave them the right information at the right time.",
+      "p4": "That experience, that confusion in the middle of the celebration, is exactly why Klarify exists."
+    },
+    "mission": {
+      "stat": "2 in 3",
+      "statText": "Cameroonian students end up in a university program they didn't originally want, not from lack of ambition, but lack of guidance at the critical moment.",
+      "quote": "We built the tool we desperately needed when we were 17 and staring at a GCE results PDF, wondering what our future looked like.",
+      "quoteAuthor": "- The Klarify Team"
+    },
+    "values": {
+      "eyebrow": "What Drives Us",
+      "heading": "Our Mission & Values",
+      "text": "Everything we build is guided by a single belief: that every Cameroonian student deserves access to the right information at the right time."
+    },
+    "team": {
+      "eyebrow": "The Founders",
+      "heading1": "Meet the passionate",
+      "heading2": "builders behind Klarify",
+      "sangwa": {
+        "role": "Co-Founder, Developer & Designer",
+        "degree": "B.Tech in Software Engineering"
+      },
+      "desmond": {
+        "role": "Co-Founder, Data Analyst & Engineer",
+        "degree": "B.Tech in Data Science"
+      },
+      "joyce": {
+        "role": "Co-Founder, Data Scientist & Community Manager",
+        "degree": "B.Tech in Data Science"
+      }
+    },
+    "platform": {
+      "eyebrow": "The Platform",
+      "heading": "What Klarify Does",
+      "text": "We are building Cameroon's most comprehensive academic orientation and results platform, one feature at a time.",
+      "cards": {
+        "gce": {
+          "title": "GCE Results Search",
+          "desc": "Search your GCE O/L, A/L, and TVE results instantly by name without PDFs or stress."
+        },
+        "orientation": {
+          "title": "Academic Orientation",
+          "desc": "Based on your A-Level subjects and interests, get personalized university program recommendations built for Cameroon's education system."
+        },
+        "concours": {
+          "title": "Concours & Career Guides",
+          "desc": "Get details on entrance exams, deadlines, fees, and the career paths that each program leads to, all in one place."
+        }
+      },
+      "cta": "Start Your Free Assessment",
+      "ctaAria": "Start Your Free Assessment"
+    }
+  },
+  "flow": {
+    "intro": {
+      "eyebrow": "Orientation Recommender",
+      "heading": "Discover Your Perfect Academic Path",
+      "text": "By analyzing your exact profile and personal interests, we match you with the most suitable degrees, HNDs, and professional concours available across the national territory."
+    },
+    "backHome": "Back to Home",
+    "previousStep": "Previous Step",
+    "backAria": "Go back to previous step",
+    "step1": {
+      "title": "Which best describes you?",
+      "subtitle": "Select your current academic or professional status to tailor your recommendations."
+    },
+    "persona": {
+      "alevel": {
+        "title": "Secondary School Student",
+        "subtitle": "I have written or am preparing for the GCE A-Levels."
+      },
+      "graduate": {
+        "title": "University Graduate",
+        "subtitle": "I have a degree and am looking for postgraduate options."
+      },
+      "professional": {
+        "title": "Self-Learner / Professional",
+        "subtitle": "I want to upskill or find professional certification paths."
+      }
+    },
+    "step2": {
+      "alevel": {
+        "title": "Select Your A-Level Subjects",
+        "subtitle": "Choose at least 2 subjects you studied for your Advanced Levels.",
+        "minSubjects": "Please select at least 2 subjects."
+      },
+      "comingSoon": {
+        "title": "Coming Soon",
+        "text": "We are currently fine-tuning our program recommendations for {audience}. This feature will be available very soon. Stay tuned!",
+        "gradAudience": "University Graduates",
+        "profAudience": "Professionals and Self-Learners"
+      }
+    },
+    "step3": {
+      "title": "What fields are you interested in?",
+      "subtitle": "Select one or more career paths or topics you are passionate about.",
+      "minInterest": "Please select at least 1 field of interest."
+    },
+    "nextStep": "Next Step",
+    "submit": "Get My Recommendations",
+    "benefits": {
+      "heading": "Why use our Recommender?",
+      "saveTime": {
+        "label": "Save Time",
+        "detail": "Stop manually reading through hundreds of university brochures."
+      },
+      "hiddenPaths": {
+        "label": "Discover Hidden Paths",
+        "detail": "Find programs you didn't know existed but perfectly match your skills."
+      },
+      "concours": {
+        "label": "Concours Awareness",
+        "detail": "Instantly know which professional schools (like ENS or FMSB) require competitive exams."
+      }
+    },
+    "faq": {
+      "title": "Recommender FAQs",
+      "q1": "How are the university programs recommended?",
+      "a1": "Our system matches your A-Level subjects and personal interests against a database of hundreds of university programs across Cameroon.",
+      "q2": "What information do I need to provide?",
+      "a2": "You only need to select at least 2 A-Level subjects you have studied and select your broad fields of interest (e.g., Technology, Health, Business).",
+      "q3": "Are these recommendations guaranteed for admission?",
+      "a3": "The recommendations show what programs you are academically eligible for. However, admission depends on your final grades and performance in any required concours (entrance exams).",
+      "q4": "What if my desired career isn't listed?",
+      "a4": "Our database is constantly updating. If you don't see a specific niche, try selecting a broader category like 'Sciences' or 'Arts' to see foundational degrees that lead to your desired career."
+    }
+  },
+  "partners": {
+    "hero": {
+      "badge": "Private University Partner Portal",
+      "heading1": "Reach High-Intent",
+      "heading2": "A-Level Students",
+      "heading3": "Right When They Decide",
+      "text": "Join Cameroon's top private institutes (IPES). Self-onboard your campus, upload degree & HND programs, display tuition fees, and receive direct student leads on WhatsApp, all from your partner dashboard.",
+      "primaryCta": "Register Your University Now",
+      "login": "Institution Login",
+      "featuresCta": "View Portal Features"
+    },
+    "value": {
+      "eyebrow": "Why Partner With Us",
+      "heading": "Built for Cameroonian Private Institutes (IPES)",
+      "cards": [
+        {
+          "title": "Intelligent Student Matching",
+          "desc": "When students enter their GCE A-Level subject combinations, our matching engine highlights your eligible degree programs directly."
+        },
+        {
+          "title": "Direct WhatsApp Leads",
+          "desc": "Students can click a single button on your program cards to chat directly with your admissions office or registrar on WhatsApp."
+        },
+        {
+          "title": "Complete Self-Service",
+          "desc": "No need to wait for manual updates. Add, edit, or remove your campus programs, tuition fees, and admission deadlines anytime from your dashboard."
+        }
+      ]
+    },
+    "pricing": {
+      "eyebrow": "Transparent Partner Pricing",
+      "heading": "Simple Listing Plans",
+      "subtitle": "Payments processed securely via Mobile Money (MTN MoMo & Orange Money).",
+      "starter": "Starter",
+      "basicListing": "Basic Listing",
+      "free": "Free",
+      "idealFor": "Ideal for small private institutes starting out.",
+      "listUpTo3": "List up to 3 programs",
+      "basicCampus": "Basic campus profile & city location",
+      "whatsappLead": "WhatsApp Lead Button",
+      "getStartedFree": "Get Started Free",
+      "mostPopular": "Most Popular",
+      "proPartner": "Pro Partner",
+      "unlimited": "Unlimited IPES",
+      "annual": "/ yr",
+      "fullFeatures": "Full features for growing private universities.",
+      "directWhatsApp": "Direct WhatsApp Admissions Lead Button",
+      "displayFees": "Display annual tuition fees & deadlines",
+      "verifiedBadge": "Verified Institution Badge",
+      "registerProCampus": "Register Pro Campus",
+      "featured": "Featured",
+      "featuredCampus": "Featured Campus",
+      "maxVisibility": "Maximum visibility during GCE results release.",
+      "everythingInPro": "Everything in Pro Plan",
+      "topPriority": "Top Priority Ranking in Recommender",
+      "featuredBanner": "Featured Banner on Homepage",
+      "getFeatured": "Get Featured",
+      "ctaHeading": "Ready to list your programs?",
+      "ctaText": "Setup takes less than 3 minutes. Start adding your university campus and academic courses today.",
+      "ctaButton": "Create Partner Account"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again.",
+    "backToTop": "Back to top",
+    "language": "Language"
+  }
+}

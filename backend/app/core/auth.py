@@ -60,7 +60,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
 
     if not credentials:
         if _is_dev_mode():
-            return {"id": "dev-guest-id", "email": "guest@klarify.com", "role": "anon"}
+            return {"id": "dev-guest-id", "email": "guest@klarifypath.com", "role": "anon"}
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authorization header missing.",
@@ -76,7 +76,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         kid = header.get("kid")
     except Exception as e:
         if _is_dev_mode():
-            return {"id": "dev-user-id", "email": "dev@klarify.com", "role": "authenticated"}
+            return {"id": "dev-user-id", "email": "dev@klarifypath.com", "role": "authenticated"}
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Malformed authentication token header: {str(e)}",
@@ -101,7 +101,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
             # Symmetric HS256 verification (fallback/legacy/local-testing)
             if not supabase_jwt_secret:
                 if _is_dev_mode():
-                    return {"id": "dev-user-id", "email": "dev@klarify.com", "role": "authenticated"}
+                    return {"id": "dev-user-id", "email": "dev@klarifypath.com", "role": "authenticated"}
                 raise HTTPException(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                     detail="SUPABASE_JWT_SECRET environment variable is not configured."
@@ -115,7 +115,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
     except JWTError as e:
         if _is_dev_mode():
             print(f"DEV MODE WARNING: JWT decode failed ({e}). Proceeding with mock user.")
-            return {"id": "dev-user-id", "email": "dev@klarify.com", "role": "authenticated"}
+            return {"id": "dev-user-id", "email": "dev@klarifypath.com", "role": "authenticated"}
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid or expired authentication token: {str(e)}. Token header: {header}",

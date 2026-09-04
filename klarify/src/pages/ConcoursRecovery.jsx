@@ -10,7 +10,7 @@ const ConcoursRecovery = () => {
   return (
     <Layout noPadding={true}>
       <SEOHead
-        title="Failed a Concours in Cameroon? What to Do Next | KlarifyPath"
+        title="Failed a Concours in Cameroon? What to Do Next | Klarify"
         description="Not making it into your dream school this year does not mean your future is over. Read our simple, honest advice on what you can study next."
         canonicalUrl="https://www.klarifypath.com/guides/failed-concours-what-next"
       />

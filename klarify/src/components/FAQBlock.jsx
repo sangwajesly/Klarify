@@ -45,7 +45,7 @@ const FAQBlock = ({ faqs, title = "Frequently Asked Questions" }) => {
                   </h3>
                   <ChevronDown
                     size={18}
-                    className={`text-slate-400 group-hover:text-slate-600 shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    className={`text-slate-400 group-hover:text-slate-600 shrink-0 transition-transform duration-300 ease-out-expo ${
                       isOpen ? "rotate-180 text-orange-500" : ""
                     }`}
                     aria-hidden="true"

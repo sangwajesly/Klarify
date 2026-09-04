@@ -141,7 +141,7 @@ const ProgramDetails = () => {
   return (
     <Layout>
       <SEOHead
-        title={`${program.name} - ${program.university} | KlarifyPath`}
+        title={`${program.name} - ${program.university} | Klarify`}
         description={
           program.descriptions ||
           `Explore prerequisites, degree duration, concours requirements, and career paths for ${program.name} at ${program.university}.`

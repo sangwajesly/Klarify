@@ -94,7 +94,7 @@ def send_otp(phone: str, full_name: str) -> dict:
     sms = _get_at_sms()
     if sms:
         try:
-            msg = f"Your KlarifyPath verification code is: {code}\nExpires in 5 minutes. Do not share it."
+            msg = f"Your Klarify verification code is: {code}\nExpires in 5 minutes. Do not share it."
             response = sms.send(msg, [phone])
             print(f"[OTP] SMS send response for {phone}: {response}")
             if isinstance(response, dict) and response.get("SMSMessageData", {}).get("Recipients"):

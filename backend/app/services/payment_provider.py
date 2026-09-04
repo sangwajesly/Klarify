@@ -53,7 +53,7 @@ class PaymentProvider:
             'amount': int(amount),
             'phone': clean_phone,
             'name': name or 'Klarify Partner',
-            'email': email or 'admin@klarifypath.com',
+            'email': email or 'adminklarify@gmail.com',
             'externalId': external_id,
             'userId': str(institution_id),
             'message': description or 'Klarify IPES Subscription Upgrade',

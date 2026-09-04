@@ -2,111 +2,118 @@ import React from "react";
 import Layout from "../components/Layout";
 import { FileText } from "lucide-react";
 import SEOHead from "../components/SEOHead";
+import { useLanguage } from "../context/LanguageContext";
 
 const Section = ({ title, children }) => (
   <section className="mb-10">
-    <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-3 border-l-2 border-orange-500 pl-4">{title}</h2>
-    <div className="text-slate-600 text-sm md:text-base leading-relaxed space-y-3 pl-4">{children}</div>
+    <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-3 border-l-2 border-orange-500 pl-4">
+      {title}
+    </h2>
+    <div className="text-slate-600 text-sm md:text-base leading-relaxed space-y-3 pl-4">
+      {children}
+    </div>
   </section>
 );
 
-const Terms = () => (
-  <Layout noPadding={false}>
-    <SEOHead
-      title="Terms of Service | Klarify"
-      description="Read the terms of service that govern your use of the Klarify academic recommendation engine and results search platform."
-    />
+const Terms = () => {
+  const { t } = useLanguage();
 
-    <div className="max-w-3xl mx-auto py-8">
-      <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200/80 shadow-sm">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-10 pb-6 border-b border-slate-100">
-          <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
-            <FileText size={24} />
+  return (
+    <Layout noPadding={false}>
+      <SEOHead
+        title="Terms of Service | Klarify"
+        description="Read the terms of service that govern your use of the Klarify academic recommendation engine and results search platform."
+      />
+
+      <div className="max-w-3xl mx-auto py-8">
+        <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200/80 shadow-sm">
+          <div className="flex items-center gap-4 mb-10 pb-6 border-b border-slate-100">
+            <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+              <FileText size={24} />
+            </div>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+                {t("legal.terms.title")}
+              </h1>
+              <p className="text-slate-400 text-xs mt-1 font-medium">
+                {t("legal.terms.lastUpdated")}
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Terms of Service</h1>
-            <p className="text-slate-400 text-xs mt-1 font-medium">Last updated: June 2025</p>
+
+          <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-10 pb-6 border-b border-slate-100">
+            {t("legal.terms.intro", { domain: "klarifypath.com" })}
+          </p>
+
+          <Section title={t("legal.terms.aboutTitle")}>
+            <p>{t("legal.terms.aboutText")}</p>
+          </Section>
+
+          <Section title={t("legal.terms.eligibilityTitle")}>
+            <p>{t("legal.terms.eligibilityText")}</p>
+          </Section>
+
+          <Section title={t("legal.terms.accountsTitle")}>
+            <p>{t("legal.terms.accountsIntro")}</p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-slate-600 text-sm md:text-base">
+              <li>{t("legal.terms.accounts1")}</li>
+              <li>{t("legal.terms.accounts2")}</li>
+              <li>{t("legal.terms.accounts3")}</li>
+              <li>{t("legal.terms.accounts4")}</li>
+            </ul>
+          </Section>
+
+          <Section title={t("legal.terms.gceTitle")}>
+            <p>{t("legal.terms.gceText")}</p>
+          </Section>
+
+          <Section title={t("legal.terms.recommendationsTitle")}>
+            <p>{t("legal.terms.recommendationsText")}</p>
+          </Section>
+
+          <Section title={t("legal.terms.conductTitle")}>
+            <p>{t("legal.terms.conductIntro")}</p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-slate-600 text-sm md:text-base">
+              <li>{t("legal.terms.conduct1")}</li>
+              <li>{t("legal.terms.conduct2")}</li>
+              <li>{t("legal.terms.conduct3")}</li>
+              <li>{t("legal.terms.conduct4")}</li>
+            </ul>
+          </Section>
+
+          <Section title={t("legal.terms.ipTitle")}>
+            <p>{t("legal.terms.ipText")}</p>
+          </Section>
+
+          <Section title={t("legal.terms.liabilityTitle")}>
+            <p>{t("legal.terms.liabilityText")}</p>
+          </Section>
+
+          <Section title={t("legal.terms.changesTitle")}>
+            <p>{t("legal.terms.changesText")}</p>
+          </Section>
+
+          <Section title={t("legal.terms.contactTitle")}>
+            <p>{t("legal.terms.contactText")}</p>
+            <p className="mt-2">
+              <a
+                href="mailto:adminklarify@gmail.com"
+                className="text-orange-500 hover:text-orange-400 transition-colors font-bold"
+              >
+                adminklarify@gmail.com
+              </a>
+            </p>
+          </Section>
+
+          <div className="mt-12 p-6 bg-slate-50 border border-slate-200/60 rounded-2xl text-center">
+            <p className="text-slate-500 text-sm">
+              {t("legal.terms.footerText")}
+            </p>
           </div>
-        </div>
-
-        <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-10 pb-6 border-b border-slate-100">
-          Welcome to Klarify. By accessing or using our platform at <span className="text-orange-500 font-semibold">klarifypath.com</span>, you agree to be bound by these Terms of Service. Please read them carefully.
-        </p>
-
-        <Section title="1. About the Service">
-          <p>
-            Klarify is an academic guidance platform designed to help Cameroonian students explore university programs, search GCE results, and plan their academic and career paths. Our services are provided free of charge and are intended for informational and orientation purposes.
-          </p>
-        </Section>
-
-        <Section title="2. Eligibility">
-          <p>
-            You must be at least 13 years of age to use Klarify. By using this platform, you confirm that you meet this requirement. Students under 18 should use the platform with parental awareness.
-          </p>
-        </Section>
-
-        <Section title="3. User Accounts">
-          <p>When you create an account:</p>
-          <ul className="list-disc list-inside space-y-2 mt-2 text-slate-600 text-sm md:text-base">
-            <li>You are responsible for keeping your login credentials secure</li>
-            <li>You agree to provide accurate information</li>
-            <li>You may not create accounts on behalf of others without their consent</li>
-            <li>We reserve the right to suspend accounts that violate these terms</li>
-          </ul>
-        </Section>
-
-        <Section title="4. GCE Results Disclaimer">
-          <p>
-            The GCE results available on this platform are sourced from official GCE Board publications. Klarify is <span className="text-slate-900 font-semibold">not affiliated with the Cameroon GCE Board</span>. We do not alter, certify, or guarantee the accuracy of any results displayed. For official confirmation of results, always refer to the Cameroon GCE Board directly.
-          </p>
-        </Section>
-
-        <Section title="5. Academic Recommendations">
-          <p>
-            Recommendations provided by our platform are generated by an automated recommendation engine based on the information you provide. They are <span className="text-slate-900 font-semibold">for informational and orientation purposes only</span> and should not replace professional academic counseling. Always verify program requirements with the respective institution.
-          </p>
-        </Section>
-
-        <Section title="6. Prohibited Conduct">
-          <p>You agree not to:</p>
-          <ul className="list-disc list-inside space-y-2 mt-2 text-slate-600 text-sm md:text-base">
-            <li>Use the platform for any unlawful purpose</li>
-            <li>Attempt to access another user's account</li>
-            <li>Scrape, copy, or redistribute our data without written permission</li>
-            <li>Abuse or disrupt the platform's services</li>
-          </ul>
-        </Section>
-
-        <Section title="7. Intellectual Property">
-          <p>
-            All content, branding, code, and design on Klarify is the property of the Klarify team. You may not reproduce or redistribute any part of the platform without explicit written permission.
-          </p>
-        </Section>
-
-        <Section title="8. Limitation of Liability">
-          <p>
-            Klarify is provided "as is" without warranties of any kind. We are not liable for any decisions made based on information provided by the platform. Academic outcomes are solely the responsibility of the student and their institution.
-          </p>
-        </Section>
-
-        <Section title="9. Changes to Terms">
-          <p>
-            We reserve the right to update these Terms at any time. Continued use of the platform after changes are posted constitutes acceptance of the revised Terms.
-          </p>
-        </Section>
-
-        <Section title="10. Contact">
-          <p>For any questions about these Terms, please contact us at:</p>
-          <p className="mt-2"><a href="mailto:hello@klarifypath.com" className="text-orange-500 hover:text-orange-400 transition-colors font-bold">hello@klarifypath.com</a></p>
-        </Section>
-
-        <div className="mt-12 p-6 bg-slate-50 border border-slate-200/60 rounded-2xl text-center">
-          <p className="text-slate-500 text-sm">By using Klarify, you agree to these Terms of Service and our Privacy Policy.</p>
         </div>
       </div>
-    </div>
-  </Layout>
-);
+    </Layout>
+  );
+};
 
 export default Terms;

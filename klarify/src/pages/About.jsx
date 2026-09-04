@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 import {
   Heart,
   Lightbulb,
@@ -29,11 +30,12 @@ const ValueCard = ({ icon: Icon, title, description }) => (
 
 const About = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "KlarifyPath",
+    name: "Klarify",
     url: "https://www.klarifypath.com",
     logo: "https://www.klarifypath.com/favicon.svg",
     description:
@@ -48,7 +50,7 @@ const About = () => {
     <Layout noPadding={true}>
       <SEOHead
         title="About Us - Our Mission for Cameroonian Education"
-        description="Learn why KlarifyPath was built. We are a team of Cameroonian students building the academic and career orientation tools we wish we had."
+        description="Learn why Klarify was built. We are a team of Cameroonian students building the academic and career orientation tools we wish we had."
         canonicalUrl="https://www.klarifypath.com/about"
         structuredData={orgSchema}
       />
@@ -72,21 +74,19 @@ const About = () => {
                 className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"
                 aria-hidden="true"
               />
-              Our Story
+              {t("about.hero.badge")}
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight tracking-tight">
-              Built by Students,
+              {t("about.hero.title")}
               <span className="text-orange-400 block sm:inline">
                 {" "}
-                For Students
+                {t("about.hero.titleHighlight")}
               </span>
             </h1>
             <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Klarify was born on results day, in the middle of the
-              celebration, confusion, and the silent question nobody could
-              answer:{" "}
+              {t("about.hero.text")}{" "}
               <em className="text-white not-italic font-medium">
-                "What do I do next?"
+                {t("about.hero.quote")}
               </em>
             </p>
           </div>
@@ -98,38 +98,27 @@ const About = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
               <div className="space-y-5">
                 <span className="section-eyebrow text-orange-500 font-bold uppercase tracking-wider text-xs block">
-                  How It Started
+                  {t("about.story.eyebrow")}
                 </span>
                 <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 leading-tight">
-                  The Confusion Nobody Talks About
+                  {t("about.story.heading")}
                 </h2>
                 <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
+                  <p>{t("about.story.p1")}</p>
                   <p>
-                    Every year in Cameroon, thousands of students open their GCE
-                    results and feel two emotions at once: joy at passing, and
-                    sudden, overwhelming confusion about what comes next.
+                    {t("about.story.p2")}{" "}
+                    <em className="text-slate-800">
+                      {t("about.story.concours")}
+                    </em>{" "}
+                    {t("about.story.p2b")}
                   </p>
                   <p>
-                    We were those students. A group of young people who, in the
-                    midst of the excitement and celebrations of GCE results day,
-                    found ourselves completely lost. We didn't know which
-                    university programs our subjects qualified us for. We didn't
-                    know which <em className="text-slate-800">Concours</em> to
-                    sit. We didn't know which careers were actually realistic.
-                  </p>
-                  <p>
-                    Some of us made rushed decisions. Some followed friends into
-                    programs that weren't right for them. Some are now studying
-                    things they never imagined, not because they chose poorly,
-                    but because{" "}
+                    {t("about.story.p3")}{" "}
                     <strong className="text-slate-900 font-bold">
-                      nobody gave them the right information at the right time.
+                      {t("about.story.p3Strong")}
                     </strong>
                   </p>
-                  <p>
-                    That experience, that confusion in the middle of the
-                    celebration, is exactly why Klarify exists.
-                  </p>
+                  <p>{t("about.story.p4")}</p>
                 </div>
               </div>
 
@@ -141,22 +130,18 @@ const About = () => {
                     aria-hidden="true"
                   />
                   <p className="text-3xl font-extrabold text-slate-900 mb-2">
-                    2 in 3
+                    {t("about.mission.stat")}
                   </p>
                   <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-                    Cameroonian students end up in a university program they
-                    didn't originally want, not from lack of ambition, but lack
-                    of guidance at the critical moment.
+                    {t("about.mission.statText")}
                   </p>
                 </div>
                 <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-6">
                   <p className="text-slate-600 italic text-sm leading-relaxed">
-                    "We built the tool we desperately needed when we were 17 and
-                    staring at a GCE results PDF, wondering what our future
-                    looked like."
+                    {t("about.mission.quote")}
                   </p>
                   <p className="text-orange-500 font-semibold text-sm mt-3">
-                    - The Klarify Team
+                    {t("about.mission.quoteAuthor")}
                   </p>
                 </div>
               </div>
@@ -169,15 +154,13 @@ const About = () => {
           <div className="max-w-6xl mx-auto">
             <div className="mb-12">
               <span className="section-eyebrow text-orange-500 font-bold uppercase tracking-wider text-xs block mb-2">
-                What Drives Us
+                {t("about.values.eyebrow")}
               </span>
               <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 leading-tight">
-                Our Mission & Values
+                {t("about.values.heading")}
               </h2>
               <p className="text-slate-600 text-sm md:text-base mt-2 max-w-xl">
-                Everything we build is guided by a single belief: that every
-                Cameroonian student deserves access to the right information at
-                the right time.
+                {t("about.values.text")}
               </p>
             </div>
 
@@ -220,12 +203,12 @@ const About = () => {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-16">
               <span className="text-xs uppercase tracking-widest font-black text-orange-400">
-                The Founders
+                {t("about.team.eyebrow")}
               </span>
               <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-3 leading-tight tracking-tight">
-                Meet the passionate <br />
+                {t("about.team.heading1")} <br />
                 <span className="font-serif italic text-orange-400 font-normal lowercase tracking-wide block mt-1.5">
-                  builders behind Klarify
+                  {t("about.team.heading2")}
                 </span>
               </h2>
             </div>
@@ -262,7 +245,7 @@ const About = () => {
                       Sangwa Jesly
                     </h3>
                     <p className="text-xs font-semibold text-orange-400 mt-1">
-                      Co-Founder, Developer & Designer
+                      {t("about.team.sangwa.role")}
                     </p>
                   </div>
                   <div className="relative z-10 space-y-3">
@@ -272,7 +255,7 @@ const About = () => {
                       engineering and educational accessibility.
                     </p>
                     <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                      B.Tech in Software Engineering
+                      {t("about.team.sangwa.degree")}
                     </p>
                   </div>
                 </div>
@@ -308,7 +291,7 @@ const About = () => {
                       Desmond Yembi
                     </h3>
                     <p className="text-xs font-semibold text-orange-400 mt-1">
-                      Co-Founder, Data Analyst & Engineer
+                      {t("about.team.desmond.role")}
                     </p>
                   </div>
                   <div className="relative z-10 space-y-3">
@@ -350,7 +333,7 @@ const About = () => {
                     Miss Joyce
                   </h3>
                   <p className="text-xs font-semibold text-orange-400 mt-1">
-                    Co-Founder, Data Scientist & Community Manager
+                    {t("about.team.joyce.role")}
                   </p>
                 </div>
 
@@ -394,14 +377,13 @@ const About = () => {
           <div className="max-w-6xl mx-auto">
             <div className="mb-12">
               <span className="section-eyebrow text-orange-500 font-bold uppercase tracking-wider text-xs block mb-2">
-                The Platform
+                {t("about.platform.eyebrow")}
               </span>
               <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">
-                What Klarify Does
+                {t("about.platform.heading")}
               </h2>
               <p className="text-slate-600 text-sm md:text-base mt-2">
-                We are building Cameroon's most comprehensive academic
-                orientation and results platform, one feature at a time.
+                {t("about.platform.text")}
               </p>
             </div>
 
@@ -409,18 +391,18 @@ const About = () => {
               {[
                 {
                   num: "01",
-                  title: "GCE Results Search",
-                  desc: "Search your GCE O/L, A/L, and TVE results instantly by name without PDFs or stress.",
+                  title: t("about.platform.cards.gce.title"),
+                  desc: t("about.platform.cards.gce.desc"),
                 },
                 {
                   num: "02",
-                  title: "Academic Orientation",
-                  desc: "Based on your A-Level subjects and interests, get personalized university program recommendations built for Cameroon's education system.",
+                  title: t("about.platform.cards.orientation.title"),
+                  desc: t("about.platform.cards.orientation.desc"),
                 },
                 {
                   num: "03",
-                  title: "Concours & Career Guides",
-                  desc: "Get details on entrance exams, deadlines, fees, and the career paths that each program leads to, all in one place.",
+                  title: t("about.platform.cards.concours.title"),
+                  desc: t("about.platform.cards.concours.desc"),
                 },
               ].map(({ num, title, desc }) => (
                 <article
@@ -444,9 +426,9 @@ const About = () => {
               <button
                 onClick={() => navigate("/flow")}
                 className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm px-6 py-3.5 rounded-xl transition-all shadow-md shadow-orange-500/25"
-                aria-label="Start Your Free Assessment"
+                aria-label={t("about.platform.ctaAria")}
               >
-                Start Your Free Assessment
+                {t("about.platform.cta")}
                 <ArrowRight size={16} aria-hidden="true" />
               </button>
             </div>
