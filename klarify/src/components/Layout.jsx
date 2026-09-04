@@ -51,42 +51,6 @@ const LanguageToggle = ({ language, setLanguage, compact = false }) => (
   </div>
 );
 
-const GoogleTranslateWidget = () => {
-  useEffect(() => {
-    const scriptId = "google-translate-script";
-    const existingScript = document.getElementById(scriptId);
-
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src =
-        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-
-    window.googleTranslateElementInit = () => {
-      if (!window.google || !window.google.translate) return;
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          includedLanguages: "en,fr",
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        "google_translate_element",
-      );
-    };
-  }, []);
-
-  return (
-    <div className="flex items-center gap-2">
-      <span className="hidden md:inline text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-        Translate
-      </span>
-      <div id="google_translate_element" className="min-w-27.5" />
-    </div>
-  );
-};
 
 const Layout = ({ children, noPadding = false }) => {
   const { user, loading, signOut } = useAuth();
@@ -120,6 +84,7 @@ const Layout = ({ children, noPadding = false }) => {
           <div className="hidden md:flex items-center gap-8">
             <nav className="flex items-center gap-7">
               <NavLink to="/">{t("nav.home")}</NavLink>
+              <NavLink to="/gce-results">{t("nav.gceResults")}</NavLink>
               <NavLink
                 to="/partners"
                 onClick={() =>
@@ -132,12 +97,7 @@ const Layout = ({ children, noPadding = false }) => {
             </nav>
 
             <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
-              <LanguageToggle
-                language={language}
-                setLanguage={setLanguage}
-                compact={true}
-              />
-              <GoogleTranslateWidget />
+              <LanguageToggle language={language} setLanguage={setLanguage} compact={true} />
               {!loading && user ? (
                 <>
                   <span className="text-sm text-slate-500 hidden lg:inline truncate max-w-40">
@@ -211,10 +171,6 @@ const Layout = ({ children, noPadding = false }) => {
                   setLanguage={setLanguage}
                   compact={true}
                 />
-              </div>
-
-              <div className="pb-2 border-b border-slate-100">
-                <GoogleTranslateWidget />
               </div>
 
               <Link
