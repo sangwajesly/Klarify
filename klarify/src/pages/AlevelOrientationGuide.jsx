@@ -108,15 +108,15 @@ const AlevelOrientationGuide = () => {
       </section>
 
       {/* Clean Single-Column Reading Body (Medium style) */}
-      <article className="bg-white py-12 px-6">
-        <div className="max-w-2xl mx-auto text-slate-700 text-base sm:text-lg leading-relaxed space-y-6">
+      <article className="bg-white dark:bg-slate-900 py-12 px-6">
+        <div className="max-w-2xl mx-auto text-slate-700 dark:text-slate-300 text-base sm:text-lg leading-relaxed space-y-6">
           <p>
             You just passed your Advanced Level. Congrats! You worked hard for
             those grades, and now you have your GCE slip in hand.
           </p>
           <p>
             But now comes the real questions:{" "}
-            <em className="text-slate-900 font-bold">
+            <em className="text-slate-900 dark:text-white font-bold">
               "Where do I apply? What course should I study?"
             </em>
           </p>
@@ -127,7 +127,7 @@ const AlevelOrientationGuide = () => {
             you exactly where you can go.
           </p>
 
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 pt-6">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white pt-6">
             1. Every Faculty Has Its Own Keys
           </h2>
           <p>
@@ -135,30 +135,30 @@ const AlevelOrientationGuide = () => {
             can't just apply for any course. Your Advanced Level passes are like
             keycards:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-600 text-sm sm:text-base">
+          <ul className="list-disc pl-6 space-y-2 text-slate-600 dark:text-slate-400 text-sm sm:text-base">
             <li>
-              To study <strong className="text-slate-800">Engineering</strong>,
+              To study <strong className="text-slate-800 dark:text-slate-200">Engineering</strong>,
               you need Math and Physics.
             </li>
             <li>
               To study{" "}
-              <strong className="text-slate-800">Medicine or Nursing</strong>,
+              <strong className="text-slate-800 dark:text-slate-200">Medicine or Nursing</strong>,
               you need Biology and Chemistry.
             </li>
             <li>
               To study{" "}
-              <strong className="text-slate-800">
+              <strong className="text-slate-800 dark:text-slate-200">
                 Management or Economics
               </strong>
               , you need Economics or Mathematics.
             </li>
             <li>
-              To study <strong className="text-slate-800">Law</strong>, you
+              To study <strong className="text-slate-800 dark:text-slate-200">Law</strong>, you
               usually need Literature in English.
             </li>
           </ul>
 
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 pt-6">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white pt-6">
             2. Match Your Combinations
           </h2>
           <p>
@@ -167,7 +167,7 @@ const AlevelOrientationGuide = () => {
           </p>
 
           {/* Clean Combination selector */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 my-6">
+          <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-5 my-6">
             <div className="flex gap-2 border-b border-slate-255 pb-3 mb-4 overflow-x-auto">
               {Object.keys(combinations).map((group) => (
                 <button
@@ -176,7 +176,7 @@ const AlevelOrientationGuide = () => {
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold capitalize transition-all cursor-pointer ${
                     selectedGroup === group
                       ? "bg-slate-950 text-white"
-                      : "bg-slate-200/60 text-slate-600 hover:bg-slate-200"
+                      : "bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:bg-slate-700"
                   }`}
                 >
                   {group}
@@ -185,10 +185,10 @@ const AlevelOrientationGuide = () => {
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-extrabold text-slate-900 text-sm">
+              <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">
                 {combinations[selectedGroup].title}
               </h4>
-              <p className="text-xs text-slate-500 leading-relaxed mb-4">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
                 {combinations[selectedGroup].description}
               </p>
 
@@ -196,12 +196,12 @@ const AlevelOrientationGuide = () => {
                 {combinations[selectedGroup].options.map((opt, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 bg-white border border-slate-200/60 rounded-xl"
+                    className="p-3.5 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-700/60 rounded-xl"
                   >
                     <strong className="text-slate-950 text-xs sm:text-sm block mb-0.5">
                       {opt.name}
                     </strong>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                       {opt.details}
                     </p>
                   </div>
@@ -210,7 +210,7 @@ const AlevelOrientationGuide = () => {
             </div>
           </div>
 
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 pt-6">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white pt-6">
             3. Three Things to Check Before Choosing
           </h2>
           <p>
@@ -241,10 +241,10 @@ const AlevelOrientationGuide = () => {
 
           {/* Clean Inline CTA */}
           <div className="my-8 p-6 bg-orange-50 border border-orange-200 rounded-2xl">
-            <h4 className="font-bold text-slate-900 text-base">
+            <h4 className="font-bold text-slate-900 dark:text-white text-base">
               Unsure about your GCE combinations?
             </h4>
-            <p className="text-sm text-slate-600 mt-1">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               Use Klarify's free Academic Recommender to match your subjects and
               grades to suitable courses in Buea, Bamenda, Douala, and Yaounde.
             </p>
@@ -265,12 +265,12 @@ const AlevelOrientationGuide = () => {
           </p>
 
           {/* Bottom CTA block */}
-          <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <p className="text-xs text-slate-400 uppercase tracking-widest font-black">
                 Orientation Tool
               </p>
-              <h4 className="font-extrabold text-slate-900 text-base mt-0.5">
+              <h4 className="font-extrabold text-slate-900 dark:text-white text-base mt-0.5">
                 Let Klarify help you explore your options
               </h4>
             </div>

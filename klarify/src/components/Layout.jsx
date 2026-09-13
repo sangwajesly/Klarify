@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
-import { Menu, X } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
+import { Menu, X, User, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { trackEvent } from "../utils/analytics";
 
@@ -15,8 +16,8 @@ const NavLink = ({ to, children, onClick }) => {
       onClick={onClick}
       className={`text-sm font-medium transition-colors duration-200 relative pb-0.5 ${
         isActive
-          ? "text-slate-900 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-orange-500"
-          : "text-slate-500 hover:text-slate-900"
+          ? "text-slate-900 dark:text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-orange-500"
+          : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white"
       }`}
     >
       {children}
@@ -27,7 +28,7 @@ const NavLink = ({ to, children, onClick }) => {
 // ── Language Toggle Button ────────────────────────────────────────────────────
 const LanguageToggle = ({ language, setLanguage, compact = false }) => (
   <div
-    className={`flex items-center rounded-lg overflow-hidden border ${compact ? "border-slate-200" : "border-white/20"} shrink-0`}
+    className={`flex items-center rounded-lg overflow-hidden border ${compact ? "border-slate-200 dark:border-slate-700" : "border-white/20"} shrink-0`}
   >
     {["en", "fr"].map((lang) => (
       <button
@@ -41,7 +42,7 @@ const LanguageToggle = ({ language, setLanguage, compact = false }) => (
               ? "bg-orange-500 text-white"
               : "bg-orange-500 text-white"
             : compact
-              ? "bg-transparent text-slate-500 hover:text-slate-800"
+              ? "bg-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 dark:text-slate-200"
               : "bg-transparent text-slate-400 hover:text-white"
         }`}
       >
@@ -52,10 +53,23 @@ const LanguageToggle = ({ language, setLanguage, compact = false }) => (
 );
 
 
-const Layout = ({ children, noPadding = false }) => {
+const Layout = ({ children, noPadding = false, hideFooter = false }) => {
   const { user, loading, signOut } = useAuth();
   const { language, setLanguage, t } = useLanguage();
+  const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -63,9 +77,9 @@ const Layout = ({ children, noPadding = false }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
       {/* ── Header ── */}
-      <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200/60 py-3.5 sticky top-0 z-50">
+      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200/60 dark:border-slate-700/60 py-3.5 sticky top-0 z-50">
         <div className="max-w-6xl w-full mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
@@ -74,7 +88,7 @@ const Layout = ({ children, noPadding = false }) => {
             </div>
             <Link
               to="/"
-              className="font-bold text-lg text-slate-900 tracking-tight hover:text-slate-700 transition-colors"
+              className="font-bold text-lg text-slate-900 dark:text-white tracking-tight hover:text-slate-700 dark:text-slate-300 transition-colors"
             >
               Klarify
             </Link>
@@ -84,6 +98,7 @@ const Layout = ({ children, noPadding = false }) => {
           <div className="hidden md:flex items-center gap-8">
             <nav className="flex items-center gap-7">
               <NavLink to="/">{t("nav.home")}</NavLink>
+              <NavLink to="/flow" onClick={() => trackEvent("nav_click", { label: "recommender", location: "header_nav" })}>Recommender</NavLink>
               <NavLink to="/gce-results">{t("nav.gceResults")}</NavLink>
               <NavLink
                 to="/partners"
@@ -96,32 +111,69 @@ const Layout = ({ children, noPadding = false }) => {
               <NavLink to="/about">{t("nav.about")}</NavLink>
             </nav>
 
-            <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
+            <div className="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-slate-700">
               <LanguageToggle language={language} setLanguage={setLanguage} compact={true} />
+              <button 
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-white dark:text-white dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white transition-colors border border-transparent"
+                aria-label="Toggle dark mode"
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
               {!loading && user ? (
-                <>
-                  <span className="text-sm text-slate-500 hidden lg:inline truncate max-w-40">
-                    {user.email}
-                  </span>
-                  <Link
-                    to="/profile"
-                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-                  >
-                    {t("nav.profile")}
-                  </Link>
+                <div className="relative" ref={profileRef}>
                   <button
-                    type="button"
-                    onClick={handleSignOut}
-                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-orange-100 text-orange-600 hover:bg-orange-200 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 border border-orange-200"
+                    aria-label="User menu"
                   >
-                    {t("nav.signOut")}
+                    {user.email ? <span className="font-bold text-sm">{user.email.charAt(0).toUpperCase()}</span> : <User size={18} />}
                   </button>
-                </>
+                  
+                  <AnimatePresence>
+                    {isProfileOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.15, ease: "easeOut" }}
+                        className="absolute right-0 mt-3 w-64 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-200/60 dark:border-slate-700/60 overflow-hidden z-50 origin-top-right"
+                      >
+                        <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
+                          <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Signed in as</p>
+                          <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{user.email}</p>
+                        </div>
+                        <div className="p-2">
+                          <Link
+                            to="/profile"
+                            onClick={() => setIsProfileOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-orange-50 hover:text-orange-600 rounded-xl transition-colors"
+                          >
+                            <User size={16} />
+                            {t("nav.profile")}
+                          </Link>
+                        </div>
+                        <div className="p-2 border-t border-slate-100 dark:border-slate-800">
+                          <button
+                            onClick={() => {
+                              handleSignOut();
+                              setIsProfileOpen(false);
+                            }}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            {t("nav.signOut")}
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ) : (
                 <>
                   <Link
                     to="/login"
-                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                    className="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white transition-colors"
                   >
                     {t("nav.signIn")}
                   </Link>
@@ -141,7 +193,7 @@ const Layout = ({ children, noPadding = false }) => {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-slate-600 hover:text-slate-900 focus:outline-none"
+              className="p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white focus:outline-none"
               aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -158,19 +210,27 @@ const Layout = ({ children, noPadding = false }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white border-b border-slate-200/60 shadow-lg fixed top-14.25 left-0 right-0 z-50 overflow-hidden max-h-[calc(100vh-60px)]"
+            className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-700/60 shadow-lg fixed top-14.25 left-0 right-0 z-50 overflow-hidden max-h-[calc(100vh-60px)]"
           >
             <nav className="flex flex-col px-6 py-4 space-y-4">
-              {/* Language Switcher */}
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              {/* Language & Theme Switcher */}
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
-                  {t("common.language")}
+                  Settings
                 </span>
-                <LanguageToggle
-                  language={language}
-                  setLanguage={setLanguage}
-                  compact={true}
-                />
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-white dark:text-white dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white transition-colors"
+                  >
+                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                  </button>
+                  <LanguageToggle
+                    language={language}
+                    setLanguage={setLanguage}
+                    compact={true}
+                  />
+                </div>
               </div>
 
               <Link
@@ -182,9 +242,22 @@ const Layout = ({ children, noPadding = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
               >
                 {t("nav.home")}
+              </Link>
+              <Link
+                to="/flow"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  trackEvent("nav_click", {
+                    label: "recommender",
+                    location: "mobile_menu",
+                  });
+                }}
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+              >
+                Recommender
               </Link>
               <Link
                 to="/universities"
@@ -195,7 +268,7 @@ const Layout = ({ children, noPadding = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
               >
                 {t("nav.universities")}
               </Link>
@@ -208,7 +281,7 @@ const Layout = ({ children, noPadding = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
               >
                 {t("nav.programs")}
               </Link>
@@ -221,7 +294,7 @@ const Layout = ({ children, noPadding = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
               >
                 {t("nav.guides")}
               </Link>
@@ -231,7 +304,7 @@ const Layout = ({ children, noPadding = false }) => {
                   setIsMobileMenuOpen(false);
                   trackEvent("partner_cta_click", { location: "mobile_menu" });
                 }}
-                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
               >
                 {t("nav.partner")}
               </Link>
@@ -244,15 +317,15 @@ const Layout = ({ children, noPadding = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
               >
                 {t("nav.about")}
               </Link>
 
-              <div className="pt-4 border-t border-slate-100 flex flex-col space-y-3">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col space-y-3">
                 {!loading && user ? (
                   <>
-                    <span className="text-sm text-slate-500 truncate">
+                    <span className="text-sm text-slate-500 dark:text-slate-400 truncate">
                       {user.email}
                     </span>
                     <Link
@@ -264,7 +337,7 @@ const Layout = ({ children, noPadding = false }) => {
                           location: "mobile_menu",
                         });
                       }}
-                      className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                      className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
                     >
                       {t("nav.profile")}
                     </Link>
@@ -290,7 +363,7 @@ const Layout = ({ children, noPadding = false }) => {
                           location: "mobile_menu",
                         });
                       }}
-                      className="text-base font-medium text-slate-700 hover:text-orange-500 transition-colors"
+                      className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
                     >
                       {t("nav.signIn")}
                     </Link>
@@ -366,14 +439,15 @@ const Layout = ({ children, noPadding = false }) => {
 
       {/* ── Page Content ── */}
       <main
-        className={`flex-1 ${noPadding ? "" : "max-w-6xl w-full mx-auto p-6 md:p-12"}`}
+        className={`flex-1 ${noPadding ? "" : "max-w-6xl w-full mx-auto px-6 md:px-12 pt-6 md:pt-8 pb-12"}`}
       >
         {children}
       </main>
 
       {/* ── Footer ── */}
-      <footer className="bg-slate-900 text-slate-400 pt-14 pb-8 border-t border-slate-800">
-        <div className="max-w-6xl mx-auto px-6 md:px-12">
+      {!hideFooter && (
+        <footer className="bg-slate-900 text-slate-400 pt-14 pb-8 border-t border-slate-800">
+          <div className="max-w-6xl mx-auto px-6 md:px-12">
           {/* Footer grid */}
           <div className="grid grid-cols-2 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800">
             {/* Brand col */}
@@ -515,13 +589,14 @@ const Layout = ({ children, noPadding = false }) => {
           </div>
 
           {/* Bottom bar */}
-          <div className="pt-6 text-xs text-slate-600 flex flex-col sm:flex-row justify-between items-center gap-2">
+          <div className="pt-6 text-xs text-slate-600 dark:text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-2">
             <p>
               &copy; {new Date().getFullYear()} {t("footer.copyright")}
             </p>
           </div>
         </div>
       </footer>
+      )}
     </div>
   );
 };

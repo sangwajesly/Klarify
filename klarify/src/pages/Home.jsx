@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
-  Target,
-  Zap,
-  ShieldCheck,
   ArrowRight,
   X,
   Building2,
+  GraduationCap,
+  BookOpen,
+  Briefcase,
+  Search,
+  Sparkles,
+  MapPin,
+  ChevronRight
 } from "lucide-react";
+import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import FAQBlock from "../components/FAQBlock";
@@ -18,33 +23,19 @@ import { trackEvent } from "../utils/analytics";
 import { fetchFeaturedInstitutions } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
 
-const FeatureCard = ({ icon: Icon, title, description }) => (
-  <article className="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 hover:border-slate-600 transition-colors duration-200 hover:-translate-y-0.5 transform">
-    <div
-      className="w-10 h-10 rounded-lg bg-orange-500/15 text-orange-400 flex items-center justify-center mb-5"
-      aria-hidden="true"
-    >
-      <Icon size={20} />
-    </div>
-    <h3 className="text-base font-semibold text-white mb-2">{title}</h3>
-    <p className="text-sm text-slate-400 leading-relaxed">{description}</p>
-  </article>
-);
+// Animation Variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
+};
 
-const StepComponent = ({ number, title, description }) => (
-  <article className="flex flex-col items-center text-center">
-    <div className="mb-5" aria-hidden="true">
-      <span className="block text-[10px] uppercase tracking-widest font-bold text-orange-500 mb-1">
-        Step
-      </span>
-      <span className="block text-5xl font-extrabold text-slate-200 leading-none">
-        {String(number).padStart(2, "0")}
-      </span>
-    </div>
-    <h3 className="text-base font-semibold text-slate-900 mb-2">{title}</h3>
-    <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
-  </article>
-);
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 }
+  }
+};
 
 const Home = () => {
   const navigate = useNavigate();
@@ -102,29 +93,27 @@ const Home = () => {
         structuredData={homeSchema}
       />
 
-      <main>
+      <main className="bg-slate-50 dark:bg-slate-950 selection:bg-orange-500/30">
         {/* ── GCE Banner ── */}
         {showGceBanner && (
-          <div className="bg-orange-600 text-white relative z-20">
-            <div className="max-w-6xl mx-auto px-6 md:px-12 py-2.5 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0">
+          <div className="bg-slate-900 text-white relative z-50 border-b border-slate-800">
+            <div className="max-w-7xl mx-auto px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
                 <span className="flex h-2 w-2 shrink-0">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
                   </span>
                 </span>
-                <p className="text-sm font-medium truncate">
+                <p className="text-sm font-medium text-slate-300">
                   <span className="md:hidden">{t("home.gceBanner.short")}</span>
-                  <span className="hidden md:inline">
-                    {t("home.gceBanner.long")}
-                  </span>
+                  <span className="hidden md:inline">{t("home.gceBanner.long")}</span>
                 </p>
               </div>
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="flex items-center gap-3">
                 <button
                   onClick={() => navigate("/gce-results")}
-                  className="text-xs font-bold bg-white text-orange-600 px-3.5 py-1.5 rounded-lg hover:bg-orange-50 transition-colors"
+                  className="text-xs font-bold bg-orange-500 text-white px-4 py-1.5 rounded-full hover:bg-orange-600 transition-colors"
                   aria-label={t("home.gceBanner.searchNow")}
                 >
                   {t("home.gceBanner.searchNow")}
@@ -132,7 +121,7 @@ const Home = () => {
                 <button
                   onClick={handleDismissGceBanner}
                   type="button"
-                  className="p-1 rounded hover:bg-white/15 focus:outline-none transition-colors text-white/80 hover:text-white"
+                  className="p-1.5 rounded-full hover:bg-slate-800 transition-colors text-slate-400 hover:text-white"
                   aria-label="Dismiss banner"
                 >
                   <X size={14} />
@@ -142,377 +131,296 @@ const Home = () => {
           </div>
         )}
 
-        {/* ── Hero ── */}
-        <section className="relative min-h-[78vh] flex items-end md:items-center overflow-hidden">
-          {/* Background */}
-          <div className="absolute inset-0 z-0">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${heroBg})` }}
-              aria-hidden="true"
-            />
-            {/* Single warm overlay — no blue tint */}
-            <div className="absolute inset-0 bg-linear-to-b from-slate-900/80 via-slate-900/85 to-slate-900/95" />
-            <div className="absolute inset-0 bg-linear-to-r from-orange-900/20 via-transparent to-transparent" />
-          </div>
-
-          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 pb-16 pt-20 md:py-24">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/8 text-white text-xs font-medium mb-8 backdrop-blur-sm">
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-orange-400"
-                aria-hidden="true"
-              />
-              {t("home.badge")}
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 max-w-3xl leading-tight">
-              {t("home.headline")}{" "}
-              <span className="text-orange-400 block sm:inline mt-2 sm:mt-0">
-                {t("home.headlineSub")}
-              </span>
-            </h1>
-
-            {/* Supporting copy */}
-            <p className="text-base md:text-lg text-slate-300 mb-10 max-w-xl leading-relaxed">
-              {t("home.subtext")}
-            </p>
-
-            {/* CTA row */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <button
-                onClick={() => navigate("/flow")}
-                aria-label={t("home.ctaPrimary")}
-                className="inline-flex items-center gap-2.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm py-3.5 px-7 rounded-xl shadow-lg shadow-orange-500/30 transition-colors duration-200"
+        {/* ── Editorial Hero ── */}
+        <section className="relative pt-8 pb-20 md:pt-12 md:pb-32 overflow-hidden bg-white dark:bg-slate-900">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+              
+              {/* Hero Content */}
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={staggerContainer}
+                className="max-w-2xl"
               >
-                {t("home.ctaPrimary")}
-                <ArrowRight size={18} aria-hidden="true" />
-              </button>
-              <span className="text-slate-400 text-sm">
-                {t("home.ctaSubtext")}
-              </span>
-            </div>
+                <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-widest mb-8">
+                  <Sparkles size={14} className="text-orange-500" />
+                  {t("home.badge")}
+                </motion.div>
+                
+                <motion.h1 variants={fadeInUp} className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white leading-[1.1] mb-8 tracking-tight">
+                  {t("home.headline")}{" "}
+                  <span className="text-orange-500">{t("home.headlineSub")}</span>
+                </motion.h1>
+                
+                <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-xl">
+                  {t("home.subtext")}
+                </motion.p>
+                
+                <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-5">
+                  <button
+                    onClick={() => navigate("/flow")}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    {t("home.ctaPrimary")}
+                    <ArrowRight size={18} />
+                  </button>
+                  <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                    {t("home.ctaSubtext")}
+                  </span>
+                </motion.div>
+              </motion.div>
 
-            {/* Trust bar */}
-            <div className="mt-10 pt-8 border-t border-white/10 flex items-center gap-3">
-              <div className="flex text-orange-400 text-sm tracking-tight">
-                ★★★★★
-              </div>
-              <span className="text-slate-300 text-sm">
-                {t("home.trustedBy")}{" "}
-                <strong className="text-white">5,000+</strong>{" "}
-                {t("home.students")}
-              </span>
+              {/* Hero Image / Composition */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                className="relative hidden lg:block"
+              >
+                {/* Decorative background shape */}
+                <div className="absolute inset-0 -translate-x-8 translate-y-8 bg-slate-100 dark:bg-slate-800 rounded-3xl" />
+                
+                {/* Main Image */}
+                <img 
+                  src={heroBg} 
+                  alt="Student focused on career" 
+                  className="relative z-10 w-full h-[600px] object-cover rounded-3xl shadow-2xl shadow-slate-900/10 grayscale-[20%]"
+                />
+                
+                {/* Floating UI Element to show "Tech" aspect without generic icons */}
+                <div className="absolute -bottom-6 -left-8 z-20 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 dark:border-slate-800 max-w-[240px]">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-500">
+                      <GraduationCap size={20} />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Matched</div>
+                      <div className="text-sm font-bold text-slate-900 dark:text-white">BSc. Computing</div>
+                    </div>
+                  </div>
+                  <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className="bg-orange-500 w-[92%] h-full rounded-full" />
+                  </div>
+                  <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium text-right">92% Match Score</div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* ── About Klarify ── */}
-        <section className="py-20 px-6 md:px-12 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-center">
-              {/* Left: eyebrow + heading */}
-              <div className="md:col-span-5">
-                <span className="section-eyebrow block mb-3">
+        {/* ── Editorial About ── */}
+        <section className="py-24 px-6 md:px-12 bg-slate-50 dark:bg-slate-950 border-t border-slate-200/50 dark:border-slate-700/50">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="order-2 lg:order-1 relative">
+                <img
+                  src={studentsCampus}
+                  alt="Cameroonian secondary school students"
+                  className="rounded-3xl shadow-xl w-full h-auto object-cover aspect-[4/3] grayscale-[10%]"
+                />
+                <div className="absolute -top-6 -right-6 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl" />
+              </div>
+              <div className="order-1 lg:order-2">
+                <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
                   {t("home.aboutSection.eyebrow")}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
+                <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight">
                   {t("home.aboutSection.heading")}
                 </h2>
-              </div>
-              {/* Right: body copy */}
-              <div className="md:col-span-7 space-y-4 text-slate-600 text-base leading-relaxed">
-                <p>{t("home.aboutSection.p1")}</p>
-                <p>{t("home.aboutSection.p2")}</p>
-                <div className="mt-8">
-                  <img
-                    src={studentsCampus}
-                    alt="Cameroonian secondary school students"
-                    className="rounded-2xl shadow-xl w-full h-auto object-cover max-h-87.5"
-                  />
+                <div className="space-y-6 text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                  <p>{t("home.aboutSection.p1")}</p>
+                  <p>{t("home.aboutSection.p2")}</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── Why Choose Us ── */}
-        <section className="bg-slate-900 py-20 px-6 md:px-12">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-12">
-              <span className="section-eyebrow block mb-3">
+        {/* ── Bento Grid Features ── */}
+        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
                 {t("home.whySection.eyebrow")}
               </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-white max-w-lg">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {t("home.whySection.heading")}
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <FeatureCard
-                icon={Target}
-                title={t("home.whySection.card1.title")}
-                description={t("home.whySection.card1.description")}
-              />
-              <FeatureCard
-                icon={Zap}
-                title={t("home.whySection.card2.title")}
-                description={t("home.whySection.card2.description")}
-              />
-              <FeatureCard
-                icon={ShieldCheck}
-                title={t("home.whySection.card3.title")}
-                description={t("home.whySection.card3.description")}
-              />
-            </div>
-          </div>
-        </section>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Feature 1 - Large spanning */}
+              <div className="md:col-span-2 bg-slate-50 dark:bg-slate-950 rounded-3xl p-10 border border-slate-200/60 dark:border-slate-700/60 overflow-hidden relative group">
+                <div className="relative z-10 max-w-md">
+                  <div className="w-12 h-12 bg-white dark:bg-slate-900 rounded-2xl shadow-sm flex items-center justify-center text-slate-900 dark:text-white mb-6">
+                    <Search size={24} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{t("home.whySection.card1.title")}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    {t("home.whySection.card1.description")}
+                  </p>
+                </div>
+                {/* Decorative element replacing generic icon pattern */}
+                <div className="absolute right-0 bottom-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500 translate-x-1/4 translate-y-1/4">
+                  <Search size={240} />
+                </div>
+              </div>
 
-        {/* ── Partner Advertisement ── */}
-        <section className="py-16 px-6 md:px-12 bg-white">
-          <div className="max-w-6xl mx-auto rounded-2xl p-8 md:p-12 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-6">
-            <div className="flex-1">
-              <h3 className="text-2xl font-extrabold text-slate-900 mb-3">
-                {t("home.partnerPromo.title")}
-              </h3>
-              <p className="text-slate-600 mb-4">
-                {t("home.partnerPromo.text")}
-              </p>
-              <ul className="text-sm text-slate-600 space-y-2 mb-4">
-                {t("home.partnerPromo.items").map((item) => (
-                  <li key={item}>• {item}</li>
-                ))}
-              </ul>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => {
-                    trackEvent("partner_cta_click", {
-                      location: "homepage_promo",
-                    });
-                    navigate("/partners");
-                  }}
-                  className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-bold"
-                >
-                  {t("home.partnerPromo.button")}
-                </button>
-                <Link
-                  to="/partner/login"
-                  onClick={() =>
-                    trackEvent("partner_cta_click", {
-                      location: "homepage_promo_login",
-                    })
-                  }
-                  className="text-sm text-slate-700 hover:text-orange-500"
-                >
-                  {t("home.partnerPromo.login")}
-                </Link>
+              {/* Feature 2 */}
+              <div className="bg-slate-900 rounded-3xl p-10 text-white relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="w-12 h-12 bg-white/10 dark:bg-slate-900/10 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/10">
+                    <Briefcase size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">{t("home.whySection.card2.title")}</h3>
+                  <p className="text-slate-400 leading-relaxed text-sm">
+                    {t("home.whySection.card2.description")}
+                  </p>
+                </div>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="bg-orange-500 rounded-3xl p-10 text-white relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="w-12 h-12 bg-white/20 dark:bg-slate-900/20 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/20">
+                    <BookOpen size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">{t("home.whySection.card3.title")}</h3>
+                  <p className="text-orange-50 leading-relaxed text-sm">
+                    {t("home.whySection.card3.description")}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Feature 4 - New span */}
+              <div className="md:col-span-2 bg-slate-50 dark:bg-slate-950 rounded-3xl p-10 border border-slate-200/60 dark:border-slate-700/60 flex flex-col md:flex-row items-center gap-8 hover:border-orange-500/30 transition-colors group">
+                <div className="flex-1">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 block group-hover:text-orange-500 transition-colors">How it works</span>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{t("home.features.step2.title")}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    {t("home.features.step2.description")}
+                  </p>
+                </div>
+                <div className="shrink-0">
+                  <button onClick={() => navigate('/flow')} className="w-14 h-14 bg-white dark:bg-slate-900 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white group-hover:bg-slate-900 group-hover:text-white transition-colors duration-300">
+                    <ChevronRight size={24} />
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div className="w-full md:w-80">
-              <img
-                src={uniAerial}
-                alt="University aerial view"
-                className="rounded-xl shadow-md w-full h-auto object-cover"
-              />
-            </div>
           </div>
         </section>
 
-        {/* ── Featured Universities Showcase ── */}
+        {/* ── Featured Universities (Modern List) ── */}
         {featuredUnis.length > 0 && (
-          <section className="py-12 bg-slate-900 text-white relative overflow-hidden border-y border-slate-800">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="max-w-6xl mx-auto px-6">
-              <div className="flex items-center gap-2 text-orange-400 text-xs font-black uppercase tracking-widest mb-4">
-                <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-                {t("home.featured.label")}
+          <section className="py-24 bg-slate-900 text-white border-y border-slate-800">
+            <div className="max-w-7xl mx-auto px-6 md:px-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                <div className="max-w-2xl">
+                  <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
+                    {t("home.featured.label")}
+                  </span>
+                  <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                    {t("home.featured.heading")}
+                  </h2>
+                </div>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">
-                {t("home.featured.heading")}
-              </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {featuredUnis.map((uni) => (
-                  <div
+                  <Link
+                    to={`/universities/${encodeURIComponent(uni.name)}`}
                     key={uni.id}
-                    className="p-6 bg-slate-950/60 backdrop-blur-md rounded-2xl border border-slate-850 flex flex-col justify-between hover:border-orange-500/30 hover:bg-slate-950 transition-all duration-200 group"
+                    className="group block p-8 bg-slate-800/40 rounded-3xl border border-slate-700/50 hover:bg-slate-800 transition-colors duration-300 relative overflow-hidden"
                   >
-                    <div>
-                      <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20 flex items-center justify-center mb-4">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/10 transition-colors" />
+                    
+                    <div className="relative z-10">
+                      <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-slate-300 mb-8 group-hover:text-orange-400 group-hover:scale-110 transition-all duration-300">
                         <Building2 size={24} />
                       </div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-orange-400 transition-colors">
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">
                         {uni.name}
                       </h3>
-                      <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                        {uni.city} &bull;{" "}
-                        {uni.campus || t("home.featured.campus")}
-                      </p>
+                      <div className="flex items-center gap-2 text-sm text-slate-400 font-medium">
+                        <MapPin size={14} />
+                        {uni.city} &bull; {uni.campus || t("home.featured.campus")}
+                      </div>
                     </div>
-
-                    <div className="flex items-center gap-3 mt-6 pt-4 border-t border-slate-800/80">
-                      <Link
-                        to={`/universities/${encodeURIComponent(uni.name)}`}
-                        className="flex-1 text-center py-2 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-bold text-xs rounded-xl border border-white/10 transition-colors"
-                      >
-                        {t("home.featured.programs")}
-                      </Link>
-                      {uni.whatsapp_number && (
-                        <a
-                          href={`https://wa.me/${String(uni.whatsapp_number).replace(/\D/g, "")}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center shrink-0"
-                          title={t("home.featured.whatsapp")}
-                        >
-                          <svg
-                            className="w-4 h-4 fill-current"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.273-3.838l.409.243c1.558.926 3.42 1.415 5.32 1.416 5.768 0 10.461-4.691 10.465-10.461.002-2.795-1.082-5.424-3.053-7.397S14.808 1.026 12.01 1.026c-5.772 0-10.465 4.693-10.469 10.464-.002 1.96.512 3.878 1.488 5.613l.273.487L2.316 21.8l3.864-.838z" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
           </section>
         )}
 
-        {/* ── How It Works ── */}
-        <section className="py-20 px-6 md:px-12 bg-slate-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-14 text-center">
-              <span className="section-eyebrow block mb-3">
-                {t("home.features.eyebrow")}
-              </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
-                {t("home.features.heading")}
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 relative">
-              {/* Connector line — between step numbers */}
-              <div
-                className="hidden md:block absolute top-9 left-[22%] right-[22%] h-px bg-slate-200 z-0"
-                aria-hidden="true"
-              />
-
-              <StepComponent
-                number="1"
-                title={t("home.features.step1.title")}
-                description={t("home.features.step1.description")}
-              />
-              <StepComponent
-                number="2"
-                title={t("home.features.step2.title")}
-                description={t("home.features.step2.description")}
-              />
-              <StepComponent
-                number="3"
-                title={t("home.features.step3.title")}
-                description={t("home.features.step3.description")}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* ── Universities Covered ── */}
-        <section className="py-20 px-6 md:px-12 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-12">
-              <span className="section-eyebrow block mb-3">
-                {t("home.coverage.eyebrow")}
-              </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">
-                {t("home.coverage.heading")}
-              </h2>
-              <p className="text-slate-500 text-base max-w-xl">
-                {t("home.coverage.text")}
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-              {[
-                "University of Buea",
-                "University of Bamenda",
-                "University of Yaounde I",
-                "University of Yaounde II",
-                "University of Douala",
-                "University of Dschang",
-                "University of Maroua",
-                "University of Ngaoundere",
-                "Professional Concours (ENS, ENSP, FMSB)",
-              ].map((uni, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-xl bg-slate-50 border-l-2 border-orange-400/50 border-t border-r border-b flex items-center text-sm font-medium text-slate-700"
-                >
-                  {uni}
+        {/* ── Partner Advertisement ── */}
+        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900">
+          <div className="max-w-7xl mx-auto bg-slate-50 dark:bg-slate-950 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-700">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              <div className="p-12 md:p-20 flex flex-col justify-center">
+                <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">
+                  {t("home.partnerPromo.title")}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed">
+                  {t("home.partnerPromo.text")}
+                </p>
+                <div className="flex flex-wrap items-center gap-4">
+                  <button
+                    onClick={() => {
+                      trackEvent("partner_cta_click", { location: "homepage_promo" });
+                      navigate("/partners");
+                    }}
+                    className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-bold transition-colors"
+                  >
+                    {t("home.partnerPromo.button")}
+                  </button>
+                  <Link
+                    to="/partner/login"
+                    onClick={() => trackEvent("partner_cta_click", { location: "homepage_promo_login" })}
+                    className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-bold transition-colors"
+                  >
+                    {t("home.partnerPromo.login")}
+                  </Link>
                 </div>
-              ))}
+              </div>
+              <div className="hidden lg:block relative min-h-[400px]">
+                <img
+                  src={uniAerial}
+                  alt="University aerial view"
+                  className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
+                />
+              </div>
             </div>
           </div>
         </section>
 
         {/* ── FAQs ── */}
-        <div className="bg-slate-50 py-4 px-6">
-          <FAQBlock faqs={homeFaqs} title={t("home.faq.heading")} />
-        </div>
+        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+          <div className="max-w-3xl mx-auto">
+            <FAQBlock faqs={homeFaqs} title={t("home.faq.heading")} />
+          </div>
+        </section>
 
         {/* ── Bottom CTA ── */}
-        <section
-          className="py-20 px-6 md:px-12 bg-orange-500 relative overflow-hidden"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, transparent, transparent 28px, rgba(255,255,255,0.04) 28px, rgba(255,255,255,0.04) 29px)",
-          }}
-        >
-          {/* ── Partner Promo ── */}
-          <section className="py-12 px-6 md:px-12 bg-slate-50">
-            <div className="max-w-6xl mx-auto rounded-2xl bg-white p-6 md:p-8 border border-slate-200 flex flex-col md:flex-row items-center gap-6">
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-slate-900">
-                  {t("home.ctaSection.heading")}
-                </h3>
-                <p className="text-sm text-slate-600 mt-2">
-                  {t("home.ctaSection.subtext")}
-                </p>
-              </div>
-              <div className="shrink-0 flex items-center gap-3">
-                <button
-                  onClick={() => navigate("/partners")}
-                  className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white rounded-xl font-bold"
-                >
-                  {t("home.ctaSection.button")}
-                </button>
-                <Link
-                  to="/partner/login"
-                  className="text-sm text-slate-700 hover:text-orange-500"
-                >
-                  {t("nav.partner")}
-                </Link>
-              </div>
-            </div>
-          </section>
-
-          <div className="relative max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        <section className="py-32 px-6 md:px-12 bg-slate-900 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-500/10 via-transparent to-transparent" />
+          
+          <div className="relative max-w-4xl mx-auto text-center z-10">
+            <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
               {t("home.bottomCta.heading")}
             </h2>
-            <p className="text-orange-100 text-base mb-8 max-w-xl mx-auto leading-relaxed">
+            <p className="text-slate-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
               {t("home.bottomCta.subtext")}
             </p>
             <button
               onClick={() => navigate("/flow")}
-              className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-3.5 rounded-xl font-bold text-sm transition-colors hover:bg-slate-800 shadow-lg shadow-slate-900/30"
+              className="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-full font-bold text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-orange-500/20"
               aria-label={t("home.bottomCta.button")}
             >
               {t("home.bottomCta.button")}
-              <ArrowRight size={18} aria-hidden="true" />
+              <ArrowRight size={20} />
             </button>
           </div>
         </section>

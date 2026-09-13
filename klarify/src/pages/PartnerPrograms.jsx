@@ -379,17 +379,17 @@ const PartnerPrograms = () => {
           <div>
             <button
               onClick={() => navigate("/partner/dashboard")}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors mb-2 cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white transition-colors mb-2 cursor-pointer"
             >
               <ArrowLeft size={14} />
               Back to Dashboard
             </button>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Academic Programs Studio
             </h1>
-            <p className="text-slate-500 text-xs sm:text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
               Managing courses for{" "}
-              <strong className="text-slate-800">{institution?.name}</strong>
+              <strong className="text-slate-800 dark:text-slate-200">{institution?.name}</strong>
             </p>
           </div>
 
@@ -420,14 +420,14 @@ const PartnerPrograms = () => {
 
         {/* Bulk CSV Upload */}
         <div className="mb-8">
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-100 pb-4">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-6 sm:p-8 shadow-xs">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <FileSpreadsheet className="text-orange-500" size={22} />
                   Bulk Upload Academic Programs
                 </h2>
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                   Upload a CSV file to add multiple Bachelor's degrees, HNDs, or Master's programs at once.
                 </p>
               </div>
@@ -443,14 +443,14 @@ const PartnerPrograms = () => {
 
             {/* Custom Drag & Drop Zone */}
             {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") ? (
-              <div className="border-2 border-dashed border-slate-200 bg-slate-50/50 rounded-2xl p-10 text-center flex flex-col items-center justify-center relative overflow-hidden min-h-[180px]">
+              <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-950/50 rounded-2xl p-10 text-center flex flex-col items-center justify-center relative overflow-hidden min-h-[180px]">
                 <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-3">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <h3 className="font-extrabold text-slate-800 text-sm">Bulk CSV Upload Locked</h3>
-                <p className="text-slate-500 text-xs mt-1.5 max-w-xs leading-relaxed">
+                <h3 className="font-extrabold text-slate-800 dark:text-slate-200 text-sm">Bulk CSV Upload Locked</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-xs mt-1.5 max-w-xs leading-relaxed">
                   Bulk course importing via CSV is a premium feature. Upgrade to a paid plan to instantly import your entire curriculum!
                 </p>
               </div>
@@ -465,7 +465,7 @@ const PartnerPrograms = () => {
                     ? "border-orange-500 bg-orange-50/20"
                     : csvFile
                     ? "border-green-400 bg-green-50/10"
-                    : "border-slate-200 hover:border-orange-400 bg-slate-50/50 hover:bg-orange-50/10"
+                    : "border-slate-200 dark:border-slate-700 hover:border-orange-400 bg-slate-50/50 dark:bg-slate-950/50 hover:bg-orange-50/10"
                 }`}
               >
                 <input
@@ -476,20 +476,20 @@ const PartnerPrograms = () => {
                   onChange={(e) => handleCsvFile(e.target.files && e.target.files[0])}
                 />
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
-                  csvFile ? "bg-green-100 text-green-600" : "bg-slate-100 text-slate-400"
+                  csvFile ? "bg-green-100 text-green-600" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                 }`}>
                   {csvFile ? <CheckCircle2 size={24} /> : <Upload size={24} />}
                 </div>
                 {csvFile ? (
                   <div>
-                    <p className="text-sm font-bold text-slate-900">{csvFile.name}</p>
-                    <p className="text-xs text-slate-500 mt-1">
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">{csvFile.name}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                       {(csvFile.size / 1024).toFixed(1)} KB &bull; File ready to parse
                     </p>
                   </div>
                 ) : (
                   <div>
-                    <p className="text-sm font-bold text-slate-900">
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
                       Drag & drop your CSV file here, or <span className="text-orange-500">browse</span>
                     </p>
                     <p className="text-xs text-slate-400 mt-1">
@@ -501,11 +501,11 @@ const PartnerPrograms = () => {
             )}
 
             {/* Collapsible Headers Guide */}
-            <div className="mt-4 border border-slate-150 rounded-2xl overflow-hidden bg-slate-50/40">
+            <div className="mt-4 border border-slate-150 rounded-2xl overflow-hidden bg-slate-50/40 dark:bg-slate-950/40">
               <button
                 type="button"
                 onClick={() => setShowInstructions(!showInstructions)}
-                className="w-full px-5 py-3.5 flex items-center justify-between font-bold text-slate-700 text-xs hover:bg-slate-55 transition-colors cursor-pointer"
+                className="w-full px-5 py-3.5 flex items-center justify-between font-bold text-slate-700 dark:text-slate-300 text-xs hover:bg-slate-55 transition-colors cursor-pointer"
               >
                 <span className="flex items-center gap-2">
                   <HelpCircle size={15} className="text-orange-500" />
@@ -514,34 +514,34 @@ const PartnerPrograms = () => {
                 {showInstructions ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </button>
               {showInstructions && (
-                <div className="px-5 pb-5 pt-2 border-t border-slate-100 text-[11px] text-slate-650 leading-relaxed space-y-4">
+                <div className="px-5 pb-5 pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-650 leading-relaxed space-y-4">
                   <p>
                     Ensure your CSV file contains the following column header row exactly as listed. The columns can be in any order:
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white p-4 rounded-xl border border-slate-100">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
                     <div>
-                      <strong className="text-slate-900">name*</strong>: Name of the course (e.g. <code>Software Engineering</code>)
+                      <strong className="text-slate-900 dark:text-white">name*</strong>: Name of the course (e.g. <code>Software Engineering</code>)
                     </div>
                     <div>
-                      <strong className="text-slate-900">faculty*</strong>: Faculty name (e.g. <code>Faculty of Engineering</code>)
+                      <strong className="text-slate-900 dark:text-white">faculty*</strong>: Faculty name (e.g. <code>Faculty of Engineering</code>)
                     </div>
                     <div>
-                      <strong className="text-slate-900">tuitionFee</strong>: Tuition amount in XAF (e.g. <code>350000</code>)
+                      <strong className="text-slate-900 dark:text-white">tuitionFee</strong>: Tuition amount in XAF (e.g. <code>350000</code>)
                     </div>
                     <div>
-                      <strong className="text-slate-900">campus</strong>: Campus location (e.g. <code>Main Campus</code>)
+                      <strong className="text-slate-900 dark:text-white">campus</strong>: Campus location (e.g. <code>Main Campus</code>)
                     </div>
                     <div>
-                      <strong className="text-slate-900">durations</strong>: Duration in years (e.g. <code>4</code>)
+                      <strong className="text-slate-900 dark:text-white">durations</strong>: Duration in years (e.g. <code>4</code>)
                     </div>
                     <div>
-                      <strong className="text-slate-900">requiresConcour</strong>: <code>true</code> or <code>false</code>
+                      <strong className="text-slate-900 dark:text-white">requiresConcour</strong>: <code>true</code> or <code>false</code>
                     </div>
                     <div>
-                      <strong className="text-slate-900">degreeObtained</strong>: Degree title (e.g. <code>B.Tech</code>, <code>HND</code>)
+                      <strong className="text-slate-900 dark:text-white">degreeObtained</strong>: Degree title (e.g. <code>B.Tech</code>, <code>HND</code>)
                     </div>
                     <div>
-                      <strong className="text-slate-900">requiredALSubjects</strong>: Comma-separated (e.g. <code>Mathematics, Physics</code>)
+                      <strong className="text-slate-900 dark:text-white">requiredALSubjects</strong>: Comma-separated (e.g. <code>Mathematics, Physics</code>)
                     </div>
                   </div>
                   <div className="flex items-start gap-2 bg-orange-50 text-orange-850 p-3.5 rounded-xl border border-orange-100 text-xs">
@@ -556,11 +556,11 @@ const PartnerPrograms = () => {
 
             {/* Parse / Action Buttons */}
             {csvFile && (
-              <div className="mt-4 flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
+              <div className="mt-4 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800 pt-4">
                 <button
                   type="button"
                   onClick={() => handleCsvFile(null)}
-                  className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                  className="px-4 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl transition-colors cursor-pointer"
                 >
                   Clear File
                 </button>
@@ -577,9 +577,9 @@ const PartnerPrograms = () => {
 
             {/* Preview Section */}
             {csvPreview.length > 0 && (
-              <div className="mt-6 border-t border-slate-100 pt-6">
+              <div className="mt-6 border-t border-slate-100 dark:border-slate-800 pt-6">
                 <div className="flex justify-between items-center mb-3">
-                  <div className="text-xs font-bold text-slate-900">
+                  <div className="text-xs font-bold text-slate-900 dark:text-white">
                     Previewing {csvPreview.length} Programs
                   </div>
                   <button
@@ -591,10 +591,10 @@ const PartnerPrograms = () => {
                   </button>
                 </div>
                 
-                <div className="border border-slate-150 rounded-2xl overflow-hidden bg-slate-50/30 mb-4 max-h-60 overflow-y-auto">
+                <div className="border border-slate-150 rounded-2xl overflow-hidden bg-slate-50/30 dark:bg-slate-950/30 mb-4 max-h-60 overflow-y-auto">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="bg-slate-50 border-b border-slate-200/80 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">
+                      <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-700/80 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">
                         <th className="py-2.5 px-4">Name</th>
                         <th className="py-2.5 px-4">Faculty</th>
                         <th className="py-2.5 px-4">Tuition (XAF)</th>
@@ -603,13 +603,13 @@ const PartnerPrograms = () => {
                     </thead>
                     <tbody className="divide-y divide-slate-100">
                       {csvPreview.map((row, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50/50 bg-white transition-colors">
-                          <td className="py-2 px-4 font-semibold text-slate-900">{row.name}</td>
-                          <td className="py-2 px-4 text-slate-600">{row.faculty}</td>
-                          <td className="py-2 px-4 text-slate-600">
+                        <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950/50 bg-white dark:bg-slate-900 transition-colors">
+                          <td className="py-2 px-4 font-semibold text-slate-900 dark:text-white">{row.name}</td>
+                          <td className="py-2 px-4 text-slate-600 dark:text-slate-400">{row.faculty}</td>
+                          <td className="py-2 px-4 text-slate-600 dark:text-slate-400">
                             {row.tuition_fee_xaf || row.tuitionFee || "N/A"}
                           </td>
-                          <td className="py-2 px-4 text-slate-500">{row.campus || "Main Campus"}</td>
+                          <td className="py-2 px-4 text-slate-500 dark:text-slate-400">{row.campus || "Main Campus"}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -633,11 +633,11 @@ const PartnerPrograms = () => {
 
         {/* Programs Data Table */}
         {programs.length > 0 ? (
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200/80 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
+                  <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-700/80 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
                     <th className="py-4 px-6">Program & Faculty</th>
                     <th className="py-4 px-4">Campus</th>
                     <th className="py-4 px-4">Duration</th>
@@ -650,24 +650,24 @@ const PartnerPrograms = () => {
                   {programs.map((p) => (
                     <tr
                       key={p.id}
-                      className="hover:bg-slate-50/60 transition-colors"
+                      className="hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950/60 transition-colors"
                     >
-                      <td className="py-4 px-6 font-semibold text-slate-900">
-                        <div className="font-bold text-slate-900">{p.name}</div>
-                        <div className="text-xs text-slate-500 font-normal">
+                      <td className="py-4 px-6 font-semibold text-slate-900 dark:text-white">
+                        <div className="font-bold text-slate-900 dark:text-white">{p.name}</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">
                           {p.faculty || "Faculty"}
                         </div>
                       </td>
-                      <td className="py-4 px-4 text-slate-600">
+                      <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
                         <span className="inline-flex items-center gap-1">
                           <MapPin size={12} className="text-slate-400" />
                           {p.campus || institution?.campus || "Main Campus"}
                         </span>
                       </td>
-                      <td className="py-4 px-4 text-slate-600">
+                      <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
                         {p.durations || p.durationsNum || 3} Years
                       </td>
-                      <td className="py-4 px-4 font-bold text-slate-900">
+                      <td className="py-4 px-4 font-bold text-slate-900 dark:text-white">
                         {p.tuition_fee_xaf
                           ? `${Number(p.tuition_fee_xaf).toLocaleString()} XAF`
                           : "Contact Campus"}
@@ -688,7 +688,7 @@ const PartnerPrograms = () => {
                       <td className="py-4 px-6 text-right space-x-2">
                         <button
                           onClick={() => handleOpenModal(p)}
-                          className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                          className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 rounded-lg transition-colors cursor-pointer"
                           title="Edit Program"
                         >
                           <Edit3 size={16} />
@@ -708,12 +708,12 @@ const PartnerPrograms = () => {
             </div>
           </div>
         ) : (
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-200/80 p-8">
+          <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-8">
             <BookOpen className="mx-auto text-slate-300 mb-3" size={40} />
-            <h3 className="text-lg font-bold text-slate-900 mb-1">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
               No programs listed yet
             </h3>
-            <p className="text-slate-500 text-xs sm:text-sm max-w-md mx-auto mb-6">
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm max-w-md mx-auto mb-6">
               Start adding your university's degree programs, tuition fees, and
               campus locations so A-Level students can find you.
             </p>
@@ -730,22 +730,22 @@ const PartnerPrograms = () => {
         {/* Modal Dialog for Add / Edit Program */}
         {isModalOpen && (
           <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto my-auto">
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[90vh] overflow-y-auto my-auto">
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100 dark:border-slate-800">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900">
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                     {editingProgram
                       ? "Edit Program Details"
                       : "Add New Academic Program"}
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Enter the course specifications as displayed in your
                     official university prospectus.
                   </p>
                 </div>
                 <button
                   onClick={handleCloseModal}
-                  className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                  className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -761,7 +761,7 @@ const PartnerPrograms = () => {
                 {/* University Name & Program Name */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       University / Institution Name *
                     </label>
                     <input
@@ -770,12 +770,12 @@ const PartnerPrograms = () => {
                       value={formData.university}
                       onChange={handleFormChange}
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       Program Name *
                     </label>
                     <input
@@ -785,7 +785,7 @@ const PartnerPrograms = () => {
                       onChange={handleFormChange}
                       placeholder="e.g. BSc Software Engineering"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     />
                   </div>
                 </div>
@@ -793,7 +793,7 @@ const PartnerPrograms = () => {
                 {/* School/Faculty & Campus Location */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       School or Faculty *
                     </label>
                     <input
@@ -803,12 +803,12 @@ const PartnerPrograms = () => {
                       onChange={handleFormChange}
                       placeholder="e.g. School of Business / COLTECH"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       School Campus Location *
                     </label>
                     <input
@@ -818,7 +818,7 @@ const PartnerPrograms = () => {
                       onChange={handleFormChange}
                       placeholder="e.g. Akwa Campus / Molyko Campus"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     />
                   </div>
                 </div>
@@ -826,14 +826,14 @@ const PartnerPrograms = () => {
                 {/* Duration, Tuition Fee, & Entry Type */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       Program Duration (Years) *
                     </label>
                     <select
                       name="durations"
                       value={formData.durations}
                       onChange={handleFormChange}
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     >
                       <option value="1">1 Year</option>
                       <option value="2">2 Years (HND / Dip)</option>
@@ -844,7 +844,7 @@ const PartnerPrograms = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       Tuition Fee per Year (XAF)
                     </label>
                     <input
@@ -853,19 +853,19 @@ const PartnerPrograms = () => {
                       value={formData.tuitionFee}
                       onChange={handleFormChange}
                       placeholder="e.g. 350000"
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       Admission Entry Mode *
                     </label>
                     <select
                       name="requiresConcour"
                       value={formData.requiresConcour}
                       onChange={handleFormChange}
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     >
                       <option value="false">Direct Admission (No Exam)</option>
                       <option value="true">Entrance Exam (Concours)</option>
@@ -876,7 +876,7 @@ const PartnerPrograms = () => {
                 {/* Degree Obtained & Required A-Level Subjects */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       Degree Obtained *
                     </label>
                     <select
@@ -884,7 +884,7 @@ const PartnerPrograms = () => {
                       value={formData.degreeObtained}
                       onChange={handleFormChange}
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     >
                       <option value="">Select Degree Type...</option>
                       <option value="HND">Higher National Diploma (HND)</option>
@@ -899,7 +899,7 @@ const PartnerPrograms = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       Required GCE A-Level Subjects
                     </label>
                     <input
@@ -908,14 +908,14 @@ const PartnerPrograms = () => {
                       value={formData.requiredALSubjects}
                       onChange={handleFormChange}
                       placeholder="e.g. Mathematics, Physics, Chemistry"
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                     />
                   </div>
                 </div>
 
                 {/* Application Portal Link */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Application Portal URL
                   </label>
                   <input
@@ -924,13 +924,13 @@ const PartnerPrograms = () => {
                     value={formData.portalUrl}
                     onChange={handleFormChange}
                     placeholder="https://youruniversity.cm/apply"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                   />
                 </div>
 
                 {/* Career Pathways */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Target Career Pathways (comma separated)
                   </label>
                   <input
@@ -939,13 +939,13 @@ const PartnerPrograms = () => {
                     value={formData.careers}
                     onChange={handleFormChange}
                     placeholder="e.g. Software Developer, Systems Architect, QA Tester"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                   />
                 </div>
 
                 {/* Program Description */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Program Overview / Description
                   </label>
                   <textarea
@@ -954,16 +954,16 @@ const PartnerPrograms = () => {
                     value={formData.descriptions}
                     onChange={handleFormChange}
                     placeholder="Provide a brief summary of what students will learn in this degree program..."
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-orange-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
                   />
                 </div>
 
                 {/* Buttons */}
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end gap-3">
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                    className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950 transition-colors"
                   >
                     Cancel
                   </button>

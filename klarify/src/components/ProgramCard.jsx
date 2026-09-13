@@ -39,7 +39,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
         <div className="flex-1 pr-4">
           <div className="flex items-start justify-between">
-            <h3 className="text-xl font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-orange-600 transition-colors">
               {program.name}
             </h3>
             {(onSave || onRemove) && (
@@ -49,7 +49,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
                 className={`p-2 rounded-lg transition-colors shrink-0 ml-4 ${
                   isSaved
                     ? "bg-orange-100 text-orange-600 hover:bg-orange-200"
-                    : "bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:bg-slate-700 hover:text-slate-600 dark:text-slate-400"
                 } ${isSaving ? "opacity-50 cursor-not-allowed" : ""}`}
                 aria-label={isSaved ? "Remove from saved" : "Save program"}
               >
@@ -57,7 +57,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
               </button>
             )}
           </div>
-          <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-600">
+          <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400">
             <div className="flex items-center gap-1.5 flex-wrap">
               <Building2 size={16} className="text-slate-400" />
               <span>{program.university}</span>
@@ -119,7 +119,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
             )}
           </div>
           {program.tuition_fee_xaf && (
-            <div className="mt-2 text-sm font-semibold text-slate-800 bg-white/80 px-3 py-1.5 rounded-lg border border-slate-100 w-full md:w-auto text-center">
+            <div className="mt-2 text-sm font-semibold text-slate-800 dark:text-slate-200 bg-white/80 dark:bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800 w-full md:w-auto text-center">
               {isPaidTier ? (
                 <>
                   <span className="text-[10px] text-slate-400 block font-normal uppercase tracking-wider">Tuition Fee</span>
@@ -142,7 +142,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
       <div className="mt-6">
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors w-full cursor-pointer"
+          className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white transition-colors w-full cursor-pointer"
         >
           {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           {expanded ? "Hide Details & Careers" : "Explore Details & Careers"}
@@ -162,7 +162,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
                       <Award size={18} className="text-blue-600" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-slate-900">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                         Entrance Exam Required
                       </h4>
                       <p className="text-xs text-blue-600/80 font-medium">
@@ -172,27 +172,27 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
                   </div>
 
                   <div className="grid grid-cols-3 gap-4 mb-5">
-                    <div className="bg-white/70 rounded-lg px-3 py-2.5 border border-blue-100/60">
+                    <div className="bg-white/70 dark:bg-slate-900/70 rounded-lg px-3 py-2.5 border border-blue-100/60">
                       <div className="text-[10px] uppercase tracking-wider text-blue-500/80 font-semibold mb-0.5">
                         Exam Month
                       </div>
-                      <div className="text-sm font-bold text-slate-900">
+                      <div className="text-sm font-bold text-slate-900 dark:text-white">
                         {program.examDetails.month}
                       </div>
                     </div>
-                    <div className="bg-white/70 rounded-lg px-3 py-2.5 border border-blue-100/60">
+                    <div className="bg-white/70 dark:bg-slate-900/70 rounded-lg px-3 py-2.5 border border-blue-100/60">
                       <div className="text-[10px] uppercase tracking-wider text-blue-500/80 font-semibold mb-0.5">
                         Deadline
                       </div>
-                      <div className="text-sm font-bold text-slate-900">
+                      <div className="text-sm font-bold text-slate-900 dark:text-white">
                         {isPaidTier ? program.examDetails.deadline : "Locked (Upgrade)"}
                       </div>
                     </div>
-                    <div className="bg-white/70 rounded-lg px-3 py-2.5 border border-blue-100/60">
+                    <div className="bg-white/70 dark:bg-slate-900/70 rounded-lg px-3 py-2.5 border border-blue-100/60">
                       <div className="text-[10px] uppercase tracking-wider text-blue-500/80 font-semibold mb-0.5">
                         Exam Fee
                       </div>
-                      <div className="text-sm font-bold text-slate-900">
+                      <div className="text-sm font-bold text-slate-900 dark:text-white">
                         {isPaidTier ? program.examDetails.fee : "Locked (Upgrade)"}
                       </div>
                     </div>
@@ -206,7 +206,7 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
                           state: { examDetails: program.examDetails },
                         })
                       }
-                      className="inline-flex items-center justify-center gap-2 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md"
+                      className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 hover:bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md"
                     >
                       <ExternalLink size={14} />
                       More Exam Details
@@ -227,8 +227,8 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
             )}
 
             {/* Career Paths Section */}
-            <div className="p-5 bg-slate-50 rounded-xl border border-slate-100">
-              <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-3">
+            <div className="p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200 mb-3">
                 <Briefcase size={16} className="text-orange-500" />
                 Potential Career Paths
               </div>
@@ -237,13 +237,13 @@ const ProgramCard = ({ program, isSaved, onSave, onRemove }) => {
                   program.careers.map((career, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 bg-white hover:bg-orange-50/50 border border-slate-200/60 hover:border-orange-200 text-xs font-medium text-slate-600 hover:text-orange-700 rounded-lg transition-all shadow-sm"
+                      className="px-3 py-1.5 bg-white dark:bg-slate-900 hover:bg-orange-50/50 border border-slate-200/60 dark:border-slate-700/60 hover:border-orange-200 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-orange-700 rounded-lg transition-all shadow-sm"
                     >
                       {career}
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs text-slate-500 italic">
+                  <span className="text-xs text-slate-500 dark:text-slate-400 italic">
                     No specific careers listed
                   </span>
                 )}

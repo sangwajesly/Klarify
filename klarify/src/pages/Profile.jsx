@@ -63,15 +63,15 @@ const Profile = () => {
       />
       <div className="max-w-4xl mx-auto py-8">
         {/* Profile Header */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 mb-8 flex flex-col md:flex-row items-center md:items-start gap-6">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 flex flex-col md:flex-row items-center md:items-start gap-6">
           <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center shrink-0">
             <User size={40} className="text-orange-500" />
           </div>
           <div className="text-center md:text-left flex-1">
-            <h1 className="text-2xl font-bold text-slate-900 mb-2">
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               My Profile
             </h1>
-            <div className="flex items-center justify-center md:justify-start gap-2 text-slate-600">
+            <div className="flex items-center justify-center md:justify-start gap-2 text-slate-600 dark:text-slate-400">
               <Mail size={16} />
               <span>{user.email || user.phone || "User"}</span>
             </div>
@@ -82,13 +82,13 @@ const Profile = () => {
         <div>
           <div className="flex items-center gap-2 mb-6">
             <Bookmark className="text-orange-500" size={24} />
-            <h2 className="text-xl font-bold text-slate-900">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               Saved Recommendations
             </h2>
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-12 bg-white rounded-xl border border-slate-100">
+            <div className="flex justify-center items-center py-12 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
               <Loader2 className="animate-spin text-orange-500" size={24} />
             </div>
           ) : savedPrograms.length > 0 ? (
@@ -103,14 +103,14 @@ const Profile = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 bg-white rounded-xl border border-slate-100 shadow-sm">
-              <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+              <div className="w-16 h-16 bg-slate-50 dark:bg-slate-950 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Bookmark size={24} className="text-slate-400" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
                 No saved programs
               </h3>
-              <p className="text-slate-500 text-sm max-w-sm mx-auto mb-6 leading-relaxed">
+              <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm mx-auto mb-6 leading-relaxed">
                 You haven't saved any recommendations yet. Go to the flow to
                 discover and save programs you're interested in.
               </p>

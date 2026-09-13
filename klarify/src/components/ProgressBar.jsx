@@ -6,14 +6,14 @@ const ProgressBar = ({ currentStep, totalSteps }) => {
   return (
     <div className="w-full mb-8">
       <div className="flex justify-between items-end mb-2">
-        <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">
+        <span className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
           Step {currentStep} of {totalSteps}
         </span>
-        <span className="text-sm font-semibold text-slate-800">
+        <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
           {percentage}%
         </span>
       </div>
-      <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+      <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
         <div 
           className="h-full bg-orange-500 rounded-full transition-all duration-500 ease-out"
           style={{ width: `${percentage}%` }}

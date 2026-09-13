@@ -13,11 +13,11 @@ import {
   ArrowRight,
   ChevronDown,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
 import FAQBlock from "../components/FAQBlock";
 import { API_URL } from "../services/api";
-import heroBg from "../assets/hero.jpg";
 import { useLanguage } from "../context/LanguageContext";
 
 const GceResults = () => {
@@ -130,306 +130,213 @@ const GceResults = () => {
         structuredData={gceSchema}
       />
 
-      <main className="relative min-h-screen flex flex-col items-center pt-24 bg-slate-900 overflow-hidden">
-        {/* Background — single consistent warm overlay */}
-        <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 bg-cover bg-center blur-2xl scale-110 opacity-40"
-            style={{ backgroundImage: `url(${heroBg})` }}
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 bg-linear-to-b from-slate-900/90 via-slate-900/80 to-slate-900" />
-        </div>
+      <main className="bg-slate-50 dark:bg-slate-950 min-h-screen selection:bg-orange-500/30">
+        {/* ── Search Engine Hero Section ── */}
+        <section className="bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-700/60 pt-8 pb-16 md:pt-12 md:pb-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-50/80 via-transparent to-transparent pointer-events-none" />
+          
+          <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10 text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+              <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-orange-600 text-xs font-bold uppercase tracking-widest mb-8 border border-orange-100">
+                <Search size={14} />
+                {t("gceResults.badge")}
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
+                {t("gceResults.heading")}{" "}
+                <span className="text-orange-500 block sm:inline">{t("gceResults.headingHighlight")}</span>
+              </h1>
+              
+              <p className="text-lg text-slate-500 dark:text-slate-400 mb-12 max-w-2xl mx-auto">
+                {t("gceResults.subtext")}
+              </p>
 
-        {/* ── Main content ── */}
-        <div className="relative z-10 w-full max-w-4xl flex flex-col items-center px-4 md:px-6">
-          {/* Header */}
-          <div className="w-full text-center mb-10 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/8 text-white text-xs font-medium backdrop-blur-sm">
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-orange-400"
-                aria-hidden="true"
-              />
-              {t("gceResults.badge")}
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-              {t("gceResults.heading")}{" "}
-              <span className="text-orange-400">
-                {t("gceResults.headingHighlight")}
-              </span>
-            </h1>
-            <p className="text-base md:text-lg text-slate-300 max-w-xl mx-auto">
-              {t("gceResults.subtext")}
-            </p>
-
-            {/* Level filters - scrollable on mobile */}
-            <div className="flex items-center gap-2 overflow-x-auto w-full max-w-2xl mx-auto py-2 px-1 hide-scrollbar sm:justify-center">
-              {EXAM_TYPES.map((type) => (
-                <button
-                  key={type.id}
-                  type="button"
-                  onClick={() => handleTabChange(type.id)}
-                  className={`shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
-                    examType === type.id
-                      ? "bg-orange-500 text-white shadow-md shadow-orange-500/20"
-                      : "bg-white/8 border border-white/15 text-slate-300 hover:bg-white/12 hover:text-white"
-                  }`}
-                >
-                  {type.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Search form */}
-            <form
-              onSubmit={handleSearch}
-              className="w-full max-w-3xl mx-auto mt-4"
-              role="search"
-            >
-              <div className="flex flex-col sm:flex-row gap-2.5">
-                {/* Candidate Name Input - Full width on mobile */}
-                <div className="relative flex-1 w-full">
-                  <Search
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                    size={18}
-                    aria-hidden="true"
-                  />
-                  <input
-                    type="search"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder={t("gceResults.searchPlaceholder")}
-                    aria-label={t("gceResults.searchAriaLabel")}
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white text-sm focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 transition-all placeholder:text-slate-400"
-                  />
+              {/* Form container */}
+              <div className="bg-white dark:bg-slate-900 p-3 md:p-4 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-200 dark:border-slate-700 max-w-3xl mx-auto">
+                <div className="flex items-center gap-2 overflow-x-auto w-full pb-3 md:pb-4 hide-scrollbar justify-start sm:justify-center border-b border-slate-100 dark:border-slate-800 mb-3 md:mb-4 px-2">
+                  {EXAM_TYPES.map((type) => (
+                    <button
+                      key={type.id}
+                      type="button"
+                      onClick={() => handleTabChange(type.id)}
+                      className={`shrink-0 px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 ${
+                        examType === type.id
+                          ? "bg-slate-900 text-white"
+                          : "bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-white dark:text-white"
+                      }`}
+                    >
+                      {type.label}
+                    </button>
+                  ))}
                 </div>
 
-                {/* Controls row on mobile: Year dropdown + Search button */}
-                <div className="flex items-center gap-2.5 w-full sm:w-auto">
-                  <div className="relative w-28 sm:w-32 shrink-0">
-                    <select
-                      aria-label={t("gceResults.yearAriaLabel")}
-                      value={examYear}
-                      onChange={(e) => setExamYear(e.target.value)}
-                      className="w-full appearance-none pl-3.5 pr-8 py-3.5 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white text-sm font-semibold text-center focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 transition-all cursor-pointer"
-                    >
-                      <option value="2026" className="text-slate-900 bg-white">
-                        2026
-                      </option>
-                      <option value="2025" className="text-slate-900 bg-white">
-                        2025
-                      </option>
-                      <option value="2024" className="text-slate-900 bg-white">
-                        2024
-                      </option>
-                    </select>
-                    <ChevronDown
-                      size={14}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none"
-                      aria-hidden="true"
+                <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <input
+                      type="search"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder={t("gceResults.searchPlaceholder")}
+                      className="w-full pl-13 pr-6 py-4 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-base focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all font-medium placeholder:text-slate-400 placeholder:font-normal"
                     />
                   </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="flex-1 sm:flex-initial px-6 py-3.5 bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/50 text-white font-bold text-sm rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 shrink-0 cursor-pointer"
-                    aria-label={t("gceResults.searchButton")}
-                  >
-                    {loading ? (
-                      <Loader2 className="animate-spin" size={18} />
-                    ) : (
-                      <>
-                        <Search size={16} className="sm:hidden" />
-                        <span>{t("gceResults.searchButton")}</span>
-                      </>
-                    )}
-                  </button>
-                </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-32 shrink-0">
+                      <select
+                        value={examYear}
+                        onChange={(e) => setExamYear(e.target.value)}
+                        className="w-full appearance-none pl-6 pr-10 py-4 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all cursor-pointer"
+                      >
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                      </select>
+                      <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 pointer-events-none" />
+                    </div>
+                    
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="flex-1 sm:flex-initial px-8 py-4 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold rounded-full transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                    >
+                      {loading ? <Loader2 className="animate-spin" size={20} /> : <span>Search</span>}
+                    </button>
+                  </div>
+                </form>
+                {error && <p className="text-red-500 mt-3 text-sm text-center font-semibold">{error}</p>}
               </div>
-
-              {error && (
-                <p
-                  className="text-red-400 mt-3 text-sm text-center font-medium"
-                  role="alert"
-                >
-                  {error}
-                </p>
-              )}
-            </form>
+            </motion.div>
           </div>
+        </section>
 
-          {/* ── Results ── */}
-          <div className="w-full space-y-4 pb-20" aria-live="polite">
-            {searched && !loading && results.length === 0 && !error && (
-              <div className="text-center py-12 px-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 mt-4">
-                <p className="text-lg text-slate-300 font-medium">
-                  {t("gceResults.noResults", { query, year: examYear })}
-                </p>
-                <p className="text-sm text-slate-500 mt-2 max-w-sm mx-auto">
-                  {t("gceResults.noResultsHint")}
-                </p>
-              </div>
-            )}
+        {/* ── Results Listing ── */}
+        <section className="py-12 md:py-16 px-6 md:px-12 max-w-4xl mx-auto min-h-[40vh]">
+          {searched && !loading && results.length === 0 && !error && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm">
+              <Search className="mx-auto text-slate-300 mb-4" size={48} />
+              <p className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                {t("gceResults.noResults", { query, year: examYear })}
+              </p>
+              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                {t("gceResults.noResultsHint")}
+              </p>
+            </motion.div>
+          )}
 
-            {results.map((result) => (
-              <article
+          <div className="space-y-6">
+            {results.map((result, idx) => (
+              <motion.article
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05 }}
                 key={result.id}
-                className="bg-white/8 backdrop-blur-sm rounded-2xl p-5 sm:p-6 border border-white/10 hover:bg-white/12 transition-all duration-200 relative overflow-hidden"
+                className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-slate-300 dark:border-slate-600 transition-all flex flex-col md:flex-row gap-6 md:items-center justify-between"
               >
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <div className="space-y-1.5 flex-1 min-w-0 w-full">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-orange-500/15 rounded-lg shrink-0 mt-0.5">
-                        <User
-                          size={18}
-                          className="text-orange-400"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-white leading-snug wrap-break-word">
-                          {result.candidate_name}
-                        </h3>
-                        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mt-1">
-                          <Building2
-                            size={14}
-                            className="shrink-0 text-slate-400"
-                            aria-hidden="true"
-                          />
-                          <span className="truncate">
-                            {result.center_number} | {result.center_name}
-                          </span>
-                        </div>
-                      </div>
+                <div className="flex items-start gap-4 flex-1 min-w-0">
+                  <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center shrink-0 text-slate-400">
+                    <User size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2 truncate">
+                      {result.candidate_name}
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-slate-500 dark:text-slate-400">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                        <Building2 size={14} />
+                        {result.center_number}
+                      </span>
+                      <span className="truncate max-w-[200px] sm:max-w-none">{result.center_name}</span>
                     </div>
                   </div>
-
-                  <div className="w-full sm:w-auto border border-orange-500/25 bg-orange-500/10 px-5 py-2.5 rounded-xl text-center shrink-0 sm:min-w-40">
-                    <span className="block text-[10px] uppercase tracking-widest font-bold text-orange-400 mb-0.5">
-                      {t("gceResults.passed")}
-                    </span>
-                    <span className="block text-base sm:text-lg font-black text-white">
-                      {result.passed_category}
-                    </span>
-                  </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/8 flex justify-start sm:justify-end">
+                <div className="flex flex-row md:flex-col items-center md:items-end justify-between gap-4 md:gap-3 border-t md:border-t-0 border-slate-100 dark:border-slate-800 pt-4 md:pt-0 shrink-0">
+                  <div className="text-left md:text-right">
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">{t("gceResults.passed")}</div>
+                    <div className="text-xl font-black text-slate-900 dark:text-white">{result.passed_category}</div>
+                  </div>
+                  
                   {!isOLevelResult(result) ? (
                     <button
                       onClick={() => navigate("/flow")}
-                      className="w-full sm:w-auto justify-center flex items-center gap-2 text-orange-400 hover:text-orange-300 font-semibold text-xs sm:text-sm transition-colors py-2.5 px-4.5 sm:p-0 bg-white/5 sm:bg-transparent rounded-xl sm:rounded-none group/btn cursor-pointer"
+                      className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition-colors"
                     >
                       {t("gceResults.getOrientation")}
-                      <GraduationCap
-                        size={16}
-                        className="transition-transform duration-200 group-hover/btn:translate-x-1 shrink-0"
-                      />
+                      <GraduationCap size={14} />
                     </button>
                   ) : (
                     <button
                       onClick={() => navigate("/careers")}
-                      className="w-full sm:w-auto justify-center flex items-center gap-2 text-slate-300 hover:text-white font-semibold text-xs sm:text-sm transition-colors py-2.5 px-4.5 sm:p-0 bg-white/5 sm:bg-transparent rounded-xl sm:rounded-none group/btn cursor-pointer"
+                      className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950 text-slate-900 dark:text-white text-xs font-bold px-5 py-2.5 rounded-full transition-colors"
                     >
                       {t("gceResults.getOrientation")}
-                      <ArrowRight
-                        size={16}
-                        className="transition-transform duration-200 group-hover/btn:translate-x-1 shrink-0"
-                      />
+                      <ArrowRight size={14} />
                     </button>
                   )}
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
-        </div>
-      </main>
+        </section>
 
-      {/* ── Content below hero ── */}
-      <section className="bg-slate-900 px-4 md:px-6 py-16">
-        <div className="max-w-6xl mx-auto">
-          {/* Core highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
-            {[
-              {
-                icon: Zap,
-                title: t("gceResults.features.0.title"),
-                body: t("gceResults.features.0.body"),
-              },
-              {
-                icon: Search,
-                title: t("gceResults.features.1.title"),
-                body: t("gceResults.features.1.body"),
-              },
-              {
-                icon: GraduationCap,
-                title: t("gceResults.features.2.title"),
-                body: t("gceResults.features.2.body"),
-              },
-            ].map(({ icon: Icon, title, body }) => (
-              <article
-                key={title}
-                className="bg-white/5 p-6 rounded-2xl border border-white/10 flex flex-col items-start"
-              >
-                <div className="w-10 h-10 rounded-lg bg-orange-500/15 text-orange-400 flex items-center justify-center mb-4 shrink-0">
-                  <Icon size={20} aria-hidden="true" />
+        {/* ── Content below ── */}
+        <section className="bg-white dark:bg-slate-900 py-24 px-6 md:px-12 border-t border-slate-200/60 dark:border-slate-700/60">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+              {[
+                { icon: Zap, title: t("gceResults.features.0.title"), body: t("gceResults.features.0.body") },
+                { icon: Search, title: t("gceResults.features.1.title"), body: t("gceResults.features.1.body") },
+                { icon: GraduationCap, title: t("gceResults.features.2.title"), body: t("gceResults.features.2.body") },
+              ].map(({ icon: Icon, title, body }) => (
+                <div key={title} className="bg-slate-50 dark:bg-slate-950 p-8 rounded-3xl border border-slate-200/60 dark:border-slate-700/60">
+                  <div className="w-12 h-12 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center text-orange-500 mb-6 shadow-sm">
+                    <Icon size={24} />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">{title}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{body}</p>
                 </div>
-                <h3 className="text-sm font-semibold text-white mb-2">
-                  {title}
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">{body}</p>
-              </article>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Share callout */}
-          <div className="bg-slate-800/60 border border-white/10 rounded-2xl p-8 md:p-10 text-center mb-16">
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-3">
-              {t("gceResults.ctaHeading")}
-            </h2>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-md mx-auto mb-7">
-              {t("gceResults.ctaSubtext")}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                  "Check your Cameroon GCE results instantly by name without downloading massive PDFs! Visit https://klarifypath.com/gce-results",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba56] text-white font-semibold text-sm py-3 px-6 rounded-xl transition-colors"
-              >
-                <Share2 size={16} />
-                {t("gceResults.shareResult")}
-              </a>
-
-              <button
-                onClick={handleCopyLink}
-                className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-sm py-3 px-6 rounded-xl transition-colors"
-              >
-                {copied ? (
-                  <>
-                    <Check size={16} className="text-green-400" />{" "}
-                    {t("gceResults.copied")}
-                  </>
-                ) : (
-                  <>
-                    <Copy size={16} /> {t("gceResults.copyLink")}
-                  </>
-                )}
-              </button>
+            <div className="bg-slate-900 rounded-[3rem] p-12 text-center text-white relative overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent" />
+              <div className="relative z-10">
+                <h2 className="text-3xl font-extrabold mb-4">{t("gceResults.ctaHeading")}</h2>
+                <p className="text-slate-400 mb-8 max-w-lg mx-auto">{t("gceResults.ctaSubtext")}</p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a
+                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                      "Check your Cameroon GCE results instantly by name without downloading massive PDFs! Visit https://klarifypath.com/gce-results"
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba56] text-white font-bold px-8 py-4 rounded-full transition-colors"
+                  >
+                    <Share2 size={18} />
+                    {t("gceResults.shareResult")}
+                  </a>
+                  
+                  <button
+                    onClick={handleCopyLink}
+                    className="inline-flex items-center justify-center gap-2 bg-white/10 dark:bg-slate-900/10 hover:bg-white/20 dark:bg-slate-900/20 text-white font-bold px-8 py-4 rounded-full transition-colors"
+                  >
+                    {copied ? <><Check size={18} className="text-green-400" /> {t("gceResults.copied")}</> : <><Copy size={18} /> {t("gceResults.copyLink")}</>}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="bg-slate-50 py-4 px-4 md:px-6">
-        <div className="max-w-4xl mx-auto">
-          <FAQBlock faqs={gceFaqs} title={t("gceResults.faqHeading")} />
-        </div>
-      </section>
+        <section className="bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 border-t border-slate-200/60 dark:border-slate-700/60">
+          <div className="max-w-3xl mx-auto">
+            <FAQBlock faqs={gceFaqs} title={t("gceResults.faqHeading")} />
+          </div>
+        </section>
+      </main>
     </Layout>
   );
 };

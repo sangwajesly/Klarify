@@ -32,10 +32,10 @@ import Analytics from "./components/Analytics";
 const ComingSoon = ({ title }) => (
   <Layout>
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-      <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
+      <h1 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
         {title}
       </h1>
-      <p className="text-slate-600 text-lg">
+      <p className="text-slate-600 dark:text-slate-400 text-lg">
         This section is currently under development. Check back soon!
       </p>
     </div>

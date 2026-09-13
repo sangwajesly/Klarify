@@ -217,39 +217,42 @@ const Programs = () => {
         canonicalUrl="https://www.klarifypath.com/programs"
       />
 
-      <main className="py-6 pb-20">
-        {/* Header */}
-        <div className="mb-8">
-          <span className="section-eyebrow block mb-2">Program Directory</span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-            Academic Programs in Cameroon
-          </h1>
-          <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
-            Explore bachelor's degrees, HNDs, and professional programs offered
-            by state universities and higher institutes. Search by subject,
-            career interest, or institution.
-          </p>
-        </div>
-
-        {/* Search & Filter Bar Card */}
-        <div className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-xs mb-8 space-y-4">
-          {/* Main Search Input */}
-          <div className="relative w-full">
-            <Search
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-              size={18}
-            />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setCurrentPage(1);
-              }}
-              placeholder="Search by program name, career (e.g. Biochemist), or keyword..."
-              className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all placeholder:text-slate-400"
-            />
+      <main className="bg-slate-50 dark:bg-slate-950 min-h-screen pt-8 pb-16 md:pt-12 md:pb-24 px-6 selection:bg-orange-500/30">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-12 text-center max-w-3xl mx-auto">
+            <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
+              Program Directory
+            </span>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
+              Academic Programs in Cameroon
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+              Explore bachelor's degrees, HNDs, and professional programs offered
+              by state universities and higher institutes. Search by subject,
+              career interest, or institution.
+            </p>
           </div>
+
+          {/* Search & Filter Bar Card */}
+          <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm mb-12 space-y-6">
+            {/* Main Search Input */}
+            <div className="relative w-full">
+              <Search
+                className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400"
+                size={20}
+              />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
+                placeholder="Search by program name, career (e.g. Biochemist), or keyword..."
+                className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-full text-slate-900 dark:text-white font-medium focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+              />
+            </div>
 
           {/* Filter Dropdowns Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -263,7 +266,7 @@ const Programs = () => {
                   setCurrentPage(1);
                 }}
                 aria-label="Filter by University"
-                className="w-full appearance-none bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
+                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
               >
                 {universities.map((uni) => (
                   <option key={uni} value={uni}>
@@ -286,7 +289,7 @@ const Programs = () => {
                   setCurrentPage(1);
                 }}
                 aria-label="Filter by Faculty"
-                className="w-full appearance-none bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
+                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
               >
                 {faculties.map((fac) => (
                   <option key={fac} value={fac}>
@@ -309,7 +312,7 @@ const Programs = () => {
                   setCurrentPage(1);
                 }}
                 aria-label="Filter by Entry Requirement"
-                className="w-full appearance-none bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
+                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
               >
                 <option value="All">All Entry Types</option>
                 <option value="Concours Required">
@@ -339,7 +342,7 @@ const Programs = () => {
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 transition-colors ${
                   selectedCategory === tag
                     ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:bg-slate-700"
                 }`}
               >
                 {tag}
@@ -350,9 +353,9 @@ const Programs = () => {
 
         {/* Results Info Bar */}
         <div className="flex items-center justify-between gap-4 mb-6 px-1">
-          <div className="text-sm font-medium text-slate-600">
+          <div className="text-sm font-medium text-slate-600 dark:text-slate-400">
             Showing{" "}
-            <strong className="text-slate-900">
+            <strong className="text-slate-900 dark:text-white">
               {filteredPrograms.length}
             </strong>{" "}
             academic programs
@@ -397,11 +400,11 @@ const Programs = () => {
                 <button
                   disabled={currentPage === 1}
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
+                  className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950 transition-colors"
                 >
                   Previous
                 </button>
-                <span className="text-xs font-medium text-slate-600 px-3">
+                <span className="text-xs font-medium text-slate-600 dark:text-slate-400 px-3">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
@@ -409,7 +412,7 @@ const Programs = () => {
                   onClick={() =>
                     setCurrentPage((p) => Math.min(totalPages, p + 1))
                   }
-                  className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
+                  className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950 transition-colors"
                 >
                   Next
                 </button>
@@ -417,12 +420,12 @@ const Programs = () => {
             )}
           </>
         ) : (
-          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8 shadow-xs">
+          <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-8 shadow-xs">
             <BookOpen className="mx-auto text-slate-300 mb-3" size={40} />
-            <h3 className="text-lg font-bold text-slate-900 mb-1">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
               No programs match your search
             </h3>
-            <p className="text-slate-500 text-sm max-w-md mx-auto mb-6">
+            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto mb-6">
               Try clearing your search keyword or switching your
               university/faculty filters to see available programs.
             </p>
@@ -435,6 +438,7 @@ const Programs = () => {
             </button>
           </div>
         )}
+        </div>
       </main>
     </Layout>
   );

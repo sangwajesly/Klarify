@@ -10,10 +10,10 @@ const BlogCard = ({ article, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden flex flex-col hover:shadow-md hover:border-orange-500/20 transition-all duration-300 cursor-pointer group"
+      className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-2xs overflow-hidden flex flex-col hover:shadow-md hover:border-orange-500/20 transition-all duration-300 cursor-pointer group"
     >
       {/* Top rounded image spanning full width */}
-      <div className="relative aspect-video w-full overflow-hidden bg-slate-100 border-b border-slate-100">
+      <div className="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800">
         <img
           src={article.image}
           alt={article.title}
@@ -26,7 +26,7 @@ const BlogCard = ({ article, onClick }) => {
       <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
         <div>
           {/* Metadata: Author • Read Time */}
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-2 font-medium">
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
             <span>{article.author}</span>
             <span>&bull;</span>
             <span className="flex items-center gap-1">
@@ -37,7 +37,7 @@ const BlogCard = ({ article, onClick }) => {
 
           {/* Title & ArrowUpRight icon */}
           <div className="flex items-start justify-between gap-3 mb-2.5">
-            <h4 className="font-extrabold text-slate-900 group-hover:text-orange-500 transition-colors text-base leading-snug tracking-tight">
+            <h4 className="font-extrabold text-slate-900 dark:text-white group-hover:text-orange-500 transition-colors text-base leading-snug tracking-tight">
               {article.title}
             </h4>
             <ArrowUpRight
@@ -47,14 +47,14 @@ const BlogCard = ({ article, onClick }) => {
           </div>
 
           {/* Teaser Description */}
-          <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-6 line-clamp-3">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6 line-clamp-3">
             {article.description}
           </p>
         </div>
 
         {/* Footer: Category Pill (left) & Date (right) */}
-        <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-          <span className="px-2.5 py-1 text-[10px] font-bold text-slate-600 bg-slate-100 rounded-lg select-none">
+        <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 mt-auto">
+          <span className="px-2.5 py-1 text-[10px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 rounded-lg select-none">
             {article.category}
           </span>
           <span className="text-xs font-semibold text-slate-400">
@@ -112,13 +112,13 @@ const Guides = () => {
       />
 
       {/* Magazine Header */}
-      <section className="bg-slate-950 text-white border-b border-slate-900 pt-28 pb-20 px-6 md:px-12 relative overflow-hidden">
+      <section className="bg-slate-950 text-white border-b border-slate-900 pt-8 pb-20 md:pt-12 px-6 md:px-12 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 dark:bg-slate-900/5 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
               <Compass size={14} />
               Orientation Guides
             </div>
@@ -143,14 +143,14 @@ const Guides = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search library..."
-              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-slate-100 text-sm focus:outline-none focus:border-orange-500 transition-all placeholder:text-slate-500"
+              className="w-full pl-11 pr-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 rounded-xl text-slate-100 text-sm focus:outline-none focus:border-orange-500 transition-all placeholder:text-slate-500 dark:text-slate-400"
             />
           </div>
         </div>
       </section>
 
       {/* Category Navigation Bar */}
-      <section className="bg-white border-b border-slate-200/80 sticky top-14.25 z-40 px-6 md:px-12">
+      <section className="bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-700/80 sticky top-14.25 z-40 px-6 md:px-12">
         <div className="max-w-6xl mx-auto flex items-center gap-2 overflow-x-auto py-3.5 hide-scrollbar">
           {categories.map((cat) => (
             <button
@@ -162,7 +162,7 @@ const Guides = () => {
               } ${
                 activeCategory === cat
                   ? "bg-slate-900 text-white shadow-sm"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:bg-slate-700"
               }`}
             >
               {cat}
@@ -171,7 +171,7 @@ const Guides = () => {
         </div>
       </section>
 
-      <section className="bg-slate-50 py-16 px-6 md:px-12">
+      <section className="bg-slate-50 dark:bg-slate-950 py-16 px-6 md:px-12">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Blog Feed Grid */}
           <div className="lg:col-span-8 space-y-8">
@@ -180,18 +180,18 @@ const Guides = () => {
                 {[1, 2].map((n) => (
                   <div
                     key={n}
-                    className="bg-white rounded-2xl border border-slate-250/80 p-5 space-y-4 animate-pulse"
+                    className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-250/80 p-5 space-y-4 animate-pulse"
                   >
-                    <div className="aspect-video w-full bg-slate-200 rounded-xl" />
-                    <div className="h-4 bg-slate-200 rounded w-1/3" />
-                    <div className="h-6 bg-slate-200 rounded w-3/4" />
-                    <div className="h-4 bg-slate-200 rounded w-full" />
+                    <div className="aspect-video w-full bg-slate-200 dark:bg-slate-700 rounded-xl" />
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/3" />
+                    <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full" />
                   </div>
                 ))}
               </div>
             ) : filteredArticles.length === 0 ? (
-              <div className="text-center py-12 bg-white rounded-3xl border border-slate-200/80 p-6">
-                <p className="text-slate-500 font-medium">
+              <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-6">
+                <p className="text-slate-500 dark:text-slate-400 font-medium">
                   No guides match your search or category selection.
                 </p>
               </div>
@@ -241,7 +241,7 @@ const Guides = () => {
                     type="email"
                     required
                     placeholder="name@gmail.com"
-                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-xs focus:outline-none focus:border-orange-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 dark:bg-slate-900/5 border border-white/10 rounded-xl text-white text-xs focus:outline-none focus:border-orange-500"
                   />
                   <button
                     type="submit"
@@ -254,14 +254,14 @@ const Guides = () => {
             </div>
 
             {/* Quick Assessment Widget */}
-            <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-2xs text-center">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 shadow-2xs text-center">
               <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 border border-orange-500/20 flex items-center justify-center mx-auto mb-4">
                 <Zap size={22} className="text-orange-500" />
               </div>
-              <h4 className="font-black text-slate-900 text-sm">
+              <h4 className="font-black text-slate-900 dark:text-white text-sm">
                 Orientation Recommender
               </h4>
-              <p className="text-xs text-slate-500 leading-relaxed mt-1.5 mb-5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1.5 mb-5">
                 Match your A-Level combination with state university programs
                 and concours across Cameroon instantly.
               </p>

@@ -445,6 +445,14 @@
       "professional": {
         "title": "Auto-formation / Professionnel",
         "subtitle": "Je veux me perfectionner ou trouver des parcours de certification professionnelle."
+      },
+      "tvee": {
+        "title": "J'ai une formation technique (TVEE / CAP / Probatoire)",
+        "subtitle": "J'ai passé un examen technique ou professionnel"
+      },
+      "highschool": {
+        "title": "Élève du secondaire / Lycéen",
+        "subtitle": "Je viens de terminer le lycée ou le secondaire"
       }
     },
     "step2": {
@@ -458,12 +466,30 @@
         "text": "Nous affinons actuellement nos recommandations de programmes pour {audience}. Cette fonctionnalite sera disponible tres prochainement. Restez a l'affut !",
         "gradAudience": "les etudiants universitaires",
         "profAudience": "les professionnels et autodidactes"
+      },
+      "tvee": {
+        "title": "Quelle est votre spécialité (Trade) ?",
+        "subtitle": "Sélectionnez la spécialité principale que vous avez étudiée au collège technique.",
+        "minSubjects": "Veuillez sélectionner votre spécialité principale pour continuer."
       }
     },
     "step3": {
-      "title": "Dans quels domaines vous interessez-vous ?",
-      "subtitle": "Selectionnez un ou plusieurs parcours professionnels ou sujets qui vous passionnent.",
-      "minInterest": "Veuillez selectionner au moins 1 domaine d'interet."
+      "alevel": {
+        "title": "Selectionnez vos matieres de Niveau A",
+        "subtitle": "Choisissez au moins 2 matieres que vous avez etudiees en terminale.",
+        "minSubjects": "Veuillez selectionner au moins 2 matieres."
+      },
+      "comingSoon": {
+        "title": "Bientot disponible",
+        "text": "Nous affinons actuellement nos recommandations de programmes pour {audience}. Cette fonctionnalite sera disponible tres prochainement. Restez a l'affut !",
+        "gradAudience": "les etudiants universitaires",
+        "profAudience": "les professionnels et autodidactes"
+      },
+      "tvee": {
+        "title": "Quelle est votre spécialité (Trade) ?",
+        "subtitle": "Sélectionnez la spécialité principale que vous avez étudiée au collège technique.",
+        "minSubjects": "Veuillez sélectionner votre spécialité principale pour continuer."
+      }
     },
     "nextStep": "Etape suivante",
     "submit": "Voir mes recommandations",
@@ -492,6 +518,29 @@
       "a3": "Les recommandations indiquent les programmes auxquels vous etes académiquement éligible. Toutefois, l'admission depend de vos notes finales et de votre performance dans les concours requis.",
       "q4": "Et si mon metier ideal n'est pas liste ?",
       "a4": "Notre base de donnees est constamment mise a jour. Si vous ne voyez pas un secteur precis, essayez de selectionner une categorie plus large comme 'Sciences' ou 'Lettres' pour trouver des filieres de base qui mènent vers votre metier ideal."
+    },
+    "track": {
+      "grammar": {
+        "title": "Enseignement Général",
+        "subtitle": "Lettres et Sciences standard"
+      },
+      "commercial": {
+        "title": "Enseignement Commercial",
+        "subtitle": "Comptabilité, Commerce, Économie"
+      },
+      "technical": {
+        "title": "Enseignement Technique (TVEE / BAC Tech)",
+        "subtitle": "Spécialités et Métiers (Bâtiment, Électricité, etc.)"
+      }
+    },
+    "step2_track": {
+      "title": "Quelle était votre filière ?",
+      "subtitle": "Sélectionnez le système éducatif que vous avez suivi."
+    },
+    "step4": {
+      "title": "Quels sont vos centres d'intérêt professionnels ?",
+      "subtitle": "Sélectionnez les domaines ou secteurs qui vous passionnent le plus.",
+      "minInterest": "Veuillez sélectionner au moins un centre d'intérêt pour continuer."
     }
   },
   "partners": {
@@ -561,5 +610,21 @@
     "error": "Une erreur s'est produite. Veuillez reessayer.",
     "backToTop": "Retour en haut",
     "language": "Langue"
+  },
+  "trades": {
+    "building_construction": "Bâtiment / Construction (Maçonnerie)",
+    "design_and_architecture": "Design et architecture",
+    "survey": "Topographie / Géomètre",
+    "electrical_installation": "Installation électrique",
+    "electrical_and_electronics": "Électricité et électronique",
+    "pharmacology": "Pharmacologie",
+    "clothing_industry": "Industrie de l'habillement / Couture",
+    "home_economics": "Économie sociale et familiale (ESF)",
+    "plumbing_and_hydraulic": "Plomberie et installation sanitaire",
+    "accounting_and_secretaryship": "Comptabilité et secrétariat",
+    "wood_work": "Menuiserie / Travail du bois",
+    "automobile_vehicles": "Mécanique automobile",
+    "mechanical_design": "Fabrication mécanique / Design mécanique",
+    "sheet_metal_works": "Chaudronnerie / Tôlerie"
   }
 }

@@ -178,7 +178,7 @@ const VerifyPhone = () => {
             </form>
 
             <div className="mt-5 text-center">
-              <p className="text-slate-500 text-xs mb-1.5">Didn't receive the code?</p>
+              <p className="text-slate-500 dark:text-slate-400 text-xs mb-1.5">Didn't receive the code?</p>
               <button
                 type="button"
                 onClick={handleResend}

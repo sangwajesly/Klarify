@@ -13,14 +13,14 @@ import {
 const Row = ({ label, value, icon }) => {
   if (!value && value !== 0) return null;
   return (
-    <div className="bg-slate-50 border border-slate-100 rounded-xl px-4 py-3">
+    <div className="bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3">
       <div className="flex items-start gap-3">
         {icon && <div className="mt-0.5 text-orange-600">{icon}</div>}
         <div>
-          <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">
+          <div className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
             {label}
           </div>
-          <div className="text-sm font-bold text-slate-900 break-words">
+          <div className="text-sm font-bold text-slate-900 dark:text-white break-words">
             {Array.isArray(value) ? value.join(", ") : value}
           </div>
         </div>
@@ -47,15 +47,15 @@ const ExamDetails = () => {
     return (
       <Layout>
         <div className="max-w-3xl mx-auto px-4 py-12">
-          <div className="flex items-center gap-2 text-sm text-slate-600">
+          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
             <ArrowLeft size={16} />
             <button className="underline" onClick={handleBackToResults}>
               Back to results
             </button>
           </div>
-          <div className="mt-6 bg-slate-50 border border-slate-200 rounded-xl p-6">
+          <div className="mt-6 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl p-6">
             <AlertCircle className="text-orange-600" size={22} />
-            <p className="mt-3 text-slate-700 font-medium">
+            <p className="mt-3 text-slate-700 dark:text-slate-300 font-medium">
               No exam details were provided.
             </p>
           </div>
@@ -67,7 +67,7 @@ const ExamDetails = () => {
   return (
     <Layout>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="flex items-center gap-2 text-sm font-medium text-slate-600 mb-6">
+        <div className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 mb-6">
           <ArrowLeft size={16} />
           <button
             className="hover:text-orange-700 transition-colors"
@@ -79,7 +79,7 @@ const ExamDetails = () => {
 
         <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 relative overflow-hidden">
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-orange-300 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 dark:bg-slate-900/10 border border-white/15 text-orange-300 text-xs font-semibold">
               <AlertCircle size={14} />
               Entrance Exam
             </div>
@@ -90,7 +90,7 @@ const ExamDetails = () => {
 
             {(examDetails.month || examDetails.deadline || examDetails.fee) && (
               <div className="mt-4 flex flex-col sm:flex-row gap-3">
-                <div className="bg-white/8 border border-white/10 rounded-xl px-4 py-3">
+                <div className="bg-white/8 dark:bg-slate-900/8 border border-white/10 rounded-xl px-4 py-3">
                   <div className="text-[11px] uppercase tracking-wider text-slate-300 font-semibold">
                     Exam Month
                   </div>
@@ -98,7 +98,7 @@ const ExamDetails = () => {
                     {examDetails.month || "-"}
                   </div>
                 </div>
-                <div className="bg-white/8 border border-white/10 rounded-xl px-4 py-3">
+                <div className="bg-white/8 dark:bg-slate-900/8 border border-white/10 rounded-xl px-4 py-3">
                   <div className="text-[11px] uppercase tracking-wider text-slate-300 font-semibold">
                     Deadline
                   </div>
@@ -106,7 +106,7 @@ const ExamDetails = () => {
                     {examDetails.deadline || "-"}
                   </div>
                 </div>
-                <div className="bg-white/8 border border-white/10 rounded-xl px-4 py-3">
+                <div className="bg-white/8 dark:bg-slate-900/8 border border-white/10 rounded-xl px-4 py-3">
                   <div className="text-[11px] uppercase tracking-wider text-slate-300 font-semibold">
                     Fee
                   </div>
@@ -155,11 +155,11 @@ const ExamDetails = () => {
         {examDetails.registration_procedure &&
           Array.isArray(examDetails.registration_procedure) &&
           examDetails.registration_procedure.length > 0 && (
-            <div className="mt-6 bg-slate-50 rounded-xl border border-slate-100 p-6">
-              <h2 className="text-base font-extrabold text-slate-900">
+            <div className="mt-6 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-100 dark:border-slate-800 p-6">
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Registration Procedure
               </h2>
-              <ol className="mt-3 list-decimal list-inside text-slate-700 text-sm space-y-2">
+              <ol className="mt-3 list-decimal list-inside text-slate-700 dark:text-slate-300 text-sm space-y-2">
                 {examDetails.registration_procedure.map((step, idx) => (
                   <li key={idx}>{step}</li>
                 ))}
@@ -183,7 +183,7 @@ const ExamDetails = () => {
             href={`https://wa.me/237672507711?text=${encodeURIComponent(`Greetings Sir, i need past questions for ${examDetails.name || "this exam"}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-semibold text-sm transition-colors"
+            className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950 font-semibold text-sm transition-colors"
           >
             View Past Questions
           </a>

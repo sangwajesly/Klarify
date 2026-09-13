@@ -14,7 +14,7 @@ export const guidesData = [
     content: [
       { type: "p", text: "You prepared. You studied past papers. You sat for the entrance exam. You imagined yourself wearing the uniform, walking through the campus, or finally joining the school you had always wanted." },
       { type: "p", text: "Then the results came out." },
-      { type: "p", text: "Your name wasn't there.", fontStyle: "bold text-slate-900" },
+      { type: "p", text: "Your name wasn't there.", fontStyle: "bold text-slate-900 dark:text-white" },
       { type: "p", text: "Suddenly, you feel lost. You don't know what to tell your parents, you don't know what to tell your friends, and worse, you don't know what you're going to do next." },
       { type: "p", text: "If this is you, take a deep breath." },
       { type: "blockquote", text: "You failed a concours. You did not fail at life." },

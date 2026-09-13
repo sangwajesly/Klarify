@@ -357,12 +357,12 @@ const PartnerDashboard = () => {
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-xs flex items-center justify-between">
             <div>
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
                 Listed Programs
               </span>
-              <span className="text-3xl font-extrabold text-slate-900">
+              <span className="text-3xl font-extrabold text-slate-900 dark:text-white">
                 {programsCount}
               </span>
             </div>
@@ -371,7 +371,7 @@ const PartnerDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-xs flex items-center justify-between">
             <div>
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
                 Active Status
@@ -385,12 +385,12 @@ const PartnerDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-xs flex items-center justify-between">
             <div>
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
                 WhatsApp Leads
               </span>
-              <span className="text-base font-bold text-slate-900">
+              <span className="text-base font-bold text-slate-900 dark:text-white">
                 Direct Contact
               </span>
             </div>
@@ -404,8 +404,8 @@ const PartnerDashboard = () => {
         {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") && (
           <div className="bg-orange-50 rounded-3xl p-6 sm:p-8 border border-orange-200 shadow-xs mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 mb-1">Upgrade your Portal Plan</h2>
-              <p className="text-sm text-slate-600">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Upgrade your Portal Plan</h2>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 You are currently on the Free Starter plan. Upgrade to unlock unlimited programs, direct WhatsApp leads, and priority ranking.
               </p>
             </div>
@@ -414,7 +414,7 @@ const PartnerDashboard = () => {
                 <>
                   <button
                     onClick={() => handleUpgrade(100, "PRO")}
-                    className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                    className="px-5 py-3 bg-white dark:bg-slate-900 border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
                   >
                     Test Upgrade PRO (100 XAF)
                   </button>
@@ -429,7 +429,7 @@ const PartnerDashboard = () => {
                 <>
                   <button
                     onClick={() => handleUpgrade(150000, "PRO")}
-                    className="px-5 py-3 bg-white border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                    className="px-5 py-3 bg-white dark:bg-slate-900 border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
                   >
                     Upgrade to PRO (150k XAF)
                   </button>
@@ -451,8 +451,8 @@ const PartnerDashboard = () => {
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-600 text-[10px] font-bold uppercase tracking-wider mb-2">
                 Active: PRO Portal
               </div>
-              <h2 className="text-lg font-bold text-slate-900 mb-1">Boost Your Visibility to FEATURED</h2>
-              <p className="text-sm text-slate-600">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Boost Your Visibility to FEATURED</h2>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 Pin your university to the top of student searches and orientation recommendations to maximize direct WhatsApp admissions leads.
               </p>
             </div>
@@ -486,25 +486,25 @@ const PartnerDashboard = () => {
         )}
 
         {/* Management Quick Actions */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs mb-8">
-          <h2 className="text-lg font-bold text-slate-900 mb-4">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-700/80 shadow-xs mb-8">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
             Portal Management Actions
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
               to="/partner/programs"
-              className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50/60 border border-slate-200/80 hover:border-orange-200 transition-all flex items-start gap-4 group"
+              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-orange-50/60 border border-slate-200/80 dark:border-slate-700/80 hover:border-orange-200 transition-all flex items-start gap-4 group"
             >
               <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shrink-0">
                 <BookOpen size={20} />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-slate-900 text-sm group-hover:text-orange-600 transition-colors flex items-center justify-between">
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm group-hover:text-orange-600 transition-colors flex items-center justify-between">
                   Manage Academic Courses
                   <ArrowRight size={16} />
                 </h3>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                   Add new Bachelor's, HNDs, or Master's programs with tuition
                   fees, prerequisites, and campus locations.
                 </p>
@@ -513,17 +513,17 @@ const PartnerDashboard = () => {
 
             <Link
               to={`/universities`}
-              className="p-5 rounded-2xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/80 hover:border-blue-200 transition-all flex items-start gap-4 group"
+              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-blue-50/60 border border-slate-200/80 dark:border-slate-700/80 hover:border-blue-200 transition-all flex items-start gap-4 group"
             >
               <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0">
                 <Building2 size={20} />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-slate-900 text-sm group-hover:text-slate-700 transition-colors flex items-center justify-between">
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm group-hover:text-slate-700 dark:text-slate-300 transition-colors flex items-center justify-between">
                   View Public Directory Listing
                   <Globe size={16} />
                 </h3>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                   See how students view your university campus and courses in
                   the main Klarify Directory.
                 </p>
@@ -563,7 +563,7 @@ const PartnerDashboard = () => {
                   </div>
 
                   {/* Pricing info badge */}
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-between">
+                  <div className="bg-white/5 dark:bg-slate-900/5 border border-white/10 rounded-2xl p-4 flex items-center justify-between">
                     <div>
                       <span className="text-xs text-slate-400">Total Price</span>
                       <span className="block text-xl font-black text-white mt-0.5">
@@ -587,7 +587,7 @@ const PartnerDashboard = () => {
                         onChange={(e) => setPayerName(e.target.value)}
                         required
                         placeholder="e.g. Sangwa Jesly"
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                       />
                     </div>
 
@@ -602,14 +602,14 @@ const PartnerDashboard = () => {
                           onChange={(e) => setPayerPhone(e.target.value)}
                           required
                           placeholder="e.g. 682833601"
-                          className="w-full pl-4 pr-16 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all placeholder:text-slate-500"
+                          className="w-full pl-4 pr-16 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all placeholder:text-slate-500 dark:text-slate-400"
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1.5 pointer-events-none select-none">
                           <span className="px-1.5 py-0.5 rounded text-[8px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">MoMo</span>
                           <span className="px-1.5 py-0.5 rounded text-[8px] font-black bg-orange-500/20 text-orange-400 border border-orange-500/30">OM</span>
                         </div>
                       </div>
-                      <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
                         Enter your Cameroonian mobile money number without country code (e.g. 6xxxxxxxx). A payment validation prompt will be pushed to your handset.
                       </p>
                     </div>
@@ -645,7 +645,7 @@ const PartnerDashboard = () => {
                       We have sent an authorization prompt to <strong className="text-white">{payerPhone}</strong>. Please check your screen, enter your Mobile Money PIN, and confirm.
                     </p>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+                  <div className="bg-white/5 dark:bg-slate-900/5 border border-white/10 rounded-2xl p-4 text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
                     <span className="text-[10px] font-black text-orange-400 uppercase block mb-1">Status</span>
                     Waiting for your handset authorization...
                   </div>
@@ -682,7 +682,7 @@ const PartnerDashboard = () => {
                   <div className="flex gap-3">
                     <button
                       onClick={() => setShowPaymentModal(false)}
-                      className="flex-1 py-3 bg-white/5 border border-white/10 text-slate-300 hover:text-white font-bold text-sm rounded-xl transition-all cursor-pointer"
+                      className="flex-1 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 text-slate-300 hover:text-white font-bold text-sm rounded-xl transition-all cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -740,7 +740,7 @@ const PartnerDashboard = () => {
                       onChange={(e) => setEditName(e.target.value)}
                       required
                       placeholder="e.g. Saint Jerome University"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                     />
                   </div>
 
@@ -755,7 +755,7 @@ const PartnerDashboard = () => {
                         onChange={(e) => setEditCity(e.target.value)}
                         required
                         placeholder="e.g. Douala"
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                       />
                     </div>
                     <div>
@@ -767,7 +767,7 @@ const PartnerDashboard = () => {
                         value={editCampus}
                         onChange={(e) => setEditCampus(e.target.value)}
                         placeholder="e.g. Main Campus"
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                       />
                     </div>
                   </div>
@@ -782,7 +782,7 @@ const PartnerDashboard = () => {
                       onChange={(e) => setEditWhatsapp(e.target.value)}
                       required
                       placeholder="e.g. 67xxxxxxx"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                     />
                   </div>
 
@@ -795,7 +795,7 @@ const PartnerDashboard = () => {
                       value={editWebsite}
                       onChange={(e) => setEditWebsite(e.target.value)}
                       placeholder="https://example.cm"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -812,7 +812,7 @@ const PartnerDashboard = () => {
                     type="button"
                     disabled={editLoading}
                     onClick={() => setShowEditModal(false)}
-                    className="flex-1 py-3 bg-white/5 border border-white/10 text-slate-300 hover:text-white font-bold text-sm rounded-xl transition-all cursor-pointer disabled:opacity-50"
+                    className="flex-1 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 text-slate-300 hover:text-white font-bold text-sm rounded-xl transition-all cursor-pointer disabled:opacity-50"
                   >
                     Cancel
                   </button>

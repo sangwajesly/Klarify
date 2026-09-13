@@ -16,7 +16,7 @@ const TYPE_FILTERS = ["All", "Entrance Required", "Upcoming Deadline"];
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { results, subjects, interest } = location.state || {};
+  const { results, subjects, interest, persona, track } = location.state || {};
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedUniversity, setSelectedUniversity] =
     useState("All Universities");
@@ -132,38 +132,35 @@ const Results = () => {
     <Layout>
       <div className="mb-8">
         <button
-          onClick={() =>
-            navigate("/flow", {
-              state: {
-                returnToSubjects: true,
-                persona: "alevel",
-                selectedSubjects: subjects || [],
-                interest: interest || [],
-              },
-            })
-          }
-          className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors mb-6"
+          onClick={() => {
+            if (window.history.state && window.history.state.idx > 0) {
+              navigate(-1);
+            } else {
+              navigate("/flow?step=4", { replace: true });
+            }
+          }}
+          className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white transition-colors mb-6 focus:outline-none"
         >
           <ArrowLeft size={16} />
           Modify Inputs
         </button>
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-8 border-b border-slate-200">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-8 border-b border-slate-200 dark:border-slate-700">
           <div>
             <span className="section-eyebrow block mb-2">Your Results</span>
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
               Your Personalized Academic Path
             </h1>
           </div>
 
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 md:max-w-md">
-            <p className="text-xs text-slate-500 leading-relaxed">
+          <div className="bg-slate-50 dark:bg-slate-950 rounded-xl p-4 border border-slate-100 dark:border-slate-800 md:max-w-md">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Based on your subjects{" "}
-              <span className="text-slate-900 font-semibold">
+              <span className="text-slate-900 dark:text-white font-semibold">
                 {subjects.join(", ")}
               </span>{" "}
               and interest in "
-              <span className="text-slate-900 font-semibold">
+              <span className="text-slate-900 dark:text-white font-semibold">
                 {Array.isArray(interest) ? interest.join(", ") : interest}
               </span>
               ", we've found the best matching programs for you.
@@ -174,7 +171,7 @@ const Results = () => {
         <div className="space-y-8">
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 shrink-0">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 shrink-0">
                 Top Recommended Programs
               </h2>
 
@@ -185,7 +182,7 @@ const Results = () => {
                     <select
                       value={selectedUniversity}
                       onChange={(e) => setSelectedUniversity(e.target.value)}
-                      className="appearance-none bg-white border border-slate-200 text-slate-700 font-semibold text-xs rounded-lg pl-3 pr-8 py-2 focus:outline-none focus:border-slate-400 cursor-pointer shadow-xs transition-colors"
+                      className="appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs rounded-lg pl-3 pr-8 py-2 focus:outline-none focus:border-slate-400 cursor-pointer shadow-xs transition-colors"
                       aria-label="Filter by University"
                     >
                       {universities.map((uni) => (
@@ -210,7 +207,7 @@ const Results = () => {
                       className={`whitespace-nowrap px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                         activeFilter === filter
                           ? "bg-slate-900 text-white"
-                          : "bg-white border border-slate-200 text-slate-600 hover:border-slate-300"
+                          : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:border-slate-600"
                       }`}
                     >
                       {filter}
@@ -233,8 +230,8 @@ const Results = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 bg-slate-50 rounded-xl border border-slate-200">
-                <p className="text-slate-500 text-sm">
+              <div className="text-center py-12 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-700">
+                <p className="text-slate-500 dark:text-slate-400 text-sm">
                   No programs match the selected filters.
                 </p>
                 <button

@@ -434,10 +434,6 @@
       "subtitle": "Select your current academic or professional status to tailor your recommendations."
     },
     "persona": {
-      "alevel": {
-        "title": "Secondary School Student",
-        "subtitle": "I have written or am preparing for the GCE A-Levels."
-      },
       "graduate": {
         "title": "University Graduate",
         "subtitle": "I have a degree and am looking for postgraduate options."
@@ -445,6 +441,14 @@
       "professional": {
         "title": "Self-Learner / Professional",
         "subtitle": "I want to upskill or find professional certification paths."
+      },
+      "tvee": {
+        "title": "I have a Technical Background (TVEE)",
+        "subtitle": "Passed Intermediate or Advanced Level Technical/Vocational Exams"
+      },
+      "highschool": {
+        "title": "High School Student",
+        "subtitle": "I just finished Secondary or High School (A-Levels / TVEE)"
       }
     },
     "step2": {
@@ -458,12 +462,30 @@
         "text": "We are currently fine-tuning our program recommendations for {audience}. This feature will be available very soon. Stay tuned!",
         "gradAudience": "University Graduates",
         "profAudience": "Professionals and Self-Learners"
+      },
+      "tvee": {
+        "title": "What is your Trade/Specialty?",
+        "subtitle": "Select the main trade you studied at the Technical College.",
+        "minSubjects": "Please select your primary trade to continue."
       }
     },
     "step3": {
-      "title": "What fields are you interested in?",
-      "subtitle": "Select one or more career paths or topics you are passionate about.",
-      "minInterest": "Please select at least 1 field of interest."
+      "alevel": {
+        "title": "Select Your A-Level Subjects",
+        "subtitle": "Choose at least 2 subjects you studied for your Advanced Levels.",
+        "minSubjects": "Please select at least 2 subjects."
+      },
+      "comingSoon": {
+        "title": "Coming Soon",
+        "text": "We are currently fine-tuning our program recommendations for {audience}. This feature will be available very soon. Stay tuned!",
+        "gradAudience": "University Graduates",
+        "profAudience": "Professionals and Self-Learners"
+      },
+      "tvee": {
+        "title": "What is your Trade/Specialty?",
+        "subtitle": "Select the main trade you studied at the Technical College.",
+        "minSubjects": "Please select your primary trade to continue."
+      }
     },
     "nextStep": "Next Step",
     "submit": "Get My Recommendations",
@@ -492,6 +514,29 @@
       "a3": "The recommendations show what programs you are academically eligible for. However, admission depends on your final grades and performance in any required concours (entrance exams).",
       "q4": "What if my desired career isn't listed?",
       "a4": "Our database is constantly updating. If you don't see a specific niche, try selecting a broader category like 'Sciences' or 'Arts' to see foundational degrees that lead to your desired career."
+    },
+    "track": {
+      "grammar": {
+        "title": "General / Grammar Education",
+        "subtitle": "Standard Arts and Sciences (GCE A-Level)"
+      },
+      "commercial": {
+        "title": "Commercial Education",
+        "subtitle": "Accounting, Commerce, Economics (GCE A-Level)"
+      },
+      "technical": {
+        "title": "Technical & Vocational (TVEE)",
+        "subtitle": "Trades and Specialties (Building, Electrical, etc.)"
+      }
+    },
+    "step2_track": {
+      "title": "What was your track?",
+      "subtitle": "Select the educational system you followed."
+    },
+    "step4": {
+      "title": "What are your career interests?",
+      "subtitle": "Select the fields or industries you are most passionate about.",
+      "minInterest": "Please select at least one interest to continue."
     }
   },
   "partners": {
@@ -561,5 +606,21 @@
     "error": "Something went wrong. Please try again.",
     "backToTop": "Back to top",
     "language": "Language"
+  },
+  "trades": {
+    "building_construction": "Building construction",
+    "design_and_architecture": "Design and architecture",
+    "survey": "Survey",
+    "electrical_installation": "Electrical installation",
+    "electrical_and_electronics": "Electrical and electronics",
+    "pharmacology": "Pharmacology",
+    "clothing_industry": "Clothing industry",
+    "home_economics": "Home economics",
+    "plumbing_and_hydraulic": "Plumbing and hydraulic",
+    "accounting_and_secretaryship": "Accounting and secretaryship",
+    "wood_work": "Wood work",
+    "automobile_vehicles": "Automobile vehicles",
+    "mechanical_design": "Mechanical design",
+    "sheet_metal_works": "Sheet metal works"
   }
 }
