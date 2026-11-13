@@ -17,17 +17,17 @@ const ConcoursRecovery = () => {
 
       {/* Guide Header Banner */}
       <section className="bg-slate-950 text-white border-b border-slate-900 pt-28 pb-16 px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-secondary-500/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="max-w-2xl mx-auto z-10 relative">
           <Link
             to="/guides"
-            className="inline-flex items-center gap-1.5 text-xs text-orange-400 font-bold uppercase tracking-widest mb-6 hover:text-orange-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-secondary-600 dark:text-secondary-400 font-bold uppercase tracking-widest mb-6 hover:text-secondary-500 dark:text-secondary-300 transition-colors"
           >
             <ArrowLeft size={12} />
             Back to Educational Guides
           </Link>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight mb-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white leading-tight mb-4">
             Failed a Concours? Here's What to Do Next
           </h1>
           <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
@@ -40,7 +40,7 @@ const ConcoursRecovery = () => {
 
       {/* Clean Single-Column Reading Body (Medium style) */}
       <article className="bg-white dark:bg-slate-900 py-12 px-6">
-        <div className="max-w-2xl mx-auto text-slate-700 dark:text-slate-300 text-base sm:text-lg leading-relaxed space-y-6">
+        <div className="max-w-2xl mx-auto text-slate-700 dark:text-slate-300 text-base sm:text-sm sm:text-base leading-relaxed space-y-6">
           <p>
             You prepared. You studied past papers. You sat for the entrance exam. You imagined yourself wearing the uniform, walking through the campus, or finally joining the school you had always wanted.
           </p>
@@ -53,7 +53,7 @@ const ConcoursRecovery = () => {
             If this is you, take a deep breath. 
           </p>
 
-          <blockquote className="border-l-4 border-orange-500 pl-4 italic text-slate-800 dark:text-slate-200 font-medium my-8">
+          <blockquote className="border-l-4 border-secondary-500 pl-4 italic text-slate-800 dark:text-slate-200 font-medium my-8">
             "You failed a concours. You did not fail at life."
           </blockquote>
 
@@ -62,7 +62,7 @@ const ConcoursRecovery = () => {
           </p>
 
           <div className="p-5 bg-slate-50 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl flex gap-3 text-sm my-6">
-            <Compass className="text-orange-500 shrink-0 mt-0.5" size={18} />
+            <Compass className="text-secondary-600 dark:text-secondary-400 shrink-0 mt-0.5" size={18} />
             <p className="text-slate-600 dark:text-slate-400">
               <strong>I know this feeling because I've been there.</strong> When I didn't make it, I felt completely lost. I thought the only door had closed. But I learned that other pathways exist, and often, they lead to even better opportunities.
             </p>
@@ -91,14 +91,14 @@ const ConcoursRecovery = () => {
           </ul>
 
           {/* Clean Inline CTA */}
-          <div className="my-8 p-6 bg-orange-50 border border-orange-200 rounded-2xl">
+          <div className="my-8 p-6 bg-secondary-50 dark:bg-secondary-950/30 border border-secondary-200 dark:border-secondary-800 rounded-2xl">
             <h4 className="font-bold text-slate-900 dark:text-white text-base">Not sure what courses you can do with your A-Levels?</h4>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               Enter your A-Level subjects and interests into Klarify to instantly discover Cameroonian university programs that fit your combination.
             </p>
             <button
               onClick={() => navigate("/flow")}
-              className="mt-4 inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer"
+              className="mt-4 inline-flex items-center gap-1.5 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer"
             >
               Explore Recommended Programs
               <ArrowRight size={14} />
@@ -168,7 +168,7 @@ export default ConcoursRecovery;
               </p>
               <Link
                 to="/gce-results"
-                className="block text-center py-2.5 bg-orange-50 text-orange-600 hover:bg-orange-100 font-bold text-xs rounded-xl border border-orange-200 transition-colors"
+                className="block text-center py-2.5 bg-secondary-50 dark:bg-secondary-950/40 text-secondary-800 dark:text-secondary-300 hover:bg-secondary-100 dark:bg-secondary-900/30 font-bold text-xs rounded-xl border border-secondary-200 dark:border-secondary-800 transition-colors"
               >
                 Search GCE Results Now &rarr;
               </Link>

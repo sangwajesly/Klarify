@@ -96,7 +96,7 @@ const ProgramDetails = () => {
     return (
       <Layout>
         <div className="flex justify-center items-center py-28">
-          <Loader2 className="animate-spin text-orange-500" size={32} />
+          <Loader2 className="animate-spin text-secondary-600 dark:text-secondary-400" size={32} />
         </div>
       </Layout>
     );
@@ -107,7 +107,7 @@ const ProgramDetails = () => {
       <Layout>
         <div className="max-w-2xl mx-auto py-16 text-center">
           <BookOpen size={48} className="mx-auto text-slate-300 mb-4" />
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+          <h1 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">
             Program Not Found
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mb-6">
@@ -115,7 +115,7 @@ const ProgramDetails = () => {
           </p>
           <Link
             to="/programs"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-sm rounded-xl transition-colors"
           >
             <ArrowLeft size={16} />
             Back to Programs Catalog
@@ -165,7 +165,7 @@ const ProgramDetails = () => {
           <div className="flex flex-col md:flex-row justify-between items-start gap-6 relative z-10">
             <div className="space-y-3 flex-1">
               {/* University pill */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 dark:bg-slate-900/10 border border-white/15 text-orange-300 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 dark:bg-slate-900/10 border border-white/15 text-secondary-500 dark:text-secondary-300 text-xs font-semibold">
                 <Building2 size={14} />
                 {program.university}
               </div>
@@ -177,18 +177,18 @@ const ProgramDetails = () => {
               <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-300 pt-1">
                 {program.faculty && (
                   <div className="flex items-center gap-1.5">
-                    <GraduationCap size={16} className="text-orange-400" />
+                    <GraduationCap size={16} className="text-secondary-600 dark:text-secondary-400" />
                     <span>{program.faculty}</span>
                   </div>
                 )}
                 {program.degreeObtained && (
                   <div className="flex items-center gap-1.5">
-                    <Award size={16} className="text-orange-400" />
+                    <Award size={16} className="text-secondary-600 dark:text-secondary-400" />
                     <span>{program.degreeObtained}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1.5">
-                  <Clock size={16} className="text-orange-400" />
+                  <Clock size={16} className="text-secondary-600 dark:text-secondary-400" />
                   <span>{program.duration}</span>
                 </div>
               </div>
@@ -201,7 +201,7 @@ const ProgramDetails = () => {
                 disabled={isSaving}
                 className={`p-3 rounded-xl border transition-all flex items-center gap-2 text-xs font-bold ${
                   isSaved
-                    ? "bg-orange-500 border-orange-500 text-white"
+                    ? "bg-secondary-500 border-secondary-500 text-white"
                     : "bg-white/10 dark:bg-slate-900/10 border-white/20 text-white hover:bg-white/20 dark:bg-slate-900/20"
                 }`}
               >
@@ -214,7 +214,7 @@ const ProgramDetails = () => {
                   href={program.portalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-400 text-white px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md shadow-orange-500/25"
+                  className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md shadow-secondary-500/25"
                 >
                   Visit Official Portal
                   <ExternalLink size={16} />
@@ -231,7 +231,7 @@ const ProgramDetails = () => {
             {/* Overview */}
             <section className="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-7 border border-slate-100 dark:border-slate-800 shadow-xs">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                <BookOpen size={20} className="text-orange-500" />
+                <BookOpen size={20} className="text-secondary-600 dark:text-secondary-400" />
                 Program Overview
               </h2>
               <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
@@ -256,40 +256,40 @@ const ProgramDetails = () => {
 
             {/* Entrance Exam / Concours Section if required */}
             {program.requiresConcours && program.examDetails && (
-              <section className="relative overflow-hidden rounded-2xl border border-blue-200 bg-linear-to-r from-blue-50 via-cyan-50/60 to-white p-6 sm:p-7 shadow-sm">
+              <section className="relative overflow-hidden rounded-2xl border border-primary-200 bg-linear-to-r from-primary-50 via-cyan-50/60 to-white p-6 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
                     <Award size={22} />
                   </div>
                   <div>
                     <h2 className="text-base font-bold text-slate-900 dark:text-white">
                       National Entrance Exam Required
                     </h2>
-                    <p className="text-xs font-semibold text-blue-600">
+                    <p className="text-xs font-semibold text-primary-600">
                       {program.examDetails.name}
                     </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 mb-6">
-                  <div className="bg-white/80 dark:bg-slate-900/80 rounded-xl p-3 border border-blue-100 text-center">
-                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">
+                  <div className="bg-white/80 dark:bg-slate-900/80 rounded-xl p-3 border border-primary-100 text-center">
+                    <span className="block text-[10px] uppercase font-bold text-primary-600/80 mb-0.5">
                       Exam Month
                     </span>
                     <span className="block text-sm font-bold text-slate-900 dark:text-white">
                       {program.examDetails.month || "June / July"}
                     </span>
                   </div>
-                  <div className="bg-white/80 dark:bg-slate-900/80 rounded-xl p-3 border border-blue-100 text-center">
-                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">
+                  <div className="bg-white/80 dark:bg-slate-900/80 rounded-xl p-3 border border-primary-100 text-center">
+                    <span className="block text-[10px] uppercase font-bold text-primary-600/80 mb-0.5">
                       Deadline
                     </span>
                     <span className="block text-sm font-bold text-slate-900 dark:text-white">
                       {program.examDetails.deadline || "Varies"}
                     </span>
                   </div>
-                  <div className="bg-white/80 dark:bg-slate-900/80 rounded-xl p-3 border border-blue-100 text-center">
-                    <span className="block text-[10px] uppercase font-bold text-blue-600/80 mb-0.5">
+                  <div className="bg-white/80 dark:bg-slate-900/80 rounded-xl p-3 border border-primary-100 text-center">
+                    <span className="block text-[10px] uppercase font-bold text-primary-600/80 mb-0.5">
                       Exam Fee
                     </span>
                     <span className="block text-sm font-bold text-slate-900 dark:text-white">
@@ -305,7 +305,7 @@ const ProgramDetails = () => {
                         state: { examDetails: program.examDetails },
                       })
                     }
-                    className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 hover:bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold px-4 py-2.5 rounded-xl transition-colors shadow-xs"
+                    className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 hover:bg-primary-50 text-primary-700 border border-primary-200 text-xs font-bold px-4 py-2.5 rounded-xl transition-colors shadow-xs"
                   >
                     <ExternalLink size={14} />
                     View Full Exam Guidelines & Documents
@@ -315,7 +315,7 @@ const ProgramDetails = () => {
                     href={`https://wa.me/237672507711?text=${encodeURIComponent(`Hello Sir, I need past questions for ${program.name} (${program.examDetails.name})`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors shadow-xs"
+                    className="inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors shadow-xs"
                   >
                     Get Past Questions on WhatsApp
                   </a>
@@ -326,7 +326,7 @@ const ProgramDetails = () => {
             {/* Potential Careers */}
             <section className="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-7 border border-slate-100 dark:border-slate-800 shadow-xs">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                <Briefcase size={20} className="text-orange-500" />
+                <Briefcase size={20} className="text-secondary-600 dark:text-secondary-400" />
                 Target Careers & Job Roles
               </h2>
               {program.careers && program.careers.length > 0 ? (
@@ -405,14 +405,14 @@ const ProgramDetails = () => {
 
             {/* University Link Card */}
             <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-xs text-center">
-              <Building2 className="mx-auto text-orange-500 mb-2" size={32} />
+              <Building2 className="mx-auto text-secondary-600 dark:text-secondary-400 mb-2" size={32} />
               <h4 className="font-bold text-slate-900 dark:text-white text-sm mb-1">
                 {program.university}
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{program.faculty}</p>
               <Link
                 to={`/universities`}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary-700 dark:text-secondary-400 hover:text-secondary-800 dark:text-secondary-300 transition-colors"
               >
                 View All Programs at this University ➔
               </Link>
@@ -423,7 +423,7 @@ const ProgramDetails = () => {
         {/* Related Programs Section */}
         {relatedPrograms.length > 0 && (
           <section className="pt-8 border-t border-slate-200 dark:border-slate-700">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-6">
               Related Programs You Might Like
             </h2>
             <div className="grid grid-cols-1 gap-4">

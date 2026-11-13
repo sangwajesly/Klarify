@@ -97,13 +97,28 @@ export function AuthProvider({ children }) {
   };
 
   const signInWithGoogle = async () => {
+    return signInWithOAuthProvider("google");
+  };
+
+  const signInWithOAuthProvider = async (provider) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
+      provider,
       options: {
         redirectTo: `${window.location.origin}/flow`,
       },
     });
     if (error) throw error;
+    return data;
+  };
+
+  const updateUserProfile = async (updates) => {
+    const { data, error } = await supabase.auth.updateUser({
+      data: updates,
+    });
+    if (error) throw error;
+    if (data?.user) {
+      setUser(data.user);
+    }
     return data;
   };
 
@@ -119,6 +134,8 @@ export function AuthProvider({ children }) {
         signInWithPhone,
         signOut,
         signInWithGoogle,
+        signInWithOAuthProvider,
+        updateUserProfile,
       }}
     >
       {children}

@@ -16,6 +16,8 @@ import Layout from "../components/Layout";
 import ProgressBar from "../components/ProgressBar";
 import SubjectSelector from "../components/SubjectSelector";
 import TradeSelector from "../components/TradeSelector";
+import SkillSelector from "../components/SkillSelector";
+import SkillPreferenceSelector from "../components/SkillPreferenceSelector";
 import InterestSelector from "../components/InterestSelector";
 import LoadingScreen from "../components/LoadingScreen";
 import SEOHead from "../components/SEOHead";
@@ -26,44 +28,44 @@ import { useLanguage } from "../context/LanguageContext";
 const PersonaButton = ({ icon: Icon, title, subtitle, selected, onClick }) => (
   <button
     onClick={onClick}
-    className={`group w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all duration-200 cursor-pointer ${
+    className={`group w-full flex items-center gap-4 p-5 rounded-[1.75rem] border transition-all duration-200 cursor-pointer ${
       selected
-        ? "border-orange-500 bg-orange-50/40 shadow-sm"
-        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-200 hover:bg-orange-50/10"
+        ? "border-primary-500 bg-primary-50/50 dark:bg-primary-950/30 shadow-xs ring-1 ring-primary-500/40"
+        : "border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50/50 dark:hover:bg-slate-800/40"
     }`}
   >
     <div
-      className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+      className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-colors ${
         selected
-          ? "bg-orange-500 text-white"
-          : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 group-hover:bg-orange-100 group-hover:text-orange-500"
+          ? "bg-primary-500 text-white font-black shadow-xs"
+          : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 group-hover:bg-slate-200/80 dark:group-hover:bg-slate-700/60 group-hover:text-slate-900 dark:group-hover:text-white"
       }`}
     >
       <Icon size={20} />
     </div>
-    <div className="flex-1">
+    <div className="flex-1 text-left min-w-0">
       <h3
-        className={`font-bold text-sm transition-colors ${selected ? "text-slate-900 dark:text-white" : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:hover:text-white dark:text-white"}`}
+        className={`font-bold text-sm sm:text-base transition-colors ${selected ? "text-slate-900 dark:text-white" : "text-slate-800 dark:text-slate-200 group-hover:text-primary-600 dark:group-hover:text-white"}`}
       >
         {title}
       </h3>
-      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
         {subtitle}
       </p>
     </div>
     <div
-      className={`ml-auto w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all ${
+      className={`ml-auto w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${
         selected
-          ? "bg-orange-500 ring-2 ring-orange-500 ring-offset-2"
-          : "border-2 border-slate-300 dark:border-slate-600 group-hover:border-orange-300"
+          ? "bg-primary-500 text-white shadow-xs"
+          : "border-2 border-slate-300 dark:border-slate-600 group-hover:border-slate-400"
       }`}
     >
       {selected && (
-        <svg className="w-3 h-3 text-white" viewBox="0 0 10 10" fill="none">
+        <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 10 10" fill="none">
           <path
             d="M1.5 5L4 7.5L8.5 2.5"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
@@ -111,13 +113,21 @@ const InputFlow = () => {
   const [interest, setInterest] = useState(() => {
     try { return JSON.parse(sessionStorage.getItem('flow_interest')) || []; } catch { return []; }
   });
+  const [userSkills, setUserSkills] = useState(() => {
+    try { return JSON.parse(sessionStorage.getItem('flow_user_skills')) || []; } catch { return []; }
+  });
+  const [skillPreferences, setSkillPreferences] = useState(() => {
+    try { return JSON.parse(sessionStorage.getItem('flow_user_preferences')) || { workMode: "all", preferredCity: "Douala", budgetType: "all" }; } catch { return { workMode: "all", preferredCity: "Douala", budgetType: "all" }; }
+  });
 
   useEffect(() => {
     sessionStorage.setItem('flow_persona', persona);
     sessionStorage.setItem('flow_track', track);
     sessionStorage.setItem('flow_subjects', JSON.stringify(selectedSubjects));
     sessionStorage.setItem('flow_interest', JSON.stringify(interest));
-  }, [persona, track, selectedSubjects, interest]);
+    sessionStorage.setItem('flow_user_skills', JSON.stringify(userSkills));
+    sessionStorage.setItem('flow_user_preferences', JSON.stringify(skillPreferences));
+  }, [persona, track, selectedSubjects, interest, userSkills, skillPreferences]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -128,8 +138,12 @@ const InputFlow = () => {
   const handleNext = () => {
     if (step === 1 && persona) {
       setStep(2);
-    } else if (step === 2 && persona === "highschool" && track) {
-      setStep(3);
+    } else if (step === 2) {
+      if (persona === "highschool" && track) {
+        setStep(3);
+      } else if (persona === "professional" && userSkills.length >= 1) {
+        setStep(3);
+      }
     } else if (step === 3 && persona === "highschool") {
       if (track === "technical" && selectedSubjects.length >= 1) {
         setStep(4);
@@ -137,6 +151,15 @@ const InputFlow = () => {
         setStep(4);
       }
     }
+  };
+
+  const handleSubmitSkills = () => {
+    if (userSkills.length === 0) return;
+    sessionStorage.setItem('flow_user_skills', JSON.stringify(userSkills));
+    sessionStorage.setItem('flow_user_preferences', JSON.stringify(skillPreferences));
+    navigate("/skills-results", {
+      state: { skills: userSkills, preferences: skillPreferences },
+    });
   };
 
   const handleBack = () => {
@@ -232,7 +255,7 @@ const InputFlow = () => {
           <span className="section-eyebrow block mb-3">
             {t("flow.intro.eyebrow")}
           </span>
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3">
             {t("flow.intro.heading")}
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed">
@@ -250,7 +273,7 @@ const InputFlow = () => {
             {step === 1 ? t("flow.backHome") : t("flow.previousStep")}
           </button>
 
-          <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 sm:p-7 md:p-9 shadow-sm border border-slate-100 dark:border-slate-800 min-h-[400px] flex flex-col">
+          <div className="bg-white dark:bg-[#0F1626] rounded-[2.5rem] p-6 sm:p-8 md:p-10 shadow-sm border border-slate-200/80 dark:border-slate-800 min-h-[420px] flex flex-col">
             <ProgressBar currentStep={step} totalSteps={totalSteps} />
 
             <div className="flex-1 relative mt-2">
@@ -266,7 +289,7 @@ const InputFlow = () => {
                     exit="exit"
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">
                       {t("flow.step1.title")}
                     </h2>
                     <p className="text-slate-500 dark:text-slate-400 text-sm mb-7">
@@ -333,7 +356,7 @@ const InputFlow = () => {
                   >
                     {persona === "highschool" ? (
                       <>
-                        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                        <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">
                           {t("flow.step2_track.title")}
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 text-sm mb-7">
@@ -379,24 +402,37 @@ const InputFlow = () => {
                           />
                         </div>
                       </>
+                    ) : persona === "professional" ? (
+                      <>
+                        <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">
+                          Select Your Current Skills
+                        </h2>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
+                          Pick the tools and competencies you already have. We will evaluate market demand and map out the exact skills you need to land remote contracts and top local roles.
+                        </p>
+
+                        <SkillSelector
+                          selectedSkills={userSkills}
+                          onChange={setUserSkills}
+                        />
+
+                        {userSkills.length === 0 && (
+                          <p className="text-xs text-amber-600 dark:text-amber-400 mt-4" role="alert">
+                            Please select at least 1 skill to continue.
+                          </p>
+                        )}
+                      </>
                     ) : (
                       <div className="flex flex-col items-center justify-center py-10 text-center h-full">
-                        <div className="w-14 h-14 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center mb-5">
-                          {persona === "graduate" ? (
-                            <BookOpen size={28} />
-                          ) : (
-                            <User size={28} />
-                          )}
+                        <div className="w-14 h-14 bg-secondary-50 dark:bg-secondary-950/40 text-secondary-800 dark:text-secondary-300 rounded-xl flex items-center justify-center mb-5">
+                          <BookOpen size={28} />
                         </div>
-                        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+                        <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-3">
                           {t("flow.step3.comingSoon.title")}
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm leading-relaxed">
                           {t("flow.step3.comingSoon.text", {
-                            audience:
-                              persona === "graduate"
-                                ? t("flow.step3.comingSoon.gradAudience")
-                                : t("flow.step3.comingSoon.profAudience"),
+                            audience: t("flow.step3.comingSoon.gradAudience"),
                           })}
                         </p>
                       </div>
@@ -405,7 +441,7 @@ const InputFlow = () => {
                 )}
 
                 {/* STEP 3 */}
-                {step === 3 && persona === "highschool" && (
+                {step === 3 && (
                   <motion.div
                     key="step3"
                     custom={direction}
@@ -415,9 +451,23 @@ const InputFlow = () => {
                     exit="exit"
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    {track === "technical" ? (
+                    {persona === "professional" ? (
                       <>
-                        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                        <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">
+                          Work Mode & Learning Preferences
+                        </h2>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
+                          Choose whether you want to prioritize global remote jobs in USD/EUR, local physical opportunities in Cameroon, or both.
+                        </p>
+
+                        <SkillPreferenceSelector
+                          preferences={skillPreferences}
+                          onChange={setSkillPreferences}
+                        />
+                      </>
+                    ) : track === "technical" ? (
+                      <>
+                        <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">
                           {t("flow.step3.tvee.title")}
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 text-sm mb-7">
@@ -430,14 +480,14 @@ const InputFlow = () => {
                         />
 
                         {selectedSubjects.length === 0 && (
-                          <p className="text-xs text-orange-500 mt-4" role="alert">
+                          <p className="text-xs text-secondary-600 dark:text-secondary-400 mt-4" role="alert">
                             {t("flow.step3.tvee.minSubjects")}
                           </p>
                         )}
                       </>
                     ) : (
                       <>
-                        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                        <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">
                           {t("flow.step3.alevel.title")}
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 text-sm mb-7">
@@ -451,7 +501,7 @@ const InputFlow = () => {
                         />
 
                         {selectedSubjects.length > 0 && selectedSubjects.length < 2 && (
-                          <p className="text-xs text-orange-500 mt-4" role="alert">
+                          <p className="text-xs text-secondary-600 dark:text-secondary-400 mt-4" role="alert">
                             {t("flow.step3.alevel.minSubjects")}
                           </p>
                         )}
@@ -471,7 +521,7 @@ const InputFlow = () => {
                     exit="exit"
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">
                       {t("flow.step4.title")}
                     </h2>
                     <p className="text-slate-500 dark:text-slate-400 text-sm mb-7">
@@ -484,7 +534,7 @@ const InputFlow = () => {
                     />
 
                     {interest.length === 0 && (
-                      <p className="text-xs text-orange-500 mt-4" role="alert">
+                      <p className="text-xs text-secondary-600 dark:text-secondary-400 mt-4" role="alert">
                         {t("flow.step4.minInterest")}
                       </p>
                     )}
@@ -510,14 +560,23 @@ const InputFlow = () => {
                   {t("flow.nextStep")}
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
-              ) : step === 2 && persona === "highschool" ? (
+              ) : step === 2 ? (
                 <button
                   onClick={handleNext}
-                  disabled={!track}
-                  className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2 py-3.5"
+                  disabled={persona === "highschool" ? !track : userSkills.length === 0}
+                  className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2 py-3.5 cursor-pointer disabled:opacity-50"
                   aria-label={t("flow.nextStep")}
                 >
                   {t("flow.nextStep")}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </button>
+              ) : step === 3 && persona === "professional" ? (
+                <button
+                  onClick={handleSubmitSkills}
+                  disabled={userSkills.length === 0}
+                  className="btn-secondary w-full sm:w-auto bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-black flex items-center justify-center gap-2 py-3.5 shadow-lg shadow-secondary-500/25 cursor-pointer"
+                >
+                  Generate Career Blueprint
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
               ) : step === 3 && persona === "highschool" ? (
@@ -534,7 +593,7 @@ const InputFlow = () => {
                 <button
                   onClick={handleSubmit}
                   disabled={interest.length === 0}
-                  className="btn-primary w-full sm:w-auto bg-orange-500 hover:bg-orange-400 flex items-center justify-center gap-2 py-3.5"
+                  className="btn-secondary w-full sm:w-auto bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-black flex items-center justify-center gap-2 py-3.5 shadow-lg shadow-secondary-500/25 cursor-pointer"
                   aria-label="Submit for recommendations"
                 >
                   {t("flow.submit")}
@@ -557,8 +616,8 @@ const InputFlow = () => {
                 { label: t("flow.benefits.concours.label"), detail: t("flow.benefits.concours.detail") },
               ].map(({ label, detail }) => (
                 <li key={label} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check size={12} className="text-orange-600" />
+                  <div className="w-5 h-5 rounded-full bg-secondary-100 dark:bg-secondary-900/30 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check size={12} className="text-secondary-700 dark:text-secondary-400" />
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     <strong className="text-slate-800 dark:text-slate-200">{label}:</strong> {detail}

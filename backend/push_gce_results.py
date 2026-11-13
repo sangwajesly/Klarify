@@ -1,5 +1,5 @@
 """
-GCE Results 2026 — PDF Extractor & Supabase Uploader
+GCE Results 2026 - PDF Extractor & Supabase Uploader
 =====================================================
 Parses all 4 GCE result PDFs (OL, AL, TVEE-AL, TVEE-IL) and
 uploads the structured candidate records to Supabase in batches.
@@ -173,7 +173,7 @@ def upload_to_supabase(supabase: Client, records: list[dict], exam_type: str):
                 supabase.table("gce_results").insert(batch).execute()
                 inserted += len(batch)
                 print(f"    Uploaded {inserted:,}/{total:,}...", end="\r")
-                break  # success — move to next batch
+                break  # success - move to next batch
             except Exception as e:
                 if attempt < MAX_RETRIES:
                     wait = 2 ** attempt  # 2s, 4s, 8s

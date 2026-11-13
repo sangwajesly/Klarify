@@ -1,9 +1,14 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  server: {
+    host: true,
+    allowedHosts: true,
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -11,7 +16,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg", "pwa-icon.svg"],
       manifest: {
-        name: "Klarify — Academic Orientation for Cameroon",
+        name: "Klarify - Academic Orientation for Cameroon",
         short_name: "Klarify",
         description:
           "Search GCE results, get university program recommendations, and explore Concours guides for Cameroonian students.",

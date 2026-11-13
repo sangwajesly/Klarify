@@ -34,50 +34,51 @@
       "long": "Verifier vos resultats GCE maintenant.",
       "searchNow": "Rechercher"
     },
-    "badge": "Plateforme d'orientation academique N1 au Cameroun",
-    "headline": "Trouvez votre prochaine etape",
-    "headlineSub": "Apres le secondaire ou l'universite",
-    "subtext": "Arretez de deviner la suite. Decouvrez les meilleures filieres universitaires, concours professionnels et parcours de carriere au Cameroun, adaptes precisement a votre profil et vos objectifs.",
+    "badge": "Plateforme leader d'orientation académique et professionnelle au Cameroun",
+    "headline": "Trouvez votre voie claire",
+    "headlineHighlight": "vers les diplômes, compétences & carrières",
+    "headlineSub": "",
+    "subtext": "Que vous terminiez le secondaire, soyez diplômé de l'université ou développiez des compétences recherchées, Klarify guide votre prochaine étape avec clarté et précision.",
     "ctaPrimary": "Commencer gratuitement",
-    "ctaSubtext": "Seulement 2 minutes - aucune carte bancaire requise.",
+    "ctaSubtext": "Prend seulement 2 minutes. Sans carte ni compte requis pour démarrer.",
     "trustedBy": "Fait confiance par",
     "students": "etudiants",
     "aboutSection": {
       "eyebrow": "A propos de Klarify",
-      "heading": "La plateforme educative de reference au Cameroun",
-      "p1": "Klarify est concu pour combler le fosse entre l'enseignement secondaire et la reussite professionnelle. Chaque annee, des milliers d'etudiants camerounais peinent a naviguer dans le systeme d'enseignement superieur complexe.",
-      "p2": "Nous resolvons cela en fournissant un moteur de recommandation intelligent et personnalise qui analyse vos forces academiques (comme les matieres du GCE A-Level) et vos interets personnels pour suggerer les meilleures filieres universitaires publiques et privees, concours et parcours de carriere au Cameroun."
+      "heading": "La première plateforme d'orientation académique et professionnelle au Cameroun",
+      "p1": "Klarify comble le fossé entre les études académiques et la réussite professionnelle. Que vous choisissiez votre première filière, prépariez un concours, exploriez des masters ou développiez des compétences recherchées, nous offrons une orientation claire et validée.",
+      "p2": "Notre moteur d'orientation intelligent analyse vos forces académiques (matières du GCE A-Level, filières universitaires) et vos compétences pour recommander des programmes accrédités, des bootcamps certifiés et des opportunités locales ou internationales."
     },
     "features": {
-      "eyebrow": "Comment ca marche",
-      "heading": "Du GCE A-Level a votre carriere en 3 etapes",
+      "eyebrow": "Comment ça marche",
+      "heading": "Votre parcours guidé en 3 étapes claires",
       "step1": {
-        "title": "Entrez votre profil",
-        "description": "Dites-nous vos matieres du GCE A-Level, vos notes et les domaines qui vous interessent le plus."
+        "title": "1. Indiquez votre profil",
+        "description": "Choisissez votre niveau : diplômé du secondaire, titulaire d'une licence ou professionnel cherchant à monter en compétences."
       },
       "step2": {
-        "title": "Obtenez des recommandations",
-        "description": "Notre moteur associe votre profil aux filieres universitaires, concours et parcours de carriere auxquels vous etes eligible."
+        "title": "2. Analyse intelligente des opportunités",
+        "description": "Notre système compare vos matières ou compétences aux exigences des universités, des concours officiels et du marché."
       },
       "step3": {
-        "title": "Explorez et postulez",
-        "description": "Plongez dans les details des programmes, les conditions des concours et contactez directement les institutions."
+        "title": "3. Feuille de route et candidature",
+        "description": "Accédez aux portails d'admission, aux épreuves de concours, aux formations certifiantes et aux stages locaux ou en télétravail."
       }
     },
     "whySection": {
       "eyebrow": "Pourquoi Klarify",
-      "heading": "Concu pour l'experience de l'etudiant camerounais",
+      "heading": "Conçu pour chaque étape de votre parcours",
       "card1": {
-        "title": "Correspondance basee sur le GCE",
-        "description": "Notre base de donnees est construite specifiquement autour des combinaisons de matieres GCE A/L et O/L du Cameroun pour des verifications d'eligibilite precises."
+        "title": "Orientation multi-niveaux",
+        "description": "Des parcours adaptés aux bacheliers, diplômés d'université et autodidactes souhaitant se perfectionner."
       },
       "card2": {
-        "title": "Resultats instantanes",
-        "description": "Plus besoin de parcourir des PDF. Obtenez vos resultats GCE et des recommandations de programmes en quelques secondes."
+        "title": "Opportunités locales et internationales",
+        "description": "Découvrez des universités accréditées au Cameroun ainsi que des stages en télétravail et formations mondiales."
       },
       "card3": {
-        "title": "Donnees fiables",
-        "description": "Toutes les donnees des institutions, les conditions des concours et les perspectives de carriere sont verifiees et regulierement mises a jour."
+        "title": "Données vérifiées et fiables",
+        "description": "Tous les critères d'admissibilité, dates de concours et frais de scolarité sont continuellement actualisés."
       }
     },
     "partnerPromo": {
@@ -354,9 +355,9 @@
   "about": {
     "hero": {
       "badge": "Notre histoire",
-      "title": "Construit par des etudiants,",
-      "titleHighlight": "Pour les etudiants",
-      "text": "Klarify est nee le jour des resultats, au milieu des celebrations, de la confusion et de la question silencieuse que personne ne pouvait repondre :",
+      "title": "Le pont entre éducation et",
+      "titleHighlight": "réussite professionnelle",
+      "text": "Klarify est né d'un constat simple : le Cameroun regorge de talents ambitieux, mais beaucoup se perdent entre le secondaire, l'université et les réalités du marché du travail.",
       "quote": "Que faire ensuite ?"
     },
     "story": {
@@ -400,20 +401,20 @@
     },
     "platform": {
       "eyebrow": "La plateforme",
-      "heading": "Ce que fait Klarify",
-      "text": "Nous construisons la plateforme d'orientation academique et de resultats la plus complete du Cameroun, fonctionnalite par fonctionnalite.",
+      "heading": "Les trois piliers de Klarify",
+      "text": "Nous connectons apprenants, établissements et entreprises pour bâtir l'infrastructure de talents la plus fiable au Cameroun.",
       "cards": {
         "gce": {
-          "title": "Recherche de resultats GCE",
-          "desc": "Recherchez instantanement vos resultats GCE O/L, A/L et TVE par nom, sans PDF ni stress."
+          "title": "Orientation académique et GCE",
+          "desc": "Consultation instantanée des résultats du GCE et orientation universitaire précise selon vos combinaisons réelles."
         },
         "orientation": {
-          "title": "Orientation academique",
-          "desc": "Selon vos matieres de Niveau A et vos centres d'interet, obtenez des recommandations personnalisees de filieres universitaires conformes au systeme educatif camerounais."
+          "title": "Évaluation des compétences et passerelles",
+          "desc": "Comparez vos compétences à la demande du marché et comblez vos lacunes grâce à des formations certifiées et des stages."
         },
         "concours": {
-          "title": "Guides concours et carriere",
-          "desc": "Obtenez les details sur les examens d'entree, les delais, les frais et les parcours de carriere auxquels chaque programme conduit."
+          "title": "Réseau de partenaires vérifiés",
+          "desc": "Une plateforme reliant universités accréditées, académies technologiques, centres de formation et recruteurs aux talents émergents."
         }
       },
       "cta": "Commencer mon evaluation gratuite",
@@ -545,64 +546,64 @@
   },
   "partners": {
     "hero": {
-      "badge": "Portail partenaire des universites privees",
-      "heading1": "Atteignez des",
-      "heading2": "etudiants A-Level",
-      "heading3": "au moment ou ils decident",
-      "text": "Rejoignez les meilleurs instituts prives du Cameroun (IPES). Créez votre campus, téléchargez vos programmes de licence et de BTS, affichez vos frais de scolarite et recevez des demandes directes sur WhatsApp depuis votre tableau de bord partenaire.",
-      "primaryCta": "Inscrire votre universite",
-      "login": "Connexion institution",
+      "badge": "Réseau Partenaire Klarify : Universités, Académies Tech & Centres Professionnels",
+      "heading1": "Former, Enseigner & Recruter",
+      "heading2": "Les Meilleurs Talents du Cameroun",
+      "heading3": "Connectez-vous aux Étudiants et Professionnels",
+      "text": "Que vous dirigiez une université privée, une académie technologique certifiée, un centre de formation professionnelle ou une entreprise : Klarify relie directement vos programmes aux étudiants et professionnels motivés.",
+      "primaryCta": "Inscrire votre organisation",
+      "login": "Connexion Portail Partenaire",
       "featuresCta": "Voir les fonctionnalites du portail"
     },
     "value": {
       "eyebrow": "Pourquoi nous choisir ?",
-      "heading": "Concu pour les instituts prives camerounais (IPES)",
+      "heading": "Pourquoi les meilleures organisations choisissent Klarify",
       "cards": [
         {
-          "title": "Correspondance intelligente des etudiants",
-          "desc": "Lorsque les etudiants saisissent leurs combinaisons de matieres du GCE A-Level, notre moteur met en avant directement les programmes universitaires auxquels ils sont admissibles."
+          "title": "Visibilité Immédiate",
+          "desc": "Touchez les bacheliers et chercheurs d'emploi recherchant des diplômes universitaires, des bootcamps de code et des formations professionnelles."
         },
         {
-          "title": "Leads WhatsApp directs",
-          "desc": "Les etudiants peuvent cliquer sur un bouton unique sur vos fiches de programme pour discuter directement avec votre bureau d'admissions ou votre secretaire sur WhatsApp."
+          "title": "Contacts WhatsApp Directs",
+          "desc": "Supprimez les formalités fastidieuses. Les candidats intéressés contactent directement vos admissions sur WhatsApp avec des messages pré-remplis."
         },
         {
-          "title": "Service autonome complet",
-          "desc": "Fini les mises a jour manuelles. Ajoutez, modifiez ou supprimez les programmes de votre campus, les frais de scolarite et les dates d'admission directement depuis votre tableau de bord."
+          "title": "Correspondance Intelligente",
+          "desc": "Notre IA évalue les matières et les compétences des utilisateurs pour recommander directement vos programmes aux profils adaptés."
         }
       ]
     },
     "pricing": {
-      "eyebrow": "Tarification transparente",
-      "heading": "Plans de listing simples",
-      "subtitle": "Paiements securises via Mobile Money (MTN MoMo et Orange Money).",
-      "starter": "Debutant",
-      "basicListing": "Listing de base",
+      "eyebrow": "Tarification Partenaire Flexible",
+      "heading": "Des formules adaptées à chaque structure",
+      "subtitle": "De l'inscription gratuite aux forfaits flexibles par cohorte et aux abonnements universitaires annuels. Paiements mobiles sécurisés via MTN MoMo et Orange Money.",
+      "starter": "Démarrage Gratuit",
+      "basicListing": "Inscription Gratuite",
       "free": "Gratuit",
-      "idealFor": "Idee pour les petits instituts prives en demarrage.",
-      "listUpTo3": "Jusqu'a 3 programmes",
-      "basicCampus": "Profil campus et ville de base",
+      "idealFor": "Idéal pour les nouveaux centres, écoles et entreprises souhaitant tester la plateforme.",
+      "listUpTo3": "Publiez jusqu'à 3 programmes, cours ou offres de stage",
+      "basicCampus": "Profil d'organisation, ville et localisation",
       "whatsappLead": "Bouton de lead WhatsApp",
       "getStartedFree": "Commencer gratuitement",
       "mostPopular": "Le plus populaire",
-      "proPartner": "Partenaire Pro",
-      "unlimited": "IPES illimites",
-      "annual": "/ an",
-      "fullFeatures": "Fonctionnalites complètes pour les universites en croissance.",
-      "directWhatsApp": "Bouton de lead WhatsApp direct",
-      "displayFees": "Affichage des frais de scolarite annuels et des delais",
-      "verifiedBadge": "Badge institution verifiee",
-      "registerProCampus": "Inscrire un campus Pro",
-      "featured": "En vedette",
-      "featuredCampus": "Campus vedette",
-      "maxVisibility": "Visibilite maximale pendant la publication des resultats GCE.",
-      "everythingInPro": "Tout ce qu'il y a dans le plan Pro",
-      "topPriority": "Classement prioritaire dans le recommandeur",
-      "featuredBanner": "Bannière mise en avant sur la page d'accueil",
-      "getFeatured": "Être mis en avant",
-      "ctaHeading": "Pret a lister vos programmes?",
-      "ctaText": "La configuration prend moins de 3 minutes. Commencez a ajouter votre campus et vos cours universitaires aujourd'hui.",
-      "ctaButton": "Creer un compte partenaire"
+      "proPartner": "Pass Cohorte Flexible",
+      "unlimited": "Bootcamps & Formations Tech",
+      "annual": "/ Trimestre",
+      "fullFeatures": "Idéal pour les bootcamps intensifs, les sessions professionnelles et les stages.",
+      "directWhatsApp": "Bouton de contact direct WhatsApp",
+      "displayFees": "Affichage des frais, dates de cohorte et programmes",
+      "verifiedBadge": "Badge Partenaire Vérifié et recommandation par IA",
+      "registerProCampus": "Choisir le Pass Cohorte",
+      "featured": "Institutionnel Annuel",
+      "featuredCampus": "Universités & Grands Campus",
+      "maxVisibility": "Visibilité prioritaire sur 12 mois pour les universités et grands instituts.",
+      "everythingInPro": "Publications illimitées de filières et masters",
+      "topPriority": "Positionnement prioritaire dans le moteur d'orientation",
+      "featuredBanner": "Bannière en vedette sur la page d'accueil",
+      "getFeatured": "Souscrire au Pass Annuel",
+      "ctaHeading": "Prêt à référencer vos formations ?",
+      "ctaText": "La configuration prend moins de 3 minutes. Commencez à publier vos filières, cours ou offres dès aujourd'hui.",
+      "ctaButton": "Rejoindre le Réseau Partenaire"
     }
   },
   "common": {

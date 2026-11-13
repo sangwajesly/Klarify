@@ -107,7 +107,7 @@ const SignUp = () => {
         if (session) {
           navigate("/flow");
         } else {
-          // Supabase sent a confirmation email — show the check-your-email screen
+          // Supabase sent a confirmation email : show the check-your-email screen
           setConfirmedEmail(formData.identifier);
           setConfirmationSent(true);
         }
@@ -137,9 +137,9 @@ const SignUp = () => {
     return (
       <Layout noPadding={true} hideFooter={true}>
         <div className="w-full h-[calc(100vh-3.5rem)] bg-slate-50 dark:bg-slate-950 flex items-center justify-center px-4 py-12 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-100/50 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-secondary-100/30 via-transparent to-transparent pointer-events-none" />
           <div className="relative z-10 w-full max-w-sm text-center">
-            <div className="w-20 h-20 rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-orange-500 flex items-center justify-center mx-auto mb-8 shadow-sm">
+            <div className="w-20 h-20 rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-secondary-600 dark:text-secondary-400 flex items-center justify-center mx-auto mb-8 shadow-sm">
               <Mail size={32} />
             </div>
             <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-3 tracking-tight">
@@ -148,7 +148,7 @@ const SignUp = () => {
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-2">
               {t("auth.signUp.confirmEmail.sentTo")}
             </p>
-            <p className="text-orange-500 font-bold text-sm mb-6 break-all">
+            <p className="text-secondary-600 dark:text-secondary-400 font-bold text-sm mb-6 break-all">
               {confirmedEmail}
             </p>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">
@@ -166,7 +166,7 @@ const SignUp = () => {
                 setConfirmationSent(false);
                 setError("");
               }}
-              className="mt-6 text-slate-500 dark:text-slate-400 font-bold hover:text-orange-500 text-xs transition-colors w-full"
+              className="mt-6 text-slate-500 dark:text-slate-400 font-bold hover:text-secondary-600 dark:text-secondary-400 text-xs transition-colors w-full"
             >
               {t("auth.signUp.confirmEmail.useDifferent")}
             </button>
@@ -185,7 +185,7 @@ const SignUp = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-500/20 via-slate-900 to-slate-900 pointer-events-none" />
           
           <div className="relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center font-bold text-xl mb-4 shadow-sm text-white">
+            <div className="w-12 h-12 rounded-2xl bg-secondary-500 flex items-center justify-center font-bold text-xl mb-4 shadow-sm text-white">
               K
             </div>
             <span className="font-bold text-xl tracking-tight">Klarify</span>
@@ -203,13 +203,13 @@ const SignUp = () => {
 
         {/* ── Right Side (Form) ── */}
         <div className="w-full lg:w-1/2 bg-slate-50 dark:bg-slate-950 relative overflow-y-auto">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-100/50 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-secondary-100/30 via-transparent to-transparent pointer-events-none" />
 
           <div className="min-h-full grid px-6 py-12">
             <div className="relative z-10 w-full max-w-sm m-auto">
             {/* Header */}
             <div className="flex flex-col items-center lg:items-start mb-8 text-center lg:text-left">
-              <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center font-bold text-xl mb-4 border border-orange-100 lg:hidden">
+              <div className="w-12 h-12 rounded-2xl bg-secondary-50 dark:bg-secondary-950/40 text-secondary-800 dark:text-secondary-300 flex items-center justify-center font-bold text-xl mb-4 border border-secondary-100 dark:border-secondary-800 lg:hidden">
                 K
               </div>
               <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight lg:text-4xl">
@@ -244,7 +244,7 @@ const SignUp = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder={t("auth.signUp.namePlaceholder")}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-4 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-4 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
                   />
                 </div>
               </div>
@@ -256,7 +256,7 @@ const SignUp = () => {
                 <div className="relative">
                   {usingPhone ? (
                     <Phone
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-600 dark:text-secondary-400"
                       size={18}
                       aria-hidden="true"
                     />
@@ -273,11 +273,11 @@ const SignUp = () => {
                     value={formData.identifier}
                     onChange={handleChange}
                     placeholder={t("auth.identifierPlaceholder")}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-4 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-4 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
                   />
                 </div>
                 {usingPhone && (
-                  <p className="text-xs text-orange-500 font-medium mt-2 flex items-center gap-1.5">
+                  <p className="text-xs text-secondary-600 dark:text-secondary-400 font-medium mt-2 flex items-center gap-1.5">
                     <Phone size={14} /> {t("auth.signUp.phoneNote")}
                   </p>
                 )}
@@ -299,7 +299,7 @@ const SignUp = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="••••••••"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-11 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-11 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
                   />
                   <button
                     type="button"
@@ -314,7 +314,7 @@ const SignUp = () => {
                     {[...Array(4)].map((_, i) => (
                       <div
                         key={i}
-                        className={`h-1.5 flex-1 rounded-full transition-colors ${i < passwordStrength() ? "bg-orange-500" : "bg-slate-100 dark:bg-slate-800"}`}
+                        className={`h-1.5 flex-1 rounded-full transition-colors ${i < passwordStrength() ? "bg-secondary-500" : "bg-slate-100 dark:bg-slate-800"}`}
                       />
                     ))}
                   </div>
@@ -337,7 +337,7 @@ const SignUp = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="••••••••"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-11 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-11 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
                   />
                   <button
                     type="button"
@@ -361,7 +361,7 @@ const SignUp = () => {
                     onChange={(e) => setAgreeToTerms(e.target.checked)}
                     className="peer sr-only"
                   />
-                  <span className="w-5 h-5 rounded-md border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 peer-checked:bg-orange-500 peer-checked:border-orange-500 transition-colors flex items-center justify-center">
+                  <span className="w-5 h-5 rounded-md border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 peer-checked:bg-secondary-500 peer-checked:border-secondary-500 transition-colors flex items-center justify-center">
                     <svg
                       className="w-3 h-3 text-white hidden peer-checked:block"
                       viewBox="0 0 10 10"
@@ -381,14 +381,14 @@ const SignUp = () => {
                   {t("auth.signUp.agreeToTerms")}{" "}
                   <Link
                     to="/terms"
-                    className="text-orange-500 font-bold hover:text-orange-400 transition-colors"
+                    className="text-secondary-600 dark:text-secondary-400 font-bold hover:text-secondary-600 dark:text-secondary-400 transition-colors"
                   >
                     {t("auth.termsLabel")}
                   </Link>{" "}
                   {t("auth.and")}{" "}
                   <Link
                     to="/privacy"
-                    className="text-orange-500 font-bold hover:text-orange-400 transition-colors"
+                    className="text-secondary-600 dark:text-secondary-400 font-bold hover:text-secondary-600 dark:text-secondary-400 transition-colors"
                   >
                     {t("auth.privacyLabel")}
                   </Link>

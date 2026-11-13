@@ -13,13 +13,13 @@ const LoadingScreen = () => {
         <div className="relative w-16 h-16 mb-6">
           <div className="absolute inset-0 rounded-full border-4 border-slate-100 dark:border-slate-800"></div>
           <motion.div 
-            className="absolute inset-0 rounded-full border-4 border-orange-500 border-t-transparent"
+            className="absolute inset-0 rounded-full border-4 border-secondary-500 border-t-transparent"
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
         </div>
         
-        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Analyzing your profile</h3>
+        <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">Analyzing your profile</h3>
         <p className="text-slate-500 dark:text-slate-400 text-sm">Our system is matching your subjects and interests with the best academic paths.</p>
       </div>
     </motion.div>

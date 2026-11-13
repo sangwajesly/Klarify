@@ -15,7 +15,7 @@ const ProgressBar = ({ currentStep, totalSteps }) => {
       </div>
       <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
         <div 
-          className="h-full bg-orange-500 rounded-full transition-all duration-500 ease-out"
+          className="h-full bg-secondary-500 rounded-full transition-all duration-500 ease-out"
           style={{ width: `${percentage}%` }}
         />
       </div>

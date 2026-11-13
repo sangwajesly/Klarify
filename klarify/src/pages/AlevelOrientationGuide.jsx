@@ -86,17 +86,17 @@ const AlevelOrientationGuide = () => {
 
       {/* Hero Header */}
       <section className="bg-slate-950 text-white border-b border-slate-900 pt-28 pb-16 px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-secondary-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-2xl mx-auto z-10 relative">
           <Link
             to="/guides"
-            className="inline-flex items-center gap-1.5 text-xs text-orange-400 font-bold uppercase tracking-widest mb-6 hover:text-orange-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-secondary-600 dark:text-secondary-400 font-bold uppercase tracking-widest mb-6 hover:text-secondary-500 dark:text-secondary-300 transition-colors"
           >
             <ArrowLeft size={12} />
             Back to Educational Guides
           </Link>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight mb-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white leading-tight mb-4">
             What Can I Study After A-Level in Cameroon?
           </h1>
           <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
@@ -109,7 +109,7 @@ const AlevelOrientationGuide = () => {
 
       {/* Clean Single-Column Reading Body (Medium style) */}
       <article className="bg-white dark:bg-slate-900 py-12 px-6">
-        <div className="max-w-2xl mx-auto text-slate-700 dark:text-slate-300 text-base sm:text-lg leading-relaxed space-y-6">
+        <div className="max-w-2xl mx-auto text-slate-700 dark:text-slate-300 text-base sm:text-sm sm:text-base leading-relaxed space-y-6">
           <p>
             You just passed your Advanced Level. Congrats! You worked hard for
             those grades, and now you have your GCE slip in hand.
@@ -240,7 +240,7 @@ const AlevelOrientationGuide = () => {
           </div>
 
           {/* Clean Inline CTA */}
-          <div className="my-8 p-6 bg-orange-50 border border-orange-200 rounded-2xl">
+          <div className="my-8 p-6 bg-secondary-50 dark:bg-secondary-950/30 border border-secondary-200 dark:border-secondary-800 rounded-2xl">
             <h4 className="font-bold text-slate-900 dark:text-white text-base">
               Unsure about your GCE combinations?
             </h4>
@@ -250,7 +250,7 @@ const AlevelOrientationGuide = () => {
             </p>
             <button
               onClick={() => navigate("/flow")}
-              className="mt-4 inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer"
+              className="mt-4 inline-flex items-center gap-1.5 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer"
             >
               Match My Subjects Free
               <ArrowRight size={14} />

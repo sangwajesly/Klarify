@@ -99,7 +99,7 @@ const UniversityDetails = () => {
     return (
       <Layout>
         <div className="flex justify-center items-center py-28">
-          <Loader2 className="animate-spin text-orange-500" size={32} />
+          <Loader2 className="animate-spin text-secondary-600 dark:text-secondary-400" size={32} />
         </div>
       </Layout>
     );
@@ -110,7 +110,7 @@ const UniversityDetails = () => {
       <Layout>
         <div className="max-w-2xl mx-auto py-16 text-center">
           <Building2 size={48} className="mx-auto text-slate-300 mb-4" />
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+          <h1 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">
             University Not Found
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mb-6">
@@ -118,7 +118,7 @@ const UniversityDetails = () => {
           </p>
           <button
             onClick={() => navigate("/universities")}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-sm rounded-xl transition-colors"
           >
             <ArrowLeft size={16} />
             Back to Universities Directory
@@ -149,11 +149,11 @@ const UniversityDetails = () => {
         {/* Hero Card */}
         <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-9 shadow-lg border border-slate-800 mb-8 relative overflow-hidden">
           <div className="flex items-start gap-4 mb-4">
-            <div className="w-14 h-14 rounded-2xl bg-orange-500/20 border border-orange-500/30 text-orange-400 flex items-center justify-center shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-secondary-500/20 border border-secondary-500/30 text-secondary-600 dark:text-secondary-400 flex items-center justify-center shrink-0">
               <Building2 size={28} />
             </div>
             <div>
-              <span className="text-xs font-semibold text-orange-400 uppercase tracking-widest block mb-1">
+              <span className="text-xs font-semibold text-secondary-600 dark:text-secondary-400 uppercase tracking-widest block mb-1">
                 State Institution Profile
               </span>
               <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
@@ -203,7 +203,7 @@ const UniversityDetails = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={`Search programs offered at ${uniName}...`}
-              className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-orange-500 transition-all placeholder:text-slate-400"
+              className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-secondary-500 transition-all placeholder:text-slate-400"
             />
           </div>
 
@@ -274,7 +274,7 @@ const UniversityDetails = () => {
                   setSearchQuery("");
                   setActiveFaculty("All");
                 }}
-                className="text-xs font-bold text-orange-600 hover:text-orange-700"
+                className="text-xs font-bold text-secondary-700 dark:text-secondary-400 hover:text-secondary-800 dark:text-secondary-300"
               >
                 Reset Search & Filters
               </button>

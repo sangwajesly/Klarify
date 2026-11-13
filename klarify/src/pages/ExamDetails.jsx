@@ -15,7 +15,7 @@ const Row = ({ label, value, icon }) => {
   return (
     <div className="bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3">
       <div className="flex items-start gap-3">
-        {icon && <div className="mt-0.5 text-orange-600">{icon}</div>}
+        {icon && <div className="mt-0.5 text-secondary-700 dark:text-secondary-400">{icon}</div>}
         <div>
           <div className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
             {label}
@@ -54,7 +54,7 @@ const ExamDetails = () => {
             </button>
           </div>
           <div className="mt-6 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl p-6">
-            <AlertCircle className="text-orange-600" size={22} />
+            <AlertCircle className="text-secondary-700 dark:text-secondary-400" size={22} />
             <p className="mt-3 text-slate-700 dark:text-slate-300 font-medium">
               No exam details were provided.
             </p>
@@ -70,7 +70,7 @@ const ExamDetails = () => {
         <div className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 mb-6">
           <ArrowLeft size={16} />
           <button
-            className="hover:text-orange-700 transition-colors"
+            className="hover:text-secondary-800 dark:text-secondary-300 transition-colors"
             onClick={handleBackToResults}
           >
             Back to results
@@ -79,7 +79,7 @@ const ExamDetails = () => {
 
         <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 relative overflow-hidden">
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 dark:bg-slate-900/10 border border-white/15 text-orange-300 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 dark:bg-slate-900/10 border border-white/15 text-secondary-500 dark:text-secondary-300 text-xs font-semibold">
               <AlertCircle size={14} />
               Entrance Exam
             </div>
@@ -173,7 +173,7 @@ const ExamDetails = () => {
               href={examDetails.portalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-white font-semibold text-sm transition-colors"
+              className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-semibold text-sm transition-colors"
             >
               Visit Registration Portal
             </a>

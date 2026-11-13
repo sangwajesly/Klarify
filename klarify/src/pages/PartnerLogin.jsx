@@ -85,10 +85,10 @@ const PartnerLogin = () => {
         
         {/* ── Left Side (Branding/Visual) ── */}
         <div className="hidden lg:flex w-1/2 bg-slate-900 text-white flex-col justify-between p-12 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-orange-500/20 via-slate-900 to-slate-900 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-primary-500/20 via-slate-900 to-slate-900 pointer-events-none" />
           
           <div className="relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center font-bold text-xl mb-4 shadow-sm text-white">
+            <div className="w-12 h-12 rounded-2xl bg-secondary-500 flex items-center justify-center font-bold text-xl mb-4 shadow-sm text-white">
               K
             </div>
             <span className="font-bold text-xl tracking-tight">Klarify Partner</span>
@@ -106,13 +106,13 @@ const PartnerLogin = () => {
 
         {/* ── Right Side (Form) ── */}
         <div className="w-full lg:w-1/2 bg-slate-50 dark:bg-slate-950 relative overflow-y-auto">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-100/50 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-secondary-100/30 via-transparent to-transparent pointer-events-none" />
 
           <div className="min-h-full grid px-6 py-12">
             <div className="relative z-10 w-full max-w-sm m-auto">
             {/* Header */}
             <div className="flex flex-col items-center lg:items-start mb-8 text-center lg:text-left">
-              <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center font-bold text-xl mb-4 border border-orange-100 lg:hidden">
+              <div className="w-12 h-12 rounded-2xl bg-secondary-50 dark:bg-secondary-950/40 text-secondary-800 dark:text-secondary-300 flex items-center justify-center font-bold text-xl mb-4 border border-secondary-100 dark:border-secondary-800 lg:hidden">
                 K
               </div>
               <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight lg:text-4xl">
@@ -138,7 +138,7 @@ const PartnerLogin = () => {
                 <div className="relative">
                   {usingPhone ? (
                     <Phone
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-600 dark:text-secondary-400"
                       size={18}
                     />
                   ) : (
@@ -152,7 +152,7 @@ const PartnerLogin = () => {
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                     placeholder={t("auth.identifierPlaceholder")}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-4 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-4 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
                   />
                 </div>
               </div>
@@ -172,7 +172,7 @@ const PartnerLogin = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-11 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl pl-12 pr-11 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
                   />
                   <button
                     type="button"
@@ -247,14 +247,14 @@ const PartnerLogin = () => {
             {t("partnerAuth.agreePrefix")}{" "}
             <Link
               to="/terms"
-              className="text-slate-700 dark:text-slate-300 font-bold hover:text-orange-500 transition-colors"
+              className="text-slate-700 dark:text-slate-300 font-bold hover:text-secondary-600 dark:text-secondary-400 transition-colors"
             >
               {t("auth.termsLabel")}
             </Link>{" "}
             {t("auth.and")}{" "}
             <Link
               to="/privacy"
-              className="text-slate-700 dark:text-slate-300 font-bold hover:text-orange-500 transition-colors"
+              className="text-slate-700 dark:text-slate-300 font-bold hover:text-secondary-600 dark:text-secondary-400 transition-colors"
             >
               {t("auth.privacyLabel")}
             </Link>

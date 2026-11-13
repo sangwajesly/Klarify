@@ -16,8 +16,14 @@ if (
   }
 }
 
+let dynamicDevtunnelUrl = "";
+if (typeof window !== "undefined" && window.location.hostname.includes("devtunnels.ms")) {
+  dynamicDevtunnelUrl = `https://${window.location.hostname.replace("-5173.", "-8000.")}`;
+}
+
 export const API_URL =
   rawUrl ||
+  dynamicDevtunnelUrl ||
   (import.meta.env.PROD
     ? "https://klarify-path-be.vercel.app"
     : "http://localhost:8000");
@@ -344,6 +350,7 @@ export const registerPartnerAccount = async ({
   campus,
   whatsappNumber,
   websiteUrl,
+  partnerType,
 }) => {
   // 1. Sign up Supabase user
   const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -379,7 +386,7 @@ export const registerPartnerAccount = async ({
     id: institutionId,
     name: institutionName,
     slug,
-    type: "PRIVATE_IPES",
+    type: partnerType || "PRIVATE_IPES",
     city: city || "Douala / Yaounde",
     campus: campus || "Main Campus",
     whatsapp_number: whatsappNumber,

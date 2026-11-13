@@ -55,10 +55,13 @@ const PartnerPrograms = () => {
     university: "",
     faculty: "",
     campus: "",
+    format: "Onsite",
     durations: "3",
+    cohortSchedule: "",
     tuitionFee: "",
     requiresConcour: "false",
     requiredALSubjects: "",
+    competencies: "",
     portalUrl: "",
     degreeObtained: "",
     careers: "",
@@ -272,13 +275,18 @@ const PartnerPrograms = () => {
         university: program.university || institution?.name || "",
         faculty: program.faculty || "",
         campus: program.campus || institution?.campus || "Main Campus",
+        format: program.format || program.delivery_mode || "Onsite",
         durations: String(program.durations || program.durationsNum || 3),
+        cohortSchedule: program.cohort_schedule || program.cohortSchedule || "",
         tuitionFee: program.tuition_fee_xaf
           ? String(program.tuition_fee_xaf)
           : program.tuitionFee || "",
         requiresConcour: program.requires_concour ? "true" : "false",
         requiredALSubjects:
           program.required_al_subjects || program.requiredALSubjects || "",
+        competencies: Array.isArray(program.tags)
+          ? program.tags.join(", ")
+          : program.tags || program.competencies || "",
         portalUrl: program.portal_url || program.portalUrl || "",
         degreeObtained: program.degree_obtained || program.degreeObtained || "",
         careers: Array.isArray(program.careers)
@@ -323,16 +331,16 @@ const PartnerPrograms = () => {
 
     setSaving(true);
     try {
+      const payload = {
+        ...formData,
+        tags: formData.competencies || "",
+        institutionId: institution?.id,
+      };
+
       if (editingProgram) {
-        await updatePartnerProgram(editingProgram.id, {
-          ...formData,
-          institutionId: institution?.id,
-        });
+        await updatePartnerProgram(editingProgram.id, payload);
       } else {
-        await createPartnerProgram({
-          ...formData,
-          institutionId: institution?.id,
-        });
+        await createPartnerProgram(payload);
       }
 
       await loadData();
@@ -360,7 +368,7 @@ const PartnerPrograms = () => {
     return (
       <Layout>
         <div className="flex justify-center items-center py-28">
-          <Loader2 className="animate-spin text-orange-500" size={32} />
+          <Loader2 className="animate-spin text-secondary-600 dark:text-secondary-400" size={32} />
         </div>
       </Layout>
     );
@@ -373,7 +381,7 @@ const PartnerPrograms = () => {
         description="Add, edit, or remove your academic programs, tuition fees, and campus information."
       />
 
-      <main className="py-6 pb-20 max-w-6xl mx-auto">
+      <main className="py-6 pb-20 max-w-7xl mx-auto">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -396,8 +404,8 @@ const PartnerPrograms = () => {
           {/* Action button container */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") && programs.length >= 3 && (
-              <span className="px-3 py-1.5 rounded-xl bg-orange-500/10 border border-orange-500/25 text-orange-600 text-xs font-bold flex items-center gap-1.5 justify-center">
-                <AlertCircle size={14} className="text-orange-500" />
+              <span className="px-3 py-1.5 rounded-xl bg-secondary-500/10 border border-secondary-500/25 text-secondary-700 dark:text-secondary-400 text-xs font-bold flex items-center gap-1.5 justify-center">
+                <AlertCircle size={14} className="text-secondary-600 dark:text-secondary-400" />
                 Limit of 3 courses reached
               </span>
             )}
@@ -410,7 +418,7 @@ const PartnerPrograms = () => {
                   handleOpenModal();
                 }
               }}
-              className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md shadow-orange-500/25 shrink-0 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md shadow-secondary-500/25 shrink-0 cursor-pointer"
             >
               <Plus size={18} />
               Add New Program
@@ -424,7 +432,7 @@ const PartnerPrograms = () => {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <FileSpreadsheet className="text-orange-500" size={22} />
+                  <FileSpreadsheet className="text-secondary-600 dark:text-secondary-400" size={22} />
                   Bulk Upload Academic Programs
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -434,7 +442,7 @@ const PartnerPrograms = () => {
               <button
                 type="button"
                 onClick={downloadSampleCsv}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-orange-200 text-orange-600 font-bold text-xs rounded-xl hover:bg-orange-50 transition-colors cursor-pointer shrink-0"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-secondary-200 dark:border-secondary-800 text-secondary-700 dark:text-secondary-400 font-bold text-xs rounded-xl hover:bg-secondary-50 dark:bg-secondary-950/30 transition-colors cursor-pointer shrink-0"
               >
                 <Download size={14} />
                 Download Sample CSV
@@ -444,7 +452,7 @@ const PartnerPrograms = () => {
             {/* Custom Drag & Drop Zone */}
             {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") ? (
               <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-950/50 rounded-2xl p-10 text-center flex flex-col items-center justify-center relative overflow-hidden min-h-[180px]">
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-3">
+                <div className="w-12 h-12 rounded-2xl bg-secondary-500/10 text-secondary-700 dark:text-secondary-400 flex items-center justify-center mb-3">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
@@ -462,10 +470,10 @@ const PartnerPrograms = () => {
                 onClick={() => document.getElementById("csv-file-input").click()}
                 className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${
                   isDragging
-                    ? "border-orange-500 bg-orange-50/20"
+                    ? "border-secondary-500 bg-secondary-50 dark:bg-secondary-950/30/20"
                     : csvFile
                     ? "border-green-400 bg-green-50/10"
-                    : "border-slate-200 dark:border-slate-700 hover:border-orange-400 bg-slate-50/50 dark:bg-slate-950/50 hover:bg-orange-50/10"
+                    : "border-slate-200 dark:border-slate-700 hover:border-secondary-400 bg-slate-50/50 dark:bg-slate-950/50 hover:bg-secondary-50/40 dark:hover:bg-secondary-950/20"
                 }`}
               >
                 <input
@@ -490,7 +498,7 @@ const PartnerPrograms = () => {
                 ) : (
                   <div>
                     <p className="text-sm font-bold text-slate-900 dark:text-white">
-                      Drag & drop your CSV file here, or <span className="text-orange-500">browse</span>
+                      Drag & drop your CSV file here, or <span className="text-secondary-600 dark:text-secondary-400">browse</span>
                     </p>
                     <p className="text-xs text-slate-400 mt-1">
                       Only CSV format is supported. Max file size: 10MB.
@@ -508,7 +516,7 @@ const PartnerPrograms = () => {
                 className="w-full px-5 py-3.5 flex items-center justify-between font-bold text-slate-700 dark:text-slate-300 text-xs hover:bg-slate-55 transition-colors cursor-pointer"
               >
                 <span className="flex items-center gap-2">
-                  <HelpCircle size={15} className="text-orange-500" />
+                  <HelpCircle size={15} className="text-secondary-600 dark:text-secondary-400" />
                   View CSV File Format & Columns Guide
                 </span>
                 {showInstructions ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -544,7 +552,7 @@ const PartnerPrograms = () => {
                       <strong className="text-slate-900 dark:text-white">requiredALSubjects</strong>: Comma-separated (e.g. <code>Mathematics, Physics</code>)
                     </div>
                   </div>
-                  <div className="flex items-start gap-2 bg-orange-50 text-orange-850 p-3.5 rounded-xl border border-orange-100 text-xs">
+                  <div className="flex items-start gap-2 bg-secondary-50 dark:bg-secondary-950/30 text-secondary-950 dark:text-secondary-200 p-3.5 rounded-xl border border-secondary-100 dark:border-secondary-800 text-xs">
                     <AlertCircle size={18} className="shrink-0 mt-0.5" />
                     <div>
                       <strong>Note:</strong> Columns marked with (*) are required. Download our sample CSV template using the button above to get started immediately.
@@ -621,7 +629,7 @@ const PartnerPrograms = () => {
                     type="button"
                     onClick={uploadCsv}
                     disabled={uploading}
-                    className="px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs rounded-xl shadow-lg shadow-orange-500/25 transition-all disabled:opacity-50 cursor-pointer"
+                    className="px-6 py-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs rounded-xl shadow-lg shadow-secondary-500/25 transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {uploading ? "Uploading Programs..." : `Confirm & Upload ${csvPreview.length} Programs`}
                   </button>
@@ -653,7 +661,14 @@ const PartnerPrograms = () => {
                       className="hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950/60 transition-colors"
                     >
                       <td className="py-4 px-6 font-semibold text-slate-900 dark:text-white">
-                        <div className="font-bold text-slate-900 dark:text-white">{p.name}</div>
+                        <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                          <span>{p.name}</span>
+                          {(p.degree_obtained || p.degreeObtained) && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                              {p.degree_obtained || p.degreeObtained}
+                            </span>
+                          )}
+                        </div>
                         <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">
                           {p.faculty || "Faculty"}
                         </div>
@@ -665,7 +680,11 @@ const PartnerPrograms = () => {
                         </span>
                       </td>
                       <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
-                        {p.durations || p.durationsNum || 3} Years
+                        {String(p.durations).includes("Year") ||
+                        String(p.durations).includes("Week") ||
+                        String(p.durations).includes("Month")
+                          ? p.durations
+                          : `${p.durations || 3} Years`}
                       </td>
                       <td className="py-4 px-4 font-bold text-slate-900 dark:text-white">
                         {p.tuition_fee_xaf
@@ -676,7 +695,7 @@ const PartnerPrograms = () => {
                         <span
                           className={`px-2.5 py-1 rounded-md text-[11px] font-bold ${
                             p.requires_concour || p.requiresConcours
-                              ? "bg-blue-50 text-blue-700 border border-blue-100"
+                              ? "bg-primary-50 text-primary-700 border border-primary-100"
                               : "bg-green-50 text-green-700 border border-green-100"
                           }`}
                         >
@@ -719,7 +738,7 @@ const PartnerPrograms = () => {
             </p>
             <button
               onClick={() => handleOpenModal()}
-              className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all shadow-md shadow-orange-500/20 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all shadow-md shadow-secondary-500/20 cursor-pointer"
             >
               <Plus size={16} />
               Add Your First Program
@@ -770,7 +789,7 @@ const PartnerPrograms = () => {
                       value={formData.university}
                       onChange={handleFormChange}
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     />
                   </div>
 
@@ -785,7 +804,7 @@ const PartnerPrograms = () => {
                       onChange={handleFormChange}
                       placeholder="e.g. BSc Software Engineering"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     />
                   </div>
                 </div>
@@ -803,7 +822,7 @@ const PartnerPrograms = () => {
                       onChange={handleFormChange}
                       placeholder="e.g. School of Business / COLTECH"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     />
                   </div>
 
@@ -818,7 +837,40 @@ const PartnerPrograms = () => {
                       onChange={handleFormChange}
                       placeholder="e.g. Akwa Campus / Molyko Campus"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Format & Cohort Schedule */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                      Delivery Format *
+                    </label>
+                    <select
+                      name="format"
+                      value={formData.format}
+                      onChange={handleFormChange}
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
+                    >
+                      <option value="Onsite">Onsite / In-Person</option>
+                      <option value="Online">Online / Remote</option>
+                      <option value="Hybrid">Hybrid (In-Person + Online)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                      Cohort Schedule / Intake
+                    </label>
+                    <input
+                      type="text"
+                      name="cohortSchedule"
+                      value={formData.cohortSchedule}
+                      onChange={handleFormChange}
+                      placeholder="e.g. Next Cohort: June 2026 / Rolling"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     />
                   </div>
                 </div>
@@ -827,45 +879,50 @@ const PartnerPrograms = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                      Program Duration (Years) *
+                      Duration *
                     </label>
                     <select
                       name="durations"
                       value={formData.durations}
                       onChange={handleFormChange}
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     >
+                      <option value="4 Weeks">4 Weeks (Intensive)</option>
+                      <option value="8 Weeks">8 Weeks (Short Course)</option>
+                      <option value="12 Weeks">12 Weeks (Bootcamp)</option>
+                      <option value="6 Months">6 Months (Cohort)</option>
+                      <option value="9 Months">9 Months</option>
                       <option value="1">1 Year</option>
-                      <option value="2">2 Years (HND / Dip)</option>
+                      <option value="2">2 Years (HND / DQP)</option>
                       <option value="3">3 Years (Bachelor's)</option>
-                      <option value="4">4 Years (Engineering/BTech)</option>
-                      <option value="5">5+ Years (Medicine/Specialist)</option>
+                      <option value="4">4 Years (Engineering / BTech)</option>
+                      <option value="5">5+ Years (Medicine / Advanced)</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                      Tuition Fee per Year (XAF)
+                      Tuition Fee (XAF)
                     </label>
                     <input
                       type="number"
                       name="tuitionFee"
                       value={formData.tuitionFee}
                       onChange={handleFormChange}
-                      placeholder="e.g. 350000"
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      placeholder="e.g. 350000 (0 for Free)"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                      Admission Entry Mode *
+                      Admission / Entry Mode *
                     </label>
                     <select
                       name="requiresConcour"
                       value={formData.requiresConcour}
                       onChange={handleFormChange}
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     >
                       <option value="false">Direct Admission (No Exam)</option>
                       <option value="true">Entrance Exam (Concours)</option>
@@ -873,20 +930,25 @@ const PartnerPrograms = () => {
                   </div>
                 </div>
 
-                {/* Degree Obtained & Required A-Level Subjects */}
+                {/* Degree / Credential & Key Competencies */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                      Degree Obtained *
+                      Credential / Degree Awarded *
                     </label>
                     <select
                       name="degreeObtained"
                       value={formData.degreeObtained}
                       onChange={handleFormChange}
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     >
-                      <option value="">Select Degree Type...</option>
+                      <option value="">Select Credential Type...</option>
+                      <option value="Bootcamp Certificate">Bootcamp Certificate of Completion</option>
+                      <option value="Professional Certificate">Professional Training Certificate</option>
+                      <option value="DQP">Diploma of Vocational Qualification (DQP)</option>
+                      <option value="CQP">Attestation of Qualification (CQP)</option>
+                      <option value="Industry Certification">Industry Certification</option>
                       <option value="HND">Higher National Diploma (HND)</option>
                       <option value="BSc">Bachelor of Science (BSc)</option>
                       <option value="BA">Bachelor of Arts (BA)</option>
@@ -900,17 +962,35 @@ const PartnerPrograms = () => {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                      Required GCE A-Level Subjects
+                      Required A-Level Subjects (or Prerequisites)
                     </label>
                     <input
                       type="text"
                       name="requiredALSubjects"
                       value={formData.requiredALSubjects}
                       onChange={handleFormChange}
-                      placeholder="e.g. Mathematics, Physics, Chemistry"
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                      placeholder="e.g. Mathematics, Physics, or Basic Computer Literacy"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                     />
                   </div>
+                </div>
+
+                {/* Key Competencies & Skills Taught */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    Key Competencies & Skills Taught (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    name="competencies"
+                    value={formData.competencies}
+                    onChange={handleFormChange}
+                    placeholder="e.g. React, Node.js, Python, Figma, Tailwind CSS, API Design"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    These skill tags power Klarify's Skill Gap recommender for graduates and job seekers.
+                  </p>
                 </div>
 
                 {/* Application Portal Link */}
@@ -924,7 +1004,7 @@ const PartnerPrograms = () => {
                     value={formData.portalUrl}
                     onChange={handleFormChange}
                     placeholder="https://youruniversity.cm/apply"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                   />
                 </div>
 
@@ -939,7 +1019,7 @@ const PartnerPrograms = () => {
                     value={formData.careers}
                     onChange={handleFormChange}
                     placeholder="e.g. Software Developer, Systems Architect, QA Tester"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                   />
                 </div>
 
@@ -954,7 +1034,7 @@ const PartnerPrograms = () => {
                     value={formData.descriptions}
                     onChange={handleFormChange}
                     placeholder="Provide a brief summary of what students will learn in this degree program..."
-                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-secondary-500"
                   />
                 </div>
 
@@ -970,7 +1050,7 @@ const PartnerPrograms = () => {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="px-6 py-2.5 bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/50 text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-orange-500/20 flex items-center gap-2 cursor-pointer"
+                    className="px-6 py-2.5 bg-secondary-500 hover:bg-secondary-400 disabled:bg-secondary-500/50 text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-secondary-500/20 flex items-center gap-2 cursor-pointer"
                   >
                     {saving ? (
                       <Loader2 className="animate-spin" size={16} />

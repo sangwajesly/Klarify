@@ -86,7 +86,7 @@ export default function InstallPrompt() {
     <div className="fixed bottom-4 left-4 right-4 z-[100] md:left-auto md:right-6 md:max-w-sm">
       <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl shadow-black/40 p-5">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-extrabold text-xl shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-extrabold text-xl shrink-0">
             K
           </div>
           <div className="flex-1 min-w-0">
@@ -113,7 +113,7 @@ export default function InstallPrompt() {
 
         <div className="flex gap-2 mt-4">
           {iosMode ? (
-            <div className="flex items-center gap-2 text-sm text-orange-300 bg-orange-500/10 border border-orange-500/20 rounded-xl px-3 py-2.5 w-full">
+            <div className="flex items-center gap-2 text-sm text-secondary-500 dark:text-secondary-300 bg-secondary-500/10 border border-secondary-500/20 rounded-xl px-3 py-2.5 w-full">
               <Share size={16} className="shrink-0" />
               <span>Tap Share, then &quot;Add to Home Screen&quot;</span>
             </div>
@@ -121,7 +121,7 @@ export default function InstallPrompt() {
             <button
               type="button"
               onClick={handleInstall}
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-semibold text-sm py-2.5 px-4 rounded-xl transition-all"
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold text-sm py-2.5 px-4 rounded-xl transition-all"
             >
               <Download size={16} />
               Install App

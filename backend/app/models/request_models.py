@@ -54,3 +54,18 @@ class RecommendationResponse(BaseModel):
     programs: List[ProgramResponse]
     certifications: List[CertificationResponse]
     books: List[BookResponse]
+
+
+class SkillItem(BaseModel):
+    id: str
+    name: Optional[str] = None
+    level: Optional[str] = "Intermediate"
+
+class SkillGapPreferences(BaseModel):
+    workMode: Optional[str] = "all"
+    preferredCity: Optional[str] = "Douala"
+    budgetType: Optional[str] = "all"
+
+class SkillGapRequest(BaseModel):
+    skills: List[SkillItem]
+    preferences: Optional[SkillGapPreferences] = None

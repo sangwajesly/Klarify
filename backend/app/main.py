@@ -29,6 +29,7 @@ use_wildcard = len(allow_origins) == 1 and allow_origins[0] == "*"
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allow_origins if not use_wildcard else ["*"],
+    allow_origin_regex=r"https://.*\.devtunnels\.ms",
     allow_credentials=(not use_wildcard),
     allow_methods=["*"],
     allow_headers=["*"],

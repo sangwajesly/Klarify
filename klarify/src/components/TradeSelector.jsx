@@ -2,56 +2,64 @@ import React from "react";
 import { Check } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
-const TRADES = [
-  "building_construction",
-  "design_and_architecture",
-  "survey",
-  "electrical_installation",
-  "electrical_and_electronics",
-  "pharmacology",
-  "clothing_industry",
+const TVEE_TRADE_KEYS = [
+  "civil_engineering",
+  "electrical_power_systems",
+  "electronics",
+  "mechanical_manufacturing",
+  "automobile_mechanics",
+  "accounting_management",
+  "marketing",
+  "secretarial_administration",
   "home_economics",
-  "plumbing_and_hydraulic",
-  "accounting_and_secretaryship",
-  "wood_work",
-  "automobile_vehicles",
-  "mechanical_design",
-  "sheet_metal_works",
+  "clothing_industry",
+  "woodwork_carpentry",
+  "welding_fabrication",
+  "surveying_topography",
+  "computer_science_telecom",
 ];
 
-const TradeSelector = ({ selected, onChange }) => {
+const TradeSelector = ({
+  selected = [],
+  onChange,
+  maxTrades = 2,
+}) => {
   const { t } = useLanguage();
 
-  const toggleTrade = (trade) => {
-    if (selected.includes(trade)) {
-      onChange([]);
+  const toggleTrade = (tradeKey) => {
+    if (selected.includes(tradeKey)) {
+      onChange(selected.filter((item) => item !== tradeKey));
     } else {
-      onChange([trade]); 
+      if (selected.length >= maxTrades) {
+        onChange([tradeKey]);
+      } else {
+        onChange([...selected, tradeKey]);
+      }
     }
   };
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 min-h-40">
-        {TRADES.map((tradeKey) => {
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {TVEE_TRADE_KEYS.map((tradeKey) => {
           const isSelected = selected.includes(tradeKey);
           return (
             <button
               key={tradeKey}
               onClick={() => toggleTrade(tradeKey)}
               className={`
-                flex items-center gap-3 px-4 py-3.5 md:py-3 rounded-xl text-sm font-medium transition-all duration-200 text-left
+                flex items-center gap-3 px-4 py-3.5 md:py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-left cursor-pointer
                 ${
                   isSelected
-                    ? "bg-slate-900 text-white shadow-md transform scale-[1.01]"
-                    : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950"
+                    ? "bg-secondary-500 text-slate-950 font-black border-2 border-secondary-500 shadow-md shadow-secondary-500/25 transform scale-[1.01]"
+                    : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-secondary-400 dark:hover:border-secondary-500 hover:bg-slate-50 dark:hover:bg-slate-800/60"
                 }
               `}
             >
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center border shrink-0 ${isSelected ? 'bg-orange-500 border-orange-500 text-white' : 'border-slate-300 dark:border-slate-600'}`}>
-                {isSelected && <Check size={12} />}
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center border shrink-0 transition-colors ${isSelected ? 'bg-slate-950 text-secondary-500 border-slate-950' : 'border-slate-300 dark:border-slate-600'}`}>
+                {isSelected && <Check size={12} className="stroke-[3]" />}
               </div>
-              {t(`trades.${tradeKey}`)}
+              <span>{t(`trades.${tradeKey}`)}</span>
             </button>
           );
         })}

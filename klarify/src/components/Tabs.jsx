@@ -11,7 +11,7 @@ const Tabs = ({ certifications, books }) => {
           onClick={() => setActiveTab('certifications')}
           className={`flex items-center gap-2 py-3 px-6 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'certifications'
-              ? 'border-orange-500 text-orange-600'
+              ? 'border-secondary-500 text-secondary-700 dark:text-secondary-400'
               : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:border-slate-600'
           }`}
         >
@@ -22,7 +22,7 @@ const Tabs = ({ certifications, books }) => {
           onClick={() => setActiveTab('books')}
           className={`flex items-center gap-2 py-3 px-6 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'books'
-              ? 'border-orange-500 text-orange-600'
+              ? 'border-secondary-500 text-secondary-700 dark:text-secondary-400'
               : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:border-slate-600'
           }`}
         >
@@ -38,7 +38,7 @@ const Tabs = ({ certifications, books }) => {
               <h4 className="font-semibold text-slate-900 dark:text-white">{cert.title}</h4>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{cert.provider}</p>
             </div>
-            <a href={cert.url} className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-950 flex items-center justify-center text-slate-400 group-hover:bg-orange-50 group-hover:text-orange-500 transition-colors">
+            <a href={cert.url} className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-950 flex items-center justify-center text-slate-400 group-hover:bg-secondary-50 dark:bg-secondary-950/30 group-hover:text-secondary-600 dark:text-secondary-400 transition-colors">
               <ExternalLink size={18} />
             </a>
           </div>
@@ -50,7 +50,7 @@ const Tabs = ({ certifications, books }) => {
               <h4 className="font-semibold text-slate-900 dark:text-white">{book.title}</h4>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{book.author}</p>
             </div>
-            <a href={book.url} className="text-sm font-medium text-orange-600 hover:text-orange-700">
+            <a href={book.url} className="text-sm font-medium text-secondary-700 dark:text-secondary-400 hover:text-secondary-800 dark:text-secondary-300">
               Read
             </a>
           </div>

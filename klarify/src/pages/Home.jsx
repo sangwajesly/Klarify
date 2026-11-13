@@ -10,7 +10,8 @@ import {
   Search,
   Sparkles,
   MapPin,
-  ChevronRight
+  ChevronRight,
+  Laptop
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Layout from "../components/Layout";
@@ -19,6 +20,11 @@ import FAQBlock from "../components/FAQBlock";
 import heroBg from "../assets/hero.jpg";
 import studentsCampus from "../assets/cameroon_secondary_students.png";
 import uniAerial from "../assets/pexels-skylight-views-2151863365-36347347.jpg";
+import studentsArtboard from "../assets/pexels-the-artboard-131151099-18346466.jpg";
+import studentBeka from "../assets/pexels-addibeka-14660578.jpg";
+import studentPraise from "../assets/pexels-praisetoby-praise-1226513-31533077.jpg";
+import campusStudents from "../assets/students_campus.png";
+import AnimatedMarqueeHero from "../components/AnimatedMarqueeHero";
 import { trackEvent } from "../utils/analytics";
 import { fetchFeaturedInstitutions } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
@@ -39,8 +45,20 @@ const staggerContainer = {
 
 const Home = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  // Only display the promotional GCE Results banner during the annual Cameroon GCE release season (Mid-July to end of August)
+  const isGceSeason = () => {
+    const now = new Date();
+    const month = now.getMonth(); // 0-indexed: 6 = July, 7 = August
+    const day = now.getDate();
+    // Mid-July (July 15) through end of August (August 31)
+    if (month === 6 && day >= 15) return true;
+    if (month === 7) return true;
+    return false;
+  };
+
   const [showGceBanner, setShowGceBanner] = useState(() => {
+    if (!isGceSeason()) return false;
     return localStorage.getItem("dismissedGceBanner") !== "true";
   });
   const [featuredUnis, setFeaturedUnis] = useState([]);
@@ -93,16 +111,16 @@ const Home = () => {
         structuredData={homeSchema}
       />
 
-      <main className="bg-slate-50 dark:bg-slate-950 selection:bg-orange-500/30">
+      <main className="bg-slate-50 dark:bg-slate-950 selection:bg-primary-500/30">
         {/* ── GCE Banner ── */}
         {showGceBanner && (
-          <div className="bg-slate-900 text-white relative z-50 border-b border-slate-800">
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-4">
+          <div className="bg-slate-900 text-white relative z-50 border-b border-slate-800 px-6 md:px-12">
+            <div className="max-w-7xl mx-auto py-3 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <span className="flex h-2 w-2 shrink-0">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
                   </span>
                 </span>
                 <p className="text-sm font-medium text-slate-300">
@@ -113,7 +131,7 @@ const Home = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => navigate("/gce-results")}
-                  className="text-xs font-bold bg-orange-500 text-white px-4 py-1.5 rounded-full hover:bg-orange-600 transition-colors"
+                  className="text-xs font-bold bg-primary-500 text-white px-4 py-1.5 rounded-full hover:bg-primary-600 transition-colors"
                   aria-label={t("home.gceBanner.searchNow")}
                 >
                   {t("home.gceBanner.searchNow")}
@@ -131,181 +149,229 @@ const Home = () => {
           </div>
         )}
 
-        {/* ── Editorial Hero ── */}
-        <section className="relative pt-8 pb-20 md:pt-12 md:pb-32 overflow-hidden bg-white dark:bg-slate-900">
-          <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
-              
-              {/* Hero Content */}
-              <motion.div 
-                initial="hidden"
-                animate="visible"
-                variants={staggerContainer}
-                className="max-w-2xl"
-              >
-                <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-widest mb-8">
-                  <Sparkles size={14} className="text-orange-500" />
-                  {t("home.badge")}
-                </motion.div>
-                
-                <motion.h1 variants={fadeInUp} className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white leading-[1.1] mb-8 tracking-tight">
-                  {t("home.headline")}{" "}
-                  <span className="text-orange-500">{t("home.headlineSub")}</span>
-                </motion.h1>
-                
-                <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-xl">
-                  {t("home.subtext")}
-                </motion.p>
-                
-                <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-5">
-                  <button
-                    onClick={() => navigate("/flow")}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    {t("home.ctaPrimary")}
-                    <ArrowRight size={18} />
-                  </button>
-                  <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">
-                    {t("home.ctaSubtext")}
-                  </span>
-                </motion.div>
-              </motion.div>
+        {/* ── Animated Marquee Hero ── */}
+        <AnimatedMarqueeHero
+          tagline={t("home.badge")}
+          taglineIcon={Sparkles}
+          title={
+            <>
+              <span className="block text-slate-900 dark:text-white">
+                {t("home.headline")}
+              </span>
+              <span className="block text-primary-500 dark:text-secondary-400 italic font-black mt-1 sm:mt-1.5">
+                {t("home.headlineHighlight")}
+              </span>
+            </>
+          }
+          description={t("home.subtext")}
+          ctaText={t("home.ctaPrimary")}
+          onCtaClick={() => {
+            trackEvent("cta_click", { location: "hero_primary" });
+            navigate("/flow");
+          }}
+          images={[
+            heroBg,
+            studentsCampus,
+            uniAerial,
+            studentsArtboard,
+            studentBeka,
+            studentPraise,
+            campusStudents,
+          ]}
+        />
 
-              {/* Hero Image / Composition */}
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-                className="relative hidden lg:block"
-              >
-                {/* Decorative background shape */}
-                <div className="absolute inset-0 -translate-x-8 translate-y-8 bg-slate-100 dark:bg-slate-800 rounded-3xl" />
-                
-                {/* Main Image */}
-                <img 
-                  src={heroBg} 
-                  alt="Student focused on career" 
-                  className="relative z-10 w-full h-[600px] object-cover rounded-3xl shadow-2xl shadow-slate-900/10 grayscale-[20%]"
-                />
-                
-                {/* Floating UI Element to show "Tech" aspect without generic icons */}
-                <div className="absolute -bottom-6 -left-8 z-20 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 dark:border-slate-800 max-w-[240px]">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-500">
-                      <GraduationCap size={20} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Matched</div>
-                      <div className="text-sm font-bold text-slate-900 dark:text-white">BSc. Computing</div>
-                    </div>
+        {/* ── Editorial About (Matching Brand Mockup) ── */}
+        <section className="py-20 md:py-28 px-6 md:px-12 bg-[#E9EBF4]/60 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800 transition-colors">
+          <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
+            {/* Top Row: Heading + Paragraph 1 + Solid Brand Blue Card */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              {/* Heading: Left Column */}
+              <div className="lg:col-span-5">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-primary-500 dark:text-white leading-[1.12] tracking-tight">
+                  {t("home.aboutSection.heading")}
+                </h2>
+              </div>
+
+              {/* Paragraph 1: Middle Column */}
+              <div className="lg:col-span-4 flex items-center">
+                <p className="text-xs sm:text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {t("home.aboutSection.p1")}
+                </p>
+              </div>
+
+              {/* Solid Blue Brand Block: Right Column */}
+              <div className="lg:col-span-3 hidden sm:flex justify-end">
+                <div className="w-full max-w-[240px] p-6 rounded-3xl bg-primary-500 dark:bg-primary-600 shadow-xl shadow-primary-500/20 text-white flex flex-col justify-between min-h-[140px] relative overflow-hidden group">
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="text-[11px] font-bold text-sky-10 uppercase tracking-wider">Accredited Base</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-secondary-400 animate-pulse" title="Active accreditation" />
                   </div>
-                  <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div className="bg-orange-500 w-[92%] h-full rounded-full" />
+                  <div className="relative z-10 mt-3">
+                    <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-none">120+</div>
+                    <p className="text-xs text-sky-11 font-medium mt-1.5 leading-snug">Cameroonian Programs & Concours</p>
                   </div>
-                  <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium text-right">92% Match Score</div>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* ── Editorial About ── */}
-        <section className="py-24 px-6 md:px-12 bg-slate-50 dark:bg-slate-950 border-t border-slate-200/50 dark:border-slate-700/50">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div className="order-2 lg:order-1 relative">
+            {/* Bottom Row: Large Student Photo (68%) + Paragraph 2 (32%) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Main Student Showcase Image */}
+              <div className="lg:col-span-8 overflow-hidden rounded-3xl shadow-2xl shadow-slate-900/10">
                 <img
                   src={studentsCampus}
                   alt="Cameroonian secondary school students"
-                  className="rounded-3xl shadow-xl w-full h-auto object-cover aspect-[4/3] grayscale-[10%]"
+                  className="w-full h-auto object-cover aspect-[16/10] hover:scale-[1.01] transition-transform duration-500"
                 />
-                <div className="absolute -top-6 -right-6 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl" />
               </div>
-              <div className="order-1 lg:order-2">
-                <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
-                  {t("home.aboutSection.eyebrow")}
-                </span>
-                <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight">
-                  {t("home.aboutSection.heading")}
-                </h2>
-                <div className="space-y-6 text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                  <p>{t("home.aboutSection.p1")}</p>
-                  <p>{t("home.aboutSection.p2")}</p>
+
+              {/* Paragraph 2: Right Column */}
+              <div className="lg:col-span-4">
+                <p className="text-xs sm:text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {t("home.aboutSection.p2")}
+                </p>
+                <div className="mt-6">
+                  <button
+                    onClick={() => navigate("/flow")}
+                    className="inline-flex items-center gap-2 text-primary-500 dark:text-secondary-400 font-bold hover:underline transition-all text-sm group cursor-pointer"
+                  >
+                    <span>Calculate your university matches</span>
+                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── Bento Grid Features ── */}
-        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900">
+        {/* ── ALX-Style "Explore Career Pathways" Section (The 3 Audience Forks) ── */}
+        <section className="py-20 md:py-24 px-6 md:px-12 bg-primary-500 text-white">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
-                {t("home.whySection.eyebrow")}
-              </span>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                {t("home.whySection.heading")}
+            <div className="text-center max-w-2xl mx-auto mb-14">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Explore Your Next Path
               </h2>
+              <p className="text-sky-11 text-sm sm:text-base mt-2 font-medium">
+                Choose the journey that matches your stage: undergraduate, postgraduate, or market skill builder.
+              </p>
             </div>
 
+            {/* 3 Pure, Clean, Soft Pastel Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Feature 1 - Large spanning */}
-              <div className="md:col-span-2 bg-slate-50 dark:bg-slate-950 rounded-3xl p-10 border border-slate-200/60 dark:border-slate-700/60 overflow-hidden relative group">
-                <div className="relative z-10 max-w-md">
-                  <div className="w-12 h-12 bg-white dark:bg-slate-900 rounded-2xl shadow-sm flex items-center justify-center text-slate-900 dark:text-white mb-6">
-                    <Search size={24} />
+              {/* Card 1: Soft Pastel Lime (Secondary School Leavers) */}
+              <div
+                onClick={() => {
+                  sessionStorage.setItem('flow_persona', 'highschool');
+                  navigate("/flow?step=2");
+                }}
+                className="p-8 rounded-[2rem] bg-[#E8EEAD] text-slate-900 flex flex-col justify-between min-h-[260px] shadow-lg shadow-black/5 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 block mb-1">
+                        Secondary School Leavers
+                      </span>
+                      <h3 className="text-xl font-black text-slate-950 tracking-tight leading-snug">
+                        Undergraduate & Concours
+                      </h3>
+                    </div>
+                    <img
+                      src={studentBeka}
+                      alt="Secondary school graduate"
+                      className="w-11 h-11 rounded-full object-cover ring-2 ring-white/80 shadow-xs shrink-0"
+                    />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{t("home.whySection.card1.title")}</h3>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {t("home.whySection.card1.description")}
+                  <p className="text-slate-800 text-xs sm:text-sm leading-relaxed font-medium">
+                    Match your GCE A-Level combinations with verified university degree programs, professional concours (FMSB, ENSP, ENS), and polytechnics across Cameroon.
                   </p>
                 </div>
-                {/* Decorative element replacing generic icon pattern */}
-                <div className="absolute right-0 bottom-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500 translate-x-1/4 translate-y-1/4">
-                  <Search size={240} />
+
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-black/10">
+                  <span className="text-xs font-bold text-slate-900 group-hover:underline">
+                    Find My Degree
+                  </span>
+                  <div className="w-10 h-10 rounded-full bg-white shadow-xs flex items-center justify-center text-slate-950 group-hover:scale-110 transition-transform shrink-0">
+                    <ArrowRight size={15} className="stroke-[2.5]" />
+                  </div>
                 </div>
               </div>
 
-              {/* Feature 2 */}
-              <div className="bg-slate-900 rounded-3xl p-10 text-white relative overflow-hidden">
-                <div className="relative z-10">
-                  <div className="w-12 h-12 bg-white/10 dark:bg-slate-900/10 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/10">
-                    <Briefcase size={24} />
+              {/* Card 2: Soft Pastel Lavender/Sky (Bachelor's Degree Holders) */}
+              <div
+                onClick={() => {
+                  sessionStorage.setItem('flow_persona', 'graduate');
+                  navigate("/flow?step=2");
+                }}
+                className="p-8 rounded-[2rem] bg-[#E9EBF4] text-slate-900 flex flex-col justify-between min-h-[260px] shadow-lg shadow-black/5 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 block mb-1">
+                        Bachelor's Graduates
+                      </span>
+                      <h3 className="text-xl font-black text-slate-950 tracking-tight leading-snug">
+                        Master&apos;s & Postgraduates
+                      </h3>
+                    </div>
+                    <img
+                      src={studentPraise}
+                      alt="Graduate student"
+                      className="w-11 h-11 rounded-full object-cover ring-2 ring-white/80 shadow-xs shrink-0"
+                    />
                   </div>
-                  <h3 className="text-xl font-bold mb-4">{t("home.whySection.card2.title")}</h3>
-                  <p className="text-slate-400 leading-relaxed text-sm">
-                    {t("home.whySection.card2.description")}
+                  <p className="text-slate-800 text-xs sm:text-sm leading-relaxed font-medium">
+                    Discover specialized master&apos;s degrees, professional postgraduate concours, and research tracks to elevate your academic and technical specialization.
                   </p>
+                </div>
+
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-black/10">
+                  <span className="text-xs font-bold text-slate-900 group-hover:underline">
+                    Explore Master&apos;s Paths
+                  </span>
+                  <div className="w-10 h-10 rounded-full bg-white shadow-xs flex items-center justify-center text-slate-950 group-hover:scale-110 transition-transform shrink-0">
+                    <ArrowRight size={15} className="stroke-[2.5]" />
+                  </div>
                 </div>
               </div>
 
-              {/* Feature 3 */}
-              <div className="bg-orange-500 rounded-3xl p-10 text-white relative overflow-hidden">
-                <div className="relative z-10">
-                  <div className="w-12 h-12 bg-white/20 dark:bg-slate-900/20 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/20">
-                    <BookOpen size={24} />
+              {/* Card 3: Crisp Soft White (Job Seekers & Self-Learners) */}
+              <div
+                onClick={() => {
+                  sessionStorage.setItem('flow_persona', 'professional');
+                  navigate("/flow?step=2");
+                }}
+                className="p-8 rounded-[2rem] bg-white text-slate-900 flex flex-col justify-between min-h-[260px] shadow-lg shadow-black/5 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 block mb-1">
+                        Job Seekers & Self-Learners
+                      </span>
+                      <h3 className="text-xl font-black text-slate-950 tracking-tight leading-snug">
+                        Skills & Career Gap Bridge
+                      </h3>
+                    </div>
+                    <img
+                      src={studentsArtboard}
+                      alt="Professional skill builder"
+                      className="w-11 h-11 rounded-full object-cover ring-2 ring-slate-100 shadow-xs shrink-0"
+                    />
                   </div>
-                  <h3 className="text-xl font-bold mb-4">{t("home.whySection.card3.title")}</h3>
-                  <p className="text-orange-50 leading-relaxed text-sm">
-                    {t("home.whySection.card3.description")}
+                  <p className="text-slate-800 text-xs sm:text-sm leading-relaxed font-medium">
+                    Input your existing skills. Uncover your market gaps and get matched with certified bootcamps, courses, and verified remote or local Cameroon internships.
                   </p>
                 </div>
-              </div>
-              
-              {/* Feature 4 - New span */}
-              <div className="md:col-span-2 bg-slate-50 dark:bg-slate-950 rounded-3xl p-10 border border-slate-200/60 dark:border-slate-700/60 flex flex-col md:flex-row items-center gap-8 hover:border-orange-500/30 transition-colors group">
-                <div className="flex-1">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 block group-hover:text-orange-500 transition-colors">How it works</span>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{t("home.features.step2.title")}</h3>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {t("home.features.step2.description")}
-                  </p>
-                </div>
-                <div className="shrink-0">
-                  <button onClick={() => navigate('/flow')} className="w-14 h-14 bg-white dark:bg-slate-900 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white group-hover:bg-slate-900 group-hover:text-white transition-colors duration-300">
-                    <ChevronRight size={24} />
-                  </button>
+
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-black/10">
+                  <span className="text-xs font-bold text-slate-900 group-hover:underline">
+                    Assess My Skills
+                  </span>
+                  <div className="w-10 h-10 rounded-full bg-slate-100 shadow-xs flex items-center justify-center text-slate-950 group-hover:scale-110 transition-transform shrink-0">
+                    <ArrowRight size={15} className="stroke-[2.5]" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -314,14 +380,12 @@ const Home = () => {
 
         {/* ── Featured Universities (Modern List) ── */}
         {featuredUnis.length > 0 && (
-          <section className="py-24 bg-slate-900 text-white border-y border-slate-800">
-            <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <section className="py-24 px-6 md:px-12 bg-slate-900 text-white border-y border-slate-800">
+            <div className="max-w-7xl mx-auto">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
                 <div className="max-w-2xl">
-                  <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
-                    {t("home.featured.label")}
-                  </span>
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                  
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                     {t("home.featured.heading")}
                   </h2>
                 </div>
@@ -334,13 +398,13 @@ const Home = () => {
                     key={uni.id}
                     className="group block p-8 bg-slate-800/40 rounded-3xl border border-slate-700/50 hover:bg-slate-800 transition-colors duration-300 relative overflow-hidden"
                   >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/10 transition-colors" />
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 rounded-full blur-2xl group-hover:bg-primary-500/10 transition-colors" />
                     
                     <div className="relative z-10">
-                      <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-slate-300 mb-8 group-hover:text-orange-400 group-hover:scale-110 transition-all duration-300">
+                      <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-slate-300 mb-8 group-hover:text-secondary-400 group-hover:scale-110 transition-all duration-300">
                         <Building2 size={24} />
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 group-hover:text-secondary-400 transition-colors">
                         {uni.name}
                       </h3>
                       <div className="flex items-center gap-2 text-sm text-slate-400 font-medium">
@@ -360,7 +424,7 @@ const Home = () => {
           <div className="max-w-7xl mx-auto bg-slate-50 dark:bg-slate-950 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-700">
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <div className="p-12 md:p-20 flex flex-col justify-center">
-                <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">
                   {t("home.partnerPromo.title")}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed">
@@ -372,7 +436,7 @@ const Home = () => {
                       trackEvent("partner_cta_click", { location: "homepage_promo" });
                       navigate("/partners");
                     }}
-                    className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-bold transition-colors"
+                    className="px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold transition-colors"
                   >
                     {t("home.partnerPromo.button")}
                   </button>
@@ -405,10 +469,10 @@ const Home = () => {
 
         {/* ── Bottom CTA ── */}
         <section className="py-32 px-6 md:px-12 bg-slate-900 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-500/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-secondary-500/15 via-transparent to-transparent" />
           
           <div className="relative max-w-4xl mx-auto text-center z-10">
-            <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
+            <h2 className="text-2xl sm:text-2xl sm:text-3xl font-extrabold text-white mb-6 tracking-tight">
               {t("home.bottomCta.heading")}
             </h2>
             <p className="text-slate-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
@@ -416,7 +480,7 @@ const Home = () => {
             </p>
             <button
               onClick={() => navigate("/flow")}
-              className="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-full font-bold text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-orange-500/20"
+              className="inline-flex items-center gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 px-10 py-5 rounded-full font-extrabold text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-secondary-500/25"
               aria-label={t("home.bottomCta.button")}
             >
               {t("home.bottomCta.button")}

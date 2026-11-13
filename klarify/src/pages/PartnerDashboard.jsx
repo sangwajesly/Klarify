@@ -13,6 +13,10 @@ import {
   X,
   AlertCircle,
   CreditCard,
+  Calendar,
+  Zap,
+  Clock,
+  Sparkles,
 } from "lucide-react";
 import Layout from "../components/Layout";
 import SEOHead from "../components/SEOHead";
@@ -26,6 +30,13 @@ import {
   initiateDirectPayment,
   checkPaymentStatus,
 } from "../services/api";
+
+const PARTNER_TYPE_LABELS = {
+  university: "Higher Institute (IPES)",
+  tech_academy: "Tech Academy & Bootcamp",
+  vocational_center: "Vocational & Trade Hub",
+  company: "Company & Hiring Partner",
+};
 
 const PartnerDashboard = () => {
   const { user, loading: authLoading } = useAuth();
@@ -148,8 +159,8 @@ const PartnerDashboard = () => {
     loadProfileData();
   }, [user]);
 
-  const handleUpgrade = (amount, planName) => {
-    setSelectedPlan({ amount, name: planName });
+  const handleUpgrade = (amount, planName, duration = "") => {
+    setSelectedPlan({ amount, name: planName, duration });
     setPayerName(user?.user_metadata?.full_name || "");
     setPayerPhone("");
     setPaymentStep("input");
@@ -167,6 +178,10 @@ const PartnerDashboard = () => {
     setPaymentStep("processing");
     setPaymentError("");
 
+    const planLabel = selectedPlan.duration
+      ? `Upgrade to ${selectedPlan.name} (${selectedPlan.duration})`
+      : `Upgrade to ${selectedPlan.name} Plan`;
+
     try {
       const resp = await initiateDirectPayment({
         institutionId: institution.id,
@@ -174,7 +189,7 @@ const PartnerDashboard = () => {
         phone: payerPhone.trim(),
         name: payerName,
         email: user?.email,
-        description: `Upgrade to ${selectedPlan.name} Plan`,
+        description: planLabel,
       });
 
       if (resp.success && resp.provider_reference) {
@@ -197,7 +212,7 @@ const PartnerDashboard = () => {
               const hostedResp = await initiateSubscriptionPayment(
                 institution.id,
                 selectedPlan.amount,
-                `Upgrade to ${selectedPlan.name} Plan`
+                planLabel
               );
               if (hostedResp.checkout_url) {
                 window.location.href = hostedResp.checkout_url;
@@ -261,7 +276,7 @@ const PartnerDashboard = () => {
     return (
       <Layout>
         <div className="flex justify-center items-center py-28">
-          <Loader2 className="animate-spin text-orange-500" size={32} />
+          <Loader2 className="animate-spin text-secondary-600 dark:text-secondary-400" size={32} />
         </div>
       </Layout>
     );
@@ -289,11 +304,14 @@ const PartnerDashboard = () => {
         <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-800 mb-8 relative overflow-hidden">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 relative z-10">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-orange-500/20 border border-orange-500/30 text-orange-400 flex items-center justify-center shrink-0">
+              <div className="w-16 h-16 rounded-2xl bg-secondary-500/20 border border-secondary-500/30 text-secondary-600 dark:text-secondary-400 flex items-center justify-center shrink-0">
                 <Building2 size={32} />
               </div>
               <div>
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <span className="px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20 text-slate-200 text-[10px] font-bold uppercase tracking-wider">
+                    {PARTNER_TYPE_LABELS[institution?.partner_type] || "Higher Institute (IPES)"}
+                  </span>
                   {institution?.verification_status === "VERIFIED" && (
                     <span className="px-2.5 py-0.5 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-bold uppercase tracking-wider">
                       Verified Partner
@@ -324,20 +342,20 @@ const PartnerDashboard = () => {
                       setEditError("");
                       setShowEditModal(true);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-orange-400 hover:text-orange-300 border border-orange-500/25 hover:border-orange-500 bg-orange-500/10 rounded-lg transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-secondary-600 dark:text-secondary-400 hover:text-secondary-500 dark:text-secondary-300 border border-secondary-500/25 hover:border-secondary-500 bg-secondary-500/10 rounded-lg transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
                   >
                     Edit Profile
                   </button>
                 </h1>
                 <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300 mt-1">
                   <span className="flex items-center gap-1">
-                    <MapPin size={12} className="text-orange-400" />
+                    <MapPin size={12} className="text-secondary-600 dark:text-secondary-400" />
                     {institution?.city || "Cameroon"} (
                     {institution?.campus || "Main Campus"})
                   </span>
                   {institution?.whatsapp_number && (
                     <span className="flex items-center gap-1">
-                      <Phone size={12} className="text-orange-400" />+
+                      <Phone size={12} className="text-secondary-600 dark:text-secondary-400" />+
                       {institution.whatsapp_number}
                     </span>
                   )}
@@ -347,7 +365,7 @@ const PartnerDashboard = () => {
 
             <Link
               to="/partner/programs"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-orange-500/25 shrink-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-secondary-500/25 shrink-0"
             >
               <PlusCircle size={18} />
               Add / Manage Programs
@@ -366,7 +384,7 @@ const PartnerDashboard = () => {
                 {programsCount}
               </span>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center font-bold">
+            <div className="w-12 h-12 rounded-xl bg-secondary-50 dark:bg-secondary-950/40 text-secondary-800 dark:text-secondary-300 flex items-center justify-center font-bold">
               <BookOpen size={24} />
             </div>
           </div>
@@ -394,7 +412,7 @@ const PartnerDashboard = () => {
                 Direct Contact
               </span>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+            <div className="w-12 h-12 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center font-bold">
               <Phone size={24} />
             </div>
           </div>
@@ -402,53 +420,207 @@ const PartnerDashboard = () => {
 
         {/* Subscription Upgrades */}
         {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") && (
-          <div className="bg-orange-50 rounded-3xl p-6 sm:p-8 border border-orange-200 shadow-xs mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Upgrade your Portal Plan</h2>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                You are currently on the Free Starter plan. Upgrade to unlock unlimited programs, direct WhatsApp leads, and priority ranking.
-              </p>
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm mb-8 space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <span className="text-[11px] font-extrabold tracking-wider uppercase text-primary-600 dark:text-secondary-400 block mb-1">
+                  Flexible Partner Pricing
+                </span>
+                <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
+                  Upgrade Your Organization Plan
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
+                  Choose a flexible cohort pass for seasonal bootcamps, or an institutional annual plan for year-round university degrees.
+                </p>
+              </div>
+
+              <div className="px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold">
+                Current: <span className="text-primary-600 dark:text-secondary-400">Free Starter (Up to 3 listings)</span>
+              </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0 animate-fade-in">
-              {user?.email === "sangwajesly82@gmail.com" ? (
-                <>
-                  <button
-                    onClick={() => handleUpgrade(100, "PRO")}
-                    className="px-5 py-3 bg-white dark:bg-slate-900 border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
-                  >
-                    Test Upgrade PRO (100 XAF)
-                  </button>
-                  <button
-                    onClick={() => handleUpgrade(200, "FEATURED")}
-                    className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
-                  >
-                    Test FEATURED (200 XAF)
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    onClick={() => handleUpgrade(150000, "PRO")}
-                    className="px-5 py-3 bg-white dark:bg-slate-900 border border-orange-300 text-orange-600 font-bold text-sm rounded-xl hover:bg-orange-50 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
-                  >
-                    Upgrade to PRO (150k XAF)
-                  </button>
-                  <button
-                    onClick={() => handleUpgrade(350000, "FEATURED")}
-                    className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/20 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
-                  >
-                    Get FEATURED (350k XAF)
-                  </button>
-                </>
-              )}
+
+            {/* Plans Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Option 1: Flexible Cohort Pass (1, 3, or 6 Months) */}
+              <div className="rounded-2xl p-6 border-2 border-primary-500/20 bg-primary-50/30 dark:bg-slate-950 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-primary-100 dark:bg-primary-950/60 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-800">
+                      Bootcamps & Cohorts
+                    </span>
+                    <Clock size={16} className="text-primary-500" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                    Flexible Cohort Pass
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4 leading-relaxed">
+                    Designed for tech bootcamps, vocational trades, and internship programs running timed cycles.
+                  </p>
+
+                  <div className="space-y-2 mb-6">
+                    <div className="text-xs font-semibold text-slate-700 dark:text-slate-300">Choose Duration:</div>
+                    <div className="grid grid-cols-3 gap-1.5">
+                      {[
+                        { label: "1 Mo", livePrice: 25000, testPrice: 50, durationText: "1 Month" },
+                        { label: "3 Mo", livePrice: 60000, testPrice: 100, durationText: "3 Months" },
+                        { label: "6 Mo", livePrice: 100000, testPrice: 150, durationText: "6 Months" },
+                      ].map((item) => {
+                        const price = user?.email === "sangwajesly82@gmail.com" ? item.testPrice : item.livePrice;
+                        return (
+                          <button
+                            key={item.label}
+                            type="button"
+                            onClick={() => handleUpgrade(price, "Flexible Cohort Pass", item.durationText)}
+                            className="p-2.5 rounded-xl border border-primary-200 dark:border-primary-800/80 bg-white dark:bg-slate-900 hover:bg-primary-500 hover:text-white dark:hover:bg-primary-600 transition-all text-center cursor-pointer group"
+                          >
+                            <span className="block text-[11px] font-extrabold text-slate-900 dark:text-white group-hover:text-white">
+                              {item.label}
+                            </span>
+                            <span className="block text-[10px] font-medium text-slate-500 dark:text-slate-400 group-hover:text-primary-100">
+                              {price.toLocaleString()} XAF
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-primary-500 shrink-0" />
+                      <span>Unlimited cohort & course listings</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-primary-500 shrink-0" />
+                      <span>Direct WhatsApp inquiry button</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-primary-500 shrink-0" />
+                      <span>Matched in Skill Gap Recommender</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Option 2: Annual Institutional (12 Months) */}
+              <div className="rounded-2xl p-6 border-2 border-secondary-500/30 bg-secondary-50/30 dark:bg-slate-950 flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-3 right-3">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-secondary-500 text-slate-950">
+                    Annual
+                  </span>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-secondary-100 dark:bg-secondary-950/60 text-secondary-800 dark:text-secondary-300 border border-secondary-200 dark:border-secondary-800">
+                      Universities & IPES
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                    Annual Institutional
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4 leading-relaxed">
+                    Full 12-month platform presence for private universities, polytechnics, and academic faculties.
+                  </p>
+
+                  <div className="mb-6">
+                    <div className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                      {user?.email === "sangwajesly82@gmail.com" ? "200" : "150,000"}{" "}
+                      <span className="text-xs font-bold text-slate-400">XAF / Year</span>
+                    </div>
+                    <span className="text-[11px] text-slate-400 block mt-0.5">365-day verified placement</span>
+                  </div>
+
+                  <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 mb-6">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-secondary-600 dark:text-secondary-400 shrink-0" />
+                      <span>Unlimited Degree, HND & Master's</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-secondary-600 dark:text-secondary-400 shrink-0" />
+                      <span>Direct WhatsApp admissions leads</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-secondary-600 dark:text-secondary-400 shrink-0" />
+                      <span>Verified Institution Badge</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <button
+                  onClick={() =>
+                    handleUpgrade(
+                      user?.email === "sangwajesly82@gmail.com" ? 200 : 150000,
+                      "Annual Institutional",
+                      "12 Months"
+                    )
+                  }
+                  className="w-full py-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold text-xs rounded-xl shadow-md shadow-secondary-500/20 transition-all cursor-pointer hover:scale-[1.02] active:scale-95"
+                >
+                  Get Annual Institutional
+                </button>
+              </div>
+
+              {/* Option 3: Featured Partner Pass (Top Priority) */}
+              <div className="rounded-2xl p-6 border border-slate-800 bg-slate-900 text-white flex flex-col justify-between relative overflow-hidden shadow-xl">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-secondary-500/20 text-secondary-400 border border-secondary-500/30">
+                      Maximum Reach
+                    </span>
+                    <Sparkles size={16} className="text-secondary-400" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">
+                    Featured Priority Pass
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-1 mb-4 leading-relaxed">
+                    Pin your campus or academy to the top of all search queries and homepage recommendation banners.
+                  </p>
+
+                  <div className="mb-6">
+                    <div className="text-2xl font-black text-white tracking-tight">
+                      {user?.email === "sangwajesly82@gmail.com" ? "300" : "350,000"}{" "}
+                      <span className="text-xs font-bold text-slate-400">XAF / Year</span>
+                    </div>
+                    <span className="text-[11px] text-secondary-400 block mt-0.5">Top rank across all filters</span>
+                  </div>
+
+                  <ul className="space-y-2.5 text-xs text-slate-300 mb-6">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-secondary-400 shrink-0" />
+                      <span>All Institutional features included</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-secondary-400 shrink-0" />
+                      <span>#1 Priority in orientation results</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-secondary-400 shrink-0" />
+                      <span>Featured Banner on Homepage</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <button
+                  onClick={() =>
+                    handleUpgrade(
+                      user?.email === "sangwajesly82@gmail.com" ? 300 : 350000,
+                      "Featured Priority",
+                      "12 Months"
+                    )
+                  }
+                  className="w-full py-3 bg-white text-slate-900 hover:bg-slate-100 font-bold text-xs rounded-xl transition-all cursor-pointer hover:scale-[1.02] active:scale-95"
+                >
+                  Get Featured Priority
+                </button>
+              </div>
             </div>
           </div>
         )}
 
         {institution?.subscription_tier === "PRO" && (
-          <div className="bg-gradient-to-r from-orange-500/5 to-amber-500/5 rounded-3xl p-6 sm:p-8 border border-orange-200/50 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="bg-gradient-to-r from-secondary-500/10 to-primary-500/10 rounded-3xl p-6 sm:p-8 border border-secondary-200 dark:border-secondary-800/50 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-600 text-[10px] font-bold uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-500/10 border border-secondary-500/20 text-secondary-700 dark:text-secondary-400 text-[10px] font-bold uppercase tracking-wider mb-2">
                 Active: PRO Portal
               </div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Boost Your Visibility to FEATURED</h2>
@@ -459,7 +631,7 @@ const PartnerDashboard = () => {
             <div className="shrink-0 w-full sm:w-auto">
               <button
                 onClick={() => handleUpgrade(user?.email === "sangwajesly82@gmail.com" ? 200 : 350000, "FEATURED")}
-                className="w-full sm:w-auto px-6 py-3.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl shadow-md shadow-orange-500/25 hover:shadow-orange-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
+                className="w-full sm:w-auto px-6 py-3.5 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-sm rounded-xl shadow-md shadow-secondary-500/25 hover:shadow-secondary-500/35 transition-all cursor-pointer hover:scale-[1.02] active:scale-95 duration-200"
               >
                 {user?.email === "sangwajesly82@gmail.com" ? "Test FEATURED (200 XAF)" : "Get FEATURED (350k XAF)"}
               </button>
@@ -469,9 +641,9 @@ const PartnerDashboard = () => {
 
         {institution?.subscription_tier === "FEATURED" && (
           <div className="bg-slate-900 border border-slate-800/80 rounded-3xl p-6 sm:p-8 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-secondary-500/10 rounded-full blur-3xl pointer-events-none" />
             <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-[10px] font-bold uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-500/20 border border-secondary-500/30 text-secondary-600 dark:text-secondary-400 text-[10px] font-bold uppercase tracking-wider mb-2">
                 Featured Partner Active
               </div>
               <h2 className="text-lg font-bold text-white mb-1">Max Level Portal Active</h2>
@@ -479,7 +651,7 @@ const PartnerDashboard = () => {
                 Your university has maximum priority ranking and is actively recommended to students matching your courses.
               </p>
             </div>
-            <div className="px-4 py-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold shrink-0">
+            <div className="px-4 py-2.5 rounded-xl bg-secondary-500/10 border border-secondary-500/20 text-secondary-600 dark:text-secondary-400 text-xs font-bold shrink-0">
               Priority Ranking Enabled
             </div>
           </div>
@@ -494,13 +666,13 @@ const PartnerDashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
               to="/partner/programs"
-              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-orange-50/60 border border-slate-200/80 dark:border-slate-700/80 hover:border-orange-200 transition-all flex items-start gap-4 group"
+              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-secondary-50 dark:bg-secondary-950/30/60 border border-slate-200/80 dark:border-slate-700/80 hover:border-secondary-200 dark:border-secondary-800 transition-all flex items-start gap-4 group"
             >
-              <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-secondary-500 text-slate-950 font-bold flex items-center justify-center shrink-0">
                 <BookOpen size={20} />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm group-hover:text-orange-600 transition-colors flex items-center justify-between">
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm group-hover:text-secondary-700 dark:text-secondary-400 transition-colors flex items-center justify-between">
                   Manage Academic Courses
                   <ArrowRight size={16} />
                 </h3>
@@ -513,7 +685,7 @@ const PartnerDashboard = () => {
 
             <Link
               to={`/universities`}
-              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-blue-50/60 border border-slate-200/80 dark:border-slate-700/80 hover:border-blue-200 transition-all flex items-start gap-4 group"
+              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-primary-50/60 border border-slate-200/80 dark:border-slate-700/80 hover:border-primary-200 transition-all flex items-start gap-4 group"
             >
               <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0">
                 <Building2 size={20} />
@@ -537,7 +709,7 @@ const PartnerDashboard = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
             <div className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-left">
               {/* Background accent */}
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-secondary-500/10 rounded-full blur-3xl pointer-events-none" />
 
               {/* Close Button */}
               {paymentStep !== "processing" && paymentStep !== "success" && (
@@ -553,9 +725,9 @@ const PartnerDashboard = () => {
               {paymentStep === "input" && (
                 <form onSubmit={processDirectPayment} className="space-y-6">
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-orange-400">Upgrade Portal</span>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-secondary-600 dark:text-secondary-400">Upgrade Portal</span>
                     <h3 className="text-xl font-extrabold text-white mt-1">
-                      Upgrade to {selectedPlan.name} Plan
+                      {selectedPlan.name} {selectedPlan.duration ? `(${selectedPlan.duration})` : "Plan"}
                     </h3>
                     <p className="text-slate-400 text-xs mt-1">
                       Unlock full orientation analytics, priority ranking, and direct WhatsApp student leads.
@@ -570,8 +742,8 @@ const PartnerDashboard = () => {
                         {selectedPlan.amount.toLocaleString()} XAF
                       </span>
                     </div>
-                    <div className="px-3 py-1.5 rounded-lg bg-orange-500/20 text-orange-400 text-xs font-bold border border-orange-500/30">
-                      One-time charge
+                    <div className="px-3 py-1.5 rounded-lg bg-secondary-500/20 text-secondary-600 dark:text-secondary-400 text-xs font-bold border border-secondary-500/30">
+                      {selectedPlan.duration ? `${selectedPlan.duration} Access` : "One-time charge"}
                     </div>
                   </div>
 
@@ -587,7 +759,7 @@ const PartnerDashboard = () => {
                         onChange={(e) => setPayerName(e.target.value)}
                         required
                         placeholder="e.g. Sangwa Jesly"
-                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-secondary-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                       />
                     </div>
 
@@ -602,11 +774,11 @@ const PartnerDashboard = () => {
                           onChange={(e) => setPayerPhone(e.target.value)}
                           required
                           placeholder="e.g. 682833601"
-                          className="w-full pl-4 pr-16 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all placeholder:text-slate-500 dark:text-slate-400"
+                          className="w-full pl-4 pr-16 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-secondary-500 rounded-xl text-white text-sm focus:outline-none transition-all placeholder:text-slate-500 dark:text-slate-400"
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1.5 pointer-events-none select-none">
                           <span className="px-1.5 py-0.5 rounded text-[8px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">MoMo</span>
-                          <span className="px-1.5 py-0.5 rounded text-[8px] font-black bg-orange-500/20 text-orange-400 border border-orange-500/30">OM</span>
+                          <span className="px-1.5 py-0.5 rounded text-[8px] font-black bg-secondary-500/20 text-secondary-600 dark:text-secondary-400 border border-secondary-500/30">OM</span>
                         </div>
                       </div>
                       <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
@@ -624,7 +796,7 @@ const PartnerDashboard = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-4 bg-orange-500 hover:bg-orange-400 text-white font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02]"
+                    className="w-full py-4 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-secondary-500/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02]"
                   >
                     <CreditCard size={18} />
                     Pay {selectedPlan.amount.toLocaleString()} XAF
@@ -636,8 +808,8 @@ const PartnerDashboard = () => {
               {paymentStep === "processing" && (
                 <div className="py-8 text-center space-y-6">
                   <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-                    <Loader2 className="animate-spin text-orange-500 absolute" size={56} />
-                    <div className="w-10 h-10 rounded-full bg-orange-500/10" />
+                    <Loader2 className="animate-spin text-secondary-600 dark:text-secondary-400 absolute" size={56} />
+                    <div className="w-10 h-10 rounded-full bg-secondary-500/10" />
                   </div>
                   <div>
                     <h3 className="text-lg font-extrabold text-white">Payment Request Sent</h3>
@@ -646,7 +818,7 @@ const PartnerDashboard = () => {
                     </p>
                   </div>
                   <div className="bg-white/5 dark:bg-slate-900/5 border border-white/10 rounded-2xl p-4 text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
-                    <span className="text-[10px] font-black text-orange-400 uppercase block mb-1">Status</span>
+                    <span className="text-[10px] font-black text-secondary-600 dark:text-secondary-400 uppercase block mb-1">Status</span>
                     Waiting for your handset authorization...
                   </div>
                 </div>
@@ -661,7 +833,7 @@ const PartnerDashboard = () => {
                   <div>
                     <h3 className="text-lg font-extrabold text-white">Upgrade Successful!</h3>
                     <p className="text-slate-400 text-xs mt-2 leading-relaxed">
-                      Thank you! Your transaction completed successfully. We are upgrading your dashboard to <span className="text-orange-400 font-bold">{selectedPlan.name}</span>...
+                      Thank you! Your transaction completed successfully. We are upgrading your dashboard to <span className="text-secondary-600 dark:text-secondary-400 font-bold">{selectedPlan.name}</span>...
                     </p>
                   </div>
                 </div>
@@ -691,7 +863,7 @@ const PartnerDashboard = () => {
                         setPaymentStep("input");
                         setPaymentError("");
                       }}
-                      className="flex-1 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-orange-500/25 cursor-pointer"
+                      className="flex-1 py-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-sm rounded-xl transition-all shadow-md shadow-secondary-500/25 cursor-pointer"
                     >
                       Try Again
                     </button>
@@ -706,7 +878,7 @@ const PartnerDashboard = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
             <div className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-left">
               {/* Background accent */}
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-secondary-500/10 rounded-full blur-3xl pointer-events-none" />
 
               {/* Close Button */}
               {!editLoading && (
@@ -720,7 +892,7 @@ const PartnerDashboard = () => {
 
               <form onSubmit={handleSaveProfile} className="space-y-6">
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-orange-400">Settings</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-secondary-600 dark:text-secondary-400">Settings</span>
                   <h3 className="text-xl font-extrabold text-white mt-1">
                     Edit Portal Profile
                   </h3>
@@ -740,7 +912,7 @@ const PartnerDashboard = () => {
                       onChange={(e) => setEditName(e.target.value)}
                       required
                       placeholder="e.g. Saint Jerome University"
-                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-secondary-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                     />
                   </div>
 
@@ -755,7 +927,7 @@ const PartnerDashboard = () => {
                         onChange={(e) => setEditCity(e.target.value)}
                         required
                         placeholder="e.g. Douala"
-                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-secondary-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                       />
                     </div>
                     <div>
@@ -767,7 +939,7 @@ const PartnerDashboard = () => {
                         value={editCampus}
                         onChange={(e) => setEditCampus(e.target.value)}
                         placeholder="e.g. Main Campus"
-                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                        className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-secondary-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                       />
                     </div>
                   </div>
@@ -782,7 +954,7 @@ const PartnerDashboard = () => {
                       onChange={(e) => setEditWhatsapp(e.target.value)}
                       required
                       placeholder="e.g. 67xxxxxxx"
-                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-secondary-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                     />
                   </div>
 
@@ -795,7 +967,7 @@ const PartnerDashboard = () => {
                       value={editWebsite}
                       onChange={(e) => setEditWebsite(e.target.value)}
                       placeholder="https://example.cm"
-                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-orange-500 rounded-xl text-white text-sm focus:outline-none transition-all"
+                      className="w-full px-4 py-3 bg-white/5 dark:bg-slate-900/5 border border-white/10 focus:border-secondary-500 rounded-xl text-white text-sm focus:outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -819,7 +991,7 @@ const PartnerDashboard = () => {
                   <button
                     type="submit"
                     disabled={editLoading}
-                    className="flex-1 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-orange-500/25 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="flex-1 py-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-sm rounded-xl transition-all shadow-md shadow-secondary-500/25 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {editLoading ? (
                       <>

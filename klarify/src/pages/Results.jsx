@@ -148,7 +148,7 @@ const Results = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-8 border-b border-slate-200 dark:border-slate-700">
           <div>
             <span className="section-eyebrow block mb-2">Your Results</span>
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white">
               Your Personalized Academic Path
             </h1>
           </div>
@@ -236,7 +236,7 @@ const Results = () => {
                 </p>
                 <button
                   onClick={handleClearFilters}
-                  className="mt-3 text-orange-600 font-semibold text-sm hover:text-orange-700"
+                  className="mt-3 text-secondary-700 dark:text-secondary-400 font-semibold text-sm hover:text-secondary-800 dark:text-secondary-300"
                 >
                   Clear All Filters
                 </button>

@@ -217,17 +217,17 @@ const Programs = () => {
         canonicalUrl="https://www.klarifypath.com/programs"
       />
 
-      <main className="bg-slate-50 dark:bg-slate-950 min-h-screen pt-8 pb-16 md:pt-12 md:pb-24 px-6 selection:bg-orange-500/30">
+      <main className="bg-slate-50 dark:bg-slate-950 min-h-screen pt-8 pb-16 md:pt-12 md:pb-24 px-6 md:px-12 selection:bg-secondary-500/30">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-12 text-center max-w-3xl mx-auto">
-            <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
+            <span className="text-secondary-600 dark:text-secondary-400 font-bold uppercase tracking-widest text-sm mb-4 block">
               Program Directory
             </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
               Academic Programs in Cameroon
             </h1>
-            <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
               Explore bachelor's degrees, HNDs, and professional programs offered
               by state universities and higher institutes. Search by subject,
               career interest, or institution.
@@ -250,7 +250,7 @@ const Programs = () => {
                   setCurrentPage(1);
                 }}
                 placeholder="Search by program name, career (e.g. Biochemist), or keyword..."
-                className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-full text-slate-900 dark:text-white font-medium focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-full text-slate-900 dark:text-white font-medium focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all placeholder:text-slate-400 placeholder:font-normal"
               />
             </div>
 
@@ -266,7 +266,7 @@ const Programs = () => {
                   setCurrentPage(1);
                 }}
                 aria-label="Filter by University"
-                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
+                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-secondary-500 cursor-pointer"
               >
                 {universities.map((uni) => (
                   <option key={uni} value={uni}>
@@ -289,7 +289,7 @@ const Programs = () => {
                   setCurrentPage(1);
                 }}
                 aria-label="Filter by Faculty"
-                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
+                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-secondary-500 cursor-pointer"
               >
                 {faculties.map((fac) => (
                   <option key={fac} value={fac}>
@@ -312,7 +312,7 @@ const Programs = () => {
                   setCurrentPage(1);
                 }}
                 aria-label="Filter by Entry Requirement"
-                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-orange-500 cursor-pointer"
+                className="w-full appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl pl-3.5 pr-8 py-2.5 focus:outline-none focus:border-secondary-500 cursor-pointer"
               >
                 <option value="All">All Entry Types</option>
                 <option value="Concours Required">
@@ -367,7 +367,7 @@ const Programs = () => {
             selectedCategory !== "All") && (
             <button
               onClick={handleResetFilters}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary-700 dark:text-secondary-400 hover:text-secondary-800 dark:text-secondary-300 transition-colors"
             >
               <RefreshCw size={12} />
               Reset Filters
@@ -378,7 +378,7 @@ const Programs = () => {
         {/* Program Cards Grid */}
         {loading || programsLoading ? (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="animate-spin text-orange-500" size={32} />
+            <Loader2 className="animate-spin text-secondary-600 dark:text-secondary-400" size={32} />
           </div>
         ) : paginatedPrograms.length > 0 ? (
           <>
@@ -431,7 +431,7 @@ const Programs = () => {
             </p>
             <button
               onClick={handleResetFilters}
-              className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-bold rounded-xl transition-colors inline-flex items-center gap-2"
+              className="px-5 py-2.5 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold text-xs font-bold rounded-xl transition-colors inline-flex items-center gap-2"
             >
               <RefreshCw size={14} />
               Reset All Filters

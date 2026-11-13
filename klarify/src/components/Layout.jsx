@@ -16,7 +16,7 @@ const NavLink = ({ to, children, onClick }) => {
       onClick={onClick}
       className={`text-sm font-medium transition-colors duration-200 relative pb-0.5 ${
         isActive
-          ? "text-slate-900 dark:text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-orange-500"
+          ? "text-slate-900 dark:text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-primary-500 dark:after:bg-secondary-500"
           : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white"
       }`}
     >
@@ -39,8 +39,8 @@ const LanguageToggle = ({ language, setLanguage, compact = false }) => (
         className={`px-2.5 py-1 text-xs font-bold uppercase transition-colors duration-150 ${
           language === lang
             ? compact
-              ? "bg-orange-500 text-white"
-              : "bg-orange-500 text-white"
+              ? "bg-primary-500 text-white"
+              : "bg-primary-500 text-white"
             : compact
               ? "bg-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 dark:text-slate-200"
               : "bg-transparent text-slate-400 hover:text-white"
@@ -53,7 +53,13 @@ const LanguageToggle = ({ language, setLanguage, compact = false }) => (
 );
 
 
-const Layout = ({ children, noPadding = false, hideFooter = false }) => {
+const Layout = ({
+  children,
+  noPadding = false,
+  hideFooter = false,
+  hideHeader = false,
+  fullScreen = false,
+}) => {
   const { user, loading, signOut } = useAuth();
   const { language, setLanguage, t } = useLanguage();
   const { theme, setTheme } = useTheme();
@@ -77,13 +83,19 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+    <div
+      className={`bg-slate-50 dark:bg-slate-950 flex flex-col ${
+        fullScreen ? "h-screen h-[100dvh] max-h-screen overflow-hidden" : "min-h-screen"
+      }`}
+    >
       {/* ── Header ── */}
-      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200/60 dark:border-slate-700/60 py-3.5 sticky top-0 z-50">
-        <div className="max-w-6xl w-full mx-auto px-6 md:px-12 flex items-center justify-between">
+      {!hideHeader && (
+        <>
+      <header className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200/60 dark:border-slate-700/60 py-3.5 px-6 md:px-12 sticky top-0 z-50">
+        <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+            <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
               K
             </div>
             <Link
@@ -124,7 +136,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                 <div className="relative" ref={profileRef}>
                   <button
                     onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-orange-100 text-orange-600 hover:bg-orange-200 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 border border-orange-200"
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-primary-100 text-primary-600 hover:bg-primary-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 border border-primary-200"
                     aria-label="User menu"
                   >
                     {user.email ? <span className="font-bold text-sm">{user.email.charAt(0).toUpperCase()}</span> : <User size={18} />}
@@ -147,7 +159,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                           <Link
                             to="/profile"
                             onClick={() => setIsProfileOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-orange-50 hover:text-orange-600 rounded-xl transition-colors"
+                            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-primary-50 dark:hover:bg-primary-900/40 hover:text-primary-600 dark:hover:text-secondary-400 rounded-xl transition-colors"
                           >
                             <User size={16} />
                             {t("nav.profile")}
@@ -242,7 +254,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
               >
                 {t("nav.home")}
               </Link>
@@ -255,7 +267,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
               >
                 Recommender
               </Link>
@@ -268,7 +280,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
               >
                 {t("nav.universities")}
               </Link>
@@ -281,7 +293,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
               >
                 {t("nav.programs")}
               </Link>
@@ -294,7 +306,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
               >
                 {t("nav.guides")}
               </Link>
@@ -304,7 +316,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                   setIsMobileMenuOpen(false);
                   trackEvent("partner_cta_click", { location: "mobile_menu" });
                 }}
-                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
               >
                 {t("nav.partner")}
               </Link>
@@ -317,7 +329,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                     location: "mobile_menu",
                   });
                 }}
-                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
               >
                 {t("nav.about")}
               </Link>
@@ -337,7 +349,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                           location: "mobile_menu",
                         });
                       }}
-                      className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                      className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
                     >
                       {t("nav.profile")}
                     </Link>
@@ -363,7 +375,7 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
                           location: "mobile_menu",
                         });
                       }}
-                      className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                      className="text-base font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-secondary-400 transition-colors"
                     >
                       {t("nav.signIn")}
                     </Link>
@@ -387,9 +399,11 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
           </motion.div>
         )}
       </AnimatePresence>
+        </>
+      )}
 
       {/* Mobile Partner FAB (A/B test): only show on small screens and when variant == 'fab' */}
-      {typeof window !== "undefined" &&
+      {!hideHeader && typeof window !== "undefined" &&
         (() => {
           try {
             let ab = localStorage.getItem("partner_ab");
@@ -439,21 +453,23 @@ const Layout = ({ children, noPadding = false, hideFooter = false }) => {
 
       {/* ── Page Content ── */}
       <main
-        className={`flex-1 ${noPadding ? "" : "max-w-6xl w-full mx-auto px-6 md:px-12 pt-6 md:pt-8 pb-12"}`}
+        className={`flex-1 ${
+          fullScreen ? "h-full max-h-screen overflow-hidden flex flex-col" : ""
+        } ${noPadding ? "" : "max-w-7xl w-full mx-auto px-6 md:px-12 pt-6 md:pt-8 pb-12"}`}
       >
         {children}
       </main>
 
       {/* ── Footer ── */}
       {!hideFooter && (
-        <footer className="bg-slate-900 text-slate-400 pt-14 pb-8 border-t border-slate-800">
-          <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <footer className="bg-slate-900 text-slate-400 pt-14 pb-8 px-6 md:px-12 border-t border-slate-800">
+          <div className="max-w-7xl mx-auto">
           {/* Footer grid */}
           <div className="grid grid-cols-2 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800">
             {/* Brand col */}
             <div className="col-span-2 md:col-span-4 md:pr-8 md:border-r md:border-slate-800">
               <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-7 h-7 rounded-md bg-orange-500 flex items-center justify-center text-white font-bold text-sm">
+                <div className="w-7 h-7 rounded-md bg-primary-500 flex items-center justify-center text-white font-bold text-sm">
                   K
                 </div>
                 <span className="font-bold text-base text-white tracking-tight">

@@ -109,7 +109,7 @@ def send_otp(phone: str, full_name: str) -> dict:
         except Exception as e:
             print(f"[OTP] SMS send failed: {e}")
             if _dev_mode_enabled():
-                print(f"[OTP] DEV — fallback code for {phone}: {code}")
+                print(f"[OTP] DEV - fallback code for {phone}: {code}")
             else:
                 raise HTTPException(
                     status_code=500,
@@ -117,7 +117,7 @@ def send_otp(phone: str, full_name: str) -> dict:
                 )
     else:
         if _dev_mode_enabled():
-            print(f"[OTP] DEV — code for {phone}: {code}")
+            print(f"[OTP] DEV - code for {phone}: {code}")
         else:
             raise HTTPException(
                 status_code=500,

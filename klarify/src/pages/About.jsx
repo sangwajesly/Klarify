@@ -57,27 +57,27 @@ const About = () => {
         structuredData={orgSchema}
       />
 
-      <main className="bg-white dark:bg-slate-900 selection:bg-orange-500/30">
+      <main className="bg-white dark:bg-slate-900 selection:bg-secondary-500/30">
         {/* ── Editorial Hero Section ── */}
-        <section className="relative pt-8 pb-20 md:pt-12 md:pb-24 overflow-hidden border-b border-slate-100 dark:border-slate-800">
-          <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <section className="relative pt-8 pb-20 md:pt-12 md:pb-24 px-6 md:px-12 overflow-hidden border-b border-slate-100 dark:border-slate-800">
+          <div className="max-w-7xl mx-auto">
             <motion.div 
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
               className="max-w-4xl mx-auto text-center"
             >
-              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-orange-600 text-xs font-bold uppercase tracking-widest mb-8">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" aria-hidden="true" />
+              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold mb-6 border border-slate-200/80 dark:border-slate-700/80 shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary-500 animate-pulse" aria-hidden="true" />
                 {t("about.hero.badge")}
               </motion.div>
               
-              <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white mb-8 leading-[1.1] tracking-tight">
+              <motion.h1 variants={fadeInUp} className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-8 leading-[1.1] tracking-tight">
                 {t("about.hero.title")}{" "}
-                <span className="text-orange-500">{t("about.hero.titleHighlight")}</span>
+                <span className="text-secondary-600 dark:text-secondary-400">{t("about.hero.titleHighlight")}</span>
               </motion.h1>
               
-              <motion.p variants={fadeInUp} className="text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+              <motion.p variants={fadeInUp} className="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
                 {t("about.hero.text")}{" "}
                 <span className="text-slate-800 dark:text-slate-200 font-medium italic block mt-4">
                   "{t("about.hero.quote")}"
@@ -95,12 +95,12 @@ const About = () => {
               {/* Left Column: Visual Story / Callout */}
               <div className="lg:col-span-5 flex flex-col gap-6">
                 <div className="rounded-[2.5rem] bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 p-10 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl" />
-                  <GraduationCap className="text-orange-500 mb-6" size={40} />
-                  <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl" />
+                  <GraduationCap className="text-secondary-600 dark:text-secondary-400 mb-6" size={40} />
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">
                     {t("about.mission.stat")}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
                     {t("about.mission.statText")}
                   </p>
                 </div>
@@ -109,18 +109,18 @@ const About = () => {
                   <p className="text-lg italic leading-relaxed text-slate-300 font-medium">
                     "{t("about.mission.quote")}"
                   </p>
-                  <p className="text-orange-400 font-bold mt-6 tracking-wide uppercase text-sm">
-                    — {t("about.mission.quoteAuthor")}
+                  <p className="text-secondary-600 dark:text-secondary-400 font-bold mt-6 tracking-wide uppercase text-sm">
+                    {t("about.mission.quoteAuthor")}
                   </p>
                 </div>
               </div>
 
               {/* Right Column: Copy */}
               <div className="lg:col-span-7 lg:pl-8">
-                <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
+                <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
                   {t("about.story.eyebrow")}
                 </span>
-                <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-8 tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-tight mb-8 tracking-tight">
                   {t("about.story.heading")}
                 </h2>
                 
@@ -147,10 +147,10 @@ const About = () => {
         <section className="bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 border-y border-slate-200/60 dark:border-slate-700/60">
           <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
+              <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
                 {t("about.values.eyebrow")}
               </span>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
                 {t("about.values.heading")}
               </h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg">
@@ -159,45 +159,44 @@ const About = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-10 border border-slate-200 dark:border-slate-700 hover:border-orange-500/30 transition-colors group">
-                <div className="w-14 h-14 bg-slate-50 dark:bg-slate-950 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white mb-6 group-hover:bg-orange-50 group-hover:text-orange-500 transition-colors">
+              <div className="bg-white dark:bg-[#0F1626] rounded-[2.5rem] p-8 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all group">
+                <div className="w-14 h-14 bg-secondary-100/70 dark:bg-secondary-950/40 text-secondary-900 dark:text-secondary-300 rounded-2xl flex items-center justify-center mb-6 shadow-xs">
                   <Lightbulb size={24} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Clarity Over Confusion</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Clarity Over Confusion</h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">
                   We transform raw academic data (GCE subjects, interests, and grades) into clear, actionable paths. No jargon. No guesswork.
                 </p>
               </div>
 
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-10 border border-slate-200 dark:border-slate-700 hover:border-orange-500/30 transition-colors group">
-                <div className="w-14 h-14 bg-slate-50 dark:bg-slate-950 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white mb-6 group-hover:bg-orange-50 group-hover:text-orange-500 transition-colors">
+              <div className="bg-white dark:bg-[#0F1626] rounded-[2.5rem] p-8 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all group">
+                <div className="w-14 h-14 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 rounded-2xl flex items-center justify-center mb-6 shadow-xs">
                   <Heart size={24} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Empathy First</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Empathy First</h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">
                   We've been those confused students. Every feature we build is shaped by lived experience, not assumptions.
                 </p>
               </div>
 
-              <div className="bg-slate-900 rounded-[2rem] p-10 text-white relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl group-hover:bg-orange-500/20 transition-colors" />
+              <div className="bg-primary-500 rounded-[2.5rem] p-8 sm:p-10 text-white relative overflow-hidden shadow-lg group">
                 <div className="relative z-10">
-                  <div className="w-14 h-14 bg-white/10 dark:bg-slate-900/10 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/10">
+                  <div className="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/20 shadow-xs">
                     <Target size={24} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3">Local & Relevant</h3>
-                  <p className="text-slate-400 leading-relaxed">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3">Local & Relevant</h3>
+                  <p className="text-primary-100 leading-relaxed text-sm sm:text-base">
                     We are built specifically for Cameroon. Our programs database, Concours information, and recommendations are all locally curated.
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-10 border border-slate-200 dark:border-slate-700 hover:border-orange-500/30 transition-colors group">
-                <div className="w-14 h-14 bg-slate-50 dark:bg-slate-950 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white mb-6 group-hover:bg-orange-50 group-hover:text-orange-500 transition-colors">
+              <div className="bg-white dark:bg-[#0F1626] rounded-[2.5rem] p-8 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all group">
+                <div className="w-14 h-14 bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-300 rounded-2xl flex items-center justify-center mb-6 shadow-xs">
                   <Users size={24} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Community-Driven</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Community-Driven</h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">
                   From parents sharing GCE results links on WhatsApp to students using our orientation engine, Klarify grows because the community believes in it.
                 </p>
               </div>
@@ -209,10 +208,10 @@ const About = () => {
         <section className="bg-white dark:bg-slate-900 py-24 px-6 md:px-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
-              <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
+              <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
                 {t("about.team.eyebrow")}
               </span>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {t("about.team.heading1")} <br />
                 <span className="text-slate-400 font-medium">
                   {t("about.team.heading2")}
@@ -222,7 +221,7 @@ const About = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Sangwa Jesly */}
-              <div className="group rounded-[2rem] overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:border-slate-600 transition-all duration-300">
+              <div className="group rounded-[2.5rem] overflow-hidden bg-white dark:bg-[#0F1626] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="aspect-[4/5] w-full relative overflow-hidden bg-slate-200 dark:bg-slate-700">
                   <img
                     src={sangwaJesly}
@@ -231,8 +230,8 @@ const About = () => {
                   />
                 </div>
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Sangwa Jesly</h3>
-                  <p className="text-sm font-bold text-orange-500 uppercase tracking-wider mt-2 mb-4">
+                  <h3 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">Sangwa Jesly</h3>
+                  <p className="text-sm font-bold text-secondary-600 dark:text-secondary-400 uppercase tracking-wider mt-2 mb-4">
                     {t("about.team.sangwa.role")}
                   </p>
                   <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
@@ -245,7 +244,7 @@ const About = () => {
               </div>
 
               {/* Desmond Yembi */}
-              <div className="group rounded-[2rem] overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:border-slate-600 transition-all duration-300">
+              <div className="group rounded-[2.5rem] overflow-hidden bg-white dark:bg-[#0F1626] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="aspect-[4/5] w-full relative overflow-hidden bg-slate-200 dark:bg-slate-700">
                   <img
                     src={desmondYembi}
@@ -254,8 +253,8 @@ const About = () => {
                   />
                 </div>
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Desmond Yembi</h3>
-                  <p className="text-sm font-bold text-orange-500 uppercase tracking-wider mt-2 mb-4">
+                  <h3 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">Desmond Yembi</h3>
+                  <p className="text-sm font-bold text-secondary-600 dark:text-secondary-400 uppercase tracking-wider mt-2 mb-4">
                     {t("about.team.desmond.role")}
                   </p>
                   <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
@@ -268,7 +267,7 @@ const About = () => {
               </div>
 
               {/* Miss Joyce */}
-              <div className="group rounded-[2rem] overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:border-slate-600 transition-all duration-300">
+              <div className="group rounded-[2.5rem] overflow-hidden bg-white dark:bg-[#0F1626] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="aspect-[4/5] w-full relative overflow-hidden bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                   {missJoyce ? (
                     <img
@@ -281,8 +280,8 @@ const About = () => {
                   )}
                 </div>
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Miss Joyce</h3>
-                  <p className="text-sm font-bold text-orange-500 uppercase tracking-wider mt-2 mb-4">
+                  <h3 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">Miss Joyce</h3>
+                  <p className="text-sm font-bold text-secondary-600 dark:text-secondary-400 uppercase tracking-wider mt-2 mb-4">
                     {t("about.team.joyce.role")}
                   </p>
                   <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
@@ -302,18 +301,18 @@ const About = () => {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
-                <span className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4 block">
+                <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
                   {t("about.platform.eyebrow")}
                 </span>
-                <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-6 tracking-tight">
                   {t("about.platform.heading")}
                 </h2>
-                <p className="text-slate-400 text-lg leading-relaxed mb-10">
+                <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-10">
                   {t("about.platform.text")}
                 </p>
                 <button
                   onClick={() => navigate("/flow")}
-                  className="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-400 text-white font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
+                  className="inline-flex items-center gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
                 >
                   {t("about.platform.cta")}
                   <ArrowRight size={18} />
@@ -338,10 +337,10 @@ const About = () => {
                     desc: t("about.platform.cards.concours.desc"),
                   },
                 ].map(({ num, title, desc }) => (
-                  <div key={num} className="bg-slate-800/50 border border-slate-700/50 p-8 rounded-3xl flex gap-6 items-start hover:bg-slate-800 transition-colors">
+                  <div key={num} className="bg-slate-800/60 border border-white/10 p-7 sm:p-8 rounded-[2rem] flex gap-5 items-start hover:bg-slate-800 transition-all shadow-xs">
                     <span className="text-2xl font-black text-slate-600 dark:text-slate-400 shrink-0 mt-1">{num}</span>
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+                      <h3 className="text-base sm:text-lg font-bold text-white mb-2">{title}</h3>
                       <p className="text-slate-400 leading-relaxed">{desc}</p>
                     </div>
                   </div>

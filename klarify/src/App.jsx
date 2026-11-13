@@ -23,6 +23,7 @@ import PartnerPrograms from "./pages/PartnerPrograms";
 import PartnerLogin from "./pages/PartnerLogin";
 import GuideDetails from "./pages/GuideDetails";
 import Guides from "./pages/Guides";
+import SkillResults from "./pages/SkillResults";
 import InstallPrompt from "./components/InstallPrompt";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -32,7 +33,7 @@ import Analytics from "./components/Analytics";
 const ComingSoon = ({ title }) => (
   <Layout>
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-      <h1 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+      <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-4">
         {title}
       </h1>
       <p className="text-slate-600 dark:text-slate-400 text-lg">
@@ -78,10 +79,9 @@ function App() {
           path="/careers"
           element={<ComingSoon title="Career Pathways" />}
         />
-        <Route
-          path="/skills"
-          element={<ComingSoon title="Skills & Certifications" />}
-        />
+        <Route path="/skills" element={<InputFlow />} />
+        <Route path="/skills-results" element={<SkillResults />} />
+        <Route path="/skill-results" element={<SkillResults />} />
 
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />

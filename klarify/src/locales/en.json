@@ -34,50 +34,51 @@
       "long": "Check GCE Results Now.",
       "searchNow": "Search Now"
     },
-    "badge": "Cameroon's #1 Academic Guidance Platform",
-    "headline": "Find Your Next Step",
-    "headlineSub": "After Secondary School or University",
-    "subtext": "Stop guessing what comes next. Discover the perfect university programs, professional concours, and career paths in Cameroon tailored precisely to your unique profile and goals.",
+    "badge": "Cameroon's Premier Academic & Career Guidance Platform",
+    "headline": "Find Your Clear Path",
+    "headlineHighlight": "to Degrees, Skills & Careers",
+    "headlineSub": "",
+    "subtext": "Whether you are completing secondary school, graduating university, or building market-ready skills, Klarify guides your exact next step with clear, verified recommendations.",
     "ctaPrimary": "Get Started Free",
-    "ctaSubtext": "Takes only 2 minutes - no credit card required.",
+    "ctaSubtext": "Takes only 2 minutes. No credit card or account required to start.",
     "trustedBy": "Trusted by",
     "students": "students",
     "aboutSection": {
       "eyebrow": "About Klarify",
-      "heading": "Cameroon's premier educational platform",
-      "p1": "Klarify is designed to bridge the gap between high school education and career success. Every year, thousands of Cameroonian students struggle to navigate the complex higher education system.",
-      "p2": "We solve this by providing an intelligent, personalized recommendation engine that analyzes your academic strengths (like GCE A-Level subjects) and personal interests to suggest the most appropriate public and private university programs, concours, and career pathways in Cameroon."
+      "heading": "Cameroon's premier educational & career platform",
+      "p1": "Klarify is designed to bridge the gap between academic education and real-world career success. Whether you are choosing your first degree, preparing for professional concours, exploring master's programs, or learning high-demand skills, we provide clear, validated guidance.",
+      "p2": "Our intelligent matching engine analyzes your academic strengths (like GCE A-Level subjects or degree fields) and competencies to recommend verified public and private programs, certified bootcamps, and local or remote opportunities."
     },
     "features": {
       "eyebrow": "How it works",
-      "heading": "From A-Levels to your career path in 3 steps",
+      "heading": "Your guided journey in 3 clear steps",
       "step1": {
-        "title": "Enter Your Profile",
-        "description": "Tell us about your GCE A-Level subjects, grades, and what fields interest you most."
+        "title": "1. Tell Us Where You Stand",
+        "description": "Select your current stage: secondary school graduate, bachelor's degree holder, or career builder with existing skills."
       },
       "step2": {
-        "title": "Get Recommendations",
-        "description": "Our engine matches your profile to eligible university programs, concours, and career paths."
+        "title": "2. AI Gap & Fit Evaluation",
+        "description": "Our engine evaluates your subjects or skills against accredited university programs, concours, and live market demand."
       },
       "step3": {
-        "title": "Explore & Apply",
-        "description": "Dive deep into program details, concours requirements, and directly contact institutions."
+        "title": "3. Clear Roadmap & Application",
+        "description": "Get direct admission links, past concours materials, certified courses, and remote or onsite internships in Cameroon."
       }
     },
     "whySection": {
       "eyebrow": "Why Klarify",
-      "heading": "Built for the Cameroonian student experience",
+      "heading": "Built for every stage of your educational journey",
       "card1": {
-        "title": "GCE-Aligned Matching",
-        "description": "Our database is built specifically around Cameroon GCE A/L and O/L subject combinations for precise eligibility checks."
+        "title": "Multi-Stage Guidance",
+        "description": "Tailored pathways for secondary school students, university graduates, and self-learners building new competencies."
       },
       "card2": {
-        "title": "Instant Results",
-        "description": "No more browsing through PDFs. Get your GCE results and program recommendations in seconds."
+        "title": "Local & Remote Opportunities",
+        "description": "Discover accredited Cameroonian institutions as well as verified remote internships and global learning resources."
       },
       "card3": {
-        "title": "Trusted Data",
-        "description": "All institution data, concours requirements, and career insights are verified and regularly updated."
+        "title": "Accurate & Verified Data",
+        "description": "All program prerequisites, concours deadlines, and tuition details are curated and updated continuously."
       }
     },
     "partnerPromo": {
@@ -354,9 +355,9 @@
   "about": {
     "hero": {
       "badge": "Our Story",
-      "title": "Built by Students,",
-      "titleHighlight": "For Students",
-      "text": "Klarify was born on results day, in the middle of the celebration, confusion, and the silent question nobody could answer:",
+      "title": "Bridging Education &",
+      "titleHighlight": "Career Success",
+      "text": "Klarify was born from a simple realization: Cameroon has immense ambition, but talent gets lost between secondary school, higher education, and the modern job market.",
       "quote": "What do I do next?"
     },
     "story": {
@@ -400,20 +401,20 @@
     },
     "platform": {
       "eyebrow": "The Platform",
-      "heading": "What Klarify Does",
-      "text": "We are building Cameroon's most comprehensive academic orientation and results platform, one feature at a time.",
+      "heading": "The Three Pillars of Klarify",
+      "text": "We connect learners, institutions, and employers to build Cameroon's most reliable talent infrastructure.",
       "cards": {
         "gce": {
-          "title": "GCE Results Search",
-          "desc": "Search your GCE O/L, A/L, and TVE results instantly by name without PDFs or stress."
+          "title": "Academic & GCE Intelligence",
+          "desc": "Instant GCE result lookups and precision university degree matchmaking based on your actual subject combinations."
         },
         "orientation": {
-          "title": "Academic Orientation",
-          "desc": "Based on your A-Level subjects and interests, get personalized university program recommendations built for Cameroon's education system."
+          "title": "Skill Assessments & Bridges",
+          "desc": "Evaluate existing skills against live job demand, mapping missing competencies directly to certified bootcamps, courses, and internships."
         },
         "concours": {
-          "title": "Concours & Career Guides",
-          "desc": "Get details on entrance exams, deadlines, fees, and the career paths that each program leads to, all in one place."
+          "title": "Verified Partner Network",
+          "desc": "Direct portals connecting accredited universities, tech academies, vocational centers, and hiring employers directly with motivated talent."
         }
       },
       "cta": "Start Your Free Assessment",
@@ -541,64 +542,64 @@
   },
   "partners": {
     "hero": {
-      "badge": "Private University Partner Portal",
-      "heading1": "Reach High-Intent",
-      "heading2": "A-Level Students",
-      "heading3": "Right When They Decide",
-      "text": "Join Cameroon's top private institutes (IPES). Self-onboard your campus, upload degree & HND programs, display tuition fees, and receive direct student leads on WhatsApp, all from your partner dashboard.",
-      "primaryCta": "Register Your University Now",
-      "login": "Institution Login",
+      "badge": "Klarify Partner Network: Higher Ed, Tech Academies & Vocational Hubs",
+      "heading1": "Educate, Train & Hire",
+      "heading2": "Cameroon's Best Talent",
+      "heading3": "Connect With Students & Career Builders",
+      "text": "Whether you run a private university, a certified tech academy, a vocational trade center, or a hiring company: Klarify connects your courses, cohorts, and opportunities directly to high-intent students and ambitious career seekers.",
+      "primaryCta": "Register Your Organization",
+      "login": "Partner Portal Login",
       "featuresCta": "View Portal Features"
     },
     "value": {
       "eyebrow": "Why Partner With Us",
-      "heading": "Built for Cameroonian Private Institutes (IPES)",
+      "heading": "Why Top Organizations Partner With Klarify",
       "cards": [
         {
-          "title": "Intelligent Student Matching",
-          "desc": "When students enter their GCE A-Level subject combinations, our matching engine highlights your eligible degree programs directly."
+          "title": "Instant Visibility",
+          "desc": "Reach students and job seekers looking for accredited university degrees, coding bootcamps, and vocational apprenticeships across Cameroon."
         },
         {
           "title": "Direct WhatsApp Leads",
-          "desc": "Students can click a single button on your program cards to chat directly with your admissions office or registrar on WhatsApp."
+          "desc": "Eliminate lengthy paperwork. Interested candidates message your admissions desk or recruitment team directly on WhatsApp with pre-filled inquiries."
         },
         {
-          "title": "Complete Self-Service",
-          "desc": "No need to wait for manual updates. Add, edit, or remove your campus programs, tuition fees, and admission deadlines anytime from your dashboard."
+          "title": "Skill & Academic Matchmaking",
+          "desc": "Our AI evaluates user subject combinations and skill gaps, recommending your programs directly to candidates who match your exact prerequisites."
         }
       ]
     },
     "pricing": {
-      "eyebrow": "Transparent Partner Pricing",
-      "heading": "Simple Listing Plans",
-      "subtitle": "Payments processed securely via Mobile Money (MTN MoMo & Orange Money).",
-      "starter": "Starter",
-      "basicListing": "Basic Listing",
+      "eyebrow": "Flexible Partner Pricing",
+      "heading": "Plans Built for Every Organization",
+      "subtitle": "From free starter listings to flexible cohort passes and annual university packages. Secure mobile money payments via MTN MoMo and Orange Money.",
+      "starter": "Free Starter",
+      "basicListing": "Free Listing",
       "free": "Free",
-      "idealFor": "Ideal for small private institutes starting out.",
-      "listUpTo3": "List up to 3 programs",
-      "basicCampus": "Basic campus profile & city location",
+      "idealFor": "Ideal for new centers, institutes, or tech agencies starting out.",
+      "listUpTo3": "List up to 3 programs, courses, or internships",
+      "basicCampus": "Organization profile, city, and campus location",
       "whatsappLead": "WhatsApp Lead Button",
       "getStartedFree": "Get Started Free",
       "mostPopular": "Most Popular",
-      "proPartner": "Pro Partner",
-      "unlimited": "Unlimited IPES",
-      "annual": "/ yr",
-      "fullFeatures": "Full features for growing private universities.",
-      "directWhatsApp": "Direct WhatsApp Admissions Lead Button",
-      "displayFees": "Display annual tuition fees & deadlines",
-      "verifiedBadge": "Verified Institution Badge",
-      "registerProCampus": "Register Pro Campus",
-      "featured": "Featured",
-      "featuredCampus": "Featured Campus",
-      "maxVisibility": "Maximum visibility during GCE results release.",
-      "everythingInPro": "Everything in Pro Plan",
-      "topPriority": "Top Priority Ranking in Recommender",
-      "featuredBanner": "Featured Banner on Homepage",
-      "getFeatured": "Get Featured",
+      "proPartner": "Flexible Cohort Pass",
+      "unlimited": "Tech Bootcamps & Cohorts",
+      "annual": "/ 3-Month Cohort",
+      "fullFeatures": "Ideal for coding bootcamps, vocational cohorts, and seasonal training cycles.",
+      "directWhatsApp": "Direct WhatsApp Admissions & Inquiry Button",
+      "displayFees": "Display tuition, cohort dates, and syllabi",
+      "verifiedBadge": "Verified Partner Badge & Skill Gap AI Placement",
+      "registerProCampus": "Get Started with Cohort Pass",
+      "featured": "Annual Institutional",
+      "featuredCampus": "Universities & Full Campuses",
+      "maxVisibility": "Full 12-month priority placement for higher education institutes.",
+      "everythingInPro": "Unlimited degree and master's listings",
+      "topPriority": "Top Priority Ranking in Recommender & Directories",
+      "featuredBanner": "Featured Campus Banner on Homepage",
+      "getFeatured": "Get Annual Institutional",
       "ctaHeading": "Ready to list your programs?",
-      "ctaText": "Setup takes less than 3 minutes. Start adding your university campus and academic courses today.",
-      "ctaButton": "Create Partner Account"
+      "ctaText": "Setup takes less than 3 minutes. Start adding your degrees, bootcamps, or internship cohorts today.",
+      "ctaButton": "Join Partner Network"
     }
   },
   "common": {

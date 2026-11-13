@@ -30,7 +30,7 @@ const FAQBlock = ({ faqs, title = "Frequently Asked Questions" }) => {
         description={`Answers to common questions about ${title}`}
       />
       <div className="max-w-3xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8 text-center">
+        <h2 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-8 text-center">
           {title}
         </h2>
 
@@ -52,7 +52,7 @@ const FAQBlock = ({ faqs, title = "Frequently Asked Questions" }) => {
                   <ChevronDown
                     size={18}
                     className={`text-slate-400 group-hover:text-slate-600 dark:text-slate-400 shrink-0 transition-transform duration-300 ease-out-expo ${
-                      isOpen ? "rotate-180 text-orange-500" : ""
+                      isOpen ? "rotate-180 text-secondary-600 dark:text-secondary-400" : ""
                     }`}
                     aria-hidden="true"
                   />

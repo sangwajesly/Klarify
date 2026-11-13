@@ -177,7 +177,7 @@ const GuideDetails = () => {
     return (
       <Layout noPadding={true}>
         <div className="min-h-screen bg-slate-900 text-white flex flex-col justify-center items-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-orange-500 mb-4" />
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-secondary-500 mb-4" />
           <p className="text-slate-400 text-sm">Loading guide...</p>
         </div>
       </Layout>
@@ -234,17 +234,17 @@ const GuideDetails = () => {
 
       {/* Guide Header Banner */}
       <section className="bg-slate-950 text-white border-b border-slate-900 pt-28 pb-16 px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-secondary-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-2xl mx-auto z-10 relative">
           <Link
             to="/guides"
-            className="inline-flex items-center gap-1.5 text-xs text-orange-400 font-bold uppercase tracking-widest mb-6 hover:text-orange-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-secondary-600 dark:text-secondary-400 font-bold uppercase tracking-widest mb-6 hover:text-secondary-500 dark:text-secondary-300 transition-colors"
           >
             <ArrowLeft size={12} />
             Back to Educational Guides
           </Link>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight mb-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white leading-tight mb-4">
             {article.title}
           </h1>
           <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
@@ -259,7 +259,7 @@ const GuideDetails = () => {
 
       {/* Clean Single-Column Reading Body (Medium style) */}
       <article className="bg-white dark:bg-slate-900 py-12 px-6">
-        <div className="max-w-2xl mx-auto text-slate-700 dark:text-slate-300 text-base sm:text-lg leading-relaxed space-y-6">
+        <div className="max-w-2xl mx-auto text-slate-700 dark:text-slate-300 text-base sm:text-sm sm:text-base leading-relaxed space-y-6">
           {article.content.map((block, idx) => {
             switch (block.type) {
               case "p":
@@ -281,7 +281,7 @@ const GuideDetails = () => {
                 return (
                   <blockquote
                     key={idx}
-                    className="border-l-4 border-orange-500 pl-4 italic text-slate-800 dark:text-slate-200 font-medium my-8"
+                    className="border-l-2 border-secondary-500 pl-5 py-1 italic text-slate-800 dark:text-slate-200 font-medium my-8"
                   >
                     "{block.text}"
                   </blockquote>
@@ -293,7 +293,7 @@ const GuideDetails = () => {
                     className="p-5 bg-slate-50 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl flex gap-3 text-sm my-6"
                   >
                     <Compass
-                      className="text-orange-500 shrink-0 mt-0.5"
+                      className="text-secondary-600 dark:text-secondary-400 shrink-0 mt-0.5"
                       size={18}
                     />
                     <p className="text-slate-600 dark:text-slate-400">{block.text}</p>
@@ -316,7 +316,7 @@ const GuideDetails = () => {
                   return (
                     <div
                       key={idx}
-                      className="my-8 p-6 bg-orange-50 border border-orange-200 rounded-2xl"
+                      className="my-8 p-6 bg-secondary-50 dark:bg-secondary-950/30 border border-secondary-200 dark:border-secondary-800 rounded-2xl"
                     >
                       <h4 className="font-bold text-slate-900 dark:text-white text-base">
                         {block.text}
@@ -326,7 +326,7 @@ const GuideDetails = () => {
                       </p>
                       <button
                         onClick={() => navigate("/flow")}
-                        className="mt-4 inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer border-none"
+                        className="mt-4 inline-flex items-center gap-1.5 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer border-none"
                       >
                         Explore Recommended Programs
                         <ArrowRight size={14} />
@@ -347,7 +347,7 @@ const GuideDetails = () => {
           {featuredPartner && (
             <div className="my-8 p-6 bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl flex flex-col sm:flex-row items-start justify-between gap-6">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-orange-100/80 text-orange-600 text-[10px] font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-secondary-100 dark:bg-secondary-900/30/80 text-secondary-700 dark:text-secondary-400 text-[10px] font-bold uppercase tracking-wider">
                   Featured Partner Campus
                 </div>
                 <h4 className="font-bold text-slate-900 dark:text-white text-base">
@@ -420,7 +420,7 @@ const GuideDetails = () => {
                 <div
                   key={item.id}
                   onClick={() => navigate(`/guides/${item.slug}`)}
-                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-2xs overflow-hidden flex flex-col hover:shadow-md hover:border-orange-500/20 transition-all duration-300 cursor-pointer group"
+                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-2xs overflow-hidden flex flex-col hover:shadow-md hover:border-secondary-500/20 transition-all duration-300 cursor-pointer group"
                 >
                   <div className="aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800">
                     <img
@@ -436,7 +436,7 @@ const GuideDetails = () => {
                         <span>&bull;</span>
                         <span>{item.readTime}</span>
                       </div>
-                      <h4 className="font-extrabold text-slate-900 dark:text-white group-hover:text-orange-500 transition-colors text-sm sm:text-base leading-snug tracking-tight mb-2">
+                      <h4 className="font-extrabold text-slate-900 dark:text-white group-hover:text-secondary-600 dark:text-secondary-400 transition-colors text-sm sm:text-base leading-snug tracking-tight mb-2">
                         {item.title}
                       </h4>
                       <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">

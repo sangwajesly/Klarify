@@ -3,44 +3,99 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary-50: #f8fafc;
-  --color-primary-100: #f1f5f9;
-  --color-primary-200: #e2e8f0;
-  --color-primary-300: #cbd5e1;
-  --color-primary-400: #94a3b8;
-  --color-primary-500: #64748b;
-  --color-primary-600: #475569;
-  --color-primary-700: #334155;
-  --color-primary-800: #1e293b;
-  --color-primary-900: #0f172a;
-  --color-primary-950: #020617;
+  /* Sky Blue Palette (Primary) */
+  --color-sky-1: #1E2129;
+  --color-sky-2: #1E2435;
+  --color-sky-3: #1E2A4B;
+  --color-sky-4: #1F2F62;
+  --color-sky-5: #1F3578;
+  --color-sky-6: #1F3B8F;
+  --color-sky-7: #4C62A5;
+  --color-sky-8: #7989BC;
+  --color-sky-9: #A5B1D2;
+  --color-sky-10: #D2D8E9;
+  --color-sky-11: #E9EBF4;
 
-  --color-accent-50: #fff7ed;
-  --color-accent-100: #ffedd5;
-  --color-accent-200: #fed7aa;
-  --color-accent-300: #fdba74;
-  --color-accent-400: #fb923c;
-  --color-accent-500: #f97316;
-  --color-accent-600: #ea580c;
-  --color-accent-700: #c2410c;
-  --color-accent-800: #9a3412;
-  --color-accent-900: #7c2d12;
-  --color-accent-950: #431407;
+  /* Yellow Green Palette (Secondary & Accent) */
+  --color-yg-1: #2F3020;
+  --color-yg-2: #404222;
+  --color-yg-3: #616726;
+  --color-yg-4: #838B2B;
+  --color-yg-5: #A4B02F;
+  --color-yg-6: #C6D433;
+  --color-yg-7: #D1DD5C;
+  --color-yg-8: #DDE585;
+  --color-yg-9: #E8EEAD;
+  --color-yg-10: #F4F6D6;
+  --color-yg-11: #F4F6D6;
+
+  /* Primary Scale -> Sky Blue */
+  --color-primary-50: #E9EBF4;
+  --color-primary-100: #D2D8E9;
+  --color-primary-200: #A5B1D2;
+  --color-primary-300: #7989BC;
+  --color-primary-400: #4C62A5;
+  --color-primary-500: #1F3B8F; /* PRIMARY */
+  --color-primary-600: #1F3578;
+  --color-primary-700: #1F2F62;
+  --color-primary-800: #1E2A4B;
+  --color-primary-900: #1E2435;
+  --color-primary-950: #1E2129;
+
+  /* Secondary Scale -> Yellow Green */
+  --color-secondary-50: #F4F6D6;
+  --color-secondary-100: #F4F6D6;
+  --color-secondary-200: #E8EEAD;
+  --color-secondary-300: #DDE585;
+  --color-secondary-400: #D1DD5C;
+  --color-secondary-500: #C6D433; /* SECONDARY */
+  --color-secondary-600: #A4B02F;
+  --color-secondary-700: #838B2B;
+  --color-secondary-800: #616726;
+  --color-secondary-900: #404222;
+  --color-secondary-950: #2F3020;
+
+  /* Accent Scale alias to Yellow Green */
+  --color-accent-50: #F4F6D6;
+  --color-accent-100: #F4F6D6;
+  --color-accent-200: #E8EEAD;
+  --color-accent-300: #DDE585;
+  --color-accent-400: #D1DD5C;
+  --color-accent-500: #C6D433;
+  --color-accent-600: #A4B02F;
+  --color-accent-700: #838B2B;
+  --color-accent-800: #616726;
+  --color-accent-900: #404222;
+  --color-accent-950: #2F3020;
+
+  /* Route legacy orange tokens directly to Yellow Green */
+  --color-orange-50: #F4F6D6;
+  --color-orange-100: #F4F6D6;
+  --color-orange-200: #E8EEAD;
+  --color-orange-300: #DDE585;
+  --color-orange-400: #D1DD5C;
+  --color-orange-500: #C6D433;
+  --color-orange-600: #A4B02F;
+  --color-orange-700: #838B2B;
+  --color-orange-800: #616726;
+  --color-orange-900: #404222;
+  --color-orange-950: #2F3020;
 
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
 
-  --font-heading: "Sora", sans-serif;
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-heading: "Manrope", system-ui, -apple-system, sans-serif;
 
-  /* Easing — used consistently, not per-component */
+  /* Easing - used consistently, not per-component */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer base {
   body {
-  @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply bg-slate-50 dark:bg-[#080C14] text-slate-900 dark:text-slate-100 antialiased;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -59,49 +114,62 @@
 
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 bg-primary-900 text-white rounded-xl font-semibold text-sm
+    @apply px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-bold text-sm
+      shadow-md shadow-primary-500/20
       disabled:opacity-40 disabled:cursor-not-allowed;
     transition: background-color 200ms var(--ease-out-expo),
                 transform 200ms var(--ease-out-expo),
                 box-shadow 200ms var(--ease-out-expo);
   }
   .btn-primary:not(:disabled):hover {
-    @apply bg-primary-800;
     transform: translateY(-1px);
   }
   .btn-primary:not(:disabled):active {
     transform: scale(0.98);
   }
 
+  .btn-secondary {
+    @apply px-6 py-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 rounded-xl font-black text-sm
+      shadow-md shadow-secondary-500/25
+      disabled:opacity-40 disabled:cursor-not-allowed;
+    transition: background-color 200ms var(--ease-out-expo),
+                transform 200ms var(--ease-out-expo),
+                box-shadow 200ms var(--ease-out-expo);
+  }
+  .btn-secondary:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+  .btn-secondary:not(:disabled):active {
+    transform: scale(0.98);
+  }
+
   .btn-outline {
-    @apply px-6 py-3 border border-slate-200 text-slate-600 rounded-xl font-semibold text-sm
+    @apply px-6 py-3 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl font-semibold text-sm
+      hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:border-slate-300 dark:hover:border-slate-700
       disabled:opacity-40;
     transition: background-color 200ms var(--ease-in-out-smooth),
                 border-color 200ms var(--ease-in-out-smooth);
-  }
-  .btn-outline:not(:disabled):hover {
-    @apply bg-slate-50 border-slate-300;
   }
   .btn-outline:not(:disabled):active {
     transform: scale(0.98);
   }
 
-  /* Card — max 2px lift on hover */
+  /* Card - Soft, rounded ALX-style surface */
   .card {
-    @apply bg-white p-6 rounded-2xl border border-slate-100;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    transition: box-shadow 220ms var(--ease-out-expo),
-                transform 220ms var(--ease-out-expo),
-                border-color 220ms var(--ease-out-expo);
+    @apply bg-white dark:bg-[#0F1626] p-6 sm:p-7 rounded-[2rem] border border-slate-200/70 dark:border-slate-800/80;
+    box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.05), 0 1px 3px -1px rgba(15, 23, 42, 0.03);
+    transition: box-shadow 260ms var(--ease-out-expo),
+                transform 260ms var(--ease-out-expo),
+                border-color 260ms var(--ease-out-expo);
   }
   .card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.07), 0 4px 8px -2px rgba(15, 23, 42, 0.03);
     transform: translateY(-2px);
   }
 
-  /* Section labels — small uppercase eyebrow text */
+  /* Section labels - small uppercase eyebrow text */
   .section-eyebrow {
-    @apply text-xs uppercase tracking-widest font-bold text-accent-500;
+    @apply text-xs uppercase tracking-widest font-bold text-primary-500 dark:text-secondary-400;
   }
 }
 

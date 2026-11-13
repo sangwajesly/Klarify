@@ -1,5 +1,5 @@
 """
-GCE Results 2026 — PDF to CSV Exporter
+GCE Results 2026 - PDF to CSV Exporter
 =======================================
 Extracts all candidate records from the 4 GCE PDFs
 and saves them as CSV files ready for Supabase bulk import.

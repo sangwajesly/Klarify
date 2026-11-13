@@ -110,13 +110,13 @@ const VerifyPhone = () => {
 
         <div className="relative z-10 w-full max-w-sm">
           <div className="flex flex-col items-center mb-6">
-            <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center mb-3">
+            <div className="w-12 h-12 rounded-xl bg-secondary-500/10 text-secondary-600 dark:text-secondary-400 flex items-center justify-center mb-3">
               <MessageSquare size={24} />
             </div>
-            <h1 className="text-2xl font-bold text-white">Verify Your Number</h1>
+            <h1 className="text-lg sm:text-base sm:text-lg font-bold text-white">Verify Your Number</h1>
             <p className="text-slate-400 text-xs mt-1 text-center max-w-xs leading-relaxed">
               We sent a 6-digit code to{" "}
-              <span className="text-orange-400 font-semibold">{phone}</span>
+              <span className="text-secondary-600 dark:text-secondary-400 font-semibold">{phone}</span>
             </p>
           </div>
 
@@ -150,10 +150,10 @@ const VerifyPhone = () => {
                     onKeyDown={(e) => handleKeyDown(i, e)}
                     className={`w-11 h-13 text-center text-xl font-bold rounded-xl border transition-all
                       ${digit
-                        ? "bg-slate-800/80 border-orange-500/60 text-white"
+                        ? "bg-slate-800/80 border-secondary-500/60 text-white"
                         : "bg-slate-800/40 border-slate-700 text-white"
                       }
-                      focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20`}
+                      focus:outline-none focus:border-secondary-500 focus:ring-2 focus:ring-secondary-500/20`}
                   />
                 ))}
               </div>
@@ -161,7 +161,7 @@ const VerifyPhone = () => {
               <button
                 type="submit"
                 disabled={loading || code.join("").length < 6}
-                className="w-full bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/40 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2"
+                className="w-full bg-secondary-500 hover:bg-secondary-400 disabled:bg-secondary-500/40 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
@@ -183,7 +183,7 @@ const VerifyPhone = () => {
                 type="button"
                 onClick={handleResend}
                 disabled={resendTimer > 0 || resending}
-                className="text-orange-400 hover:text-orange-300 text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1 mx-auto"
+                className="text-secondary-600 dark:text-secondary-400 hover:text-secondary-500 dark:text-secondary-300 text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1 mx-auto"
               >
                 <RefreshCw size={12} className={resending ? "animate-spin" : ""} />
                 {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend Code"}
