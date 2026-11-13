@@ -95,14 +95,18 @@ const Layout = ({
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-              K
-            </div>
             <Link
               to="/"
-              className="font-bold text-lg text-slate-900 dark:text-white tracking-tight hover:text-slate-700 dark:text-slate-300 transition-colors"
+              className="flex items-center gap-2.5 hover:opacity-90 transition-opacity"
             >
-              Klarify
+              <img
+                src="/favicon.svg"
+                alt="Klarify Logo"
+                className="w-8 h-8 rounded-lg shadow-xs"
+              />
+              <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight">
+                Klarify
+              </span>
             </Link>
           </div>
 
@@ -469,9 +473,11 @@ const Layout = ({
             {/* Brand col */}
             <div className="col-span-2 md:col-span-4 md:pr-8 md:border-r md:border-slate-800">
               <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-7 h-7 rounded-md bg-primary-500 flex items-center justify-center text-white font-bold text-sm">
-                  K
-                </div>
+                <img
+                  src="/favicon.svg"
+                  alt="Klarify Logo"
+                  className="w-7 h-7 rounded-md shadow-xs"
+                />
                 <span className="font-bold text-base text-white tracking-tight">
                   Klarify
                 </span>

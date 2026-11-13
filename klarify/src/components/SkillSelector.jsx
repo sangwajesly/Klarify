@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { Check, Search, X, Sparkles, Plus } from "lucide-react";
+import { Check, Search, X, Plus, Sparkles, Layers } from "lucide-react";
 import { SKILL_CATEGORIES } from "../data/skillsData";
 
 const SkillSelector = ({ selectedSkills = [], onChange }) => {
@@ -44,7 +44,10 @@ const SkillSelector = ({ selectedSkills = [], onChange }) => {
       );
       onChange(next);
     } else {
-      onChange([...selectedSkills, { id: skill.id, name: skill.name, level: "Intermediate" }]);
+      onChange([
+        ...selectedSkills,
+        { id: skill.id, name: skill.name, level: "Intermediate" },
+      ]);
     }
   };
 
@@ -52,17 +55,25 @@ const SkillSelector = ({ selectedSkills = [], onChange }) => {
     if (!customName.trim()) return;
     const customId = customName.toLowerCase().replace(/[^a-z0-9]/g, "_");
     if (!selectedMap.has(customId)) {
-      onChange([...selectedSkills, { id: customId, name: customName.trim(), level: "Intermediate" }]);
+      onChange([
+        ...selectedSkills,
+        { id: customId, name: customName.trim(), level: "Intermediate" },
+      ]);
     }
     setSearchQuery("");
   };
 
-  const setSkillLevel = (skillId, level, e) => {
+  const cycleSkillLevel = (skillId, e) => {
     e.stopPropagation();
+    const current = selectedMap.get(skillId) || "Intermediate";
+    const levels = ["Beginner", "Intermediate", "Advanced"];
+    const nextIdx = (levels.indexOf(current) + 1) % levels.length;
+    const nextLevel = levels[nextIdx];
+
     const next = selectedSkills.map((s) => {
       const id = typeof s === "string" ? s : s.id;
       if (id === skillId) {
-        return typeof s === "string" ? { id: s, level } : { ...s, level };
+        return typeof s === "string" ? { id: s, level: nextLevel } : { ...s, level: nextLevel };
       }
       return s;
     });
@@ -76,52 +87,55 @@ const SkillSelector = ({ selectedSkills = [], onChange }) => {
 
   return (
     <div className="w-full">
-      {/* Search Input */}
+      {/* Search Input Bar (Touch-Optimized) */}
       <div className="relative mb-5">
         <Search
-          size={16}
-          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+          size={18}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
         />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search any skill (e.g. Excel, SQL, React, Solar, Figma)..."
-          className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-secondary-500 focus:ring-2 focus:ring-secondary-500/20 transition-all font-medium"
+          placeholder="Search any skill (e.g. Excel, Python, React, Solar, Figma)..."
+          className="w-full pl-12 pr-11 py-3.5 sm:py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-secondary-500 focus:ring-2 focus:ring-secondary-500/20 transition-all font-medium shadow-xs"
         />
         {searchQuery && (
           <button
+            type="button"
             onClick={() => setSearchQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
+            aria-label="Clear search"
           >
-            <X size={14} />
+            <X size={15} />
           </button>
         )}
       </div>
 
-      {/* Domain Category Tabs */}
+      {/* Domain Category Tabs (Swipeable on Mobile) */}
       {!searchQuery && (
-        <div className="flex overflow-x-auto gap-1 mb-5 border-b border-slate-200 dark:border-slate-800 hide-scrollbar pb-1">
+        <div className="flex overflow-x-auto gap-2 mb-6 pb-2 hide-scrollbar">
           {categories.map((cat) => {
             const count = getCategoryCount(cat);
+            const isActive = activeTab === cat;
             return (
               <button
                 key={cat}
                 type="button"
                 onClick={() => setActiveTab(cat)}
-                className={`flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap cursor-pointer ${
-                  activeTab === cat
-                    ? "bg-primary-500 text-white shadow-xs"
-                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap cursor-pointer shrink-0 ${
+                  isActive
+                    ? "bg-primary-500 text-white shadow-md shadow-primary-500/20"
+                    : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
                 }`}
               >
-                {cat}
+                <span>{cat}</span>
                 {count > 0 && (
                   <span
-                    className={`flex items-center justify-center w-4 h-4 rounded-full text-[10px] font-black ${
-                      activeTab === cat
+                    className={`flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] font-black ${
+                      isActive
                         ? "bg-secondary-500 text-slate-950"
-                        : "bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300"
+                        : "bg-primary-500 text-white"
                     }`}
                   >
                     {count}
@@ -133,8 +147,26 @@ const SkillSelector = ({ selectedSkills = [], onChange }) => {
         </div>
       )}
 
-      {/* Skill Badges Grid */}
-      <div className="flex flex-wrap gap-2.5 min-h-[160px] content-start">
+      {/* Selected Counter & Status Banner */}
+      <div className="flex items-center justify-between mb-4 px-1 text-xs sm:text-sm">
+        <span className="text-slate-500 dark:text-slate-400 font-medium">
+          {searchQuery
+            ? `Search results for "${searchQuery}"`
+            : `Skills in ${activeTab}`}
+        </span>
+        <span
+          className={`font-bold ${
+            selectedSkills.length > 0
+              ? "text-secondary-600 dark:text-secondary-400"
+              : "text-amber-500"
+          }`}
+        >
+          {selectedSkills.length} selected (min 1)
+        </span>
+      </div>
+
+      {/* Skill Chips Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
         {filteredSkills.map((skill) => {
           const isSelected = selectedMap.has(skill.id);
           const currentLevel = selectedMap.get(skill.id) || "Intermediate";
@@ -143,91 +175,137 @@ const SkillSelector = ({ selectedSkills = [], onChange }) => {
             <div
               key={skill.id}
               onClick={() => toggleSkill(skill)}
-              className={`group flex flex-col sm:flex-row sm:items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer border ${
+              className={`group flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer border min-h-[56px] select-none ${
                 isSelected
-                  ? "bg-primary-500/10 dark:bg-secondary-500/15 border-primary-500 dark:border-secondary-500 text-slate-900 dark:text-white shadow-xs"
-                  : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary-400 dark:hover:border-secondary-500"
+                  ? "bg-secondary-500/15 dark:bg-secondary-500/20 border-secondary-500 text-slate-900 dark:text-white shadow-sm ring-1 ring-secondary-500"
+                  : "bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/40"
               }`}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 min-w-0 pr-2">
                 <div
-                  className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
+                  className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 border transition-all ${
                     isSelected
-                      ? "bg-primary-500 dark:bg-secondary-500 text-white dark:text-slate-950 font-bold"
-                      : "border border-slate-300 dark:border-slate-700 group-hover:border-primary-500"
+                      ? "bg-secondary-500 text-slate-950 border-secondary-500 shadow-xs"
+                      : "border-slate-300 dark:border-slate-600 group-hover:border-slate-400"
                   }`}
                 >
-                  {isSelected && <Check size={11} className="stroke-[3]" />}
+                  {isSelected && <Check size={14} className="stroke-[3]" />}
                 </div>
-                <span>{skill.name}</span>
-                {skill.popular && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-normal">
-                    In-demand
+                <div className="flex flex-col min-w-0">
+                  <span className="font-bold text-slate-900 dark:text-white truncate">
+                    {skill.name}
                   </span>
-                )}
+                  {skill.popular && (
+                    <span className="text-[10px] text-primary-600 dark:text-secondary-400 font-medium">
+                      High Demand
+                    </span>
+                  )}
+                </div>
               </div>
 
-              {/* Proficiency Level Toggle (Visible when selected) */}
+              {/* Tap-to-cycle Proficiency Level */}
               {isSelected && (
-                <div className="flex items-center gap-1 sm:ml-2 pt-1 sm:pt-0 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-slate-700 sm:pl-2">
-                  {["Beginner", "Intermediate", "Advanced"].map((lvl) => (
-                    <button
-                      key={lvl}
-                      type="button"
-                      onClick={(e) => setSkillLevel(skill.id, lvl, e)}
-                      className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
-                        currentLevel === lvl
-                          ? "bg-primary-500 text-white dark:bg-secondary-500 dark:text-slate-950 font-bold"
-                          : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
-                      }`}
-                    >
-                      {lvl.charAt(0)}
-                    </button>
-                  ))}
-                </div>
+                <button
+                  type="button"
+                  onClick={(e) => cycleSkillLevel(skill.id, e)}
+                  title="Tap to toggle level: Beginner -> Intermediate -> Advanced"
+                  className="shrink-0 px-2.5 py-1 rounded-xl bg-secondary-500 text-slate-950 text-[11px] font-black uppercase tracking-wider shadow-xs hover:scale-105 active:scale-95 transition-transform"
+                >
+                  {currentLevel}
+                </button>
               )}
             </div>
           );
         })}
+      </div>
 
-        {filteredSkills.length === 0 && (
-          <div className="w-full py-6 text-center text-slate-400 text-sm">
-            No standard catalog skills found for "{searchQuery}".
-          </div>
-        )}
-
-        {searchQuery.trim().length > 1 && !filteredSkills.some((s) => s.name.toLowerCase() === searchQuery.toLowerCase()) && (
-          <div className="w-full pt-1">
+      {/* Empty State / Custom Skill Prompt */}
+      {filteredSkills.length === 0 && (
+        <div className="py-8 text-center bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 my-4">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">
+            No pre-mapped catalog skills found for "{searchQuery}".
+          </p>
+          {searchQuery.trim().length > 1 && (
             <button
               type="button"
               onClick={() => handleAddCustomSkill(searchQuery.trim())}
-              className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-dashed border-primary-500 text-primary-600 dark:text-secondary-400 font-bold text-xs hover:bg-primary-50 dark:hover:bg-primary-950/30 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-primary-500 text-white font-bold text-xs sm:text-sm hover:bg-primary-600 transition-colors shadow-sm cursor-pointer"
             >
-              <Plus size={14} />
-              <span>Add "{searchQuery.trim()}" to my skills</span>
+              <Plus size={16} />
+              <span>Add "{searchQuery.trim()}" as a custom skill</span>
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Custom Add Trigger When Searching */}
+      {searchQuery.trim().length > 1 &&
+        filteredSkills.length > 0 &&
+        !filteredSkills.some(
+          (s) => s.name.toLowerCase() === searchQuery.toLowerCase()
+        ) && (
+          <div className="mt-4">
+            <button
+              type="button"
+              onClick={() => handleAddCustomSkill(searchQuery.trim())}
+              className="w-full inline-flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-dashed border-secondary-500/70 text-slate-900 dark:text-white font-bold text-xs sm:text-sm hover:bg-secondary-500/10 transition-colors cursor-pointer"
+            >
+              <Plus size={16} className="text-secondary-500" />
+              <span>Add "{searchQuery.trim()}" as a custom skill</span>
             </button>
           </div>
         )}
-      </div>
 
-      {/* Selected Counter & Clear Action */}
-      <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-        <span>
-          Selected:{" "}
-          <strong className="text-slate-900 dark:text-white font-bold">
-            {selectedSkills.length} skill{selectedSkills.length !== 1 ? "s" : ""}
-          </strong>
-        </span>
-        {selectedSkills.length > 0 && (
-          <button
-            type="button"
-            onClick={() => onChange([])}
-            className="text-xs text-red-500 hover:underline cursor-pointer"
-          >
-            Clear all
-          </button>
-        )}
-      </div>
+      {/* Selected Skills Tray */}
+      {selectedSkills.length > 0 && (
+        <div className="mt-8 p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+              Your Selected Skills ({selectedSkills.length})
+            </span>
+            <button
+              type="button"
+              onClick={() => onChange([])}
+              className="text-xs text-red-500 hover:underline font-medium cursor-pointer"
+            >
+              Clear all
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {selectedSkills.map((s) => {
+              const skillName = typeof s === "string" ? s : s.name;
+              const skillId = typeof s === "string" ? s : s.id;
+              const level = typeof s === "string" ? "Intermediate" : s.level || "Intermediate";
+
+              return (
+                <span
+                  key={skillId}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold shadow-xs"
+                >
+                  <span>{skillName}</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-secondary-500 text-slate-950 font-black">
+                    {level}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onChange(
+                        selectedSkills.filter(
+                          (item) => (typeof item === "string" ? item : item.id) !== skillId
+                        )
+                      )
+                    }
+                    className="text-slate-400 hover:text-red-500 cursor-pointer ml-0.5"
+                    aria-label={`Remove ${skillName}`}
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -14,19 +14,31 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "pwa-icon.svg"],
+      includeAssets: ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "pwa-icon.svg", "pwa-192x192.png", "pwa-512x512.png"],
       manifest: {
         name: "Klarify - Academic Orientation for Cameroon",
         short_name: "Klarify",
         description:
           "Search GCE results, get university program recommendations, and explore Concours guides for Cameroonian students.",
-        theme_color: "#f97316",
+        theme_color: "#1F3B8F",
         background_color: "#0f172a",
         display: "standalone",
         orientation: "portrait-primary",
         scope: "/",
         start_url: "/",
         icons: [
+          {
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any",
+          },
           {
             src: "pwa-icon.svg",
             sizes: "512x512",

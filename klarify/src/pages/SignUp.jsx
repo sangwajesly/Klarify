@@ -184,11 +184,13 @@ const SignUp = () => {
         <div className="hidden lg:flex w-1/2 bg-slate-900 text-white flex-col justify-between p-12 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-500/20 via-slate-900 to-slate-900 pointer-events-none" />
           
-          <div className="relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-secondary-500 flex items-center justify-center font-bold text-xl mb-4 shadow-sm text-white">
-              K
-            </div>
-            <span className="font-bold text-xl tracking-tight">Klarify</span>
+          <div className="relative z-10 flex items-center gap-3">
+            <img
+              src="/favicon.svg"
+              alt="Klarify Logo"
+              className="w-12 h-12 rounded-2xl shadow-sm"
+            />
+            <span className="font-bold text-2xl tracking-tight text-white">Klarify</span>
           </div>
 
           <div className="relative z-10 max-w-md">

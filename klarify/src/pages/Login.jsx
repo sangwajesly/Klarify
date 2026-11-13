@@ -136,9 +136,11 @@ const Login = () => {
 
           {/* Top Brand Logo */}
           <Link to="/" className="inline-flex items-center gap-2.5 relative z-10 group">
-            <div className="w-10 h-10 rounded-full bg-secondary-500 text-slate-950 flex items-center justify-center font-black text-base shadow-md group-hover:scale-105 transition-transform">
-              K
-            </div>
+            <img
+              src="/favicon.svg"
+              alt="Klarify Logo"
+              className="w-10 h-10 rounded-xl shadow-md group-hover:scale-105 transition-transform"
+            />
             <span className="font-extrabold text-2xl tracking-tight text-white drop-shadow-xs">
               Klarify
             </span>
@@ -165,9 +167,11 @@ const Login = () => {
             {/* Mobile Header Brand & Back */}
             <div className="lg:hidden mb-3.5 flex items-center justify-between">
               <Link to="/" className="inline-flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-secondary-500 text-slate-950 flex items-center justify-center font-black text-sm shadow-xs">
-                  K
-                </div>
+                <img
+                  src="/favicon.svg"
+                  alt="Klarify Logo"
+                  className="w-8 h-8 rounded-lg shadow-xs"
+                />
                 <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
                   Klarify
                 </span>
