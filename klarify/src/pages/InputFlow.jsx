@@ -890,11 +890,11 @@ const InputFlow = () => {
                 type="button"
                 onClick={handleNext}
                 disabled={!canProceed()}
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-8 rounded-2xl bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 h-10 sm:h-12 px-5 sm:px-8 rounded-xl sm:rounded-2xl bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
                 aria-label={t("flow.nextStep")}
               >
                 <span>Continue</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={15} />
               </button>
             ) : step === 2 ? (
               persona === "graduate" ? null : (
@@ -902,11 +902,11 @@ const InputFlow = () => {
                   type="button"
                   onClick={handleNext}
                   disabled={!canProceed()}
-                  className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-8 rounded-2xl bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
+                  className="inline-flex items-center justify-center gap-2 h-10 sm:h-12 px-5 sm:px-8 rounded-xl sm:rounded-2xl bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
                   aria-label={t("flow.nextStep")}
                 >
                   <span>Continue</span>
-                  <ArrowRight size={16} />
+                  <ArrowRight size={15} />
                 </button>
               )
             ) : step === 3 && persona === "professional" ? (
@@ -914,28 +914,28 @@ const InputFlow = () => {
                 type="button"
                 onClick={handleSubmitSkills}
                 disabled={!canProceed()}
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-8 rounded-2xl bg-secondary-500 hover:bg-secondary-400 disabled:opacity-40 text-slate-950 font-black text-sm shadow-md shadow-secondary-500/25 transition-all cursor-pointer disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 h-10 sm:h-12 px-5 sm:px-8 rounded-xl sm:rounded-2xl bg-secondary-500 hover:bg-secondary-400 disabled:opacity-40 text-slate-950 font-black text-xs sm:text-sm shadow-md shadow-secondary-500/25 transition-all cursor-pointer disabled:cursor-not-allowed"
               >
                 <span>Generate Career Blueprint</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={15} />
               </button>
             ) : step === 3 && persona === "highschool" ? (
               <button
                 type="button"
                 onClick={handleNext}
                 disabled={!canProceed()}
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-8 rounded-2xl bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 h-10 sm:h-12 px-5 sm:px-8 rounded-xl sm:rounded-2xl bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
                 aria-label={t("flow.nextStep")}
               >
                 <span>Continue to Interests</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={15} />
               </button>
             ) : step === 4 && persona === "highschool" ? (
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={!canProceed()}
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-8 rounded-2xl bg-secondary-500 hover:bg-secondary-400 disabled:opacity-40 text-slate-950 font-black text-sm shadow-md shadow-secondary-500/25 transition-all cursor-pointer disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 h-10 sm:h-12 px-5 sm:px-8 rounded-xl sm:rounded-2xl bg-secondary-500 hover:bg-secondary-400 disabled:opacity-40 text-slate-950 font-black text-xs sm:text-sm shadow-md shadow-secondary-500/25 transition-all cursor-pointer disabled:cursor-not-allowed"
                 aria-label="Submit for recommendations"
               >
                 <span>{t("flow.submit")}</span>

@@ -172,36 +172,36 @@ const GceResults = () => {
 
                 <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
                   <div className="relative flex-1">
-                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                     <input
                       type="search"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder={t("gceResults.searchPlaceholder")}
-                      className="w-full pl-13 pr-6 py-4 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-base focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all font-medium placeholder:text-slate-400 placeholder:font-normal"
+                      className="w-full pl-11 sm:pl-13 pr-4 sm:pr-6 py-2.5 sm:py-3.5 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm sm:text-base focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all font-medium placeholder:text-slate-400 placeholder:font-normal"
                     />
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-32 shrink-0">
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <div className="relative w-28 sm:w-32 shrink-0">
                       <select
                         value={examYear}
                         onChange={(e) => setExamYear(e.target.value)}
-                        className="w-full appearance-none pl-6 pr-10 py-4 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all cursor-pointer"
+                        className="w-full appearance-none pl-4 sm:pl-6 pr-8 sm:pr-10 py-2.5 sm:py-3.5 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold text-xs sm:text-sm focus:outline-none focus:border-secondary-500 focus:ring-4 focus:ring-secondary-500/10 transition-all cursor-pointer"
                       >
                         <option value="2026">2026</option>
                         <option value="2025">2025</option>
                         <option value="2024">2024</option>
                       </select>
-                      <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 pointer-events-none" />
                     </div>
                     
                     <button
                       type="submit"
                       disabled={loading}
-                      className="flex-1 sm:flex-initial px-8 py-4 bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300 text-white font-bold rounded-full transition-all shadow-xs flex items-center justify-center shrink-0 cursor-pointer"
+                      className="flex-1 sm:flex-initial px-5 sm:px-8 py-2.5 sm:py-3.5 bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300 text-white font-bold text-xs sm:text-sm rounded-full transition-all shadow-xs flex items-center justify-center shrink-0 cursor-pointer"
                     >
-                      {loading ? <Loader2 className="animate-spin" size={20} /> : <span>Search</span>}
+                      {loading ? <Loader2 className="animate-spin" size={18} /> : <span>Search</span>}
                     </button>
                   </div>
                 </form>

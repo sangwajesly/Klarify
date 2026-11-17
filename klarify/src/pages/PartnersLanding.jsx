@@ -78,14 +78,14 @@ const PartnersLanding = () => {
                   <Link
                     to="/partner/register?utm_source=site&utm_medium=partners_hero&utm_campaign=partner_acquisition"
                     onClick={() => trackEvent("partner_cta_click", { location: "partners_hero" })}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-black py-4 px-8 rounded-full transition-all duration-300 shadow-lg shadow-secondary-500/25 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 sm:gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-black py-3 sm:py-4 px-6 sm:px-8 rounded-full text-xs sm:text-sm md:text-base transition-all duration-300 shadow-lg shadow-secondary-500/25 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                   >
                     <span>{t("partners.hero.primaryCta")}</span>
-                    <ArrowRight size={18} />
+                    <ArrowRight size={16} />
                   </Link>
                   <Link
                     to="/partner/login"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white hover:text-white font-bold px-7 py-4 rounded-full border border-white/20 hover:bg-white/10 backdrop-blur-sm transition-colors cursor-pointer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white hover:text-white font-bold px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-full text-xs sm:text-sm border border-white/20 hover:bg-white/10 backdrop-blur-sm transition-colors cursor-pointer"
                   >
                     <span>{t("partners.hero.login")}</span>
                   </Link>
@@ -366,10 +366,10 @@ const PartnersLanding = () => {
             </p>
             <Link
               to="/partner/register"
-              className="inline-flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white px-10 py-5 rounded-full font-bold text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-slate-900/20"
+              className="inline-flex items-center gap-2.5 sm:gap-3 bg-slate-900 hover:bg-slate-800 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm md:text-base transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-slate-900/20"
             >
               {t("partners.pricing.ctaButton")}
-              <ArrowRight size={20} />
+              <ArrowRight size={16} />
             </Link>
           </div>
         </section>

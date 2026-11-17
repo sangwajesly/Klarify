@@ -312,10 +312,10 @@ const About = () => {
                 </p>
                 <button
                   onClick={() => navigate("/flow")}
-                  className="inline-flex items-center gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2.5 sm:gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold py-3 sm:py-3.5 px-6 sm:px-8 rounded-full text-xs sm:text-sm md:text-base transition-all hover:scale-105 cursor-pointer"
                 >
                   {t("about.platform.cta")}
-                  <ArrowRight size={18} />
+                  <ArrowRight size={16} />
                 </button>
               </div>
 

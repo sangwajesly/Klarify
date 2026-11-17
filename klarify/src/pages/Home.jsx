@@ -441,14 +441,14 @@ const Home = () => {
                       trackEvent("partner_cta_click", { location: "homepage_promo" });
                       navigate("/partners");
                     }}
-                    className="px-6 sm:px-8 py-3.5 sm:py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                    className="px-5 sm:px-7 py-2.5 sm:py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-xs sm:text-sm transition-colors cursor-pointer"
                   >
                     {t("home.partnerPromo.button")}
                   </button>
                   <Link
                     to="/partner/login"
                     onClick={() => trackEvent("partner_cta_click", { location: "homepage_promo_login" })}
-                    className="px-6 sm:px-8 py-3.5 sm:py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-bold text-xs sm:text-sm transition-colors"
+                    className="px-5 sm:px-7 py-2.5 sm:py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-bold text-xs sm:text-sm transition-colors"
                   >
                     {t("home.partnerPromo.login")}
                   </Link>
@@ -485,11 +485,11 @@ const Home = () => {
             </p>
             <button
               onClick={() => navigate("/flow")}
-              className="inline-flex items-center gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 px-8 sm:px-10 py-4 sm:py-5 rounded-full font-black text-sm sm:text-base transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-secondary-500/25 cursor-pointer"
+              className="inline-flex items-center gap-2.5 sm:gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 px-6 sm:px-9 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm md:text-base transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-secondary-500/25 cursor-pointer"
               aria-label={t("home.bottomCta.button")}
             >
               <span>{t("home.bottomCta.button")}</span>
-              <ArrowRight size={18} />
+              <ArrowRight size={16} />
             </button>
           </div>
         </section>
