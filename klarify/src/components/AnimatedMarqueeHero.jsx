@@ -41,15 +41,17 @@ export const AnimatedMarqueeHero = ({
 
   return (
     <section
-      className={`relative w-full overflow-hidden bg-[#FAFAFC] dark:bg-[#0A0E17] flex flex-col items-center justify-between pt-6 pb-6 sm:pt-8 sm:pb-8 md:pt-10 md:pb-0 md:h-[calc(100vh-4.25rem)] md:min-h-[560px] md:max-h-[820px] px-4 transition-colors ${className}`}
+      className={`relative w-full overflow-hidden bg-gradient-to-b from-[#F3F6FD] via-[#FAFBFD] to-[#EDF2FB] dark:from-[#0C1226] dark:via-[#0A0E17] dark:to-[#080B12] flex flex-col items-center justify-between pt-7 pb-6 sm:pt-8 sm:pb-8 md:pt-10 md:pb-0 md:h-[calc(100vh-4.25rem)] md:min-h-[560px] md:max-h-[820px] px-4 transition-colors border-b border-slate-200/50 dark:border-slate-800/80 md:border-b-0 ${className}`}
     >
       {/* Ambient background glow blending Sky Blue and Yellow Green */}
       <div 
-        className="pointer-events-none absolute inset-0 -top-24 opacity-50 dark:opacity-25"
+        className="pointer-events-none absolute inset-0 -top-12 opacity-80 dark:opacity-40"
         style={{
-          background: "radial-gradient(ellipse 55% 45% at 50% 10%, rgba(198, 212, 51, 0.09), transparent 65%), radial-gradient(ellipse 70% 50% at 50% 28%, rgba(31, 59, 143, 0.07), transparent 75%)"
+          background: "radial-gradient(ellipse 70% 50% at 30% 12%, rgba(31, 59, 143, 0.12), transparent 70%), radial-gradient(ellipse 60% 45% at 75% 16%, rgba(198, 212, 51, 0.15), transparent 65%)"
         }}
       />
+      {/* Subtle micro dot texture for depth */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.045] bg-[radial-gradient(#1F3B8F_1px,transparent_1px)] [background-size:16px_16px]" />
 
       {/* Main Content Area - Upper Center */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto">
@@ -59,9 +61,9 @@ export const AnimatedMarqueeHero = ({
             initial="hidden"
             animate="show"
             variants={FADE_IN_VARIANTS}
-            className="mb-3 sm:mb-4 inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-200/90 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm px-3 sm:px-4 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-slate-700 dark:text-slate-300 shadow-xs max-w-[94vw]"
+            className="mb-3 sm:mb-4 inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-primary-500/20 dark:border-secondary-500/30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm max-w-[94vw]"
           >
-            {TaglineIcon && <TaglineIcon size={12} className="text-secondary-600 dark:text-secondary-400 shrink-0" />}
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" aria-hidden="true" />
             <span className="truncate sm:whitespace-normal">{tagline}</span>
           </motion.div>
         )}
@@ -71,7 +73,7 @@ export const AnimatedMarqueeHero = ({
           initial="hidden"
           animate="show"
           variants={STAGGER_CONTAINER}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight leading-[1.15] mb-3 sm:mb-4"
+          className="text-[1.75rem] sm:text-3xl md:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight leading-[1.14] mb-3 sm:mb-4"
         >
           {title ? (
             title
@@ -123,12 +125,27 @@ export const AnimatedMarqueeHero = ({
               <ArrowRight size={13} className="stroke-[2.5]" />
             </div>
           </motion.button>
+
+          {/* Social Proof Trust Strip */}
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={FADE_IN_VARIANTS}
+            transition={{ delay: 0.45 }}
+            className="mt-3 flex items-center justify-center gap-1.5 text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium"
+          >
+            <span className="font-bold text-slate-700 dark:text-slate-300">320+ Programs</span>
+            <span>&bull;</span>
+            <span>Free AI Guidance</span>
+            <span>&bull;</span>
+            <span>Cameroon-Wide</span>
+          </motion.div>
         </motion.div>
       </div>
 
       {/* Animated Image Marquee - Positioned directly below CTA on mobile, docked at bottom on desktop */}
       <div 
-        className="w-full mt-6 sm:mt-8 md:mt-0 md:absolute md:bottom-0 md:left-0 md:h-[28%] lg:h-[30%] overflow-hidden touch-pan-y pointer-events-auto [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_100%)]"
+        className="w-full mt-6 sm:mt-8 md:mt-0 md:absolute md:bottom-0 md:left-0 md:h-[28%] lg:h-[30%] overflow-hidden touch-pan-y pointer-events-auto [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] md:[mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_100%)]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
