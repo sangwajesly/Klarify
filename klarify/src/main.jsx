@@ -14,7 +14,29 @@ import queryClient from "./services/queryClient";
 
 initPwaInstallListener();
 
-registerSW({ immediate: true });
+const updateSW = registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    updateSW(true);
+  },
+  onRegisteredSW(swUrl, registration) {
+    if (registration) {
+      setInterval(() => {
+        registration.update();
+      }, 30 * 60 * 1000);
+    }
+  },
+});
+
+if (typeof document !== "undefined") {
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && "serviceWorker" in navigator) {
+      navigator.serviceWorker.ready.then((reg) => {
+        reg.update();
+      });
+    }
+  });
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
