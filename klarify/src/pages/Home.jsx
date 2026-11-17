@@ -213,7 +213,7 @@ const Home = () => {
                     <span className="w-2.5 h-2.5 rounded-full bg-secondary-400 animate-pulse" title="Active accreditation" />
                   </div>
                   <div className="relative z-10 mt-3">
-                    <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-none">120+</div>
+                    <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-none">320+</div>
                     <p className="text-xs text-sky-11 font-medium mt-1.5 leading-snug">Cameroonian Programs & Concours</p>
                   </div>
                 </div>
