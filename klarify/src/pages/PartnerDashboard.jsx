@@ -262,6 +262,12 @@ const PartnerDashboard = () => {
 
         {/* ── Executive Workspace Header (Unified, Modern) ── */}
         <div className="bg-slate-900 text-white rounded-3xl p-5 sm:p-7 shadow-xl border border-slate-800 mb-6 relative overflow-hidden">
+          <img
+            src="/klarify-mark-white.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute -right-8 -bottom-8 w-44 h-44 opacity-5 pointer-events-none select-none"
+          />
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-5 relative z-10">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-secondary-500/20 border border-secondary-500/30 text-secondary-400 flex items-center justify-center shrink-0">

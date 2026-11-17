@@ -39,7 +39,7 @@ const About = () => {
     "@type": "Organization",
     name: "Klarify",
     url: "https://www.klarifypath.com",
-    logo: "https://www.klarifypath.com/favicon.svg",
+    logo: "https://www.klarifypath.com/klarify-logo.png",
     description:
       "Cameroon's premier educational platform for academic orientation, career guidance, and GCE result searching.",
     address: {

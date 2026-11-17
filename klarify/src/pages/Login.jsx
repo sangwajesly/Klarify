@@ -135,15 +135,12 @@ const Login = () => {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_20%_20%,rgba(198,212,51,0.15),transparent_70%)]" />
 
           {/* Top Brand Logo */}
-          <Link to="/" className="inline-flex items-center gap-2.5 relative z-10 group">
+          <Link to="/" className="inline-block relative z-10 group" aria-label="Klarify Home">
             <img
-              src="/favicon.svg"
+              src="/klarify-logo-white.png"
               alt="Klarify Logo"
-              className="w-10 h-10 rounded-xl shadow-md group-hover:scale-105 transition-transform"
+              className="h-9 sm:h-10 w-auto group-hover:scale-105 transition-transform drop-shadow-sm"
             />
-            <span className="font-extrabold text-2xl tracking-tight text-white drop-shadow-xs">
-              Klarify
-            </span>
           </Link>
 
           {/* Bottom Editorial Copy */}
@@ -166,15 +163,17 @@ const Login = () => {
             
             {/* Mobile Header Brand & Back */}
             <div className="lg:hidden mb-3.5 flex items-center justify-between">
-              <Link to="/" className="inline-flex items-center gap-2">
+              <Link to="/" className="inline-flex items-center" aria-label="Klarify Home">
                 <img
-                  src="/favicon.svg"
+                  src="/klarify-logo.png"
                   alt="Klarify Logo"
-                  className="w-8 h-8 rounded-lg shadow-xs"
+                  className="h-7 w-auto block dark:hidden"
                 />
-                <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
-                  Klarify
-                </span>
+                <img
+                  src="/klarify-logo-white.png"
+                  alt="Klarify Logo"
+                  className="h-7 w-auto hidden dark:block"
+                />
               </Link>
               <Link
                 to="/"

@@ -184,14 +184,13 @@ const SignUp = () => {
         <div className="hidden lg:flex w-1/2 bg-slate-900 text-white flex-col justify-between p-12 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-500/20 via-slate-900 to-slate-900 pointer-events-none" />
           
-          <div className="relative z-10 flex items-center gap-3">
+          <Link to="/" className="relative z-10 inline-block group" aria-label="Klarify Home">
             <img
-              src="/favicon.svg"
+              src="/klarify-logo-white.png"
               alt="Klarify Logo"
-              className="w-12 h-12 rounded-2xl shadow-sm"
+              className="h-10 w-auto group-hover:scale-105 transition-transform"
             />
-            <span className="font-bold text-2xl tracking-tight text-white">Klarify</span>
-          </div>
+          </Link>
 
           <div className="relative z-10 max-w-md">
             <h2 className="text-4xl font-extrabold tracking-tight mb-4 leading-tight">
@@ -211,9 +210,18 @@ const SignUp = () => {
             <div className="relative z-10 w-full max-w-sm m-auto">
             {/* Header */}
             <div className="flex flex-col items-center lg:items-start mb-8 text-center lg:text-left">
-              <div className="w-12 h-12 rounded-2xl bg-secondary-50 dark:bg-secondary-950/40 text-secondary-800 dark:text-secondary-300 flex items-center justify-center font-bold text-xl mb-4 border border-secondary-100 dark:border-secondary-800 lg:hidden">
-                K
-              </div>
+              <Link to="/" className="mb-4 lg:hidden inline-block" aria-label="Klarify Home">
+                <img
+                  src="/klarify-logo.png"
+                  alt="Klarify Logo"
+                  className="h-8 w-auto block dark:hidden"
+                />
+                <img
+                  src="/klarify-logo-white.png"
+                  alt="Klarify Logo"
+                  className="h-8 w-auto hidden dark:block"
+                />
+              </Link>
               <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight lg:text-4xl">
                 {t("auth.signUp.createAccount") || "Create an account"}
               </h1>

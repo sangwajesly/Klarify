@@ -202,6 +202,12 @@ const Home = () => {
               {/* Solid Blue Brand Block: Right Column */}
               <div className="lg:col-span-3 hidden sm:flex justify-end">
                 <div className="w-full max-w-[240px] p-6 rounded-3xl bg-primary-500 dark:bg-primary-600 shadow-xl shadow-primary-500/20 text-white flex flex-col justify-between min-h-[140px] relative overflow-hidden group">
+                  <img
+                    src="/klarify-mark-white.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute -bottom-4 -right-4 w-28 h-28 opacity-15 pointer-events-none group-hover:scale-110 transition-transform duration-500"
+                  />
                   <div className="flex items-center justify-between relative z-10">
                     <span className="text-[11px] font-bold text-sky-10 uppercase tracking-wider">Accredited Base</span>
                     <span className="w-2.5 h-2.5 rounded-full bg-secondary-400 animate-pulse" title="Active accreditation" />

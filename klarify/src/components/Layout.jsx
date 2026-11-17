@@ -97,16 +97,19 @@ const Layout = ({
           <div className="flex items-center gap-3">
             <Link
               to="/"
-              className="flex items-center gap-2.5 hover:opacity-90 transition-opacity"
+              className="flex items-center hover:opacity-90 transition-opacity"
+              aria-label="Klarify Home"
             >
               <img
-                src="/favicon.svg"
+                src="/klarify-logo.png"
                 alt="Klarify Logo"
-                className="w-8 h-8 rounded-lg shadow-xs"
+                className="h-7 sm:h-8 w-auto block dark:hidden"
               />
-              <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight">
-                Klarify
-              </span>
+              <img
+                src="/klarify-logo-white.png"
+                alt="Klarify Logo"
+                className="h-7 sm:h-8 w-auto hidden dark:block"
+              />
             </Link>
           </div>
 
@@ -472,16 +475,13 @@ const Layout = ({
           <div className="grid grid-cols-2 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800">
             {/* Brand col */}
             <div className="col-span-2 md:col-span-4 md:pr-8 md:border-r md:border-slate-800">
-              <div className="flex items-center gap-2.5 mb-4">
+              <Link to="/" className="inline-block mb-4 hover:opacity-90 transition-opacity" aria-label="Klarify Home">
                 <img
-                  src="/favicon.svg"
+                  src="/klarify-logo-white.png"
                   alt="Klarify Logo"
-                  className="w-7 h-7 rounded-md shadow-xs"
+                  className="h-7 sm:h-8 w-auto"
                 />
-                <span className="font-bold text-base text-white tracking-tight">
-                  Klarify
-                </span>
-              </div>
+              </Link>
               <p className="text-sm leading-relaxed max-w-xs text-slate-400">
                 Personalized academic recommendations to help students find the
                 right university programs and career paths based on their unique

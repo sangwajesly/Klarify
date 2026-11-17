@@ -218,7 +218,7 @@ const GuideDetails = () => {
     publisher: {
       "@type": "Organization",
       name: "Klarify",
-      logo: "https://www.klarifypath.com/favicon.svg",
+      logo: "https://www.klarifypath.com/klarify-logo.png",
     },
   };
 
