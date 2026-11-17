@@ -41,7 +41,7 @@ export const AnimatedMarqueeHero = ({
 
   return (
     <section
-      className={`relative w-full h-[calc(100vh-4.25rem)] min-h-[560px] max-h-[820px] overflow-hidden bg-[#FAFAFC] dark:bg-[#0A0E17] flex flex-col items-center justify-between pt-5 sm:pt-7 md:pt-9 px-4 transition-colors ${className}`}
+      className={`relative w-full overflow-hidden bg-[#FAFAFC] dark:bg-[#0A0E17] flex flex-col items-center justify-between pt-6 pb-6 sm:pt-8 sm:pb-8 md:pt-10 md:pb-0 md:h-[calc(100vh-4.25rem)] md:min-h-[560px] md:max-h-[820px] px-4 transition-colors ${className}`}
     >
       {/* Ambient background glow blending Sky Blue and Yellow Green */}
       <div 
@@ -126,14 +126,14 @@ export const AnimatedMarqueeHero = ({
         </motion.div>
       </div>
 
-      {/* Animated Image Marquee - Docked at the bottom of the viewport with generous clearance */}
+      {/* Animated Image Marquee - Positioned directly below CTA on mobile, docked at bottom on desktop */}
       <div 
-        className="absolute bottom-0 left-0 w-full h-[26%] sm:h-[28%] md:h-[30%] overflow-hidden touch-pan-y pointer-events-auto [mask-image:linear-gradient(to_bottom,transparent_0%,black_35%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_35%,black_100%)]"
+        className="w-full mt-6 sm:mt-8 md:mt-0 md:absolute md:bottom-0 md:left-0 md:h-[28%] lg:h-[30%] overflow-hidden touch-pan-y pointer-events-auto [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_100%)]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <motion.div
-          className="flex w-max gap-3 sm:gap-5 items-end h-full translate-y-3 sm:translate-y-5 md:translate-y-7 pb-2"
+          className="flex w-max gap-3 sm:gap-4 md:gap-5 items-end h-full md:translate-y-4 md:pb-2"
           animate={{
             x: ["0%", "-50%"],
           }}

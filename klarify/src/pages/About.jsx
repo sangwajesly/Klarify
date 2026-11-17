@@ -88,7 +88,7 @@ const About = () => {
         </section>
 
         {/* ── Story Section (Editorial Asymmetry) ── */}
-        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900">
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 bg-white dark:bg-slate-900">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
               
@@ -144,7 +144,7 @@ const About = () => {
         </section>
 
         {/* ── Mission & Values (Bento Grid Style) ── */}
-        <section className="bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 border-y border-slate-200/60 dark:border-slate-700/60">
+        <section className="bg-slate-50 dark:bg-slate-950 py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 border-y border-slate-200/60 dark:border-slate-700/60">
           <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
@@ -205,7 +205,7 @@ const About = () => {
         </section>
 
         {/* ── Team Section (Editorial Profile Cards) ── */}
-        <section className="bg-white dark:bg-slate-900 py-24 px-6 md:px-12">
+        <section className="bg-white dark:bg-slate-900 py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
               <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
@@ -297,7 +297,7 @@ const About = () => {
         </section>
 
         {/* ── What Klarify Does Section (Clean List) ── */}
-        <section className="bg-slate-900 text-white py-32 px-6 md:px-12">
+        <section className="bg-slate-900 text-white py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>

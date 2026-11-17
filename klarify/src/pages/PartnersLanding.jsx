@@ -158,7 +158,7 @@ const PartnersLanding = () => {
         </section>
 
         {/* ── Value Proposition (Bento Grid) ── */}
-        <section id="features" className="py-24 px-6 md:px-12 bg-slate-50 dark:bg-slate-950 border-b border-slate-200/60 dark:border-slate-700/60">
+        <section id="features" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 bg-slate-50 dark:bg-slate-950 border-b border-slate-200/60 dark:border-slate-700/60">
           <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
@@ -206,7 +206,7 @@ const PartnersLanding = () => {
         </section>
 
         {/* ── Pricing Section ── */}
-        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900">
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 bg-white dark:bg-slate-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-20">
               <span className="text-xs font-bold text-primary-500 dark:text-secondary-400 uppercase tracking-wider block mb-2">
@@ -353,7 +353,7 @@ const PartnersLanding = () => {
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section className="py-32 px-6 md:px-12 bg-secondary-500 relative overflow-hidden">
+        <section className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 bg-secondary-500 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent" />
           
           <div className="relative max-w-4xl mx-auto text-center z-10">

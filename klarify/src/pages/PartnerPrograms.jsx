@@ -70,6 +70,7 @@ const PartnerPrograms = () => {
 
   const [formData, setFormData] = useState(initialForm);
   // Bulk upload state
+  const [showBulkUpload, setShowBulkUpload] = useState(false);
   const [csvFile, setCsvFile] = useState(null);
   const [csvPreview, setCsvPreview] = useState([]);
   const [parsing, setParsing] = useState(false);
@@ -402,13 +403,24 @@ const PartnerPrograms = () => {
           </div>
 
           {/* Action button container */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
             {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") && programs.length >= 3 && (
               <span className="px-3 py-1.5 rounded-xl bg-secondary-500/10 border border-secondary-500/25 text-secondary-700 dark:text-secondary-400 text-xs font-bold flex items-center gap-1.5 justify-center">
                 <AlertCircle size={14} className="text-secondary-600 dark:text-secondary-400" />
                 Limit of 3 courses reached
               </span>
             )}
+            <button
+              onClick={() => setShowBulkUpload((prev) => !prev)}
+              className={`inline-flex items-center justify-center gap-2 text-xs sm:text-sm px-4 py-2.5 rounded-xl border font-bold transition-all cursor-pointer ${
+                showBulkUpload
+                  ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-transparent shadow-xs"
+                  : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+              }`}
+            >
+              <FileSpreadsheet size={16} />
+              {showBulkUpload ? "Hide CSV Import" : "Bulk Upload CSV"}
+            </button>
             <button
               onClick={() => {
                 const isStarter = !institution?.subscription_tier || institution?.subscription_tier === "STARTER";
@@ -418,7 +430,7 @@ const PartnerPrograms = () => {
                   handleOpenModal();
                 }
               }}
-              className="inline-flex items-center justify-center gap-2 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md shadow-secondary-500/25 shrink-0 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-all shadow-md shadow-secondary-500/25 shrink-0 cursor-pointer"
             >
               <Plus size={18} />
               Add New Program
@@ -426,28 +438,29 @@ const PartnerPrograms = () => {
           </div>
         </div>
 
-        {/* Bulk CSV Upload */}
-        <div className="mb-8">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-6 sm:p-8 shadow-xs">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
-              <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <FileSpreadsheet className="text-secondary-600 dark:text-secondary-400" size={22} />
-                  Bulk Upload Academic Programs
-                </h2>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  Upload a CSV file to add multiple Bachelor's degrees, HNDs, or Master's programs at once.
-                </p>
+        {/* Collapsible Bulk CSV Upload */}
+        {showBulkUpload && (
+          <div className="mb-8">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-5 sm:p-8 shadow-xs">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <div>
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <FileSpreadsheet className="text-secondary-600 dark:text-secondary-400" size={20} />
+                    Bulk Upload Academic Programs
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    Upload a CSV file to add multiple Bachelor's degrees, HNDs, or Master's programs at once.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={downloadSampleCsv}
+                  className="inline-flex items-center gap-2 px-3.5 py-2 border border-secondary-200 dark:border-secondary-800 text-secondary-700 dark:text-secondary-400 font-bold text-xs rounded-xl hover:bg-secondary-50 dark:bg-secondary-950/30 transition-colors cursor-pointer shrink-0"
+                >
+                  <Download size={14} />
+                  Download Sample CSV
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={downloadSampleCsv}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-secondary-200 dark:border-secondary-800 text-secondary-700 dark:text-secondary-400 font-bold text-xs rounded-xl hover:bg-secondary-50 dark:bg-secondary-950/30 transition-colors cursor-pointer shrink-0"
-              >
-                <Download size={14} />
-                Download Sample CSV
-              </button>
-            </div>
 
             {/* Custom Drag & Drop Zone */}
             {(!institution?.subscription_tier || institution?.subscription_tier === "STARTER") ? (
@@ -629,7 +642,7 @@ const PartnerPrograms = () => {
                     type="button"
                     onClick={uploadCsv}
                     disabled={uploading}
-                    className="px-6 py-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold font-bold text-xs rounded-xl shadow-lg shadow-secondary-500/25 transition-all disabled:opacity-50 cursor-pointer"
+                    className="px-6 py-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-secondary-500/25 transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {uploading ? "Uploading Programs..." : `Confirm & Upload ${csvPreview.length} Programs`}
                   </button>
@@ -638,94 +651,172 @@ const PartnerPrograms = () => {
             )}
           </div>
         </div>
+      )}
 
-        {/* Programs Data Table */}
-        {programs.length > 0 ? (
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-700/80 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
-                    <th className="py-4 px-6">Program & Faculty</th>
-                    <th className="py-4 px-4">Campus</th>
-                    <th className="py-4 px-4">Duration</th>
-                    <th className="py-4 px-4">Tuition Fee (XAF)</th>
-                    <th className="py-4 px-4">Entry Type</th>
-                    <th className="py-4 px-6 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
-                  {programs.map((p) => (
-                    <tr
-                      key={p.id}
-                      className="hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950/60 transition-colors"
-                    >
-                      <td className="py-4 px-6 font-semibold text-slate-900 dark:text-white">
-                        <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                          <span>{p.name}</span>
-                          {(p.degree_obtained || p.degreeObtained) && (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                              {p.degree_obtained || p.degreeObtained}
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">
-                          {p.faculty || "Faculty"}
-                        </div>
-                      </td>
-                      <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
-                        <span className="inline-flex items-center gap-1">
-                          <MapPin size={12} className="text-slate-400" />
-                          {p.campus || institution?.campus || "Main Campus"}
+      {/* Programs Data Display */}
+      {programs.length > 0 ? (
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 shadow-xs overflow-hidden">
+          {/* Mobile Card List (block md:hidden) */}
+          <div className="block md:hidden divide-y divide-slate-100 dark:divide-slate-800">
+            {programs.map((p) => (
+              <div key={p.id} className="p-4 sm:p-5 flex flex-col gap-3">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0 flex-1">
+                    <div className="font-bold text-slate-900 dark:text-white text-sm leading-snug flex items-center gap-1.5 flex-wrap">
+                      <span>{p.name}</span>
+                      {(p.degree_obtained || p.degreeObtained) && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                          {p.degree_obtained || p.degreeObtained}
                         </span>
-                      </td>
-                      <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
-                        {String(p.durations).includes("Year") ||
-                        String(p.durations).includes("Week") ||
-                        String(p.durations).includes("Month")
-                          ? p.durations
-                          : `${p.durations || 3} Years`}
-                      </td>
-                      <td className="py-4 px-4 font-bold text-slate-900 dark:text-white">
-                        {p.tuition_fee_xaf
-                          ? `${Number(p.tuition_fee_xaf).toLocaleString()} XAF`
-                          : "Contact Campus"}
-                      </td>
-                      <td className="py-4 px-4">
-                        <span
-                          className={`px-2.5 py-1 rounded-md text-[11px] font-bold ${
-                            p.requires_concour || p.requiresConcours
-                              ? "bg-primary-50 text-primary-700 border border-primary-100"
-                              : "bg-green-50 text-green-700 border border-green-100"
-                          }`}
-                        >
-                          {p.requires_concour || p.requiresConcours
-                            ? "Concours Exam"
-                            : "Direct Entry"}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6 text-right space-x-2">
-                        <button
-                          onClick={() => handleOpenModal(p)}
-                          className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 rounded-lg transition-colors cursor-pointer"
-                          title="Edit Program"
-                        >
-                          <Edit3 size={16} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(p.id)}
-                          className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                          title="Delete Program"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      )}
+                    </div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400 font-normal mt-0.5">
+                      {p.faculty || "Faculty"}
+                    </div>
+                  </div>
+                  <span
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-bold shrink-0 ${
+                      p.requires_concour || p.requiresConcours
+                        ? "bg-primary-50 text-primary-700 border border-primary-100"
+                        : "bg-green-50 text-green-700 border border-green-100"
+                    }`}
+                  >
+                    {p.requires_concour || p.requiresConcours
+                      ? "Concours Exam"
+                      : "Direct Entry"}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50/70 dark:bg-slate-800/50 p-2.5 rounded-xl">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <MapPin size={13} className="text-slate-400 shrink-0" />
+                    <span className="truncate">{p.campus || institution?.campus || "Main Campus"}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Clock size={13} className="text-slate-400 shrink-0" />
+                    <span>
+                      {String(p.durations).includes("Year") ||
+                      String(p.durations).includes("Week") ||
+                      String(p.durations).includes("Month")
+                        ? p.durations
+                        : `${p.durations || 3} Years`}
+                    </span>
+                  </div>
+                  <div className="col-span-2 flex items-center justify-between pt-1 border-t border-slate-200/60 dark:border-slate-700/60 mt-0.5">
+                    <span className="text-slate-400 text-[11px]">Tuition:</span>
+                    <span className="font-bold text-slate-900 dark:text-white">
+                      {p.tuition_fee_xaf
+                        ? `${Number(p.tuition_fee_xaf).toLocaleString()} XAF`
+                        : "Contact Campus"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-1">
+                  <button
+                    onClick={() => handleOpenModal(p)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer"
+                  >
+                    <Edit3 size={13} />
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(p.id)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50 rounded-lg transition-colors cursor-pointer"
+                  >
+                    <Trash2 size={13} />
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
+
+          {/* Desktop Table View (hidden md:block) */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-700/80 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
+                  <th className="py-4 px-6">Program & Faculty</th>
+                  <th className="py-4 px-4">Campus</th>
+                  <th className="py-4 px-4">Duration</th>
+                  <th className="py-4 px-4">Tuition Fee (XAF)</th>
+                  <th className="py-4 px-4">Entry Type</th>
+                  <th className="py-4 px-6 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
+                {programs.map((p) => (
+                  <tr
+                    key={p.id}
+                    className="hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-950/60 transition-colors"
+                  >
+                    <td className="py-4 px-6 font-semibold text-slate-900 dark:text-white">
+                      <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>{p.name}</span>
+                        {(p.degree_obtained || p.degreeObtained) && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                            {p.degree_obtained || p.degreeObtained}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">
+                        {p.faculty || "Faculty"}
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
+                      <span className="inline-flex items-center gap-1">
+                        <MapPin size={12} className="text-slate-400" />
+                        {p.campus || institution?.campus || "Main Campus"}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
+                      {String(p.durations).includes("Year") ||
+                      String(p.durations).includes("Week") ||
+                      String(p.durations).includes("Month")
+                        ? p.durations
+                        : `${p.durations || 3} Years`}
+                    </td>
+                    <td className="py-4 px-4 font-bold text-slate-900 dark:text-white">
+                      {p.tuition_fee_xaf
+                        ? `${Number(p.tuition_fee_xaf).toLocaleString()} XAF`
+                        : "Contact Campus"}
+                    </td>
+                    <td className="py-4 px-4">
+                      <span
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-bold ${
+                          p.requires_concour || p.requiresConcours
+                            ? "bg-primary-50 text-primary-700 border border-primary-100"
+                            : "bg-green-50 text-green-700 border border-green-100"
+                        }`}
+                      >
+                        {p.requires_concour || p.requiresConcours
+                          ? "Concours Exam"
+                          : "Direct Entry"}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6 text-right space-x-2">
+                      <button
+                        onClick={() => handleOpenModal(p)}
+                        className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+                        title="Edit Program"
+                      >
+                        <Edit3 size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(p.id)}
+                        className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                        title="Delete Program"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
         ) : (
           <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-8">
             <BookOpen className="mx-auto text-slate-300 mb-3" size={40} />

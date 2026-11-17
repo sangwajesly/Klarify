@@ -181,7 +181,7 @@ const Home = () => {
         />
 
         {/* ── Editorial About (Matching Brand Mockup) ── */}
-        <section className="py-20 md:py-28 px-6 md:px-12 bg-[#E9EBF4]/60 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800 transition-colors">
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 bg-[#E9EBF4]/60 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800 transition-colors">
           <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
             {/* Top Row: Heading + Paragraph 1 + Solid Brand Blue Card */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -245,7 +245,7 @@ const Home = () => {
         </section>
 
         {/* ── ALX-Style "Explore Career Pathways" Section (The 3 Audience Forks) ── */}
-        <section className="py-20 md:py-24 px-6 md:px-12 bg-primary-500 text-white">
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 bg-primary-500 text-white">
           <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-14">
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -380,11 +380,10 @@ const Home = () => {
 
         {/* ── Featured Universities (Modern List) ── */}
         {featuredUnis.length > 0 && (
-          <section className="py-24 px-6 md:px-12 bg-slate-900 text-white border-y border-slate-800">
+          <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 bg-slate-900 text-white border-y border-slate-800">
             <div className="max-w-7xl mx-auto">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
                 <div className="max-w-2xl">
-                  
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                     {t("home.featured.heading")}
                   </h2>
@@ -396,18 +395,18 @@ const Home = () => {
                   <Link
                     to={`/universities/${encodeURIComponent(uni.name)}`}
                     key={uni.id}
-                    className="group block p-8 bg-slate-800/40 rounded-3xl border border-slate-700/50 hover:bg-slate-800 transition-colors duration-300 relative overflow-hidden"
+                    className="group block p-6 sm:p-8 bg-slate-800/40 rounded-3xl border border-slate-700/50 hover:bg-slate-800 transition-colors duration-300 relative overflow-hidden"
                   >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 rounded-full blur-2xl group-hover:bg-primary-500/10 transition-colors" />
                     
                     <div className="relative z-10">
-                      <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-slate-300 mb-8 group-hover:text-secondary-400 group-hover:scale-110 transition-all duration-300">
-                        <Building2 size={24} />
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-slate-300 mb-6 group-hover:text-secondary-400 group-hover:scale-110 transition-all duration-300">
+                        <Building2 size={22} />
                       </div>
                       <h3 className="text-base sm:text-lg font-bold text-white mb-2 group-hover:text-secondary-400 transition-colors">
                         {uni.name}
                       </h3>
-                      <div className="flex items-center gap-2 text-sm text-slate-400 font-medium">
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 font-medium">
                         <MapPin size={14} />
                         {uni.city} &bull; {uni.campus || t("home.featured.campus")}
                       </div>
@@ -420,36 +419,36 @@ const Home = () => {
         )}
 
         {/* ── Partner Advertisement ── */}
-        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900">
-          <div className="max-w-7xl mx-auto bg-slate-50 dark:bg-slate-950 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-700">
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 bg-white dark:bg-slate-900">
+          <div className="max-w-7xl mx-auto bg-slate-50 dark:bg-slate-950 rounded-3xl sm:rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800">
             <div className="grid grid-cols-1 lg:grid-cols-2">
-              <div className="p-12 md:p-20 flex flex-col justify-center">
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">
+              <div className="p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-center">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">
                   {t("home.partnerPromo.title")}
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mb-6 leading-relaxed">
                   {t("home.partnerPromo.text")}
                 </p>
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                   <button
                     onClick={() => {
                       trackEvent("partner_cta_click", { location: "homepage_promo" });
                       navigate("/partners");
                     }}
-                    className="px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold transition-colors"
+                    className="px-6 sm:px-8 py-3.5 sm:py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-xs sm:text-sm transition-colors cursor-pointer"
                   >
                     {t("home.partnerPromo.button")}
                   </button>
                   <Link
                     to="/partner/login"
                     onClick={() => trackEvent("partner_cta_click", { location: "homepage_promo_login" })}
-                    className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-bold transition-colors"
+                    className="px-6 sm:px-8 py-3.5 sm:py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-bold text-xs sm:text-sm transition-colors"
                   >
                     {t("home.partnerPromo.login")}
                   </Link>
                 </div>
               </div>
-              <div className="hidden lg:block relative min-h-[400px]">
+              <div className="hidden lg:block relative min-h-[380px]">
                 <img
                   src={uniAerial}
                   alt="University aerial view"
@@ -461,30 +460,30 @@ const Home = () => {
         </section>
 
         {/* ── FAQs ── */}
-        <section className="py-24 px-6 md:px-12 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+        <section className="py-10 sm:py-14 md:py-16 px-4 sm:px-6 md:px-12 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
           <div className="max-w-3xl mx-auto">
             <FAQBlock faqs={homeFaqs} title={t("home.faq.heading")} />
           </div>
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section className="py-32 px-6 md:px-12 bg-slate-900 relative overflow-hidden">
+        <section className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 bg-slate-900 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-secondary-500/15 via-transparent to-transparent" />
           
           <div className="relative max-w-4xl mx-auto text-center z-10">
-            <h2 className="text-2xl sm:text-2xl sm:text-3xl font-extrabold text-white mb-6 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-4 tracking-tight">
               {t("home.bottomCta.heading")}
             </h2>
-            <p className="text-slate-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base md:text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
               {t("home.bottomCta.subtext")}
             </p>
             <button
               onClick={() => navigate("/flow")}
-              className="inline-flex items-center gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 px-10 py-5 rounded-full font-extrabold text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-secondary-500/25"
+              className="inline-flex items-center gap-3 bg-secondary-500 hover:bg-secondary-400 text-slate-950 px-8 sm:px-10 py-4 sm:py-5 rounded-full font-black text-sm sm:text-base transition-transform hover:scale-105 active:scale-95 shadow-2xl shadow-secondary-500/25 cursor-pointer"
               aria-label={t("home.bottomCta.button")}
             >
-              {t("home.bottomCta.button")}
-              <ArrowRight size={20} />
+              <span>{t("home.bottomCta.button")}</span>
+              <ArrowRight size={18} />
             </button>
           </div>
         </section>

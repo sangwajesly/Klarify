@@ -23,14 +23,14 @@ const FAQBlock = ({ faqs, title = "Frequently Asked Questions" }) => {
   };
 
   return (
-    <section className="py-12 my-6">
+    <div className="w-full">
       <SEOHead
         structuredData={faqSchema}
         title={title}
         description={`Answers to common questions about ${title}`}
       />
       <div className="max-w-3xl mx-auto px-4">
-        <h2 className="text-lg sm:text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-8 text-center">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-6 sm:mb-8 text-center tracking-tight">
           {title}
         </h2>
 
@@ -76,7 +76,7 @@ const FAQBlock = ({ faqs, title = "Frequently Asked Questions" }) => {
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

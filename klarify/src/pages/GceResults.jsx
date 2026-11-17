@@ -288,7 +288,7 @@ const GceResults = () => {
         </section>
 
         {/* ── Content below ── */}
-        <section className="bg-white dark:bg-slate-900 py-24 px-6 md:px-12 border-t border-slate-200/60 dark:border-slate-700/60">
+        <section className="bg-white dark:bg-slate-900 py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 border-t border-slate-200/60 dark:border-slate-700/60">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
               {[
@@ -337,7 +337,7 @@ const GceResults = () => {
           </div>
         </section>
 
-        <section className="bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 border-t border-slate-200/60 dark:border-slate-700/60">
+        <section className="bg-slate-50 dark:bg-slate-950 py-10 sm:py-14 md:py-16 px-4 sm:px-6 md:px-12 border-t border-slate-200/60 dark:border-slate-700/60">
           <div className="max-w-3xl mx-auto">
             <FAQBlock faqs={gceFaqs} title={t("gceResults.faqHeading")} />
           </div>
